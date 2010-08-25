@@ -1,0 +1,24 @@
+#set ($i = 0)
+#foreach ($customer in $customers)
+#beforeall	
+	<fieldset>
+		<legend>Customer In:</legend>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tbody>
+#each
+		<tr class="scaffoldrow" id=customer$i>
+		<td>
+			$HtmlHelper.InputHidden("customer[$i].ID", "$customer.ID")
+			$customer.ID
+		</td>
+		<td>
+			$AjaxHelper.ButtonToRemote("-", "SubtractCustomerCondition.rails", $DictHelper.CreateDict( "update=customer${i}" ))
+		</td>
+		</tr>
+	#set ($i = $i + 1)
+#afterall
+	</tbody>
+	</table>
+	</fieldset>
+	<br/>
+#end

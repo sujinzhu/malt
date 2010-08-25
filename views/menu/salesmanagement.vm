@@ -1,0 +1,30 @@
+﻿<ul>
+  <li><a href='${url.for("%{area='sales', controller='cpo', action='new'}")}'>
+    <img src="${siteroot}/content/images/user.png"/>
+    <span>${common.customerpo}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='sales', controller='sales', action='new'}")}'>
+    <img src="${siteroot}/content/images/user.png"/>
+    <span>${common.salesorder}</span></a>
+  </li>
+</ul>
+<ul>
+  <li><a href='${url.for("%{area='sales', controller='cpo', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.customerpo}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='sales', controller='salesorder', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.salesorder}</span></a>
+  </li>
+</ul>
+<ul>
+  <li><a href='${url.for("%{area='sales', controller='pnt', action='new'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.createnew} ${common.partnumbertranslation}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='sales', controller='pnt', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.partnumbertranslation}</span></a>
+  </li>
+</ul>

@@ -1,0 +1,42 @@
+
+<P>$commonText.cncmachine :</P>
+#foreach($project in $projects)
+#beforeall
+	$AjaxHelper.LinkToFunction("$commonText.expanding $commonText.all", "expandTree('machines')")
+	&nbsp;
+	$AjaxHelper.LinkToFunction("$commonText.collapsing $commonText.all", "collapseTree('machines')")
+	#foreach($project in $projects)
+		#set($groupi="groupi$project.Key")
+		<SCRIPT type="text/javascript">
+		var $groupi = new CheckBoxGroup();
+		#foreach($machine in $project.Children)
+		${groupi}.addToGroup("project${project.Key}machine${machine.Key}");
+		#end
+		${groupi}.setControlBox("project$project.Key");
+		${groupi}.setMasterBehavior("all");
+		</SCRIPT>
+	#end
+	<UL CLASS="mktree" ID="machines">
+#each
+	#set($groupi="groupi$project.Key")
+	<LI><INPUT TYPE="checkbox" NAME="project$project.Key" VALUE="$project.Key" onClick="${groupi}.check(this)" 
+			#if(!$uncheckasdevault)
+			checked
+			#end
+			 />$commonText.project:$project.Value
+	#foreach($machine in $project.Children)
+	#beforeall
+		<UL>
+	#each
+		<LI><INPUT TYPE="checkbox" NAME="machines" ID="project${project.Key}machine${machine.Key}" VALUE="$machine.Key" onClick="${groupi}.check(this)" 
+		#if(!$uncheckasdevault)
+			checked
+		#end
+		 />$machine.Value
+	#afterall
+		</UL>
+	#end
+	</LI>
+#afterall
+</UL>
+#end

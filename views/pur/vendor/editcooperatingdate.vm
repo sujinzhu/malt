@@ -1,0 +1,30 @@
+<div class="ui-helper-clearfix">
+  #if(${isnew})
+  <form action='${url.for("%{action='createcooperatingdate'}")}' method="POST">
+  #else
+  <form action='${url.for("%{action='updatecooperatingdate'}")}' method="POST">
+  #end
+  ${f.push("extension2")}
+  ${f.hiddenfield("Id")}
+  <p>
+    <span class="label2">${common.cooperatingdate}[${common.begin}]:</span>
+    <span class="field2 short-date">${f.textfield("CooperateBeginDate")}</span>
+  </p>
+  <p>
+    <span class="label2">${common.cooperatingdate}[${common.end}]:</span>
+    <span class="field2 short-date">${f.textfield("CooperateEndDate")}</span>
+  </p>
+  ${f.pop()}
+  <p>
+    ${f.submit($common.submit)}
+  </p>
+  </form>
+</div>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  fnDecorative();
+  $('#extension2_CooperateBeginDate').datepicker();
+  $('#extension2_CooperateEndDate').datepicker();
+// ]]>
+</script>

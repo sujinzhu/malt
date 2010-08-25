@@ -1,0 +1,22 @@
+<div id='radio'>
+<input type="radio" id="radio1" name="radio" value='${url.for("%{area='quota', controller='materialquota', action='listconsumingquota'}")}' 
+#if($quotaType=="Consuming")
+checked
+#end
+/>
+<label for="radio1">${common.consumingcredit}</label>
+
+<input type="radio" id="radio2" name="radio" value='${url.for("%{area='quota', controller='materialquota', action='listorderingquota'}")}' 
+#if($quotaType=="Ordering")
+checked
+#end
+/>
+<label for="radio2">${common.orderingcredit}</label>
+
+<input type="radio" id="radio3" name="radio" value='${url.for("%{area='quota', controller='outsourcingquota', action='listoutsourcingquota'}")}' 
+#if($quotaType=="Outsourcing")
+checked
+#end
+/>
+<label for="radio3">${common.outsourcing-quota}</label>
+</div>

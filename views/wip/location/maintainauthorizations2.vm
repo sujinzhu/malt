@@ -1,0 +1,36 @@
+##$type (string PrincipalType), $name (string UserName or Role) are required
+##$allows (Location[] allowed locations) is required
+##$denies (Location[] denied locations) is required
+##$all (Location[] all locations, include non-active) is required
+<h3>Maintain ${type} location authorizations:</h3>
+
+$FormHelper.FormTag("%{action='maintainauthorizations2'}")
+<p>
+$FormHelper.RadioField("type", "User")User 
+$FormHelper.RadioField("type", "Role")Role
+    Name:
+$FormHelper.TextField("name")
+$FormHelper.Submit("Select")
+</p>
+$FormHelper.EndFormTag()
+
+#set($colsPerRow = 2)
+#foreach($location in $all)
+#beforeall
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	#set($currentCol = 0)
+	<tr class="scaffoldrow">
+#each
+	#if($currentCol == $colsPerRow)
+	</tr><tr class="scaffoldaltrow">
+	#end
+	#if($currentCol == $colsPerRow * 2)
+	</tr><tr class="scaffoldrow">
+	#set($currentCol = 0)
+	#end
+	#parse("${siteRoot}/wip/location/authorization/authorization.vm")
+	#set($currentCol = $currentCol + 1)
+#afterall
+	</tr>
+	</table>
+#end

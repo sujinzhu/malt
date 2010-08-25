@@ -1,0 +1,5 @@
+<h2>Find deliveries that need register on Customer PO:</h2>
+#parse("${siteRoot}/sales/delivery/criterions6.vm")
+<br/>
+#parse("${siteRoot}/sales/delivery/criterions7.vm")
+<br/>

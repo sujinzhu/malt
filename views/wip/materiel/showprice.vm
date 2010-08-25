@@ -1,0 +1,13 @@
+<fieldset>
+<legend>${commonText.price}:</legend>
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th>STNDCOST</th>		
+		<td>${StringHelper.Format("{0:0.0000}", $material.STNDCOST)}</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th>CURRCOST</th>
+		<td>${StringHelper.Format("{0:0.0000}", $material.CURRCOST)}</td>
+	</tr>
+</table>
+</fieldset>

@@ -1,0 +1,98 @@
+#capturefor(head)
+  ${j.jquery_dataTable()}
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances;
+    $(function(){
+      $('a').button();
+      oInstances = $('#instances').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"fnRender": function(oObj){return fnGetLink(oObj.aData[0]);}, "sType": "html", "sClass": "id"},
+        {"sClass": "description"},
+        {"sClass": "address"},
+        {"sClass": "address"},
+        {"sClass": "address"},
+        {"sClass": "phone-number"},
+        {"sClass": "phone-number"},
+        {"sClass": "phone-number"},
+        {"sClass": "phone-number"},
+        {"sClass": "phone-number"},
+        {"sClass": "zip"},
+        {"sClass": "area"},
+        ]
+      });
+      $('#new-instance').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+      });
+      $('#instance_Id').focus();
+    });
+
+    function fnAddToDT(data){
+      if(!fnHasError(data)){
+        oInstances.fnAddData([data['Id'], data['Description'], data['Address1'], data['Address2'], data['Address3'], data['Fax1'], data['Fax2'], data['Tel1'], data['Tel2'], data['Tel3'], data['Zip'], data['Area']]);
+        $('#instance_Description').val("");
+        $('#instance_Address1').val("");
+        $('#instance_Address2').val("");
+        $('#instance_Address3').val("");
+        $('#instance_Fax1').val("");
+        $('#instance_Fax2').val("");
+        $('#instance_Tel1').val("");
+        $('#instance_Tel2').val("");
+        $('#instance_Tel3').val("");
+        $('#instance_Zip').val("");
+        $('#instance_Area').val("");
+        $('#instance_Id').val("").focus();
+      }
+    }
+
+    function fnGetLink(id){
+      var linkView =  '$url.for("%{action='view', querystring='id='}")' + id;
+      var linkEdit =  '$url.for("%{action='edit', querystring='id='}")' + id;
+      return "<a target='_blank' href='" + linkView + "'>${common.view}</a>" + "&nbsp;&nbsp;&nbsp;" + "<a target='_blank' href='" + linkEdit + "'>${common.edit}</a>" + "&nbsp;&nbsp;&nbsp;" + id;
+    }
+  // ]]>
+  </script>
+#end
+
+<h3>${common.createnew} ${common.address}</h3>
+<a href='${url.for("%{action='list'}")}'>${common.returntolist}</a>
+
+${h.start_with_layout($url.for("%{action='create'}"), "new-instance")}
+
+${f.push("instance")}
+
+${h.field($common.id, $f.textfield("Id", "%{class='required'}"), true)}
+
+#parse("${siteroot}/common/addr/_fields.vm")
+
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+
+${h.end_with_layout()}
+
+<div id="instances-container">
+
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.description}</th>
+      <th>${common.address}1</th>
+      <th>${common.address}2</th>
+      <th>${common.address}3</th>
+      <th>${common.fax}1</th>
+      <th>${common.fax}2</th>
+      <th>${common.tel}1</th>
+      <th>${common.tel}2</th>
+      <th>${common.tel}3</th>
+      <th>${common.zip}</th>
+      <th>${common.area}</th>
+    </tr>
+  </thead>
+</table>
+</div>

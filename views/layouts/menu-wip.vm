@@ -1,0 +1,66 @@
+<LI>WIP
+<UL>
+	<LI>$commonText.material
+	<UL>
+		<LI>$Html3Helper.LinkTo("$commonText.search", "WIP","Materiel", "Search")</LI>
+	</UL>
+	</LI>
+	<LI>$wip.BOM
+	<UL>
+		<LI>$Html3Helper.LinkTo("$commonText.search", "WIP","BOM", "Default")</LI>
+	</UL>
+	</LI>
+	<LI>${commonText.location}
+	<UL>
+		<LI>$Html3Helper.LinkTo("${commonText.list}","wip","location","list")</LI>
+	</UL>
+	</LI>
+	<LI>Traveler
+	<UL>
+		<LI>$Html3Helper.LinkTo("${commonText.search}", "WIP","traveler", "search")</LI>
+		<LI>$Html3Helper.LinkTo("${commonText.universalsearch}", "WIP","traveler", "universalsearch")</LI>
+	</UL>
+	</LI>
+	<LI>Delivery
+	<UL>
+		<LI>$Html3Helper.LinkTo("${commonText.universalsearch}", "WIP","delivery", "universalsearch")</LI>
+		<LI>$Html3Helper.LinkTo("${commonText.search}", "WIP","delivery", "search")</LI>
+		<LI>$Html3Helper.LinkTo("${commonText.sign}", "WIP","delivery", "listarrival")</LI>
+		<LI>$Html3Helper.LinkTo("${commonText.callback}", "WIP","delivery", "listleaving")</LI>
+		<LI/>
+		<LI>$Html3Helper.LinkTo("${wip.flowout}","","FlowOut", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.transferout}","","TransferOut", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.rejectout}","","RejectOut", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.reworkout}","","ReworkOut", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.adjuststock}","","AdjustStock", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.scraptostore}","","ScrapToStore", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.rtvtostore}","","RTVToStore", "Start")</LI>
+		<LI/>
+		<LI>$Html3Helper.LinkTo("${wip.sendtocheck}","","SendToCheck", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.flowtraveler}","","FlowTravelerA", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.flowtraveler}(${wip.newmaterielwillgenerate})","","FlowTravelerB", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.transfertraveler}","","TransferTraveler", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.rejecttraveler}","","RejectTraveler", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.reworktraveler}","","ReworkTraveler", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.combinetravelers}","","CombineTravelers", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.splittraveler}","","SplitTraveler", "Start")</LI>
+		<LI/>
+		<LI>$Html3Helper.LinkTo("${wip.archivetraveler}","","ArchiveTraveler","Start") </LI>
+		<LI>$Html3Helper.LinkTo("${wip.compacttraveler}","","CompactTraveler","Start") </LI>
+	</UL>
+	</LI>
+	<LI>$commonText.storemanagement
+	<UL>
+		<LI>$Html3Helper.LinkTo("${wip.vendscrap}","","VendScrap", "Start")</LI>
+		<LI>$Html3Helper.LinkTo("${wip.returntovender}","","ReturnToVender", "Start")</LI>
+		<LI/>
+		<LI>${Html3Helper.LinkTo("${wip.ship}(${commonText.stock})","","ShipStock","Start")}</LI>
+	</UL>
+	</LI>
+	<LI>${commonText.stock}
+	<UL>
+		<LI>$Html3Helper.LinkTo("${commonText.universalsearch}", "WIP","stock", "universalsearch")</LI>
+	</UL>
+	</LI>
+</UL>
+</LI>

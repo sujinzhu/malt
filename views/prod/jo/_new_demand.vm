@@ -1,0 +1,6 @@
+﻿${form.push("jocd")}
+${h.start_with_layout($url.for("%{action='createdemand'}"), "newDemandForm")}
+#parse("${siteroot}/prod/jo/_demand_fields.vm")
+${form.pop()}
+${h.field("", $form.submit(${common.create}))}
+${h.end_with_layout()}

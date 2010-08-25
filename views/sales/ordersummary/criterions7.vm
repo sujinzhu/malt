@@ -1,0 +1,10 @@
+<fieldset>
+<legend>7. By Requested Date:</legend>
+$HtmlHelper.Form("Search7.rails", "criterions7", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+#parse("${siteRoot}/sales/ordersummary/daterange.vm")
+
+$HtmlHelper.SubmitButton("$commonText.search")
+
+$HtmlHelper.EndForm()
+</fieldset>

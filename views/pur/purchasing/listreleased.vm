@@ -1,0 +1,64 @@
+#capturefor(head)
+  ${j.jquery_dataTable()}
+ 
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oEntries;
+    $(function(){
+      oEntries = $('#entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "po-id"},
+        null,
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        null,
+        {"sClass": "quantity"},
+        {"sClass": "short-date"}
+        ]
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.searchresult} ${common.purchaseorder}
+#end
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.order} ${common.id}</th>
+      <th>${common.status}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.unit}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.requireddate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td><a href='${url.for("%{action='released', querystring='id=$entry.PO.Id'}")}'>${entry.PO.Id}</a></td>
+      <td>${h.getenumname($entry.PO.Status)}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.Unit.Id} $!{entry.Unit.Description}</td>
+      <td>${entry.RequiredQuantity.ToString("N")}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+

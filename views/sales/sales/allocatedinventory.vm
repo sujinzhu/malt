@@ -1,0 +1,158 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container a { margin-left: 2em; }
+#header-container .ui-widget-header th { padding: .3em; }
+#entries-container { margin-top: 1em; }
+
+#instance { width: 800px; float: left; }
+#entry { margin-top: .5em; }
+
+#inventories-container { margin-top: .5em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+${j.jquery_editable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    oDataTable = $('#instances').dataTable({
+      "bProcessing": true,
+      "bServerSide": true,
+      "sAjaxSource": '$url.for("%{action='allocatableinventories', querystring='id=$entry.Id'}")',
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "fnServerData": function(sSource, aoData, fnCallback){
+        jQuery.get(sSource, aoData, function(json){
+          if(!fnHasError(json)){
+            fnCallback(json);
+          }
+        },
+       'json');
+      },
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "repository-id", "bSortable": false},
+      {"sClass": "repository-name", "bSortable": false},
+      {"sClass": "material-id", "bSortable": false},
+      {"sClass": "material-name", "bSortable": false},
+      {"sClass": "material-spec", "bSortable": false},
+      {"sClass": "quantity", "bSortable": false},
+      {"sClass": "quantity", "bSortable": false, "fnRender": function(oObj){return fnRenderAllocatedQuantity(oObj.aData[0], oObj.aData[7]);}},
+      {"sClass": "datetime", "bSortable": false},
+      {"sClass": "datetime", "bSortable": false},
+      {"bSortable": false},
+      {"bSortable": false},
+      ],
+      "fnDrawCallback": function(){
+        $('.allocated-quantity').editable(function(value, settings){
+          jQuery.post('${url.for("%{action='changeallocatedquantity', querystring='soeId=$entry.Id'}")}',
+          {id: this.id, value: value}, function(data){
+            if(!fnHasError(data)){
+              oDataTable.fnDraw();
+              $('#allocated-quantity').html(data['TotalQuantity']);
+              return data['CurrentQuantity'];
+            }
+          }, 'json');
+          return value;
+        }, {width: 50});
+      }
+    });
+    $('#header-container a').button();
+
+    fnClassTrigerMaterialMenu();
+  });
+  
+  function fnRenderAllocatedQuantity(sId, dAllocatedQuantity)
+  {
+    return '<span id="' + sId + '" class="allocated-quantity">' + dAllocatedQuantity + "</span>";
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.allocateinventory}: ${entry.SO.Id} (${common.finished-goods})
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.allocateinventory}(${common.finished-goods}): ${entry.SO.Id}</h3>
+<a href='${url.for("%{action='edit', querystring='id=$entry.SO.Id'}")}'>${common.edit}</a>
+<table id="instance" class="display">
+  <tr class="ui-widget-header">
+    <th>${common.customer}</th>
+    <th></th>
+    <th>${common.tradetype}</th>
+    <th>${common.salesman}</th>
+    <th>${common.createdate}</th>
+    <th>${common.status}</th>
+  </tr>
+  <tr class="ui-widget-content">
+    <td>$!{entry.SO.Customer.Id}</td>
+    <td>$!{entry.SO.Customer.Name}</td>
+    <td>$!{h.getenumname($entry.SO.TradeType)}</td>
+    <td>$!{entry.SO.SalesMan}</td>
+    <td>$!{entry.SO.CreatedDate.ToShortDateString()}</td>
+    <td>${h.getenumname($entry.SO.Status)}</td>
+  </tr>
+</table>
+
+<table id="entry" class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th class="material-id">${common.materialid}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requireddate}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.allocatedquantity}</th>
+      <th>${common.plannedmaterialquantity}</th>
+      <th>${common.plannedproducingquantity}</th>
+      <th>${common.deliveredquantity}</th>
+      <th>${common.ordermargin}</th>
+      <th>${common.baseunit}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td id="allocated-quantity">${entry.AllocatedQuantity}</td>
+      <td>${entry.PlannedMaterialQuantity}</td>
+      <td>${entry.PlannedProducingQuantity}</td>
+      <td>${entry.DeliveredQuantity}</td>
+      <td>${entry.RemainRequiredQuantity}</td>
+      <td>${entry.Unit.Id}</td>
+      <td>$!{entry.Unit.Description}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="inventories-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th></th>
+      <th>${common.repository}</th>
+      <th></th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.quantity}</th>
+      <th>${common.allocatedquantity}</th>
+      <th>${common.createdate}</th>
+      <th>${common.lastupdatedate}</th>
+      <th>${common.allocatee}</th>
+      <th>${common.stub}</th>
+    </tr>
+  </thead>
+</table>
+</div>

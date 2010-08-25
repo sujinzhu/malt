@@ -1,0 +1,12 @@
+<fieldset>
+<legend>Remove:</legend>
+
+<p>
+Do you really want to remove this CRR?
+</p>
+
+<p>
+$Html3Helper.LinkTo("Yes", "Sales","FGRequest", "Remove", $id) | $AjaxHelper.LinkToRemote("Cancel", "${siteRoot}/Home/Nothing.rails", $DictHelper.CreateDict( "update=crroperation"))
+</p>
+
+</fieldset>

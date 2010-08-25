@@ -1,0 +1,30 @@
+<h3>Get Input Info:</h3>
+$HtmlHelper.Form("GetInputInfoForMRB-Save.rails", "getinputinfoformrb", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th>${commonText.material}:</th>
+		<th>${commonText.customer}r:</th>
+		<th>${commonText.quantity}:</th>
+		<th>${wip.allocatee}:</th>
+		<th>${wip.rtno}:</th>
+		<th>${wip.lineno}:</th>
+		<th>${wip.wdweek}:</th>
+	</tr>
+	<tr class="scaffoldrow">
+		<td>$HtmlHelper.InputHidden("inputs[0].Inmat", "${Session.itemcode}")${Session.itemcode}</td>
+		<td>$HtmlHelper.InputHidden("inputs[0].Incust", "${Session.customerId}")${Session.customerID}</td>
+		<td>$HtmlHelper.InputHidden("inputs[0].Inqty", "${Session.quantity}")${Session.quantity}</td>
+		<td>$HtmlHelper.InputText("inputs[0].Inalcat", "${Session.allocatee.Trim()}", 30, 82)</td>
+		<td>$HtmlHelper.InputText("inputs[0].Inrt", "", 15, 15)</td>
+		<td>$HtmlHelper.InputText("inputs[0].Inline", "0", 3, 3, $DictHelper.Create("validators=number|0|0|999")) </td>
+		<td>$HtmlHelper.InputText("inputs[0].Inweek", "0", 2, 2, $DictHelper.Create("validators=number|0|0|54")) </td>
+</table>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$HtmlHelper.SubmitButton($commonText.nextstep)
+</p>
+$HtmlHelper.EndForm()
+
+

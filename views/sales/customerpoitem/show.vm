@@ -1,0 +1,56 @@
+<h3>Information for Customer PO Item [$cpoitem.ID]</h3>
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th align="right">$commonText.order:</th>
+		<th>$Html3Helper.LinkTo("$cpoitem.Order.OrderNumber", "Sales","CustomerPO", "Show", $cpoitem.Order.ID)</th>
+		<th>$commonText.received $commonText.date:</th>
+		<td>$cpoitem.ReceivedDate.ToString("yyyy-MM-dd")</td>
+	</tr>
+	<tr class="scaffoldaltrow">
+		<th align="right">
+			$commonText.affirmatory $commonText.delivery $commonText.date:
+		</th>
+		<td>$!cpoitem.AffirmatoryDeliveryDate.ToString('yyyy-MM-dd')</td>
+		<th align="right">$commonText.order $commonText.remnant:</th>
+		<td align="right">$cpoitem.OrderRemnant</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th align="right">
+			$commonText.customer $commonText.requested $commonText.shipby:
+		</th>
+		<td>$!cpoitem.ShipBy</td>
+		<th align="right">$commonText.delivered $commonText.quantity:</th>
+		<td align="right">$!cpoitem.DeliveredQuantity</td>
+	</tr>
+	<tr class="scaffoldaltrow">
+		<th align="right">$commonText.affirmatory $commonText.shipby:</th>
+		<td>$!cpoitem.AffirmatoryShipBy</td>
+		<th align="right">$sales.billedquantity:</th>
+		<td align="right">$!cpoitem.BilledQuantity</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th align="right">
+			$commonText.remark:
+		</th>
+		<td colspan=3>
+			$!cpoitem.Remark
+		</td>
+	</tr>
+</table>
+<br/>
+
+#set($fgr = $cpoitem.FGRequest)
+#parse("${siteRoot}/sales/fgrequest/show.vm")
+
+<br/>
+<fieldset>
+<legend>$commonText.task:</legend>
+#if($cpoitem.DeliveredQuantity == 0)
+	$AjaxHelper.LinkToRemote("$commonText.remove", "${siteRoot}/Sales/CustomerPOItem/Confirm.rails", $DictHelper.CreateDict( "update=cpoitemoperation", "with='id=$cpoitem.ID'"))
+#end
+$AjaxHelper.LinkToRemote("$commonText.edit", "${siteRoot}/Sales/CustomerPOItem/Edit.rails", $DictHelper.CreateDict( "update=cpoitemoperation", "with='id=$cpoitem.ID'" ) )
+$AjaxHelper.LinkToRemote("$commonText.update $commonText.requested $commonText.quantity", "${siteRoot}/Sales/CustomerPOItem/EditRequestedQuantity.rails", $DictHelper.CreateDict( "update=cpoitemoperation", "with='id=$cpoitem.ID'" ) )
+</fieldset>
+
+<br/>
+<div id="cpoitemoperation"></div>

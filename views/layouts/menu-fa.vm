@@ -1,0 +1,16 @@
+<LI>FA
+<UL>
+	<LI>FA1
+	<UL>
+		<LI>$Html3Helper.LinkTo("${commonText.createnew}", "FA","FAProcess", "NewFA1")</LI>
+	</UL>
+	</LI>
+	<LI>AVL
+	<UL>
+		<LI>$Html3Helper.LinkTo("${commonText.createnew}", "FA","VendorApproval", "New")</LI>
+		<LI>$Html3Helper.LinkTo("${commonText.list}", "FA","VendorApproval", "List")</LI>
+		<LI>$Html3Helper.LinkTo("${commonText.universalsearch}", "FA","VendorApproval", "universalsearch")</LI>
+	</UL>
+	</LI>
+</UL>
+</LI>

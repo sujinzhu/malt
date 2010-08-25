@@ -1,0 +1,24 @@
+#set ($i = 0)
+#foreach ($employee in $employees)
+#beforeall	
+	<fieldset>
+		<legend>Signee In:</legend>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tbody>
+#each
+		<tr class="scaffoldrow" id=signee$i>
+		<td>
+			$HtmlHelper.InputHidden("employee[$i].ID", "$employee.ID")
+			$employee.ID [$!employee.Name]
+		</td>
+		<td>
+			$AjaxHelper.ButtonToRemote("-", "SubtractSigneeCondition.rails", $DictHelper.CreateDict( "update=signee${i}" ))
+		</td>
+		</tr>
+	#set ($i = $i + 1)
+#afterall
+	</tbody>
+	</table>
+	</fieldset>
+	<br/>
+#end

@@ -1,0 +1,16 @@
+﻿#select-material, #get-received-quantity { padding-left: 1em; padding-bottom: 1em; }
+#select-material span { padding: 5px; margin: 0px; float: left; }
+#select-material button { margin-left: .3em;}
+#rn-header { margin-bottom: .5em; width: 750px; float: left; }
+#select-purchaseorder { width: 750px; }
+.material { width: 100px; }
+.quantity { width: 100px; }
+.unit { width: 100px; }
+.date { width: 200px; }
+.poe span {float: left; vertical-align: middle; }
+.poe { padding: 3px; margin-top: 5px; }
+.poedata { cursor: pointer; }
+#selected-poe { width: 750px; }
+#select-material, #get-received-quantity, #get-received-quantity table { float: left; }
+#btnFinish { margin-left: 1.5em; }
+#btnCancel { margin-left: .5em; float: right; }

@@ -1,0 +1,8 @@
+<fieldset>
+<legend>5. All: [Sort by CRRNO]</legend>
+$HtmlHelper.Form("Search5.rails", "criterions5", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+$HtmlHelper.SubmitButton("$commonText.search")
+
+$HtmlHelper.EndForm()
+</fieldset>

@@ -1,0 +1,95 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+p { margin-top: 1em; height: 25px; float: left; }
+span { float: left; }
+.label2 { width: 100px; text-align: right; padding-right: .3em; }
+.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
+.label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+
+.customer, .order-number { width: 250px; }
+
+#criteria-container { padding: 0 1em 1.5em 1em; width: 500px; margin-top: 2em; }
+/* ]]> */
+</style>
+
+${j.jquery_autocomplete()}
+${j.jquery_form()}
+${j.jquery_validate()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#instance_Customer_Id, #customer').autocomplete('$url.for("%{controller='customer', action='autocomplete2'}")', {
+      width: 300,
+      matchContains: true,
+      formatItem: formatCustomerItem,
+      formatResult: formatResult
+    });
+    $('#instance_Customer_Id').focus();
+    $('#instance_ShipTo_Id').autocomplete('$url.for("%{area='common', controller='addr', action='autocomplete2'}")', {
+      width: 400,
+      matchContains: true,
+      formatItem: formatAddressItem,
+      formatResult: formatResult
+    });
+    $('#new-instance-form').validate();
+    $('#search-form').validate();
+    fnDecorative();
+  });
+
+  function fnDecorative(){
+    $('.label2').addClass('ui-state-active ui-corner-bl');
+    $('.field2').addClass('ui-state-hover ui-corner-tr');
+    $(':submit').button();
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.createnew} ${common.customerpo}
+#end
+
+<div id="header-container">
+  <h3>${common.createnew} ${common.customerpo}</h3>
+</div>
+
+<div id="new-instance-container">
+
+${h.start_with_layout($url.for("%{action='create'}"), "new-instance-form")}
+${f.push("instance")}
+
+${h.field($common.customer, $f.textfield('Customer.Id', "%{class='required'}"), true)}
+${h.field($common.ordernumber, $f.textfield('OrderNumber', "%{class='required'}"), true)}
+${h.field($common.buyer, $f.textfield('Buyer'))}
+${h.field($common.shipto, $f.textfield('ShipTo.Id', "%{class='required'}"), true)}
+${h.field($common.notice, $f.textarea('Notice'))}
+
+${h.field("", $f.Submit($common.create))}
+
+${f.pop()}
+${h.end_with_layout()}
+</div>
+
+<div id="criteria-container" class="ui-widget-content ui-helper-clearfix">
+<form id="search-form" action='${url.for("%{action='findforedit'}")}' method="POST">
+
+  <p>
+    <span class="label2">*${common.customer}:</span>
+    <span class="field2 customer">
+      <input type="text" name="customer" value="$!{customer}" id="customer" class="required"/>
+    </span>
+  </p>
+
+  <p>
+    <span class="label2">*${common.ordernumber}:</span>
+    <span class="field2 order-number">
+      <input type="text" name="orderNumber" value="$!{orderNumber}" id="orderNumber" class="required"/>
+    </span>
+  </p>
+
+  <p><input type="submit" value="${common.edit}" /></p>
+
+</form>
+</div>

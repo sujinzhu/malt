@@ -1,0 +1,88 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container a { margin-left: 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#header-container a').button();
+
+    $('#entries').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false},
+      {"fnRender": function(oObj){return fnGetLink(oObj.aData[1]);}, "sType": "html", "sClass": "pr-id"},
+      {"sClass": "status"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit"},
+      {"sClass": "short-date"},
+      {"sClass": "quantity"},
+      null
+      ]
+    });
+  });
+
+  function fnGetLink(id){
+    var linkView =  '$url.for("%{area='pur', controller='purchaserequisition', action='view', querystring='id='}")' + id;
+    return "<a target='_blank' href='" + linkView + "'>" + id + "</a>";
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.purchaserequisition}: ${so.Id}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+  <h3>${common.purchaserequisition}: ${so.Id}</h3>
+  <a href='${url.for("%{action='generatepurchaserequisition', querystring='id=$so.Id'}")}'>${common.generatepr}</a>
+</div>
+
+#if($entries)
+<div id="entries-container" class="ui-helper-clearfix">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.purchaserequisition} ${common.id}</th>
+      <th>${common.status}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.unit}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.orderedquantity}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.PR.Id}</td>
+      <td>${h.getenumname($entry.PR.Status)}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>$!{entry.Unit.Description}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.OrderedQuantity}</td>
+      <td>$!{entry.Responsible}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+#end

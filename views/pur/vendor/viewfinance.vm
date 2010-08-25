@@ -1,0 +1,26 @@
+<p>
+  <span class="label2">${common.currency}:</span>
+  <span class="field2 currency">[$!{extension.HomeCurrency.Id}]&nbsp;$!{extension.HomeCurrency.Description}</span>
+</p>
+<p>
+  <span class="label2">${common.vendorcategory}:</span>
+  <span class="field2 vendor-category">[$!{extension.Category.Id}]&nbsp;$!{extension.Category.Description}</span>
+</p>
+<p>
+  <span class="label2">${common.settlementmode}:</span>
+  <span class="field2 settlement">[$!{extension.Settlement.Id}]&nbsp;$!{extension.Settlement.Description}</span>
+</p>
+<p>
+  <span class="label2">${common.paymentterm}:</span>
+  <span class="field2 payment">[$!{extension.Payment.Id}]&nbsp;$!{extension.Payment.Description}</span>
+</p>
+<p>
+  <span class="label2">${common.transport}:</span>
+  <span class="field2 transport">[$!{extension.Transport.Id}]&nbsp;$!{extension.Transport.Description}</span>
+</p>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  fnDecorative();
+// ]]>
+</script>

@@ -1,0 +1,204 @@
+﻿#if($material)
+  #capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #base li, #units-header li, #repositories-header li{ clear: both; }
+  .label, .label2, .value, .value2 { padding: 5px; margin-bottom: .5em; }
+  .label, .label2 { float: left; text-align: right; margin-right: -1px;}
+  .label { min-width: 80px; }
+  .value, .value2 { float: left; }
+  .value { min-width: 200px; }
+  .rate { text-align: right; }
+  .operator { text-align: center; }
+  #btnSetPrimaryUnit, #btnSetSecondUnit, #btnSetPrimaryRepository, #btnSetThirdUnit, #btnSetPurchasingLeadTime { margin-left: 1em; }
+
+  #category div li { clear: both; }
+  #base, #ui-tabs-1, #ui-tabs-2, #ui-tabs-3 { margin-bottom: 1.4em; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#category').tabs({selected: ${tab}}).width('800px');
+      fnAdjustHeight('#mn');
+      fnAdjustHeight('#mn2');
+      fnAdjustHeight('#ms');
+      fnAdjustHeight('#mpu');
+      fnAdjustHeight('#msu');
+      fnAdjustHeight('#mpr');
+      fnAdjustHeight('#mpt');
+      fnAdjustHeight('#mpl');
+      fnAdjustHeight('#mpq');
+      fnAdjustHeight('#moq');
+      fnAdjustHeight('#mtu');
+      $('#formBasedata').validate({submitHandler: function(form){$(form).ajaxSubmit({dataType: 'json', success: fnHasError});}});
+      $('#btnSetPrimaryUnit').click(function(){ jQuery.post('${url.for("%{action='setprimaryunit'}")}', {material: '${material.Id}', primaryUnit: $('#primaryUnit').val()}, function(data){fnHasError(data)}, "json"); });
+      $('#btnSetSecondUnit').click(function(){ jQuery.post('${url.for("%{action='setsecondunit'}")}', {material: '${material.Id}', secondUnit: $('#secondUnit').val()}, function(data){fnHasError(data)}, "json"); });
+      $('#btnSetThirdUnit').click(function(){ jQuery.post('${url.for("%{action='setthirdunit'}")}', {material: '${material.Id}', thirdUnit: $('#thirdUnit').val()}, function(data){fnHasError(data)}, "json"); });
+      $('#btnSetPrimaryRepository').click(function(){ jQuery.post('${url.for("%{action='setprimaryrepository'}")}', {material: '${material.Id}', primaryRepository: $('#primaryRepository').val()}, function(data){fnHasError(data)}, "json"); });
+      $('#formPurchasingLeadTime').validate({submitHandler: function(form){$(form).ajaxSubmit({dataType: 'json', success: fnHasError});}});
+      $('#formMPQ').validate({submitHandler: function(form){$(form).ajaxSubmit({dataType: 'json', success: fnHasError});}});
+      $('#formMOQ').validate({submitHandler: function(form){$(form).ajaxSubmit({dataType: 'json', success: fnHasError});}});
+    });
+    function fnAdjustHeight(element) { $(element + ' .label').height($(element + ' .value').height()); }
+    function fnAddToDT(data){
+      if(!fnHasError(data)){
+        oMUs.fnAddData([data['Unit'], data['Rate'], data['PrimaryUnit'] + " " + data['PrimaryUnitDescription'], " = ", data['Rate2'], data['Unit'] + " " + data['UnitDescription'], '${common.remove}']);
+        fnTrigerRemoveUnit();
+        $('#unit').select("");
+        $('#rate2').val("");
+        $('#rate').val("").focus();
+      }
+    }
+    function fnRemoveUnit(unit, iCell)
+    {
+      var url = '${url.for("%{action='removeunit'}")}';
+      jQuery.post(url, {material: '${material.Id}', unit: unit}, function(data){ if(!fnHasError(data)) { oMUs.fnDeleteRow(iCell); $('#rate').focus();} }, 'json');
+    }
+    function fnGetRemoveLink(label)
+    {
+      return "<span style='cursor: pointer;'>"+label+"</span>";
+    }
+    function fnTrigerRemoveUnit()
+    {
+      $('#material-units tbody td').click(function(){
+        var aPos = oMUs.fnGetPosition(this);
+        var aData = oMUs.fnGetData(aPos[0]);
+        if(aData[aPos[2]] == fnGetRemoveLink('${common.remove}'))
+        {
+          fnRemoveUnit(aData[0], aPos[0]);
+          //oMUs.fnDeleteRow(aPos[0]);
+        }
+      });
+    }
+    function fnAddToRepositories(data){
+      if(!fnHasError(data)){
+        oMRs.fnAddData([data['Repository'], data['RepositoryDescription'], data['TradeType'], '${common.remove}']);
+        fnTrigerRemoveRepository();
+      }
+    }
+    function fnTrigerRemoveRepository(){
+      $('#material-repositories tbody td').click(function(){
+        var aPos = oMRs.fnGetPosition(this);
+        var aData = oMRs.fnGetData(aPos[0]);
+        if(aData[aPos[1]] == '${common.remove}')
+        {
+          fnRemoveRepository(aData[0]);
+          oMRs.fnDeleteRow(aPos[0]);
+        }
+      });
+    }
+    function fnRemoveRepository(repository)
+    {
+      var url = '${url.for("%{action='removerepository'}")}';
+      jQuery.post(url, {material: '${material.Id}', repository: repository}, function(data){fnHasError(data);}, 'json');
+    }
+  // ]]>
+  </script>
+  #end
+
+  <h3>${common.material} : ${url.link($material.Id, "%{action='view', querystring='id=$material.Id'}")}</h3>
+
+  <div id="category">
+    <ul>
+      <li><a href="#base">${common.basedata}</a></li>
+      <li><a href='${url.for("%{action='editunits', querystring='id=$material.Id'}")}'>${common.unit}</a></li>
+      <li><a href='${url.for("%{action='editrepositories', querystring='id=$material.Id'}")}'>${common.repository}</a></li>
+      <li><a href='${url.for("%{action='editspec', querystring='id=$material.Id'}")}'>${common.specification}</a></li>
+      <li><a href='${url.for("%{action='editoutsourcing', querystring='id=$material.Id'}")}'>${common.issueoutward}</a></li>
+    </ul>
+
+    <div id="base">
+      <ul>
+      ${f.push("material")}
+      <form action='${url.for("%{action='update'}")}' method="POST" id="formBasedata">
+        <li id="mi">
+          <span class="ui-widget-header ui-corner-left label">Id:</span>
+          <span class="value ui-widget-content ui-corner-right">${material.Id}</span>
+          ${f.hiddenfield("Id")}
+        </li>
+        <li id="mn">
+          <span class="ui-widget-header ui-corner-left label">${common.name}:</span>
+          <span class="value ui-widget-content ui-corner-right">${f.textfield("Name", "%{class='required'}")}</span>
+        </li>
+        <li id="mn2">
+          <span class="ui-widget-header ui-corner-left label">${common.name}2:</span>
+          <span class="value ui-widget-content ui-corner-right">${f.textfield("Name2")}</span>
+        </li>
+        <li id="ms">
+          <span class="ui-widget-header ui-corner-left label">${common.specification}:</span>
+          <span class="value ui-widget-content ui-corner-right">${f.textfield("Specification")}</span>
+          ${f.submit($common.update, "%{style='margin-left: 1em;'}")}
+        </li>
+      </form>
+      ${f.pop()}
+        <li id="mpu">
+          <span class="ui-widget-header ui-corner-left label">${common.primaryunit}:</span>
+          <span class="value ui-widget-content ui-corner-right">
+          #if(${m.trygetprimaryunit($material)})
+            ${m.trygetprimaryunit($material).Description}
+          </span>
+          #else
+            ${f.select("primaryUnit", $u.findall(), "%{text='Description', value='Id'}")}
+          </span>
+          <button id="btnSetPrimaryUnit">${common.set}</button>
+          #end
+        </li>
+        <li id="msu">
+          <span class="ui-widget-header ui-corner-left label">${common.secondunit}:</span>
+          <span class="value ui-widget-content ui-corner-right">
+          #if(${m.getsecondunit($material)})
+            ${f.select("secondUnit", $m.getsecondunit($material).Id, $u.findall(), "%{text='Description', value='Id'}")}
+          #else
+            ${f.select("secondUnit", $u.findall(), "%{value='Id'}")}
+          #end
+          </span>
+          <button id="btnSetSecondUnit">${common.set}</button>
+        </li>
+        <li id="mtu">
+          <span class="ui-widget-header ui-corner-left label">${common.thirdunit}:</span>
+          <span class="value ui-widget-content ui-corner-right">
+          #if(${m.getthirdunit($material)})
+            ${f.select("thirdUnit", $m.getthirdunit($material).Id, $u.findall(), "%{text='Description', value='Id'}")}
+          #else
+            ${f.select("thirdUnit", $u.findall(), "%{value='Id'}")}
+          #end
+          </span>
+          <button id="btnSetThirdUnit">${common.set}</button>
+        </li>
+        <li id="mpq">
+        <form action='${url.for("%{action='setminimumpackagingquantity'}")}' method="POST" id="formMPQ">
+          ${f.hiddenfield("material", $material.Id)}
+          <span class="ui-widget-header ui-corner-left label">${common.minimumpackagingquantity}:</span>
+          <span class="value ui-widget-content ui-corner-right">
+          ${f.textfieldvalue("mpq", $m.getminimumpackagingquantity($material), "%{class='required', min='1'}")}</span>
+          ${f.submit($common.set, "%{style='margin-left: 1em;'}")}
+        </form>
+        </li>
+        <li id="mpl">
+        <form action='${url.for("%{action='setpurchasingleadtime'}")}' method="POST" id="formPurchasingLeadTime">
+          ${f.hiddenfield("material", $material.Id)}
+          <span class="ui-widget-header ui-corner-left label">${common.purchasingleadtime}:</span>
+          <span class="value ui-widget-content ui-corner-right">
+          ${f.textfieldvalue("purchasingLeadTime", $m.trygetpurchasingleadtime($material).Days, "%{class='required', min='1'}")} ${common.days}</span>
+          ${f.submit($common.set, "%{style='margin-left: 1em;'}")}
+        </form>
+        </li>
+        <li id="moq">
+        <form action='${url.for("%{action='setminimumorderquantity'}")}' method="POST" id="formMOQ">
+          ${f.hiddenfield("material", $material.Id)}
+          <span class="ui-widget-header ui-corner-left label">${common.minimumorderquantity}:</span>
+          <span class="value ui-widget-content ui-corner-right">
+          ${f.textfieldvalue("moq", $m.getminimumorderquantity($material), "%{class='required', min='1'}")}</span>
+          ${f.submit($common.set, "%{style='margin-left: 1em;'}")}
+        </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+#end

@@ -1,0 +1,76 @@
+#capturefor(head)
+  <link rel="stylesheet" href="${siteroot}/content/css/inv/receiving/received.css" type="text/css" media="screen" charset="utf-8" />
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#rn-entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+    });
+    function fnAccept(){
+      document.location='${url.for("%{action='accept', querystring='id=${rn.Id}'}")}';
+    }
+    function fnReject(){
+      document.location='${url.for("%{action='reject', querystring='id=${rn.Id}'}")}';
+    }
+  // ]]>
+  </script>
+#end
+
+<h3>${common.receivingnote} : ${rn.Id}</h3>
+
+<table id="rn-header" class="display">
+  <thead>
+    <tr class="ui-widget-header ui-corner-top">
+      <th>${common.vendor}</th>
+      <th>${common.receiveddate}</th>
+      <th>${common.deliverynoteid}</th>
+      <th>${common.consignee}</th>
+      <th>${common.rmwarehouse}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content ui-corner-bottom">
+      <td>${rn.Vendor.Id} $!{rn.Vendor.Name}</td>
+      <td>${dateformat.ToShortDate($rn.ReceivedDate)}</td>
+      <td>${rn.DeliveryNoteId}</td>
+      <td>${rn.Consignee}</td>
+      <td>${rn.Repository} ${r.getdescription($rn.Repository)}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button id="btnAccept" onclick="javascript:fnAccept();">${common.accept}</button>
+<button id="btnReject" onclick="javascript:fnReject();">${common.reject}</button>
+
+<table id="rn-entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.material}</th>
+      <th>${common.receivedquantity}</th>
+      <th>${common.baseunit}</th>
+      <th>${common.unitprice}</th>
+      <th>${common.notice}</th>
+      <th>Accepted?</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($rne in $rn.Entries)
+    <tr>
+      <td>${rne.Id}</td>
+      <td>${rne.Material.Id} $!{rne.Material.Name} [$!{rne.Material.Specification}]</td>
+      <td>${rne.ReceivedQuantity}</td>
+      <td>${rne.Unit.Id} $!{rne.Unit.Description}</td>
+      <td>$!{rne.UnitPrice}</td>
+      <td>$!{rne.Notice}</td>
+      <td>${rne.Accepted}</td>
+    </tr>
+  #end
+  </tbody>
+</table>

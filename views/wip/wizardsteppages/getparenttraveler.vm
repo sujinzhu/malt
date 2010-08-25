@@ -1,0 +1,12 @@
+$HtmlHelper.Form("GetParentTraveler-Save.rails", "getparenttraveler", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<p>$HtmlHelper.LabelFor("parentTravelerId", "<b>${wip.parenttravelerid}</b>:")
+$HtmlHelper.InputText("parentTravelerId", "", 15, 15, $DictHelper.Create("validators=blank", "style=text-transform: uppercase;"))
+</p>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$HtmlHelper.SubmitButton($commonText.nextstep)
+</p>
+$HtmlHelper.EndForm()
+

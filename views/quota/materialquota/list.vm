@@ -1,0 +1,123 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#quota-maintain-container { margin-top: 1em; width: 600px; padding-left: 1em; padding-bottom: 1em; }
+.field2 { width: 300px; }
+
+p { margin-top: 1em; height: 25px; float: left; }
+span { float: left; }
+.label2 { width: 100px; text-align: right; padding-right: .3em; }
+.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
+.label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+${j.jquery_autocomplete()}
+${j.jquery_form()}
+${j.jquery_validate()}
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#quotas').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit-desc"},
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    })
+
+    $('.button').button();
+    $('#radio').buttonset();
+    $(':radio').click(function(){window.location=$(this).val()+"?sheetId=$uow.SheetId"; });
+
+    $('#materialId').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")',{
+      width: 550,
+      matchContains: true,
+      formatItem: formatMaterialItem,
+      formatResult: formatResult,
+      max: 30
+    }).focusout(function(){
+      if($(this).val() > ""){
+        fnTrigerMaterialMenu(this, $(this).val());
+      }
+    }).focusin(function(){
+      $('.material-menu-triger').remove();
+    }).focus();
+
+    fnDecorative();
+    $('#form-maintain-quota').validate();
+
+    $('#btnIncrease').click(function(){
+      $('#form-maintain-quota').attr("action", '${urlIncreaseAction}');
+      $('#form-maintain-quota').submit();
+    });
+
+    $('#btnDecrease').click(function(){
+      $('#form-maintain-quota').attr("action", '${urlDecreaseAction}');
+      $('#form-maintain-quota').submit();
+    });
+  });
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.material} ${common.quota}: ${uow.SheetId}
+#end
+
+<div id="header-container">
+<h3>${common.material} ${common.quota}: ${uow.SheetId}</h3>
+#parse("${siteroot}/quota/materialquota/index.vm")
+</div>
+
+<div id="instances-container" class="ui-helper-clearfix">
+<table id="quotas" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.material}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.quota}</th>
+      <th>${common.unit}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($quota in $quotas)
+    <tr>
+      <td>${quota.Id}</td>
+      <td>${quota.Material.Id}</td>
+      <td>$!{quota.Material.Name}</td>
+      <td>$!{quota.Material.Specification}</td>
+      <td>${quota.Quota}</td>
+      <td>$!{m.trygetprimaryunit($quota.Material).Description}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+
+<div id="quota-maintain-container" class="ui-widget-content ui-helper-clearfix">
+  <form id="form-maintain-quota" method="POST">
+    ${f.hiddenfield("sheetId", "$uow.SheetId")}
+    <p>
+      <span class="label2">*${common.materialid}:</span>
+      <span class="field2">${f.textfield("materialId", "%{size='30', class='required'}")}&nbsp;</span>
+    </p>
+    <p>
+      <span class="label2">*${common.quantity}:</span>
+      <span class="field2">${f.textfield("quantity", "%{size='30', class='required', min='0.0000000001'}")}&nbsp;</span>
+    </p>
+    <p>
+      <a id="btnIncrease" class="button">${common.increase}</a>
+      <a id="btnDecrease" class="button">${common.decrease}</a>
+    </p>
+  </form>
+</div>
+

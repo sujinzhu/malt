@@ -1,0 +1,38 @@
+
+#foreach($a in $urls)
+#beforeall
+<UL Class="mktree" ID="urls">
+$AjaxHelper.LinkToFunction("$commonText.expanding $commonText.all", "expandTree('urls')")
+&nbsp;
+$AjaxHelper.LinkToFunction("$commonText.collapsing $commonText.all", "collapseTree('urls')")
+
+#each
+<LI>$a.Key
+	#foreach($ctl in $a.Children)
+	#beforeall
+	<UL>
+	#each
+	#set($group="group$ctl.Key")
+	<SCRIPT LANGUAGE="JavaScript">
+	var $group = new CheckBoxGroup();
+	${group}.addToGroup("actions['$ctl.Key']");
+	${group}.setControlBox("$ctl.Key");
+	${group}.setMasterBehavior("all");
+	</SCRIPT>
+	<LI><INPUT TYPE="checkbox" NAME="$ctl.Key" VALUE="$ctl.Key" onClick="${group}.check(this)">$ctl.Key
+		<UL>
+		#foreach($act in $ctl.Children)
+			<LI><INPUT TYPE="checkbox" ID="actions['$ctl.Key']" Name="urls[$act.Key].ID" 
+			#if($sectedurls.Contains($act.Key))
+			 checked 
+			#end
+			VALUE="$act.Key" onClick="${group}.check(this)">$act.Value
+		#end
+		</UL>
+	#afterall
+	</UL>
+	#end
+</LI>
+#afterall
+</UL>
+#end

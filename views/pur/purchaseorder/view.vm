@@ -1,0 +1,86 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container a { margin: 0 0 1em 1em; }
+/* ]]> */
+</style>
+  
+  ${j.jquery_dataTable()}
+ 
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oEntries;
+    $(function(){
+      $('.button').button();
+      oEntries = $('#entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        null,
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"sClass": "unit-id"},
+        {"sClass": "unit-desc"},
+        {"sClass": "short-date"}
+        ]
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.purchaseorder}: ${instance.Id}
+#end
+
+<div id="header-container">
+<h3>${common.purchaseorder}: ${instance.Id}</h3>
+<a class="button" href='${url.for("%{action='viewwithprice', querystring='id=$instance.Id'}")}'>${common.viewwithprice}</a>
+#if($instance.Printable)
+<a class="button" href='${url.for("%{action='print', querystring='id=$instance.Id'}")}'>${common.print}</a>
+#end
+#parse("${siteroot}/pur/purchaseorder/_head.vm")
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.tradetype}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.deliveredquantity}</th>
+      <th>${common.remainorderquantity}</th>
+      <th>${common.unit}</th>
+      <th></th>
+      <th>${common.requireddate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>$!{h.getenumname($entry.TradeType)}</td>
+      <td>${entry.RequiredQuantity.ToString("N")}</td>
+      <td>${entry.DeliveredQuantity.ToString("N")}</td>
+      <td>${entry.RemainRequiredQuantity.ToString("N")}</td>
+      <td>${entry.Unit.Id}</td>
+      <td>$!{entry.Unit.Description}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

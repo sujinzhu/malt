@@ -1,0 +1,65 @@
+<Fieldset>
+<Legend><b>Info:</b></Legend>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+		<tr class="scaffoldrow">
+			<th>From Location:</th>
+			<td>$!{Session.fromLocation}</td>
+			<th>Traveler:</th>
+			<td colspan="4">$!{Session.travelerId}</td>
+		</tr>
+		<tr class="scaffoldaltrow">			
+			<th>To Location:</th>
+			<td>$!{Session.toLocation}</td>
+			<th>Traveler Remark:</th>
+			<td colspan="4">$!{Session.travelerComment}</td>
+		</tr>
+		<tr class="scaffoldrow">
+			<th>In/Out</th>
+			<th>${commonText.material}:</th>
+			<th>${commonText.customer}:</th>
+			<th>${commonText.quantity}:</th>
+			<th>${wip.allocatee}:</th>
+			<th>${wip.rtno}:</th>
+			<th>${wip.lineno}:</th>
+			<th>${wip.wdweek}:</th>
+		</tr>
+		<tr class="scaffoldaltrow">
+			<th>Output</th>
+			<td>$!{Session.itemcode}</td>
+			<td>$!{Session.customerId}</td>
+			<td>$!{Session.quantity}</td>
+			<td>$!{Session.allocatee}</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	#set($i = 0)
+	#foreach($input in $Session.inputs)
+		<tr class="scaffoldrow">
+			<th>Input${i}</th>
+			<td>${input.Inmat}</td>
+			<td>${input.Incust}</td>
+			<td>${input.Inqty}</td>
+			<td>$!{input.Inalcat}</td>
+			<td>$!{input.Inrt}</td>
+			<td>$!{input.Inline}</td>
+			<td>$!{input.Inweek}</td>
+	#set($i = $i + 1)
+		</tr>
+	#end
+	</table>
+</FieldSet>
+
+$HtmlHelper.Form("ReviewYourInput-Save.rails", "confirm", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<p>$HtmlHelper.LabelFor("deliveryComment", $wip.deliverycomment)
+$HtmlHelper.InputText("deliveryComment", "", 70, 300)
+</p>
+<p>Please double check above information you have inputed before you press "OK".</p>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+<input type="Submit" onClick="this.value='Submitting..';this.disabled=true;" value="${commonText.submit}">
+$HtmlHelper.LinkTo("Cancel", "ReviewYourInput-Cancel")
+</p>
+$HtmlHelper.EndForm()

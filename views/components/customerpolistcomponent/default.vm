@@ -1,0 +1,25 @@
+#foreach($item in $source)
+#beforeall
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr>
+		<th>$commonText.customer</th>
+		<th>$commonText.order $commonText.number</th>
+		<th>$commonText.order $commonText.received $commonText.date</th>
+		<th></th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>$item.Customer.ShortName</td>
+		<td>$item.OrderNumber</td>
+		<td>$item.ReceivedDate.ToString("yyyy-MM-dd")</td>
+		<td>$Html3Helper.LinkTo("$commonText.show", "Sales","CustomerPO", "Show", $item.ID)</td>
+#after
+	</tr>
+#afterall
+</table>
+#nodata
+<p>No items.</p>
+#end

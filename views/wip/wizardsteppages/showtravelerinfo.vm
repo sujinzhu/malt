@@ -1,0 +1,7 @@
+<p>
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+ | 
+$WizardHelper.LinkToNext("${commonText.nextstep}")
+</p>
+<br/>
+#parse("${siteRoot}/wip/traveler/show/itraveler.vm")

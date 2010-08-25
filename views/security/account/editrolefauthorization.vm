@@ -1,0 +1,28 @@
+<div class="ui-widget ui-helper-clearfix">
+  <ul id="other-authorizations" class="gallery ui-helper-reset ui-helper-clearfix">
+  #foreach($mrurl in $otherAuthorizations)
+    <li class="ui-widget-content ui-corner-tr">
+      <h5 class="area ui-widget-header">${mrurl.area}</h5>
+      <h5 class="controller ui-widget-header">${mrurl.controller}</h5>
+      <h5 class="action ui-widget-header">${mrurl.action}</h5>
+    </li>
+  #end
+  </ul>
+
+  <div id="current-authorizations-container" class="ui-widget-content ui-state-default">
+    <h4 class="ui-widget-header">${common.current} ${common.authorizations}</h4>
+    <ul id="current-authorizations" class="gallery ui-helper-resert">
+    #foreach($mrurl in $currentAuthorizations)
+      <li class="ui-widget-content ui-corner-tr">
+        <h5 class="area ui-widget-header">${mrurl.area}</h5>
+        <h5 class="controller ui-widget-header">${mrurl.controller}</h5>
+        <h5 class="action ui-widget-header">${mrurl.action}</h5>
+      </li>
+    #end
+    </ul>
+  </div>
+ </div>   
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+// ]]>
+</script>

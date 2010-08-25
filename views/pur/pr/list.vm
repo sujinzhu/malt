@@ -1,0 +1,57 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#button-container { margin-top: -1px; padding: 0 0 1em 1em;}
+h4 { font-size: 116%; padding: .3em; }
+a { margin: 1em 1.5em 0 0; }
+#instances-container { width 800px; margin-top: 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#instances').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"sClass": "pr-id"},
+      {"bVisible": false},
+      {"sClass": "repository"},
+      {"sClass": "status"},
+      ]
+    });
+    $('#button-container a').button();
+  });
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.purchaserequisition} ${common.list}: ${common.waitforreviewing}
+#end
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.source}</th>
+      <th>${common.applicant}/${common.department}</th>
+      <th>${common.status}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($pr in $instances)
+    <tr>
+      <td><a href='${url.for("%{action='steering', querystring='id=$pr.Id}")}'>${pr.Id}</a></td>
+      <td>${pr.Source}</td>
+      <td>$!{pr.Applicant} $!{r.getdescription($pr.Applicant)}</td>
+      <td>${h.getenumname($pr.Status)}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+

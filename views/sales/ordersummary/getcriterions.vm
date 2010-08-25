@@ -1,0 +1,15 @@
+<h2>$commonText.order $commonText.summary $commonText.report:</h2>
+
+#parse("${siteRoot}/sales/ordersummary/criterions1.vm")
+<br/>
+#parse("${siteRoot}/sales/ordersummary/criterions2.vm")
+<br/>
+#parse("${siteRoot}/sales/ordersummary/criterions3.vm")
+<br/>
+#parse("${siteRoot}/sales/ordersummary/criterions4.vm")
+<br/>
+#parse("${siteRoot}/sales/ordersummary/criterions5.vm")
+<br/>
+#parse("${siteRoot}/sales/ordersummary/criterions6.vm")
+<br/>
+#parse("${siteRoot}/sales/ordersummary/criterions7.vm")

@@ -1,0 +1,72 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .id { width: 180px; }
+  .phone-number { text-align: right; }
+  #subject-container h3, #subject-container link { float: left; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_dataTable()}
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances;
+    $(function(){
+      $('a').button();
+      oInstances = $('#instances').dataTable({
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": '$url.for("%{action='listtabledata'}")',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"fnRender": function(oObj){return fnGetLink(oObj.aData[0]);}, "sType": "html", "sClass": "id"},
+        {"sClass": "description"},
+        {"sClass": "address"},
+        {"sClass": "address"},
+        {"sClass": "address", "bVisible": false},
+        {"sClass": "phone-number"},
+        {"sClass": "phone-number", "bVisible": false},
+        {"sClass": "phone-number"},
+        {"sClass": "phone-number", "bVisible": false},
+        {"sClass": "phone-number", "bVisible": false},
+        {"sClass": "zip"},
+        {"sClass": "area"},
+        ]
+      });
+    });
+    function fnGetLink(id){
+      var linkView =  '$url.for("%{action='view', querystring='id='}")' + id;
+      var linkEdit =  '$url.for("%{action='edit', querystring='id='}")' + id;
+      return "<a target='_blank' href='" + linkView + "'>${common.view}</a>" + "&nbsp;&nbsp;&nbsp;" + "<a target='_blank' href='" + linkEdit + "'>${common.edit}</a>" + "&nbsp;&nbsp;&nbsp;" + id;
+    }
+  // ]]>
+  </script>
+#end
+
+<div id="subject-container" class="ui-helper-clearfix">
+<h3>${common.address}</h3>
+<a href='${url.for("%{action='new'}")}' target='_blank'>${common.createnew}</a>
+</div>
+<div id="instances-container">
+
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.description}</th>
+      <th>${common.address}1</th>
+      <th>${common.address}2</th>
+      <th>${common.address}3</th>
+      <th>${common.fax}1</th>
+      <th>${common.fax}2</th>
+      <th>${common.tel}1</th>
+      <th>${common.tel}2</th>
+      <th>${common.tel}3</th>
+      <th>${common.zip}</th>
+      <th>${common.area}</th>
+    </tr>
+  </thead>
+</table>
+</div>

@@ -1,0 +1,82 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#entries').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false},
+      {"fnRender": function(oObj){return fnGetLink(oObj.aData[1]);}, "sType": "html", "sClass": "pr-id"},
+      {"sClass": "status"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit"},
+      {"sClass": "short-date"},
+      {"sClass": "quantity"},
+      null
+      ]
+    });
+  });
+
+  function fnGetLink(id){
+    var linkView =  '$url.for("%{action='view', querystring='id='}")' + id;
+    return "<a target='_blank' href='" + linkView + "'>" + id + "</a>";
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.searchresult} ${common.purchaseorder}
+#end
+
+<div id="header-container">
+<h3>${common.purchaserequisition}:</h3>
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.purchaserequisition} ${common.id}</th>
+      <th>${common.status}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.unit}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.orderedquantity}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.PR.Id}</td>
+      <td>${h.getenumname($entry.PR.Status)}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>$!{entry.Unit.Description}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.OrderedQuantity}</td>
+      <td>$!{entry.Responsible}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

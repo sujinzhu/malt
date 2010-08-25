@@ -1,0 +1,73 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+    #rn-header { margin-bottom: .5em; width: 750px; float: left; }
+    #btnReturn { margin-left: 1.5em; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#rn-entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+    });
+    function fnReturn(){
+      document.location='${url.for("%{action='return', querystring='id=${rn.Id}'}")}';
+    }
+  // ]]>
+  </script>
+#end
+
+<h3>${common.receivingnote} : ${rn.Id}</h3>
+
+<table id="rn-header" class="display">
+  <thead>
+    <tr class="ui-widget-header ui-corner-top">
+      <th>${common.vendor}</th>
+      <th>${common.receiveddate}</th>
+      <th>${common.deliverynoteid}</th>
+      <th>${common.consignee}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content ui-corner-bottom">
+      <td>${rn.Vendor.Id}</td>
+      <td>${dateformat.ToShortDate($rn.ReceivedDate)}</td>
+      <td>${rn.DeliveryNoteId}</td>
+      <td>${rn.Consignee}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button id="btnReturn" onclick="javascript:fnReturn();">${common.returntovendor}</button>
+
+<table id="rn-entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.material}</th>
+      <th>${common.receivedquantity}</th>
+      <th>${common.baseunit}</th>
+      <th>${common.unitprice}</th>
+      <th>${common.notice}</th>
+      <th>Accepted?</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($rne in $rn.Entries)
+    <tr>
+      <td>${rne.Id}</td>
+      <td>${rne.Material.Id}</td>
+      <td>${rne.ReceivedQuantity}</td>
+      <td>${rne.Unit.Id}</td>
+      <td>$!{rne.UnitPrice}</td>
+      <td>$!{rne.Notice}</td>
+      <td>${rne.Accepted}</td>
+    </tr>
+  #end
+  </tbody>
+</table>

@@ -1,0 +1,30 @@
+      <ul>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.materialid}:</span>
+          <span class="value ui-widget-content ui-corner-right">${material.Id}</span>
+        </li>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.name}:</span>
+          <span class="value ui-widget-content ui-corner-right">${material.Name}</span>
+        </li>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.name}2:</span>
+          <span class="value ui-widget-content ui-corner-right">$!{material.Name2}&nbsp;</span>
+        </li>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.specification}:</span>
+          <span class="value ui-widget-content ui-corner-right">$!{material.Specification}&nbsp;</span>
+        </li>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.size}:</span>
+          <span class="value ui-widget-content ui-corner-right">$!{m.getsize($material)}&nbsp;</span>
+        </li>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.box-quantity}:</span>
+          <span class="value ui-widget-content ui-corner-right">$!{m.getboxquantity($material)}&nbsp;</span>
+        </li>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.pieces-quantity}:</span>
+          <span class="value ui-widget-content ui-corner-right">$!{m.getpiecesquantity($material)}&nbsp;</span>
+        </li>
+      </ul>

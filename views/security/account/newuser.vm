@@ -1,0 +1,22 @@
+#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#formNewInstance').validate();
+      $('#id').focus();
+    });
+  // ]]>
+  </script>
+#end
+<h3>${common.createnew} ${common.user}</h3>
+
+${h.start_with_layout($url.for("%{action='createuser'}"), "formNewInstance")}
+
+${h.field($common.user, $f.textfield("id", "%{class='required'}"), true)}
+${h.field($common.password, $f.passwordfield("password", "%{class='required'}"), true)}
+${h.field("", $f.submit($common.create))}
+
+${h.end_with_layout()}
+

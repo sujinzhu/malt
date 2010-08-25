@@ -1,0 +1,23 @@
+<fieldset>
+<legend>$commonText.price:</legend>
+$HtmlHelper.Form("Update.rails", "edit", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+$HtmlHelper.InputHidden("material.ID", $material.ID)
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th>Description</th>		
+		<td>$HtmlHelper.InputText("material.Description", "$material.Description")</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th>EAU</th>		
+		<td>$HtmlHelper.InputText("material.EAU", "$material.EAU", $DictHelper.Create("validators=blank"))</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th>EOQ</th>
+		<td>$HtmlHelper.InputText("material.EOQ", "$material.EOQ", $DictHelper.Create("validators=blank"))</td>
+	</tr>
+</table>
+$HtmlHelper.SubmitButton("$commonText.save")
+
+$HtmlHelper.EndForm()
+</fieldset>

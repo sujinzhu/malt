@@ -1,0 +1,145 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #header-container { margin-bottom: .5em; float: left; }
+  #btnPrint { float: none; margin-left: 1.5em; }
+  #header-container, #issued-inventories-container { width: 800px; }
+  #entries-container, #issued-inventories-container { margin-top: 1em; clear: both; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oEntries;
+    $(function(){
+      $('#entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {'bVisible': false},
+        {"sClass": "so-id"},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"sClass": "unit-id"},
+        {"sClass": "unit-desc"},
+        null,
+        ],
+        'fnDrawCallback': function(){
+          fnClassTrigerMaterialMenu();
+          },
+      });
+
+      $('#affected-inventories').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+      
+      $('.button').button();
+    });
+  // ]]>
+  </script>
+#end
+<h3>${common.issuefinishedgoods}</h3>
+
+#if($h.getenumname($instance.Status)  != "Draft")
+<a href='${url.for("%{action='print', querystring='id=$instance.Id'}")}' target="_blank" class="button">${common.print} ${common.sheetforissuefg}</a>
+<a href='${url.for("%{action='print2', querystring='id=$instance.Id'}")}' target="_blank" class="button">${common.print} ${common.deliverynote}</a>
+#end
+
+<div id="header-container">
+<table class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Id</th>
+      <th>${common.customer}</th>
+      <th>${common.repository}</th>
+      <th>${common.storekeeper}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${instance.Id}</td>
+      <td>[${instance.Customer.Id}]${instance.Customer.Name}</td>
+      <td>${r.getdescription($instance.IssuedFrom)}</td>
+      <td>${instance.IssuedBy}</td>
+      <td>${h.getenumname($instance.Status)}</td>
+      <td>${instance.CreateDate.ToShortDateString()}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.ordernumber}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.quantity}</th>
+      <th>${common.packagequantity}</th>
+      <th>${common.unit}</th>
+      <th></th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td><a href='${url.for("%{area='sales', controller='salesorder', action='view', querystring='id=$!{entry.SOE.SO.Id}'}")}' target='_blank'>$!{entry.SOE.SO.Id}</a></td>
+      <td>${entry.SOE.Material.Id}</td>
+      <td>${entry.SOE.Material.Name}</td>
+      <td>${entry.SOE.Material.Specification}</td>
+      <td>${entry.DeliveredQuantity}</td>
+      <td>${entry.PackageQuantity}</td>
+      <td>${entry.SOE.Unit.Id}</td>
+      <td>$!{entry.SOE.Unit.Description}</td>
+      <td>$!{entry.Notice}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+
+#if($h.getenumname($instance.status) == "Delivered")
+<h3>${common.affectedinventories}:</h3>
+<div id="affected-inventories-container">
+<table id="affected-inventories" class="display">
+  <thead>
+    <tr>
+      <th>${common.repository}</th>
+      <th>${common.material}</th>
+      <th>${common.quantity}</th>
+      <th>${common.createdate}</th>
+      <th>${common.lastupdatedate}</th>
+      <th>${common.allocatee}</th>
+      <th>${common.stub}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    #foreach($inventory in $entry.DeliveredInventories)
+    <tr>
+      <td>${r.getdescription($inventory.Repository)}</td>
+      <td>${inventory.Material}</td>
+      <td>${inventory.Quantity}</td>
+      <td>${inventory.CreateDate.ToString()}</td>
+      <td>${inventory.LastUpdateDate.ToString()}</td>
+      <td>$!{inventory.Allocatee}</td>
+      <td>$!{inventory.Stub}</td>
+    </tr>
+    #end
+  #end
+  </tbody>
+</table>
+</div>
+#end

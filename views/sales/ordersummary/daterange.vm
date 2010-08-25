@@ -1,0 +1,30 @@
+<p>
+	<label  for="fromDate">$commonText.from:</label>&nbsp;
+	$HtmlHelper.InputText("fromDate", "$!fromDate.ToString('yyyy-MM-dd')", 10, 10, $DictHelper.Create("validators=blank"))
+	<input type="reset" value=" ... " id="fromDate_b" />
+</p>
+<p>
+	<label  for="toDate">$commonText.to:</label>&nbsp;
+	$HtmlHelper.InputText("toDate", "$!toDate.ToString('yyyy-MM-dd')", 10, 10, $DictHelper.Create("validators=blank"))
+	<input type="reset" value=" ... " id="toDate_b" />
+</p>
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "fromDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "fromDate_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime		:	false
+    });
+</script>
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "toDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "toDate_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime		:	false
+    });
+</script>

@@ -1,0 +1,90 @@
+﻿
+<h2>Create many MonoRail Authorizations around one URL:</h2>
+
+$HtmlHelper.Form("createMonoRailAuthorizations1.rails", "scaffoldingform", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<div>
+<p></p>
+<style type="text/css">
+    body {
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 10px;
+		color: Black;
+		background-color: White;
+    }
+    
+    div.auto_complete {
+      position:absolute;
+      width:250px;
+      background-color:white;
+      border:1px solid #888;
+      margin:0px;
+      padding:0px;
+    }
+    ul.names  {
+      list-style-type: none;
+      margin:0px;
+      padding:0px;
+    }
+    ul.names li.selected { background-color: #ffb; }
+    li.name {
+      list-style-type: none;
+      display:block;
+      margin:0;
+      padding:2px;
+    }
+    #list {
+      margin:0;
+      margin-top:10px;
+      padding:0;
+      list-style-type: none;
+      width:250px;
+    }
+    #list li {
+      margin:0;
+      margin-bottom:4px;
+      padding:5px;
+      border:1px solid #888;
+      cursor:move;
+    }
+  </style>
+<p>
+<lable for="MonoRailURL.ID">URL:</lable>
+$HtmlHelper.Select("MonoRailURL.ID")
+$HtmlHelper.CreateOptions($urls, "", "ID", $!mrAuthorization.MonoRailURL.ID)
+$HtmlHelper.EndSelect()
+</p>
+<p>
+<lable for="MonoRailAuthorization.PrincipalType">Principal Type:</lable>
+$HtmlHelper.Select("MonoRailAuthorization.PrincipalType")
+$HtmlHelper.CreateOptions($MonoRailAuthorizationEnumHelper.GetPrincipalTypeList(), "value", "key", $mrAuthorization.PrincipalType)
+$HtmlHelper.EndSelect()
+</p>
+<p>
+<lable for="MonoRailAuthorization.PermissionType">Permission Type:</lable>
+$HtmlHelper.Select("MonoRailAuthorization.PermissionType")
+$HtmlHelper.CreateOptions($MonoRailAuthorizationEnumHelper.GetPermissionTypeList(), "value", "key", $!mrAuthorization.PermissionType)
+##foreach($entry in $MonoRailAuthorizationEnumHelper.GetPermissionTypeList())
+	##if($entry.key==$mrAuthorization.PermissionType)
+		##$HtmlHelper.CreateOption($entry.value, $entry.key, $DictHelper.Create("selected"))
+	##else
+		##$HtmlHelper.CreateOption($entry.value, $entry.key)
+	##end
+##end
+$HtmlHelper.EndSelect()
+</p>
+<p>
+<Lable for="MonoRailAuthorization.PrincipalName">User ID or Role:</lable>
+$HtmlHelper.InputText("MonoRailAuthorization.PrincipalName", $!mrAuthorization.PrincipalName, $DictHelper.Create("Validate=blank"))
+<div id="MonoRailAuthorization.PrincipalNameautocomplete" class="auto_complete"></div>
+$AjaxHelper.AutoCompleteInputText( "MonoRailAuthorization.PrincipalName", "${siteRoot}/sysadmin/rolelist/GetSearchItems.rails", null)
+</p>
+</div>
+
+$HtmlHelper.SubmitButton($commonText.create)
+
+$HtmlHelper.EndForm()
+
+<p>
+$Html3Helper.LinkTo("List", "sysadmin","monorailauthorization", "listmonorailauthorization")
+</p>

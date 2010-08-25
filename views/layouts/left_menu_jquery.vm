@@ -1,0 +1,53 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<title>${common.main-interface}</title>
+<link rel="shortcut icon" href="${siteRoot}/Content/favicon.ico" type="image/vnd.microsoft.icon" />
+${h.stylesheet_link("${siteRoot}/Content/css/yui/reset-fonts-grids.css")}
+${h.stylesheet_link("${siteRoot}/Content/css/malt.css")}
+${h.stylesheet_link("${siteRoot}/Content/css/side-menu.css")}
+${j.jquery_css('')}
+${j.jquery()}
+${j.jquery_ui()}
+${h.javascript_link("${siteRoot}/Content/js/malt.js")}
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#site-menu').accordion();
+  });
+  function navigate(header, url){
+    $('#pageHeader').text(header);
+    $('#mainMenu').load(url);
+  }
+// ]]>
+</script>
+  
+$!{head}
+${h.javascript_link("${siteroot}/Content/js/site.js")}
+<base target="_blank" />
+</head>
+<body>
+  <div id="doc3" class="yui-t2">
+
+    <div id="hd">
+    </div>
+
+
+    <div id="yui-main">
+      <div class="yui-b">
+        <div id="bd" class="ui-widget">
+          $!{pageHeader}
+            <div id="mainMenu">
+              ${childContent}
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="yui-b">#parse("${siteroot}/layouts/site-menu.vm")</div>
+  </div>
+  $!{foot}
+</body>
+</html>

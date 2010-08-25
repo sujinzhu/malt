@@ -1,0 +1,70 @@
+#capturefor(head)
+  ${j.jquery_dataTable()}
+ 
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oEntries;
+    $(function(){
+      oEntries = $('#entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "po-id"},
+        null,
+        null,
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        null,
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        null,
+        {"sClass": "short-date"}
+        ]
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+<div id="entries-container">
+<h3>${common.receivingnote} ${common.detail}</h3>
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.receivingnote}</th>
+      <th>${common.order}</th>
+      <th>${common.vendor}</th>
+      <th>${common.status}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.unit}</th>
+      <th>${common.receivedquantity}</th>
+      <th>${common.rmwarehouse}</th>
+      <th>${common.receiveddate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td><a href='${url.for("%{action='view', querystring='id=$entry.RN.Id'}")}'>${entry.RN.Id}</a></td>
+      <td><a href='${url.for("%{area='pur', controller='purchaseorder', action='view', querystring='id=$entry.POE.PO.Id'}")}'>${entry.POE.PO.Id}</a></td>
+      <td>${entry.RN.Vendor.Id} $!{entry.RN.Vendor.Name}</td>
+      <td>${h.getenumname($entry.RN.Status)}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.Unit.Id} $!{entry.Unit.Description}</td>
+      <td>${entry.ReceivedQuantity.ToString("N")}</td>
+      <td>$!{entry.Repository} $!{r.getdescription($entry.Repository)}</td>
+      <td>${entry.RN.ReceivedDate.ToShortDateString()}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+

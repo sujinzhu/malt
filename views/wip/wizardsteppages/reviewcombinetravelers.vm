@@ -1,0 +1,18 @@
+<Fieldset>
+<Legend><b>Info:</b></Legend>
+	$StringHelper.Format("${wip.comfirmcombinetravelers}", $Session.parentTravelerId, $Session.SubTravelerId)
+</FieldSet>
+
+$HtmlHelper.Form("ReviewCombineTravelers-Save.rails", "confirm", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<p>$HtmlHelper.LabelFor("deliveryComment", $wip.deliverycomment)
+$HtmlHelper.InputText("deliveryComment", "", 70, 300)
+</p>
+<p>Please double check above information you have inputed before you press "OK".</p>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$HtmlHelper.SubmitButton("OK")
+$HtmlHelper.LinkTo("Cancel", "ReviewCombineTravelers-Cancel")
+</p>
+$HtmlHelper.EndForm()

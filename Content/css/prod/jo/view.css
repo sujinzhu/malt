@@ -1,0 +1,17 @@
+﻿.rowHelper {float:left}
+.panel {float: left; margin-top:10px; margin-left: 10px;}
+
+#demands{margin-left: 0;}
+#btnAddDemand, #btnGeneratePR {float: right; margin-left: 5px;}
+#btnAddDemand span{float: left;}
+.customer{width: 90px; float: left;}
+.source{width:140px; float: left;}
+.quantity{width: 80px; float: left;}
+.unit{width: 90px; float: left;}
+.date{width: 100px;}
+
+#bom { width: 200px; }
+#enProcesses, #avProcesses {width: 300px;}
+#enabledProcesses , #availableProcesses {min-height: 100px;}
+#enabledProcesses li, #availableProcesses li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em;}
+#enabledProcesses li span, #availableProcesses li span { position: absolute; margin-left: -1.3em; }

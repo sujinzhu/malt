@@ -1,0 +1,17 @@
+$HtmlHelper.Form("GetDeliveryQuantity-Save.rails", "getdeliveryquantity", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<table>
+	<tr>
+		<th colspan="2">${wip.deliveryquantity}:</th>
+	</tr>
+	<tr>
+		<td>$HtmlHelper.LabelFor("quantity", "$commonText.quantity:")</td>
+		<td>$HtmlHelper.InputText("quantity", "", $DictHelper.Create("validators=number|0|1|999999"))</td>
+	</tr>
+</table>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$HtmlHelper.SubmitButton($commonText.nextstep)
+</p>
+$HtmlHelper.EndForm()

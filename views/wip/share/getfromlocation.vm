@@ -1,0 +1,5 @@
+<p>$HtmlHelper.LabelFor("fromLocation", "$commonText.from:")
+$HtmlHelper.Select("fromLocation")
+$HtmlHelper.CreateOptions($locations, "ID", "ID", $!Session.fromloc.ID)
+$HtmlHelper.EndSelect()
+</p>

@@ -1,0 +1,116 @@
+#capturefor(head)
+  ${j.jquery_dataTable()}
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances;
+    $(function(){
+      oInstances = $('#instances').dataTable({
+        "bJQueryUI": true,
+        "aoColumns": [
+          {"bVisible": false},
+          {"sClass": "customer-id"},
+          {"sClass": "customer-name"},
+          {"sClass": "material-id"},
+          null,
+          {"sClass": "material-id"},
+          {"sClass": "material-name"},
+          {"sClass": "material-spec"},
+          {"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[8]);}, "bSortable": false}
+        ]
+      });
+      $('#instance_Customer_Id').autocomplete('$url.for("%{area='sales', controller='customer', action='autocomplete2'}")', {
+        width: 300,
+        matchContains: true,
+        formatItem: formatCustomerItem,
+        formatResult: formatResult
+      }).focus();
+      $('#instance_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        matchContains: true,
+        formatItem: formatMaterialItem,
+        formatResult: formatResult,
+        max: 30
+      });
+      $('#new-instance').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+      });
+    });
+    function fnAddToDT(data){
+      if(!fnHasError(data)){
+        oInstances.fnAddData([data['Id'], data['CustomerId'], data['CustomerName'], data['PartNumber'], data['Revision'], data['MaterialId'], data['MaterialName'], data['MaterialSpec'], '${common.remove}']);
+        fnTrigerRemoveEntry();
+        $('#instance_PartNumber').val("");
+        $('#instance_Material_Id').val("");
+        $('#instance_Customer_Id').val("").focus();
+      }
+    }
+    function fnGetRemoveLink(label)
+    {
+      return "<span style='cursor: pointer;'>"+label+"</span>";
+    }
+    function fnTrigerRemoveEntry()
+    {
+      $('#instances tbody td').click(function(){
+        var aPos = oInstances.fnGetPosition(this);
+        var aData = oInstances.fnGetData(aPos[0]);
+        if(aData[aPos[2]] == fnGetRemoveLink('${common.remove}'))
+        {
+          fnRemoveEntry(aData[0], aPos[0]);
+        }
+      });
+    }
+    function fnRemoveEntry(id, rowId)
+    {
+      var url = '${url.for("%{action='remove'}")}';
+      jQuery.post(url, {id: id}, function(data){
+        if(!fnHasError(data)){
+          oInstances.fnDeleteRow(rowId);
+        }
+      }, 'json');
+    }
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.createnew} ${common.partnumbertranslation}
+#end
+
+<div id="new-instance-container">
+<h3>${common.partnumbertranslation}</h3>
+${h.start_with_layout($url.for("%{action='create'}"), "new-instance")}
+
+${f.push("instance")}
+
+${h.field($common.customer, $f.textfield("Customer.Id", "%{class='required'}"), true)}
+${h.field("${common.materialid}(${common.customer})", $f.textfield("PartNumber", "%{class='required'}"), true)}
+${h.field($common.revision, $f.textfield("Revision", "%{class='required'}"), true)}
+${h.field("${common.materialid}(${common.self})", $f.textfield("Material.Id", "%{class='required'}"), true)}
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+${h.end_with_layout()}
+</div>
+
+<div id="recently-created-container">
+<h3>${common.recentlycreated}</h3>
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.customer}</th>
+      <th></th>
+      <th>${common.materialid}(${common.customer})</th>
+      <th>${common.revision}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+</table>
+</div>

@@ -1,0 +1,10 @@
+<h3>Select From Location:</h3>
+$HtmlHelper.Form("SelectFromScrapLocation-Save.rails")
+#parse("${siteRoot}/wip/share/getfromlocation.vm")
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$HtmlHelper.SubmitButton("${commonText.nextstep}")
+</p>
+$HtmlHelper.EndForm()

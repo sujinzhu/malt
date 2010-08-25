@@ -1,0 +1,126 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container a { margin-left: 2em; }
+#header-container .ui-widget-header th { padding: .3em; }
+#entries-container { margin-top: 1em; }
+
+#instance { width: 800px; float: left; }
+#entry { margin-top: .5em; }
+
+#inventories-container { margin-top: .5em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+${j.jquery_editable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    var url = '$url.for("%{action='allocatableinventories', querystring='id='}")';
+    url = url + '$so.Id&materialId=$material.Id';
+    oDataTable = $('#instances').dataTable({
+      "bProcessing": true,
+      "bServerSide": true,
+      "sAjaxSource": url,
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "fnServerData": function(sSource, aoData, fnCallback){
+        jQuery.get(sSource, aoData, function(json){
+          if(!fnHasError(json)){
+            fnCallback(json);
+          }
+        },
+       'json');
+      },
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "repository-id", "bSortable": false},
+      {"sClass": "repository-name", "bSortable": false},
+      {"sClass": "material-id", "bSortable": false},
+      {"sClass": "material-name", "bSortable": false},
+      {"sClass": "material-spec", "bSortable": false},
+      {"sClass": "quantity", "bSortable": false},
+      {"sClass": "quantity", "bSortable": false, "fnRender": function(oObj){return fnRenderAllocatedQuantity(oObj.aData[0], oObj.aData[7]);}},
+      {"sClass": "datetime", "bSortable": false},
+      {"sClass": "datetime", "bSortable": false},
+      {"bSortable": false},
+      {"bSortable": false},
+      ],
+      "fnDrawCallback": function(){
+        $('.allocated-quantity').editable(function(value, settings){
+          var url = '${url.for("%{action='changeallocatedquantity', querystring='soId='}")}';
+          url = url + '$so.Id&materialId=$material.Id';
+          jQuery.post(url,
+          {id: this.id, value: value}, function(data){
+            if(!fnHasError(data)){
+              oDataTable.fnDraw();
+              $('#max').html(data['Max']);
+              return data['CurrentQuantity'];
+            }
+          }, 'json');
+          return value;
+        }, { width: '30' });
+      }
+    });
+    $('#header-container a').button();
+  });
+  
+  function fnRenderAllocatedQuantity(sId, dAllocatedQuantity)
+  {
+    return '<span id="' + sId + '" class="allocated-quantity">' + dAllocatedQuantity + "</span>";
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.allocateinventory}: ${so.Id} (${common.semi-finished-goods}, ${common.raw-material})
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.salesorder}(${common.semi-finished-goods}, ${common.raw-material}): ${so.Id}</h3>
+<table id="instance" class="display">
+  <tr class="ui-widget-header">
+    <th>${common.customer}</th>
+    <th></th>
+    <th>${common.tradetype}</th>
+    <th>${common.salesman}</th>
+    <th>${common.createdate}</th>
+    <th>${common.status}</th>
+    <th>${common.max-allowed}</th>
+  </tr>
+  <tr class="ui-widget-content">
+    <td>$!{so.Customer.Id}</td>
+    <td>$!{so.Customer.Name}</td>
+    <td>$!{h.getenumname($so.TradeType)}</td>
+    <td>$!{so.SalesMan}</td>
+    <td>$!{so.CreatedDate.ToShortDateString()}</td>
+    <td>${h.getenumname($so.Status)}</td>
+    <td id="max">${max}</td>
+  </tr>
+</table>
+</div>
+
+<div id="inventories-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th></th>
+      <th>${common.repository}</th>
+      <th></th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.quantity}</th>
+      <th>${common.allocatedquantity}</th>
+      <th>${common.createdate}</th>
+      <th>${common.lastupdatedate}</th>
+      <th>${common.allocatee}</th>
+      <th>${common.stub}</th>
+    </tr>
+  </thead>
+</table>
+</div>

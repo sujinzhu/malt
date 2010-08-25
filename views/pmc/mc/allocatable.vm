@@ -1,0 +1,64 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3, #header-container a { float: left;}
+#header-container a { margin-left: 1em; }
+
+#instances-container { margin-top: 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('.button').button();
+
+    oDataTable = $('#instances').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      null
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+  });
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.allocateinventory}: ${sheet.Id}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.allocateinventory}: ${sheet.Id}</h3>
+<a href='${url.for("%{action='autoallocate', querystring='id=$sheet.Id'}")}' class="button">${common.auto-allocate-inventory}</a>
+<a href='${url.for("%{action='autodisallocate', querystring='id=$sheet.Id'}")}' class="button">${common.auto-disallocate-inventory}</a>
+</div>
+
+<div id="instances-container" class="ui-helper-clearfix">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.material}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($material in $allocatable)
+    <tr>
+      <td>${material.Id}</td>
+      <td>${material.Name}</td>
+      <td>${material.Specification}</td>
+      <td><a href='${url.for("%{action='allocated', querystring='id=$sheet.Id&materialId=$material.Id'}")}' target="_blank">${common.allocateinventory}</a></td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

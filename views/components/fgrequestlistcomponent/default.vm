@@ -1,0 +1,37 @@
+#foreach($item in $source)
+#beforeall
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0" width=100%>
+	<tr>
+		<th>$commonText.customer</th>
+		<th>$commonText.origin</th>
+		<th>CRRNO</th>
+		<th>Cust. Drawing No.</th>
+		<th>Cust. P/N</th>
+		<th>Rev.</th>
+		<th>${commonText.material}</th>
+		<th>${commonText.requested} ${commonText.date}</th>
+		<th>${commonText.requested} ${commonText.quantity}</th>
+		<th></th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>$Html3Helper.LinkTo("$item.Customer.ShortName", "Core","Customer", "Show", $item.Order.Customer.ID)</td>
+		<td>${item.Origin}</td>
+		<td>${item.CRRNO}</td>
+		<td>$!{item.CustomerDrawingNo}</td>
+		<td>$!{item.CustomerPN}</td>
+		<td>$!{item.CustomerPN_Rev}</td>
+		<td>$!{item.Material.ID}</td>
+		<td>${item.RequestedDate.ToString("yyyy-MM-dd")}</td>
+		<td align="right">${item.RequestedQuantity}</td>
+		<td>${Html3Helper.LinkTo("$commonText.show", "Sales","FGRequest", "Show", $item.ID)}</td>
+#after
+	</tr>
+#afterall
+</table>
+#nodata
+<p>No items.</p>
+#end

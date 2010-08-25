@@ -1,0 +1,74 @@
+#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+ 
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances;
+    $(function(){
+      oInstances = $('#instances').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+      $('#new-instance').validate();
+      function formatItem(row){ return row[0] + " " + row[1]; }
+      function formatResult(row) { return row[0]; }
+      $('#instance_Vendor_Id').autocomplete('$url.for("%{area='pur', controller='vendor', action='autocomplete2'}")', {
+        width: 300,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult,
+        max: 30
+      }).focus();
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.createnew} ${common.zeropricepo}
+#end
+
+<h3>${common.createnew} ${common.zeropricepo}</h3>
+
+${h.start_with_layout($url.for("%{action='createzeropricepo'}"), "new-instance")}
+${f.push("instance")}
+
+${h.field("Id", $f.TextField('Id'))}
+${h.field($common.vendor, $f.textfield("Vendor.Id", "%{class='required'}"))}
+${h.field($common.shipto, $f.select("ShipTo.Id", $addresses, "%{value='Id', text='Description', class='required'}"))}
+${h.field(${common.notice}, $f.TextArea('Notice'))}
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+
+${h.end_with_layout()}
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th></th>
+      <th>${common.vendor}</th>
+      <th>${common.createdate}</th>
+      <th>${common.buyer}</th>
+      <th>${common.shipto}</th>
+      <th>${common.status}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($instance in $instances)
+    <tr>
+      <td>${url.link($instance.Id, "%{action='draftzeropricepo', querystring='id=$instance.Id'}")}</td>
+      <td>${instance.Vendor.Id}</td>
+      <td>${instance.CreatedDate}</td>
+      <td>${instance.Buyer}</td>
+      <td>${instance.ShipTo.Id}</td>
+      <td>${h.getenumname($instance.Status)}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

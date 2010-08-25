@@ -1,0 +1,190 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container a { float: right; }
+#bill-new-component-container { width: 750px; padding-left: 1em; margin-top: 1em; }
+#bill-components-container { margin-top: 1em; }
+/* ]]> */
+</style>
+  
+${j.jquery_dataTable()}
+${j.jquery_form()}
+${j.jquery_validate()}
+${j.jquery_autocomplete()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    oDataTable = $('#bill-components').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {'bVisible': false},
+      {'sClass': 'material-id'},
+      {'sClass': 'material-name'},
+      {'sClass': 'material-spec'},
+      null, null, 
+      null, null, 
+      null, null, 
+      {'sClass': 'short-date'},
+      {'sClass': 'short-date'},
+      {'sClass': 'short-date'},
+      {'sClass': 'short-date'},
+      {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='removecomponent'}")}');}, "bSortable": false}
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+
+    $('#header-container a').button();
+
+    $('#formNewComponent').validate({
+      submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+    });
+
+    $('#component_Component_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+      width: 550,
+      matchContains: true,
+      formatItem: formatMaterialItem,
+      formatResult: formatResult,
+      max: 30
+    }).focus()
+    .focusout(function(){
+      jQuery.post('${url.for("%{controller='material', action='getprimaryunit'}")}', {material: $('#component_Component_Id').val()}, function(data){
+        if(!fnHasError(data))
+        {
+          $('#component_Component_Id').after('<span class="pu">[' + data['PrimaryUnit'] + '] ' + data['PrimaryUnitDescription'] + '</span>');
+        }
+      }, 'json');
+    }).focusin(function(){
+      $('.pu').remove();
+    });;
+
+    $('#component_EffectiveDate').datepicker();
+    $('#component_ObsoleteDate').datepicker();
+  });
+
+  function fnAddToDT(data){
+    if(!fnHasError(data)){
+      oDataTable.fnAddData([data['Id'], data['Component'], data['ComponentName'], data['ComponentSpecification'], data['Rate'], data['ComponentUnitDescription'], data['Rate2'], data['CompoundUnitDescription'], data['Loss'], data['Status'], data['EffectiveDate'], data['ObsoleteDate'], data['CreateDate'], data['ModifyDate'], '${common.remove}']);
+      $('#component_Rate').val("");
+      $('#component_Loss').val("");
+      $('#component_Component_Id').val("").focus();
+    }
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.bom}: ${bill.Compound.Id} [${bill.Id}]
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.bom}</h3>
+<a href='${url.for("%{action='setasdefault', querystring='id=$bill.Id'}")}'>${common.set-as-default}</a>
+<a href='${url.for("%{action='new'}")}'>${common.createnew}</a>
+</div>
+
+<div id="bill-header-container">
+<table id="bill-header" class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Id</th>
+      <th>${common.name}</th>
+      <th>${common.compound}</th>
+      <th></th>
+      <th></th>
+      <th>${common.primaryunit}</th>
+      <th>${common.status}</th>
+      <th>${common.priority}</th>
+      <th>${common.effectivedate}</th>
+      <th>${common.createdate}</th>
+      <th>${common.modifydate}</th>
+      <th>${common.obsoletedate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${bill.Id}</td>
+      <td class="bom-description">$!{bill.Description}</td>
+      <td class="material-id">${bill.Compound.Id}</td>
+      <td class="material-name">$!{text.fold($bill.Compound.Name, 20)}</td>
+      <td class="material-spec">$!{text.fold($bill.Compound.Specification, 20)}</td>
+      <td class="unit-description">$!{m.trygetprimaryunit($bill.Compound).description}</td>
+      <td>${h.getenumname($bill.Status)}</td>
+      <td>${bill.Priority}</td>
+      <td>${bill.EffectiveDate.ToShortDateString()}</td>
+      <td>${bill.CreateDate.ToShortDateString()}</td>
+      <td>${bill.ModifyDate.ToShortDateString()}</td>
+      <td>${bill.ObsoleteDate.ToShortDateString()}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="bill-new-component-container" class="ui-widget-content ui-corner-all">
+<h3>${common.createnew} ${common.component}</h3>
+
+${h.start_with_layout($url.for("%{action='createcomponent'}"), "formNewComponent")}
+${f.push("component")}
+
+$f.hiddenfield("Bill.Id")
+${h.field($common.component, $f.textfield("Component.Id", "%{class='required'}"), true)}
+${h.field("${common.rate}1", $f.textfield("Rate", "%{class='required', min='0.000000001'}"), true, "$common.need $common.howmany ${common.component} ($common.countbyprimaryunit)", "", "")}
+${h.field($common.loss, $f.textfield("Loss"), false, "%", "", "")}
+${h.field("${common.rate}2", $f.textfield("Rate2", "%{class='required', min='0.000000001'}"), true, "$common.howmany ${common.compound} ($common.countbyprimaryunit)", "", "")}
+${h.field($common.effectivedate, $f.textfield("EffectiveDate"))}
+${h.field($common.obsoletedate, $f.textfield("ObsoleteDate"))}
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+${h.end_with_layout()}
+</div>
+<div id="bill-edit-component-container" class="ui-helper-hidden"></div>
+
+<div id="bill-components-container">
+<table id="bill-components" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.component}</th>
+      <th></th>
+      <th></th>
+      <th>${common.rate}(${common.component})</th>
+      <th>${common.unit}(${common.component})</th>
+      <th>${common.rate}(${common.compound})</th>
+      <th>${common.unit}(${common.compound})</th>
+      <th>${common.loss}</th>
+      <th>${common.status}</th>
+      <th>${common.effectivedate}</th>
+      <th>${common.obsoletedate}</th>
+      <th>${common.createdate}</th>
+      <th>${common.modifydate}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($component in $bill.BOMComponents)
+    <tr>
+      <td>${component.Id}</td>
+      <td>${component.Component.Id}</td>
+      <td>$!{component.Component.Name}</td>
+      <td>$!{component.Component.Specification}</td>
+      <td>${component.Rate}</td>
+      <td>${m.trygetprimaryunit($component.Component).Description}</td>
+      <td>${component.Rate2}</td>
+      <td>${m.trygetprimaryunit($bill.Compound).Description}</td>
+      <td>${component.Loss}%</td>
+      <td>${h.getenumname($component.Status)}</td>
+      <td>${component.EffectiveDate.ToShortDateString()}</td>
+      <td>${component.ObsoleteDate.ToShortDateString()}</td>
+      <td>${component.CreateDate.ToShortDateString()}</td>
+      <td>${component.ModifyDate.ToShortDateString()}</td>
+      <td>${common.remove}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+

@@ -1,0 +1,8 @@
+<a id='lnkToCPO' href='${url.for("%{controller='cpo', action='view', querystring='id=$cpo.Id'}")}'>
+${common.customerpo}: ${cpo.OrderNumber}</a>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $('#lnkToCPO').button();
+// ]]>
+</script>

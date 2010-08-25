@@ -1,0 +1,184 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+${j.jquery_editable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  var oGoods;
+  $(function(){
+    oDataTable = $('#contained-goods').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "so-id"},
+      {"sClass": "po-id"},
+      {"sClass": "customer-name"},
+      {"sClass": "product-id"},
+      {"sClass": "material-name2"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity carton-quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "short-date "},
+      null,
+      {"fnRender": function(oObj){return fnRenderSelectLink(oObj, "fnUnassignGoods");}, "bSortable": false},
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+
+    oGoods = $('#goods').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false, "sClass": "entry-id"},
+      {"sClass": "so-id"},
+      {"sClass": "po-id"},
+      {"sClass": "customer-name"},
+      {"sClass": "product-id"},
+      {"sClass": "material-name2"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity carton-quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity plan-container"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "short-date "},
+      null,
+      ],
+      "fnDrawCallback": function(){
+        fnClassTrigerMaterialMenu();
+        $('.plan-container').editable(function(value, settings){
+          jQuery.post('${url.for("%{action='assigngoods', querystring='containerId=$container.Id'}")}',
+          {id: this.id, value: value}, function(data){
+            if(!fnHasError(data)){
+              oDataTable.fnAddData([data['Id'], data['SOId'], data['OrderNumber'], data['CustomerName'], data['ProductId'], data['MaterialName2'], data['MaterialName'], data['MaterialSpec'], data['CartonQuantity'], data['QuantityInContainer'], data['QuantityInCurrentContainer'], data['Size'], data['SizeInCurrentContainer'], data['OriginalRequiredDate'], data['Notice'], '$common.cancel']);
+            }
+          }, 'json');
+          return value;
+        });
+      }
+    });
+  });
+
+  function fnUnassignGoods(id, iRow){
+    jQuery.post('$url.for("%{action='unassigngoods'}")',
+    {containerId: "$container.Id", id: id},
+    function(data){
+      if(!fnHasError(data)){
+        oDataTable.fnDeleteRow(iRow);
+        oGoods.fnAddData([data['Id'], data['SOId'], data['OrderNumber'], data['CustomerName'], data['ProductId'], data['MaterialName2'], data['MaterialName'], data['MaterialSpec'], data['CartonQuantity'], data['QuantityInContainer'], data['QuantityInCurrentContainer'], data['Size'], data['RemainSize'], data['OriginalRequiredDate'], data['Notice']]);
+      }
+    },
+    'json');
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.plan-container} ${container}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.plan-container} ${container} [$!{container.PlanningDeliverDate.ToShortDateString()}]</h3>
+</div>
+
+<div id="contained-goods-container">
+<table id="contained-goods" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.ordernumber}</th>
+      <th>${common.po-id}</th>
+      <th>${common.customer}</th>
+      <th>${common.product-id}</th>
+      <th>${common.name}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.carton-quantity}</th>
+      <th>${common.quantity-in-container}</th>
+      <th>${common.quantity-in-this-container}</th>
+      <th>${common.size}</th>
+      <th>${common.total-size}</th>
+      <th>${common.original-required-date}</th>
+      <th>${common.notice}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($pair in $containedGoods)
+    <tr>
+      <td>${pair.Goods.Id}</td>
+      <td>${pair.Goods.SO.Id}</td>
+      <td>${pair.Goods.OrderNumber}</td>
+      <td>${pair.Goods.SO.Customer.Name}</td>
+      <td>${pair.Goods.ProductId}</td>
+      <td>$!{pair.Goods.Material.Name2}</td>
+      <td>$!{pair.Goods.Material.Name}</td>
+      <td>$!{pair.Goods.Material.Specification}</td>
+      <td>${pair.Goods.CartonQuantity.ToString("F0")}</td>
+      <td>${pair.Goods.QuantityInContainer.ToString("F0")}</td>
+      <td>${pair.ContainedQuantity.ToString("F0")}</td>
+      <td>${pair.Goods.Size.ToString("F3")}</td>
+      <td>${pair.TotalSize.ToString("F2")}</td>
+      <td>${pair.Goods.OriginalRequiredDate.ToShortDateString()}</td>
+      <td>$!{pair.Goods.Notice}</td>
+      <td>${common.cancel}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+
+<div id="goods-container">
+<table id="goods" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.ordernumber}</th>
+      <th>${common.po-id}</th>
+      <th>${common.customer}</th>
+      <th>${common.product-id}</th>
+      <th>${common.name}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.carton-quantity}</th>
+      <th>${common.quantity-in-container}</th>
+      <th>${common.plan-container}</th>
+      <th>${common.size}</th>
+      <th>${common.total-size}</th>
+      <th>${common.original-required-date}</th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $goods)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.SO.Id}</td>
+      <td>${entry.OrderNumber}</td>
+      <td>${entry.SO.Customer.Name}</td>
+      <td>${entry.ProductId}</td>
+      <td>$!{entry.Material.Name2}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.CartonQuantity.ToString("F0")}</td>
+      <td>${entry.QuantityInContainer.ToString("F0")}</td>
+      <td id="${entry.Id}">0</td>
+      <td>${entry.Size.ToString("F3")}</td>
+      <td>${entry.RemainSize.ToString("F2")}</td>
+      <td>${entry.OriginalRequiredDate.ToShortDateString()}</td>
+      <td>$!{entry.Notice}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

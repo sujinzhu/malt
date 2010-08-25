@@ -1,0 +1,100 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3, #header-container a { float: left; margin-bottom: 1em; }
+#header-container { width: 800px; }
+#entries-container { margin-top: 1em; clear: both; }
+#btnIssue { float: none; margin-left: 1.5em; }
+/* ]]> */
+</style>
+  
+${j.jquery_form()}
+${j.jquery_validate()}
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('.button').button();
+
+    oDataTable = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "jo-id"},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity"},
+        {"sClass": "unit-desc"},
+        null
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();},
+    });
+  });
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.releasematerial}: ${issuingNote.Id}
+#end
+
+<div id="header-container">
+<h3>${common.releasematerial}: ${issuingNote.Id} </h3>
+<a id="btnIssue" href='${url.for("%{action='issue', querystring='id=$issuingNote.Id'}")}' class="button">${common.issue}</a>
+
+<table class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Id</th>
+      <th>${common.workshop} / ${common.vendor}</th>
+      <th>${common.applyby}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${issuingNote.Id}</td>
+      <td> ${r.getdescription($issuingNote.IssueTo)} </td>
+      <td>${issuingNote.ApplyBy}</td>
+      <td>${h.getenumname($issuingNote.Status)}</td>
+      <td>${issuingNote.CreateDate.ToShortDateString()}</td>
+    </form>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.ordernumber}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.unit}</th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $issuingNote.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>$!{entry.JobOrder}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>$!{m.trygetprimaryunit($entry.Material).Description}</td>
+      <td>$!{entry.Notice}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

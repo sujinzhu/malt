@@ -1,0 +1,27 @@
+#foreach($item in $source)
+#beforeall
+<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr>
+		<th>$commonText.material</th>
+		<th>Location</th>
+		<th>$commonText.customer</th>
+		<th>Allocatee</th>
+		<th>$commonText.quantity</th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>$item.Key.Materiel</td>
+		<td>$item.Key.Location</td>
+		<td>$item.Key.Customer</td>
+		<td>$item.Key.Allocatee</td>
+		<td align="right">$StringHelper.Format("{0:0}", $item.Quantity)</td>
+#after
+	</tr>
+#afterall
+</table>
+#nodata
+<p>No items.</p>
+#end

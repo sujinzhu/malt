@@ -1,0 +1,3 @@
+#blockcomponent(CustomerPOListComponent with "source=$source")
+
+#end

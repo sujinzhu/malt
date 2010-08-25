@@ -1,0 +1,82 @@
+#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances;
+    $(function(){
+      $('#formNewInstance').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+        });
+      oInstances = $('#affected-inventories').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {'sClass': "repository-id"},
+        {'sClass': "material-id"},
+        {'sClass': "material-name"},
+        {'sClass': "material-spec"},
+        {'sClass': "quantity"},
+        {'sClass': "unit-id"},
+        {'sClass': "unit-desc"},
+        {'sClass': "datetime"},
+        {'sClass': "datetime"},
+        ],
+        "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+      });
+      $('#material').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      });
+    });
+    function fnAddToDT(result){
+      if(!fnHasError(result[0])){
+        $(result).each(function(index, data){
+        oInstances.fnAddData([data['Repository'], data['Material'], data['MaterialName'], data['MaterialSpec'], data['Quantity'], data['UnitId'], data['UnitDesc'], data['CreateDate'], data['LastUpdateDate']]);
+        });
+        $('#quantity').val("");
+        $('#material').val("").focus();
+      }
+    }
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.directly} ${common.decrease} ${common.inventory}
+#end
+
+<h3>${common.directly} ${common.decrease} ${common.inventory}</h3>
+
+${h.start_with_layout($url.for("%{action='decrease'}"), "formNewInstance")}
+
+${h.field($common.repository, $f.select("repository", $r.findall(), "%{value='id', class='required'}"), true)}
+${h.field($common.material, $f.textfield("material", "%{class='required'}"), true)}
+${h.field($common.quantity, $f.textfield("quantity", "%{class='required', min='0.00000000001'}"), true)}
+${h.field("", $f.submit($common.decrease))}
+
+${h.end_with_layout()}
+
+<h3>${common.affectedinventories}</h3>
+<div id="affected-inventories-container">
+<table id="affected-inventories" class="display">
+  <thead>
+    <tr>
+      <th>${common.repository}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.quantity}</th>
+      <th>${common.baseunit}</th>
+      <th></th>
+      <th>${common.createdate}</th>
+      <th>${common.lastupdatedate}</th>
+    </tr>
+  </thead>
+</table>
+</div>

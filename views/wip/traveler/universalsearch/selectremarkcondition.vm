@@ -1,0 +1,4 @@
+$HtmlHelper.LabelFor("rem", "${commonText.remark}:")
+$HtmlHelper.InputText("rem","",30,100)
+$AjaxHelper.ButtonToRemote("+","AddRemarkCondition.rails",$DictHelper.CreateDict("update=remarkConditions", "with=Form.serialize($('universalsearch'))"))
+

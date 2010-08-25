@@ -1,0 +1,40 @@
+<table cellpadding="5" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th align="right">$HtmlHelper.LabelFor("fgr.Origin","$commonText.origin:")</th>
+		<td>$HtmlHelper.InputHidden("fgr.Origin", $fgr.Origin)
+		$fgr.Origin</td>
+		<th align="right">$HtmlHelper.LabelFor("fgr.Customer.ID", "$commonText.customer:")</th>
+		<td>$HtmlHelper.InputHidden("fgr.Customer.ID", $fgr.Customer.ID)
+		$fgr.Customer.ShortName</td>
+		<th align="right">$HtmlHelper.LabelFor("fgr.CRRNO","CRRNO:")</th>
+		<td title="Keep blank in this field if you want the system to generate the CRRNO automatically.">
+			$HtmlHelper.InputText("fgr.CRRNO", "$!fgr.CRRNO")</td>
+	</tr>
+	<tr class="scaffoldaltrow">
+		<th align="right">$HtmlHelper.LabelFor("fgr.CustomerDrawingNo","Customer Drawing No:")</th>
+		<td>$HtmlHelper.InputText("fgr.CustomerDrawingNo", "$!fgr.CustomerDrawingNo")</td>
+		<th align="right">$HtmlHelper.LabelFor("fgr.CustomerPN","Customer PN:")</th>
+		<td>$HtmlHelper.InputText("fgr.CustomerPN", "$!fgr.CustomerPN")</td>
+		<th align="right">$HtmlHelper.LabelFor("fgr.CustomerPN_Rev","Rev:")</th>
+		<td>$HtmlHelper.InputText("fgr.CustomerPN_Rev", "$!fgr.CustomerPN_Rev")</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th align="right">$HtmlHelper.LabelFor("fgr.Material.ID","$commonText.material:")</th>
+		<td>$HtmlHelper.InputText("fgr.Material.ID", "$!fgr.Material.ID")</td>
+		<th align="right">$HtmlHelper.LabelFor("fgr.RequestedDate", "$commonText.requested $commonText.date:")</th>
+		<td>$HtmlHelper.InputText("fgr.RequestedDate", "$!fgr.RequestedDate.ToString('yyyy-MM-dd')", 10, 10, $DictHelper.Create("validators=blank"))
+		<input type="reset" value=" ... " id="fgr.RequestedDate_b" /></td>
+		<th align="right">$HtmlHelper.LabelFor("fgr.RequestedQuantity", "$commonText.requested $commonText.quantity:")</th>
+		<td>$HtmlHelper.InputText("fgr.RequestedQuantity", "", $DictHelper.Create("validators=number|0|1|9999999999"))</td>
+	</tr>
+</table>
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "fgr.RequestedDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "fgr.RequestedDate_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime		:	false
+    });
+</script>

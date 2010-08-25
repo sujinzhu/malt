@@ -1,0 +1,19 @@
+      <ul class="ui-helper-clearfix">
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.materialid}:</span>
+          <span class="value ui-widget-content ui-corner-right">${material.Id}</span>
+        </li>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.name}:</span>
+          <span class="value ui-widget-content ui-corner-right">${material.Name}</span>
+        </li>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.name}2:</span>
+          <span class="value ui-widget-content ui-corner-right">$!{material.Name2}&nbsp;</span>
+        </li>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.need-outsource}:</span>
+          <span class="value ui-widget-content ui-corner-right">$!{m.needoutsourcing($material)}&nbsp;</span>
+        </li>
+      </ul>
+

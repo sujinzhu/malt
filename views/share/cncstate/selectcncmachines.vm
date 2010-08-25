@@ -1,0 +1,43 @@
+
+<P>$commonText.cncmachine :</P>
+$AjaxHelper.LinkToFunction("$commonText.expanding $commonText.all", "expandTree('machines')")
+&nbsp;
+$AjaxHelper.LinkToFunction("$commonText.collapsing $commonText.all", "collapseTree('machines')")
+#foreach($workshop in $workshops)
+	#foreach($line in $workshop.Children)
+		#set($groupi="groupi$line.Key")
+		<SCRIPT type="text/javascript">
+		var $groupi = new CheckBoxGroup();
+		#foreach($machine in $line.Children)
+		${groupi}.addToGroup("line${line.Key}machine${machine.Key}");
+		#end
+		${groupi}.setControlBox("lineofworkshop$workshop.Key");
+		${groupi}.setMasterBehavior("all");
+		</SCRIPT>
+	#end
+#end
+<UL CLASS="mktree" ID="machines">
+#foreach($workshop in $workshops)
+	<LI>$commonText.workshop:$workshop.Value
+	<UL>
+	#foreach($line in $workshop.Children)
+		#set($groupi="groupi$line.Key")
+		<LI><INPUT TYPE="checkbox" NAME="lineofworkshop$workshop.Key" VALUE="$line.Key" onClick="${groupi}.check(this)" 
+			#if(!$uncheckasdevault)
+			checked
+			#end
+			 />$commonText.productline:$line.Value
+			<UL>
+			#foreach($machine in $line.Children)
+				<LI><INPUT TYPE="checkbox" NAME="machines" ID="line${line.Key}machine${machine.Key}" VALUE="$machine.Key" onClick="${groupi}.check(this)" 
+				#if(!$uncheckasdevault)
+				checked
+				#end
+				 />$machine.Value
+			#end
+			</UL>
+	#end
+	</UL>
+	</LI>
+#end
+</UL>

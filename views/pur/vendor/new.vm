@@ -1,0 +1,70 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #new-instance-container { width: 800px; padding: 0 1em 1em 1em; }
+  h3 { font-size: 123.1%; }
+  p { margin-top: 1em; height: 25px; float: left; }
+  span { float: left; }
+  .label2 { width: 100px; text-align: right; padding-right: .3em; }
+  .field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
+  .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+
+  .vendor-id, .vendor-name, .vendor-fullname, .notice { width: 300px; }
+  .currency, .vendor-category, .settlement, .payment, .transport { width: 150px; }
+  .address { width: 500px; }
+  .short-date { width: 200px; }
+  /* ]]> */
+  </style>
+
+  ${j.jquery_autocomplete()}
+  ${j.jquery_validate()}
+  
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $("#instance_Id").focus();
+      $("#new-instance").validate();
+      fnDecorative();
+    });
+
+    function fnDecorative(){
+      $('.label2').addClass('ui-state-active ui-corner-bl');
+      $('.field2').addClass('ui-state-hover ui-corner-tr');
+      //$('p').addClass('ui-helper-clearfix');
+      $(':submit').button();
+    }
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.createnew} ${common.vendor}
+#end
+
+<h3>${common.createnew} ${common.vendor}</h3>
+
+<div id="new-instance-container" class="ui-helper-clearfix ui-widget-content">
+  <form id="new-instance" action='${url.for("%{action='create'}")}' method="POST">
+  ${f.push("instance")}
+  <p>
+    <span class="label2">*${common.id}:</span>
+    <span class="field2 vendor-id">${f.textfield("Id", "%{size='30', class='required'}")}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">*${common.name}:</span>
+    <span class="field2 vendor-name">${f.textfield("Name", "%{size='30', class='required'}")}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">${common.fullname}:</span>
+    <span class="field2 vendor-fullname">${f.textfield("Fullname", "%{size='30'}")}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">${common.notice}:</span>
+    <span class="field2 notice">${f.textfield("Notice", "%{size='30'}")}&nbsp;</span>
+  </p>
+  ${f.pop()}
+  <p>
+    ${f.submit($common.submit)}
+  </p>
+  </form>
+</div>

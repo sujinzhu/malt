@@ -1,0 +1,16 @@
+﻿#capturefor(head)
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#btnPR').click(function(){document.location='${url.for("%{area='pur', controller='pr', action='list'}")}';});
+      $('#btnPO').click(function(){document.location='${url.for("%{area='pur', controller='po', action='list'}")}';});
+    });
+  // ]]>
+  </script>
+#end
+    
+<div id="buttonContainer">
+  <button id="btnPR">${common.purchaserequisition}</button>
+  ==&gt;
+  <button id="btnPO">${common.purchaseorder}</button>
+</div>

@@ -1,0 +1,60 @@
+<FIELDSET>
+<LEGEND>$commonText.new $commonText.itema</LEGEND>
+#parse("${siteRoot}/share/sales/fgrequestform.vm")
+<br/>
+<table cellpadding="5" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th align="right">
+		$HtmlHelper.LabelFor("cpoitem.ShipBy", "$commonText.customer $commonText.requested $commonText.shipby:")
+		</th>
+		<td>$HtmlHelper.InputText("cpoitem.ShipBy", "", $DictHelper.Create("validators=blank"))</td>
+		<th align="right">
+		$HtmlHelper.LabelFor("cpoitem.ReceivedDate", "$commonText.order $commonText.received $commonText.date:")
+		</th>
+		<td>$HtmlHelper.InputText("cpoitem.ReceivedDate", "$cpo.ReceivedDate.ToString('yyyy-MM-dd')", 10, 10, $DictHelper.Create("validators=blank"))
+		<input type="reset" value=" ... " id="cpoitem.ReceivedDate_b" /></td>
+	</tr>
+	<tr class="scaffoldaltrow">
+		<th align="right">
+		$HtmlHelper.LabelFor("cpoitem.AffirmatoryShipBy", "$commonText.affirmatory $commonText.shipby:")
+		</th>
+		<td>$HtmlHelper.InputText("cpoitem.AffirmatoryShipBy", "")</td>
+		<th align="right">
+		$HtmlHelper.LabelFor("cpoitem.AffirmatoryDeliveryDate", "$commonText.affirmatory $commonText.delivery $commonText.date:")
+		</th>
+		<td>$HtmlHelper.InputText("cpoitem.AffirmatoryDeliveryDate", "$!fgr.RequestedDate.ToString('yyyy-MM-dd')", 10, 10)
+		<input type="reset" value=" ... " id="cpoitem.AffirmatoryDeliveryDate_b" /></td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th align="right">
+			$commonText.remark:
+		</th>
+		<td colspan=3>
+			$HtmlHelper.InputText("cpoitem.Remark","",80, 255)
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "cpoitem.AffirmatoryDeliveryDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "cpoitem.AffirmatoryDeliveryDate_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime		:	false
+    });
+</script>
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "cpoitem.ReceivedDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "cpoitem.ReceivedDate_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime		:	false
+    });
+</script>
+<p>
+$HtmlHelper.SubmitButton("$commonText.add")
+</p>
+</FIELDSET>

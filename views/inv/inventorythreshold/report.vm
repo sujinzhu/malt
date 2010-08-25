@@ -1,0 +1,64 @@
+#capturefor(head)
+
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .quantity { text-align: right; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances;
+    $(function(){
+      oInstances = $('#instances').dataTable({
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": '$url.for("%{action='listreportdata'}")',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "fnServerData": function(sSource, aoData, fnCallback){
+          jQuery.get(sSource, aoData, function(json){if(!fnHasError(json)){fnCallback(json);}}, 'json');
+        },
+        "aoColumns": [
+        null, 
+        null, 
+        null, 
+        null, 
+        null, 
+        null, 
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"bSortable": false}
+        ]
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+<div id="instances-container">
+<h3>${common.safetystockstatus}:</h3>
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.material}</th>
+      <th>${common.repository}1</th>
+      <th>${common.repository}2</th>
+      <th>${common.repository}3</th>
+      <th>${common.repository}4</th>
+      <th>${common.safetystock}</th>
+      <th>${common.current}${common.inventory}</th>
+      <th>${common.stocklimit}</th>
+      <th>${common.safetystockstatus}</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div>

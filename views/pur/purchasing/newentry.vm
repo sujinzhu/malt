@@ -1,0 +1,60 @@
+<div class="ui-widget-content ui-corner-all ui-helper-clearfix">
+  <form id="new-entry" action='${url.for("%{action='addentry2'}")}' method="POST">
+    ${f.push("requisition")}
+    ${f.hiddenfield("Id")}
+    ${f.pop()}
+
+    ${f.push("entry")}
+    ${f.hiddenfield("PO.Id")}
+
+  <p>
+    <span class="label2">${common.material}:</span>
+    <span class="field2 material">${entry.Material.Id} $!{entry.Material.Name} $!{entry.Material.Specification}</span>
+  </p>
+  <p>
+    <span class="label2">${common.requiredquantity}:</span>
+    <span class="field2">${requisition.RequiredQuantity} ${requisition.Unit.Description}</span>
+  </p>
+  <p>
+    <span class="label2">${common.orderedquantity}:</span>
+    <span class="field2">${requisition.OrderedQuantity}  ${requisition.Unit.Description}</span>
+  </p>
+  <p>
+    <span class="label2">${common.unit}:</span>
+    <span class="field2">${f.textfield("Unit.Id", "%{class='required'}")}</span>
+  </p>
+  <p>
+    <span class="label2">${common.unitprice}:</span>
+    <span class="field2">${f.textfield("UnitPrice", "%{class='required', min='0'}")}</span>
+  </p>
+  <p>
+    <span class="label2">${common.requireddate}:</span>
+    <span class="field2">${f.textfield('RequiredDate', "%{class='required'}")}</span>
+  </p>
+  ${f.pop()}
+  <p>
+    ${f.submit($common.submit)}
+    <a id="btnSelectAnother" href="#">${common.selectanother}</a>
+  </p>
+  </form>
+</div>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  fnDecorative();
+  $('#new-entry').validate({
+    submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+  });
+  $('#entry_Unit_Id').autocomplete('$url.for("%{area='inv', controller='unit', action='autocomplete2'}")', {
+    width: 300,
+    matchContains: true,
+    formatItem: formatUnitItem,
+    formatResult: formatResult
+  }).focus();
+  $('#entry_RequiredDate').datepicker();
+  $('#btnSelectAnother').button().click(function(){
+    $('#new-entry-container').hide("clip");
+    $('#instances-container').show("clip");
+  });
+// ]]>
+</script>

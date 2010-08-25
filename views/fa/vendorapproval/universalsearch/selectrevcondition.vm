@@ -1,0 +1,3 @@
+$HtmlHelper.LabelFor("rev", "Rev:")
+$HtmlHelper.InputText("rev", "", 1, 1,  $DictHelper.Create("validators=blank", "style=text-transform: uppercase;"))
+$AjaxHelper.ButtonToRemote("+", "AddRevCondition.rails", $DictHelper.CreateDict( "update=revConditions", "with=Form.serialize($('universalsearch'))" ) )

@@ -1,0 +1,41 @@
+#capturefor(head)
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#finals').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+    });
+  // ]]>
+  </script>
+#end
+<h3>${common.sfgsubmit}</h3>
+
+<div id="header-container">
+<table id="finals" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.workshop}</th>
+      <th>${common.repository}</th>
+      <th>${common.submitby}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($final in $finals)
+    <tr>
+      <td>${url.link($final.Id, "%{action='steering', querystring='id=$final.Id'}")}</td>
+      <td>${r.getdescription($final.SubmitFrom)}</td>
+      <td>${r.getdescription($final.SubmitTo)}</td>
+      <td>${final.SubmitBy}</td>
+      <td>${h.getenumname($final.Status)}</td>
+      <td>${final.CreateDate.ToShortDateString()}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

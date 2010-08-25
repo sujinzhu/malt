@@ -1,0 +1,21 @@
+﻿<ul class="sourceList">
+  #foreach($pr in $availablePRs)
+  #beforeall
+  <li class="ui-state-highlight ui-corner-bl ui-corner-tr">
+    <span class="source">${common.source}</span>
+    <span class="quantity">${common.quantity}</span>
+    <span class="unit">${common.unit}</span>
+    <span class="date">${common.requireddate}</span>
+  </li>
+  #each
+    #set($quantity = $pr.RequiredQuantity - $pr.OrderedQuantity)
+  <li id="${pr.Id}" class="ui-state-default ui-corner-bl ui-corner-tr" onclick="javascript:fnSelectPR(this);">
+    <span class="source">${pr.Source}</span>
+    <span class="quantity">${quantity}</span>
+    <span class="unit">${pr.Unit.Id}</span>
+    <span class="date">${pr.RequiredDate.ToShortDateString()}</span>
+  </li>
+  #nodata
+    <p class="ui-state-highlight nosuiteddata">${common.nosuiteddata}.</p>
+  #end
+</ul>

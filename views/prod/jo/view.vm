@@ -1,0 +1,119 @@
+﻿#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  ${j.jquery_treeview()}
+  ${h.stylesheet_link("${siteroot}/Content/css/prod/jo/view.css")}
+  ${h.javascript_link("${siteroot}/Content/js/prod/jo/view.js")}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+  $(function(){
+    $('#bomtree').treeview({url: '${url.for("%{action='bombranch', querystring='joid=$jo.Id'}")}'});
+    $('#btnAddDemand').click(function(){$('#newDemand').fadeOut("slow");$('#selectDemand').html('').load('$url.for("%{action='SelectDemand'}")', {joid: '${jo.Id}'}).fadeIn("slow");});
+    $('#btnGeneratePR').click(function(){fnGeneratePR('$url.for("%{action='generatepr'}")', '${jo.Id}');});
+  });
+  // ]]>
+  </script>
+#end
+
+#capturefor(pageHeader)
+  <h3 id="pageHeader">${common.joborder} - ${jo.Id} [${jo.Material.Id}]</h3>
+#end
+
+<div class="rowHelper">
+  <div id="demands" class="panel">
+    <div class="ui-widget-header ui-corner-top">
+      ${common.tomeetthedemands}:
+      <button id="btnAddDemand"><span class="ui-icon ui-icon-plusthick"></span>${common.adoptdemand}</button>
+      <button id="btnGeneratePR">${common.generatepr}</button>
+    </div>
+
+    <div class="ui-widget-content ui-corner-bottom">
+      <div id="selectDemand" class="ui-helper-hidden"></div>
+      <div id="newDemand" class="ui-helper-hidden">
+        #parse("${siteroot}/prod/jo/_new_demand.vm")
+      </div>
+      <table id="jocdList" class="display ui-widget">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>${common.source}</th>
+            <th>${common.customer}</th>
+            <th>${common.material}</th>
+            <th>${common.requiredquantity}</th>
+            <th>${common.baseunit}</th>
+            <th>${common.requireddate}</th>
+            <th>${common.scheduledquantity} [${common.all}]</th>
+            <th>${common.scheduledquantity} [${common.thisorder}]</th>
+          </tr>
+        </thead>
+        <tbody>
+        #if($jo.JobOrderCustomerDemands)
+          #foreach($jocd in $jo.JobOrderCustomerDemands)
+          <tr>
+            <td>${jocd.Id}</td>
+            <td>${jocd.CustomerDemand.Source}</td>
+            <td>#if($jocd.CustomerDemand.Customer) $jocd.CustomerDemand.Customer.ShortName #end</td>
+            <td>${jocd.CustomerDemand.Material.ID}</td>
+            <td>${jocd.CustomerDemand.RequiredQuantity}</td>
+            <td>${jocd.CustomerDemand.BaseUnit.Id}</td>
+            <td>${jocd.CustomerDemand.RequiredDate.ToShortDateString()}</td>
+            <td>${jocd.CustomerDemand.ScheduledQuantity}</td>
+            <td>${jocd.ScheduledQuantity}</td>
+          </tr>
+          #end
+        #end
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="8" style="text-align: right;">${common.total}:</th>
+            <th></th>
+        </tfoot>
+      </table>
+    </div>
+    
+  </div>
+
+</div>
+
+<div class="rowHelper">
+  <div id="bom" class="panel">
+    <div class="ui-widget-header ui-corner-top">
+      ${common.bomsetting}
+    </div>
+    <div class="ui-widget-content ui-corner-bottom">
+      #if(!${jo.BOMTree}) ${common.bomsettingisempty}
+      #else
+      ${jo.Material.Id}
+      <ul id="bomtree">
+      </ul>
+      #end
+    </div>
+  </div>
+  <div id="enProcesses" class="panel">
+    <div class="ui-widget-header ui-corner-top">
+      ${common.enabledprocesses}
+    </div>
+    <div class="ui-widget-content ui-corner-bottom">
+      <ul id="enabledProcesses">
+        #foreach($jobOrderProcess in $jo.JobOrderProcesses)
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>${jobOrderProcess.Process.Name}</li>
+        #end
+      </ul>
+    </div>
+  </div>
+
+  <div id="avProcesses" class="panel">
+    <div class="ui-widget-header ui-corner-top">
+      ${common.availableprocesses}
+    </div>
+    <div class="ui-widget-content ui-corner-bottom">
+      <ul id="availableProcesses">
+        #foreach($process in $jo.AvailableProcesses)
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>${process.Name}</li>
+        #end
+      </ul>
+    </div>
+  </div>
+</div>

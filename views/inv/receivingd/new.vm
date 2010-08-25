@@ -1,0 +1,40 @@
+#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      function formatItem(row){ return row[0] + " " + row[1]; }
+      function formatResult(row) { return row[0]; }
+      $('#rn_Vendor_Id').autocomplete('$url.for("%{area='pur', controller='vendor', action='autocomplete2'}")', {
+        width: 300,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      }).focus();
+      $('#rn_Repository').autocomplete('$url.for("%{area='inv', controller='repository', action='autocomplete2'}")', {
+        width: 300,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      });
+      $('#selectvendor').validate();
+    });
+  // ]]>
+  </script>
+#end
+
+<h3>${common.receiving} =&gt; 1. ${common.createnew} ${common.receivingnote}:</h3>
+
+${f.push("rn")}
+${h.start_with_layout($url.for("%{action='createreceivingnote'}"), "selectvendor")}
+
+${h.field($common.receivingnoteid, $f.TextField('Id'))}
+${h.field($common.vendor, $f.textfield("Vendor.Id", "%{class='required'}"), true)}
+${h.field($common.deliverynoteid, $f.textfield("DeliveryNoteId", "%{class='required'}"), true)}
+${h.field($common.rmwarehouse, $f.textfield("Repository", "%{class='required'}"), true)}
+
+${h.field("", $f.submit($common.create))}
+${f.pop()}
+${h.end_with_layout()}

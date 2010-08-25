@@ -1,0 +1,46 @@
+#foreach($stock in $stocks)
+#beforeall
+	#set($i = 0)
+	<p><font color="blue">
+	$StringHelper.Format("You are processing a shipment for <b>{0}</b>[{4}] with <b>{1}</b> from <b>{2}</b>, total quantity is <b>{3:00}</b>",$WIPHelper.GetCustomer($customerId).ShortName, $!itemCode, $!fromLocationid, $!totalQuantity, $customerId)
+	</font></p>
+	$HtmlHelper.Form("PickGoods-Save.rails", "pickgoods", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+	<h4>Please select stock for each Allocatee:</h4>
+	<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr>
+		<th>Allocatee</th>
+		<th>${commonText.current} ${commonText.quantity}</th>
+		<th>${commonText.picked} ${commonText.quantity}</th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>${stock.Key}
+		${HtmlHelper.InputHidden("stock[${i}].Allocatee",${stock.Key})}</td>
+		<td align="right">${StringHelper.Format("{0:0}", ${stock.Value})}
+		</td>
+		#if($stock.Value < $totalQuantity)
+			#set($limit = $StringHelper.Format("{0:0}",$stock.Value))
+		#else
+			#set($limit = $StringHelper.Format("{0:0}",$totalQuantity))
+		#end
+		<td>
+		${HtmlHelper.InputText("stock[${i}].Quantity","0","%{validators='number|0|0|$limit'}")}
+		</td>
+	</th>
+	#set($i = $i + 1)
+#afterall
+	</table>
+	<p>
+	#if($WizardHelper.HasPreviousStep())
+	$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+	#end
+	$HtmlHelper.SubmitButton($commonText.nextstep)
+	</p>
+	$HtmlHelper.EndForm()
+#nodata
+	<p>No items.</p>
+#end
+

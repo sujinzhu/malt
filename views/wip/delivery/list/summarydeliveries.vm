@@ -1,0 +1,32 @@
+#foreach($delivery in $deliveries)
+#beforeall
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+		<tr>
+			<th>${commonText.travelerid}</th>
+			<th>${commonText.from}</th>
+			<th>${commonText.to}</th>
+			<th>${commonText.material}</th>
+			<th>${commonText.customer}</th>
+			<th>${commonText.quantity}</th>
+			<th>${commonText.date}</th>
+			<th></th>
+		</tr>
+#odd
+		<tr class="scaffoldaltrow">
+#even
+		<tr class="scaffoldrow">
+#each
+			<td>$!{delivery.TravelerId}</td>
+			<td>${delivery.From.ID.Trim()}</td>
+			<td>${delivery.To.ID.Trim()}</td>
+			<td>${delivery.Material.ID.Trim()}</td>
+			<td>${delivery.Customer.ShortName.Trim()}</td>
+			<td>${StringHelper.Format("{0:0}", $delivery.Quantity)}</td>
+			<td>${delivery.Time.ToString("yyyy-MM-dd HH:mm:ss")}</td>
+			<td>$Html3Helper.LinkTo("${commonText.show}","wip","delivery", "show", ${delivery.Id})</td>
+		</tr>
+#afterall
+	</table>
+#nodata
+	No Delivery(s) up to snuff.
+#end

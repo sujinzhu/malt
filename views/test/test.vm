@@ -1,0 +1,11 @@
+<form action="Save.rails" method="post">
+<p>
+<input type="Text" name="stock.Key" value="" />
+</p>
+<p>
+<input type="Text" name="stock.Value" value="" />
+</p>
+<p>
+<input type="submit" />
+</p>
+</form>

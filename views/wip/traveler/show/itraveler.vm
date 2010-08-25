@@ -1,0 +1,18 @@
+	#parse("${siteRoot}/wip/traveler/show/itravelerinfo.vm")
+
+	#parse("${siteRoot}/wip/traveler/show/itravelercomponent.vm")
+
+	#foreach($deliveryId in $traveler.Deliveries)
+	#beforeall
+		<h3>Delivery:</h3>
+		<UL>
+	#each
+			<li>${Html3Helper.LinkTo("${deliveryId}", "wip","delivery", "show", ${deliveryId})}</li>
+	#afterall
+		</UL>
+	#end
+
+$AjaxHelper.LinkToRemote("List Archives", "${siteRoot}/wip/traveler/listarchives.rails", $DictHelper.CreateDict( "update=archives", "with='travid=${traveler.TravelerId}&skipLayout=true'" ) )
+ | 
+<A href="${siteRoot}/wip/traveler/trace.rails?times=${traveler.Times}&id=${traveler.TravelerId}">Trace...</a>
+<div id="archives"></div>

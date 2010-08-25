@@ -1,0 +1,5 @@
+$HtmlHelper.LabelFor("projectId","$commonText.add $commonText.project:")
+$HtmlHelper.Select("projectId")
+$HtmlHelper.CreateOptions($projects, "Name", "ID")
+$HtmlHelper.EndSelect()
+$AjaxHelper.ButtonToRemote("+", "AddPorjectCondition.rails", $DictHelper.CreateDict( "update=projectConditions", "with=Form.serialize($('universalsearch'))" ) )

@@ -1,0 +1,30 @@
+#foreach($url in $urls)
+#beforeall
+	<h3>MonoRailURLs:</h3>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr>
+		<th></th>
+		<th>Area</th>
+		<th>Controller</th>
+		<th>Action(s)</th>
+		<th></th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>${url.ID}</td>
+		<td>${url.Area}</td>
+		<td>${url.Controller}</td>
+		<td>${url.Action}</td>
+		<td>
+		${Html3Helper.LinkTo("${commonText.remove}", "sysadmin","monorailurl", "confirm", ${url.ID})} 
+		${Html3Helper.LinkTo("${commonText.show}", "sysadmin","monorailurl", "show", ${url.ID})}
+		</td>
+	</tr>
+#afterall
+</table>
+#nodata
+<p>No items.</p>
+#end

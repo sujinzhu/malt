@@ -1,0 +1,26 @@
+<H2>$commonText.customer $commonText.order [$cpo.ID]</H2>
+
+<p>$commonText.customer:<b>$cpo.Customer.ShortName</b></p>
+<p>$commonText.order $commonText.number:<b>$cpo.OrderNumber</b></p>
+<p>$commonText.received $commonText.date:<b>$cpo.ReceivedDate.ToString("yyyy-MM-dd")</b></p>
+<br/>
+
+$HtmlHelper.Form("${siteRoot}/Sales/CustomerPOItem/Create.rails", "new", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+$HtmlHelper.InputHidden("cpoitem.Order.ID", $cpo.ID)
+<FIELDSET>
+<LEGEND>$commonText.task</LEGEND>
+$Html3Helper.LinkTo("$commonText.remove", "Sales","CustomerPO", "Confirm", $cpo.ID)
+
+$AjaxHelper.LinkToRemote("$commonText.new ${commonText.itema}", "${siteRoot}/Sales/CustomerPOItem/New.rails", $DictHelper.CreateDict( "update=newitem", "with=Form.serialize($('new'))" ) )
+
+</FIELDSET>
+<br/>
+<div id="newitem"></div>
+$HtmlHelper.EndForm()
+
+<FIELDSET>
+<LEGEND>Items:</LEGEND>
+#blockcomponent(CustomerPOItemListComponent with "source=$cpo.Items")
+
+#end
+</FIELDSET>

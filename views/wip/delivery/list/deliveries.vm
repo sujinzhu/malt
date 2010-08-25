@@ -1,0 +1,87 @@
+#foreach($delivery in $deliveries)
+#beforeall
+	#set($summary = $WIPHelper.SummarizeDeliveries($deliveries))
+	<h3>Deliveries:</h3>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+#each
+	#set($img="${siteRoot}/Content/images/${delivery.Type}.gif")
+	<tr class="scaffoldaltrow">
+		<td background="${img}">$Html3Helper.LinkTo("${commonText.show}","wip","delivery", "show", ${delivery.Id})</td>
+		<td background="${img}"><b>${delivery.Type}</b></td>
+		<th>${commonText.from}</th><td background="${img}">${delivery.From.ID.Trim()}</td>
+		<th>${commonText.operator}</th><td background="${img}">${IdentityHelper.GetFullName($delivery.Operator)}</td>
+		<th>${commonText.date}</th><td background="${img}">${delivery.Time.ToString("yyyy-MM-dd HH:mm:ss")}</td>
+		<td rowspan="3" valign="top" align="right">
+		<IMG SRC='${siteRoot}/Content/images/${delivery.State}.jpg' BORDER='0' />
+		</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th>${commonText.state}</th><td>${delivery.State}</td>
+		<th>${commonText.to}</th><td>${delivery.To.ID.Trim()}</td>
+		<th>${commonText.signee}</th><td>
+		#if($delivery.IsSigned)
+		${IdentityHelper.GetFullName($delivery.Signee)}
+		#end
+		</td>
+		<th>${commonText.signtime}</th><td>
+		#if($delivery.IsSigned)
+		${delivery.SignTime.ToString("yyyy-MM-dd HH:mm:ss")}
+		#end
+		</td>
+	</tr>
+	<tr class="scaffoldaltrow">
+		<th>${commonText.material}</th><td background="${img}">${delivery.Material.ID.Trim()}</td>
+		<th>${commonText.customer}</th><td background="${img}">${delivery.Customer.ID.Trim()}</td>
+		<th>${wip.allocatee}</th><td background="${img}">${delivery.Allocatee.Trim()}</td>
+		<th>${commonText.quantity}</th><td background="${img}">${StringHelper.Format("{0:0}", $delivery.Quantity)}</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th></th><td>
+			#if($delivery.TravelerId)
+			$Html3Helper.LinkTo("${delivery.TravelerId}",  "wip","traveler", "show", ${delivery.TravelerId})
+			#end
+		</td>
+		<th>${commonText.remark}</th><td colspan="8">${delivery.Remark}</td>
+	</tr>
+#afterall
+	#foreach($item in $summary)
+	#odd
+		<tr class="scaffoldaltrow">
+	#even
+		<tr class="scaffoldrow">
+	#each
+			<td colspan="7" align="right">${item.Key.ID}</td>
+			<td align="right">${StringHelper.Format("{0:0}",${item.Value})}</td>
+		</tr>
+	#end
+	#if($deliveries.TotalItems > 0)
+	<tr>
+		<td colspan="3">Showing $deliveries.FirstItem - $deliveries.LastItem of ${deliveries.TotalItems}</td>
+		<td colspan="5" align="right">
+		#if($deliveries.HasFirst)
+			 $PaginationHelper.CreatePageLinkWithCurrentQueryString(1, "first", null)
+		#else
+			first
+		#end
+		#if($deliveries.HasPrevious)
+			 | $PaginationHelper.CreatePageLinkWithCurrentQueryString(${deliveries.PreviousIndex}, "prev", null)
+		#else
+			 | prev
+		#end
+		#if($deliveries.HasNext)
+			 | $PaginationHelper.CreatePageLinkWithCurrentQueryString(${deliveries.NextIndex}, "next", null)
+		#else
+			 | next
+		#end
+		#if($deliveries.HasLast)
+			 | $PaginationHelper.CreatePageLinkWithCurrentQueryString(${deliveries.LastIndex}, "last", null)
+		#else
+			 | last
+		#end
+		</td>
+	</tr>
+	#end
+	</table>
+#nodata
+	No Delivery(s) up to snuff.
+#end

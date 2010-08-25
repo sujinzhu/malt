@@ -1,0 +1,8 @@
+﻿##PRPOMatchMode: OneToOne
+${h.start_with_layout($url.for("%{action='createentry'}"), 'newPOEForm')}
+${form.push('poe')}
+#parse("${siteroot}/pur/po/_entry_fields.vm")
+${form.pop()}
+${form.hiddenfield('prid')}
+${h.field("", $form.submit($common.create))}
+${h.end_with_layout()}

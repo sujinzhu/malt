@@ -1,0 +1,46 @@
+#**
+require variables
+$location	Location
+$allows	List<Location>	allowed locations
+$denies	List<Location>	denied locations
+$type	string		PrincipalType
+$name	string		PrincipalName
+required macros
+allow		 $type $name $locationId
+deny		 $type $name $locationId
+removeallowed	 $type $name $locationId
+removedenied	 $type $name $locationId
+*#
+#set($locationId = $location.ID)
+<td id='l${locationId.Trim()}'>
+
+#if($allows && $allows.Contains($location))
+		#removeallowed($type $name $locationId)
+		 | 
+		#deny($type $name $locationId)
+#else
+	#if($denies && $denies.ConTains($location))
+		#removedenied($type $name $locationId)
+		 | 
+		#allow($type $name $locationId)
+	#else
+		#allow($type $name $locationId)
+		 | 
+		#deny($type $name $locationId)
+	#end
+#end
+
+#set($color = "black")
+#if($allows && $allows.Contains($location))
+	#set($color = "green")
+#end
+#if($denies && $denies.ConTains($location))
+	#set($color = "red")
+#end
+
+<b><font color="${color}">${location.ID} </font></b>
+
+#if($location.UnderDepartment)
+[$CoreHelper.GetDeptName($location.DeptID)]
+#end
+</td>

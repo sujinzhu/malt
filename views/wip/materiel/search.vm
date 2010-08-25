@@ -1,0 +1,8 @@
+<h2>$commonText.search $commonText.material:</h2>
+$HtmlHelper.Form("DoSearch.rails", "search", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<p>$HtmlHelper.LabelFor("itemcode", "P/N:")
+$HtmlHelper.InputText("itemcode", "$!itemcode", $DictHelper.Create("validators=blank"))
+${HtmlHelper.SubmitButton("${commonText.search}")}
+</p>
+$HtmlHelper.EndForm()

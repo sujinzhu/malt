@@ -1,0 +1,121 @@
+﻿#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #date-criteria-container { float: left; width: 800px; padding: 0 .5em 1em .5em; }
+  #repositories-criteria-container { float: left; width: 800px; padding: 0 .5em 1em .5em; }
+  #materials-criteria-container { float: left; width: 800px; padding: 0 .5em 1em .5em; }
+  h4 { padding: 3px; }
+  #date-container, #repositories-container, #materials-container { margin-top: -1px; }
+  p, #repositories, #materials { width: 98%; margin: .5em;}
+  #button-container { float: none; text-align: center; }
+  #btnQuery { float: none; }
+  .repository-name { min-width: 100px; width: 12.5%; }
+  .datetime { min-width: 100px; width: 12.5%; }
+  .quantity { text-align: right; }
+
+  .total-container { float: left; margin-right: 1em; padding: .3em; }
+  .total-quantity { margin-left: -1px; text-align: right; min-width: 50px;}
+
+  #criteria-container ul span, #criteria-container li { float: left; margin: .5em; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_autocomplete()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      function formatItem(row){ return row[0] + " " + row[1]; }
+      function formatResult(row) { return row[0]; }
+      $('#repositories').autocomplete('$url.for("%{area='inv', controller='repository', action='autocomplete2'}")', {
+        width: 200,
+        multiple: true,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      }).focus();
+      $('.repository').autocomplete('$url.for("%{area='inv', controller='repository', action='autocomplete2'}")', {
+        width: 200,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      });
+      $('#materials').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        multiple: true,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      });
+      $('.material').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      });
+      $('.date').datepicker();
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.inoutbalance}
+#end
+
+<form action='${url.for("%{action='search'}")}' method="POST" target="_blank">
+
+<div id='criteria-container' class="ui-helper-clearfix">
+  <div id='date-criteria-container'>
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.date}</h4>
+    <div id="date-container" class="ui-widget-content">
+    <p>${common.from} : ${f.textfield("fromDate", "%{class='date'}")}
+    ${common.to} : ${f.textfield("toDate", "%{class='date'}")}
+    </p>
+    </div>
+  </div>
+
+  <div id='repositories-criteria-container'>
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.repository}</h4>
+    <div id="repositories-container" class="ui-widget-content">
+    ${f.textarea("repositories")}
+    <p>${common.from} : ${f.textfield("fromRepository", "%{class='repository'}")}
+    ${common.to} : ${f.textfield("toRepository", "%{class='repository'}")}
+    </p>
+    </div>
+  </div>
+
+  <div id='materials-criteria-container'>
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.material}</h4>
+    <div id="materials-container" class="ui-widget-content ui-helper-clearfix">
+      ${f.textarea("materials")}
+      <p>${common.from} : ${f.textfield("fromMaterial", "%{class='material'}")}
+      ${common.to} : ${f.textfield("toMaterial", "%{class='material'}")}
+      </p>
+      <div >
+      <ul class="ui-helper-clearfix"><span>${common.materialclass} : </span>
+      #foreach($class in $materialClasses)
+        <li><input type="checkbox" name="materialClasses" value='${class.Id}'> $!{class.Description}</li>
+      #end
+      </ul>
+      <ul class="ui-helper-clearfix"><span>${common.inventoryclass} : </span>
+      #foreach($class in $inventoryClasses)
+        <li><input type="checkbox" name="inventoryClasses" value='${class.Id}'> $!{class.Description}</li>
+      #end
+      </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id='date-criteria-container'>
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.joborder}</h4>
+    <div id="date-container" class="ui-widget-content">
+      <p>${f.textfield("joId")} </p>
+    </div>
+  </div>
+
+</div>
+
+<p><input type="submit" value="${common.query}" /></p>
+</form>

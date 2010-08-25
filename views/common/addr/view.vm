@@ -1,0 +1,75 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#instance-container { width: 800px; }
+#instance-container h3, #instance-container div { padding: .8em; }
+#instance-container h3 { margin-bottom: .8em; }
+p { margin-top: .4em; }
+span { float: left; }
+.label2 { width: 80px; text-align: right; padding-right: .3em; }
+.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
+.label2, .field2 { padding-top: .2em; padding-bottom: .2em; }
+.description { width: 500px;}
+.zip, .area { width: 150px; }
+.address { width: 500px; }
+.tel, .fax { width: 150px; }
+/* ]]> */
+</style>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('a').button();
+    $('.label2').addClass('ui-state-active ui-corner-bl');
+    $('.field2').addClass('ui-state-hover ui-corner-tr');
+    $('p').addClass('ui-helper-clearfix');
+  });
+// ]]>
+</script>
+#end
+
+<div id="instance-container">
+  <h3 class="ui-widget-header ui-corner-all">${common.address}: ${instance.Id}</h3>
+
+  <div class="ui-widget ui-widget-content ui-corner-all">
+  <p><span class="field2 description">$!{instance.Description}&nbsp;</span></p>
+
+  <p>
+    <span class="label2">${common.zip}:</span>
+    <span class="field2 zip">$!{instance.Zip}&nbsp;</span>
+    <span class="label2">${common.area}:</span>
+    <span class="field2 area">$!{instance.Area}&nbsp;</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.address}1:</span>
+    <span class="field2 address">$!{instance.Address1}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">${common.address}2:</span>
+    <span class="field2 address">$!{instance.Address2}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">${common.address}3:</span>
+    <span class="field2 address">$!{instance.Address3}&nbsp;</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.fax}1:</span>
+    <span class="field2 fax">$!{instance.Fax1}&nbsp;</span>
+    <span class="label2">${common.fax}2:</span>
+    <span class="field2 fax">$!{instance.Fax2}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">${common.tel}1:</span>
+    <span class="field2 tel">$!{instance.Tel1}&nbsp;</span>
+    <span class="label2">${common.tel}2:</span>
+    <span class="field2 tel">$!{instance.Tel2}&nbsp;</span>
+    <span class="label2">${common.tel}3:</span>
+    <span class="field2 tel">$!{instance.Tel3}&nbsp;</span>
+  </p>
+  </div>
+</div>
+
+<p><a href='${url.for("%{action='edit', querystring='id=$instance.Id'}")}'>${common.edit}</a></p>
+<p><a href='${url.for("%{action='remove', querystring='id=$instance.Id'}")}'>${common.remove}</a></p>

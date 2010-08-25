@@ -1,0 +1,158 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container { width: 800px; }
+#header-container h3 { float: left; }
+
+#btnIssue, #btnCancel { float: left; }
+#btnIssue { margin-left: 1em; }
+#btnCancel {margin-left: 4em; }
+
+#sales-order-entries-container { margin-top: 1em; }
+.margin { cursor: pointer; }
+
+#new-entry-container { padding-left: 1em; margin-top: 1em; padding-bottom: 1em; width: 800px; }
+#new-entry-container p { margin-top: 1em; float: left; }
+#new-entry-container p { height: 25px; }
+#new-entry-container span  { float: left; }
+.label2 { width: 100px; text-align: right; padding-right: .3em; }
+.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; width: 220px; }
+.label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+.material { width: 500px; }
+
+#entries-container { margin-top: 1em; clear: both; }
+/* ]]> */
+</style>
+  
+  ${j.jquery_dataTable()}
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('.button').button();
+
+      oDataTable = $('#entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {'bVisible': false},
+        {"sClass": "so-id"},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"sClass": "unit-id"},
+        {"sClass": "unit-desc"},
+        null,
+        {"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[oObj.iDataColumn]);}, "bSortable": false}
+        ],
+        'fnDrawCallback': function(){
+          fnTrigerRemove('${url.for("%{action='removeentry'}")}', '#entries', '$common.remove');
+          fnClassTrigerMaterialMenu();
+          },
+      });
+
+      fnShowOrderEntry();
+    });
+
+    function fnAddToDT(data){
+      if(!fnHasError(data)){
+        oDataTable.fnAddData([data['Id'], data['JobOrder'], data['MaterialId'], data['MaterialName'], data['MaterialSpec'], data['DeliveredQuantity'], data['PackageQuantity'], data['UnitId'], data['UnitDesc'], data['Notice'], '${common.remove}']);
+        fnShowOrderEntry();
+      }
+    }
+
+    function fnShowOrderEntry()
+    {
+      $('#new-entry-container').html('').hide("slow");
+      $('#sales-order-entries-container').load('${url.for("%{action='deliverableorderentries', querystring='customerId=$instance.Customer.Id'}")}').show('slow');
+    }
+
+    function fnSelectOrderEntry(iId, iRow){
+      $('#sales-order-entries-container').html('').hide("slow");
+      $('#new-entry-container').load('${url.for("%{action='orderentry'}")}', {orderEntryId: iId, dnId: '$instance.Id'}).show('slow');
+    }
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.issuefinishedgoods}: ${instance.Id} (${instance.Customer.Name})
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.issuefinishedgoods}</h3>
+<a id="btnIssue" href='${url.for("%{action='deliver', querystring='id=$instance.Id'}")}' class="button">${common.issue}</a>
+<a id="btnCancel" href='${url.for("%{action='cancel', querystring='id=$instance.Id'}")}' class="button">${common.cancel}</a>
+
+<table class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Id</th>
+      <th>${common.customer}</th>
+      <th>${common.repository}</th>
+      <th>${common.storekeeper}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${instance.Id}</td>
+      <td>[${instance.Customer.Id}]${instance.Customer.Name}</td>
+      <td>${r.getdescription($instance.IssuedFrom)}</td>
+      <td>${instance.IssuedBy}</td>
+      <td>${h.getenumname($instance.Status)}</td>
+      <td>${instance.CreateDate.ToShortDateString()}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="sales-order-entries-container" class="ui-helper-clearfix">
+</div>
+
+<div id="new-entry-container" class="ui-widget-content ui-corner-all ui-helper-hidden">
+</div>
+
+<div id="entries-container">
+<h4>${common.deliverynote}</h4>
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.ordernumber}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.quantity}</th>
+      <th>${common.packagequantity}</th>
+      <th>${common.unit}</th>
+      <th></th>
+      <th>${common.notice}</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>$!{entry.SOE.SO.Id}</td>
+      <td>${entry.SOE.Material.Id}</td>
+      <td>${entry.SOE.Material.Name}</td>
+      <td>${entry.SOE.Material.Specification}</td>
+      <td>${entry.DeliveredQuantity}</td>
+      <td>${entry.PackageQuantity}</td>
+      <td>${entry.SOE.Unit.Id}</td>
+      <td>$!{entry.SOE.Unit.Description}</td>
+      <td>$!{entry.Notice}</td>
+      <td>${common.remove}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+

@@ -1,0 +1,97 @@
+#capturefor(head)
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    oDataTable = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "po-id"},
+      {"sClass": "customer-name"},
+      {"sClass": "product-id"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name2"},
+      {"sClass": "material-name"},
+      {"sClass": "quantity carton-quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "short-date required-date"},
+      {"sClass": "short-date "},
+      null,
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+
+    $('.container-selector').change(function(){
+      fnChangeContainer(this.id, $(this).val());
+    });
+  });
+
+  function fnChangeContainer(iSoe, iContainer)
+  {
+    jQuery.post('$url.for("%{action='changecontainer'}")', {soeId: iSoe, containerId: iContainer}, function(data){fnHasError(data);}, 'json');
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.plan-container} - ${instance.Id}
+#end
+
+<h3>${common.plan-container} - ${instance.Id}:</h3>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.po-id}</th>
+      <th>${common.customer}</th>
+      <th>${common.product-id}</th>
+      <th>${common.materialid}</th>
+      <th></th>
+      <th></th>
+      <th>${common.carton-quantity}</th>
+      <th>${common.size}</th>
+      <th>${common.box-quantity}</th>
+      <th>${common.pieces-quantity}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.total-size}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.original-required-date}</th>
+      <th>${common.container-model}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.OrderNumber}</td>
+      <td>${entry.SO.Customer.Name}</td>
+      <td>${entry.ProductId}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name2}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td id="carton${entry.Id}">${entry.CartonQuantity.ToString("F0")}</td>
+      <td>${entry.Size.ToString("F3")}</td>
+      <td>${entry.BoxQuantity.ToString("F0")}</td>
+      <td>${entry.PiecesQuantity.ToString("F0")}</td>
+      <td>${entry.RequiredQuantity.ToString("F0")}</td>
+      <td>${entry.TotalSize.ToString("F2")}</td>
+      <td id="date${entry.Id}">${entry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.OriginalRequiredDate.ToShortDateString()}</td>
+      <td>
+      ${f.select("containerId", $entry.Container.Id, $containers, "%{value='id', class='container-selector', id='$entry.Id.ToString()'}")}
+      </td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+

@@ -1,0 +1,27 @@
+#foreach($travelerArchive in $archives)
+#beforeall
+	<h3>Archived:</h3>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+		<tr>
+			<th></th>
+			<th>${wip.usedtimes}</th>
+			<th>${commonText.archivetime}</th>
+			<th>${commonText.lastupdatedat}</th>
+			<th>${commonText.lastupdatedby}</th>
+		</tr>
+#odd
+		<tr class="scaffoldrow">
+#even
+		<tr class="scaffoldaltrow">
+#each
+			<td>$Html3Helper.LinkTo("${travelerArchive.Id}", "wip","traveler", "showarchive", ${travelerArchive.Id})</td>
+			<td>${travelerArchive.Times}</td>
+			<td>${travelerArchive.ArchiveTime.ToString("yyyy-MM-dd HH:mm:ss")}</td>
+			<td>${travelerArchive.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss")}</td>
+			<td>${IdentityHelper.GetFullName(${travelerArchive.LastOperator})}</td>
+		</tr>
+#afterall
+	</table>
+#nodata
+	<p>No archives found.</p>
+#end

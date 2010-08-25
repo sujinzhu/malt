@@ -1,0 +1,24 @@
+#set ($i = 0)
+#foreach ($vendor in $vendors)
+#beforeall	
+	<fieldset>
+		<legend>Vendor In:</legend>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tbody>
+#each
+		<tr class="scaffoldrow" id=vendor$i>
+		<td>
+			$HtmlHelper.InputHidden("vendor[$i].ID", "$vendor.Id")
+			$vendor.Name
+		</td>
+		<td>
+			$AjaxHelper.ButtonToRemote("-", "SubtractVendorCondition.rails", $DictHelper.CreateDict( "update=vendor${i}" ))
+		</td>
+		</tr>
+	#set ($i = $i + 1)
+#afterall
+	</tbody>
+	</table>
+	</fieldset>
+	<br/>
+#end

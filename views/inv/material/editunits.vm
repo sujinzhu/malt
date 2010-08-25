@@ -1,0 +1,96 @@
+﻿#if($material)
+    <div id="units-header">
+      <ul>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.primaryunit}:</span>
+          <span class="value ui-widget-content ui-corner-right">
+          #if(${m.trygetprimaryunit($material)})
+            ${m.trygetprimaryunit($material).Id} &nbsp;
+            ${m.trygetprimaryunit($material).Description}
+          #end
+          &nbsp;</span>
+        </li>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.secondunit}:</span>
+          <span class="value ui-widget-content ui-corner-right">
+          #if(${m.getsecondunit($material)})
+            ${m.getsecondunit($material).Id} &nbsp;
+            ${m.getsecondunit($material).Description}
+          #end
+          &nbsp;</span>
+        </li>
+      <form action='${url.for("%{action='addunit'}")}' method="POST" id="formAddUnit">
+        ${form.hiddenfield("material", $material.Id)}
+        <li id="unit">
+          <span class="ui-widget-header ui-corner-left label">${common.exchange}:</span>
+          <span class="ui-widget-content value">
+          ${f.textfield("rate", "%{class='required', min='0.00000000001'}")}
+          $!{m.trygetprimaryunit($material).Description}
+          <strong> = </strong>
+          ${f.textfield("rate2", "%{class='required', min='0.00000000001'}")}
+          ${f.select("unit", $u.findall(), "%{value='id', class='required'}")}
+          </span>
+          ${form.submit($common.add, "%{style='margin-left: 1em;'}")}
+        </li>
+      </form>
+      </ul>
+    </div>
+
+<table id="material-units" class="display">
+  <thead>
+    <tr>
+      <th></th>
+      <th>${common.rate}1</th>
+      <th>${common.primaryunit}</th>
+      <th></th>
+      <th>${common.rate}2</th>
+      <th>${common.unit}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($mu in $mus)
+    <tr>
+      <td>${mu.Unit.Id}</td>
+      <td>${mu.Rate}</td>
+      <td>
+      #if(${m.trygetprimaryunit($material)})
+        ${m.trygetprimaryunit($material).Id} ${m.trygetprimaryunit($material).Description}
+      #end
+      </td>
+      <td> = </td>
+      <td>${mu.Rate2}</td>
+      <td>${mu.Unit.Id} $!{mu.Unit.Description}</td>
+      <td>${common.remove}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  var oMUs = $('#material-units').dataTable({
+    "bJQueryUI": true,
+    "sPaginationType": "full_numbers",
+    "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "rate", "sType": "numeric"},
+      {"bSortable": false},
+      {"bSortable": false, "sClass": "operator"},
+      {"sClass": "rate", "sType": "numeric"},
+      null,
+      {"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[6]);}, "bSortable": false}
+    ]
+    });
+  //TODO: set the .lable2 height
+  //fnAdjustHeight('#unit');
+  fnjQuerifyInput();
+  fnButtonEffect();
+  $('#formAddUnit').validate({
+    submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+  });
+  fnTrigerRemoveUnit();
+  $('#rate').focus();
+// ]]>
+</script>
+#end

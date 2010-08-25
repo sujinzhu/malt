@@ -1,0 +1,47 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+    h3 { float: left; }
+    #btnNew { float: none; margin-left: 700px; }
+    #instances-container { width: 800px; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#instance').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+<h3>${common.users}</h3>
+<a id="btnNew" href='${url.for("%{action='newuser'}")}' class="fg-button ui-state-default ui-corner-all">${common.createnew}</a>
+
+<div id="instances-container">
+<table id="instance" class="display">
+  <thead>
+    <tr>
+      <th>${common.user}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($user in $users)
+    <tr>
+      <td>${user}</td>
+      <td>
+      ${url.link($common.edit, "%{action='edituser', querystring='id=$user'}")}
+      ${url.link($common.changepassword, "%{action='changeuserpassword', querystring='id=$user'}")}
+      ${url.link($common.remove, "%{action='removeuser', querystring='id=$user'}")}
+      </td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

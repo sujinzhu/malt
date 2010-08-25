@@ -1,0 +1,71 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  h3 { float: left; font-size: 123.1%; }
+  p { margin-top: 1em; height: 25px; float: left; }
+  span { float: left; }
+  .label2 { width: 100px; text-align: right; padding-right: .3em; }
+  .field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
+  .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+
+  .customer-name, .customer-fullname, .notice { width: 300px; }
+  .address { width: 300px; }
+
+  #instance-container { width: 500px; }
+  #linkView { margin: 0 0 1.5em 1.5em; }
+  /* ]]> */
+  </style>
+
+  ${j.jquery_autocomplete()}
+  
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#instance_Address_Id').autocomplete('$url.for("%{area='common', controller='addr', action='autocomplete2'}")', {
+      width: 400,
+      matchContains: true,
+      formatItem: formatAddressItem,
+      formatResult: formatResult
+    });
+    $('#linkView').button();
+    fnDecorative();
+  });
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+  ${common.customer}: ${instance.Id} $!{instance.Name}
+#end
+
+<div id="header-container">
+  <h3>${common.customer}: ${instance.Id} [$!{instance.Name}]</h3>
+  <a id="linkView" href='${url.for("%{action='view', querystring='id=$instance.Id'}")}'>${common.view}</a>
+</div>
+
+<div id="instance-container" class="ui-helper-clearfix">
+  <form action='${url.for("%{action='update'}")}' method="POST">
+  ${f.push("instance")}
+  ${f.hiddenfield("Id")}
+  <p>
+    <span class="label2">${common.name}:</span>
+    <span class="field2 customer-name">${f.textfield("Name", "%{size='30'}")}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">${common.fullname}:</span>
+    <span class="field2 customer-fullname">${f.textfield("Fullname", "%{size='30'}")}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">${common.address}:</span>
+    <span class="field2 address">${f.textfield("Address.Id", "%{size='30'}")}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">${common.is-active}:</span>
+    <span class="field2 status">$!{f.checkboxfield("IsActive")}&nbsp;</span>
+  </p>
+  ${f.pop()}
+  <p>
+    ${f.submit($common.submit)}
+  </p>
+  </form>
+</div>

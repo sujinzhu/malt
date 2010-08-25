@@ -1,0 +1,47 @@
+<h3>Get Input Info:</h3>
+$HtmlHelper.Form("GetInputInfo-Save.rails", "getinputinfo", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+#foreach($item in $bomcmpts)
+#beforeall
+	#set($i = 0)
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+		<tr class="scaffoldrow">
+			<th>${commonText.material}:</th>
+			<th>${commonText.customer}:</th>
+			<th>${commonText.quantity}:</th>
+			<th>${wip.allocatee}:</th>
+			<th>${wip.rtno}:</th>
+			<th>${wip.lineno}:</th>
+			<th>${wip.wdweek}:</th>
+		</tr>
+#odd
+		<tr class="scaffoldrow">
+#even
+		<tr class="scaffoldaltrow">
+#each
+			<td>$HtmlHelper.InputHidden("inputs[${i}].Inmat", "$item.Key.ID")$item.Key.ID</td>
+			<td>
+			##$HtmlHelper.Select("inputs[${i}].Incust")
+			##$HtmlHelper.CreateOptions($customers, "ShortName", "ID", $!Session.customerId)
+			##$HtmlHelper.EndSelect()
+			$FormHelper.Select("inputs[${i}].Incust", ${defautCustomer}, ${customers}, "%{Text='ID', Value='ID'}")
+			</td>
+			#set($inqty = $!Session.quantity * $item.Value)
+			<td>$HtmlHelper.InputHidden("inputs[${i}].Inqty", "${inqty}")${inqty}</td>
+			<td>$HtmlHelper.InputText("inputs[${i}].Inalcat", "$!{Session.allocatee.Trim()}", 30, 100)</td>
+			<td>$HtmlHelper.InputText("inputs[${i}].Inrt", "",15,15)</td>
+			<td>$HtmlHelper.InputText("inputs[${i}].Inline", "0", 3, 3, $DictHelper.Create("validators=number|0|0|999"))</td>
+			<td>$HtmlHelper.InputText("inputs[${i}].Inweek", "0", 2, 2, $DictHelper.Create("validators=number|0|0|54"))</td>
+#after
+		</tr>
+	#set($i=$i+1)
+#afterall
+	</table>
+#end
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$HtmlHelper.SubmitButton($commonText.nextstep)
+</p>
+$HtmlHelper.EndForm()
+

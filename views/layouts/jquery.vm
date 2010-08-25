@@ -1,0 +1,66 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<title>$!{title}</title>
+<link rel="shortcut icon" href="${siteRoot}/Content/favicon.ico" type="image/vnd.microsoft.icon" />
+${h.stylesheet_link("${siteRoot}/Content/css/yui/reset-fonts-grids.css")}
+${h.stylesheet_link("${siteRoot}/Content/css/malt.css")}
+${h.stylesheet_link("${siteroot}/Content/css/fg-button.css")}
+${j.jquery_css('')}
+${j.jquery()}
+${j.jquery_ui()}
+${h.javascript_link("${siteRoot}/Content/js/malt.js")}
+${h.javascript_link("${siteroot}/content/js/fg-button.js")}
+$!{head}
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    #if(${error}) fnDialogError('${error}'); #end
+    fnClassTrigerMaterialMenu();
+  });
+
+  function fnClassTrigerMaterialMenu()
+  {
+    $('.material-id').css("cursor", "pointer").click(function(){fnShowMaterialMenu($(this).text());});
+  }
+
+  function fnShowMaterialMenu(sMaterialId)
+  {
+    $('#material-info').load('${url.for("%{area='inv', controller='material', action='getmenu'}")}', {id: sMaterialId}).dialog({title: sMaterialId});
+  }
+
+  function fnTrigerMaterialMenu(element, sMaterialId)
+  {
+    $(element).after("<span class='material-menu-triger ui-icon ui-icon-info'></span>");
+    $('.material-menu-triger').click(function(){fnShowMaterialMenu(sMaterialId);});
+  }
+// ]]>
+</script>
+${h.javascript_link("${siteroot}/Content/js/site.js")}
+</head>
+<body>
+  <div id="doc3">
+
+    <div id="info" title="Information" class="ui-state-highlight ui-corner-all ui-helper-hidden">
+     <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+     <span id="infoMsg">aa</span>
+     <span class="ui-icon ui-icon-circle-close" style="float: right; margin-left: .3em;" onclick="javascript:fnHideInfo();"></p>
+    </div>
+
+    <div id="bd" class="ui-widget">
+      ${childContent}
+    </div>
+    
+    <div id="error" title="Error!" class="ui-helper-hidden">
+     <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><span id="errorMsg"></span></p>
+    </div>
+
+    <div id="material-info" class="ui-helper-hidden">
+    </div>
+
+  </div>
+  $!{foot}
+</body>
+</html>

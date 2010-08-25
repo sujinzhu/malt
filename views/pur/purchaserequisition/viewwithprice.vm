@@ -1,0 +1,78 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('.button').button();
+    $('#entries').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit"},
+      {"sClass": "price"},
+      {"sClass": "short-date"},
+      {"sClass": "quantity"},
+      {"sClass": "vendor"},
+      null,
+      null
+      ],
+    });
+  });
+// ]]>
+</script>
+#end
+
+<div id="header-container">
+<h3>${common.purchaserequisition}: ${instance.Id}</h3>
+#parse("${siteroot}/pur/purchaserequisition/_head.vm")
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.unit}</th>
+      <th>${common.unitprice}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.orderedquantity}</th>
+      <th>${common.vendor}</th>
+      <th>${common.responsible}</th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>$!{entry.Unit.Description}</td>
+      <td>$!{entry.UnitPrice}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.OrderedQuantity}</td>
+      <td>$!{entry.Vendor.Name}</td>
+      <td>$!{entry.Responsible}</td>
+      <td>$!{entry.Notice}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,20 @@
+<!-- All -->
+#foreach($location in $all)
+#beforeall
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr><th>Location</th><th></th></tr>
+#odd
+	<tr class="scaffoldaltrow">
+#even
+	<tr class="scaffoldrow">
+#each
+		<td>${location.ID}</td>
+		<td>
+		$AjaxHelper.ButtonToRemote("Allow","AllowAuthorization.rails","%{update='allow',with='locationId=${location.ID}&type=${type}&name=${name}'}")
+		 | 
+		$AjaxHelper.ButtonToRemote("Deny","DenyAuthorization.rails","%{update='deny',with='locationId=${location.ID}&type=${type}&name=${name}'}")
+		</td>
+	</tr>
+#afterall
+	</table>
+#end

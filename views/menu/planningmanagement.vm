@@ -1,0 +1,60 @@
+<ul>
+  <li><a href='${url.for("%{area='sales', controller='pnt', action='new'}")}'>
+    <img src="${siteroot}/content/images/doc.png"/>
+    <span>${common.partnumbertranslation}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='sales', controller='sales', action='new'}")}'>
+    <img src="${siteroot}/content/images/user.png"/>
+    <span>${common.salesorder}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='sales', controller='container', action='new'}")}'>
+    <img src="${siteroot}/content/images/shipment.png"/>
+    <span>${common.container}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='pmc', controller='mc', action='index'}")}'>
+    <img src="${siteroot}/content/images/user.png"/>
+    <span>${common.planningmaterial}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='inventory', action='list'}")}'>
+    <img src="${siteroot}/content/images/inventory.png"/>
+    <span>${common.inventory} ${common.query}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='inventory', action='allocated'}")}'>
+    <img src="${siteroot}/content/images/inventory.png"/>
+    <span>${common.deallocate} ${common.inventory}</span></a>
+  </li>
+</ul>
+<ul>
+  <li><a href='${url.for("%{area='sales', controller='pnt', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.partnumbertranslation}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='sales', controller='salesorder', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.salesorder}</span></a>
+  </li>
+</ul>
+<ul>
+  <li><a href='${url.for("%{area='sales', controller='salesorder', action='exportlist'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.soe-list} (${common.export})</span></a>
+  </li>
+  <li><a href='${url.for("%{area='sales', controller='salesorder', action='domesticlist'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.soe-list} (${common.domestic})</span></a>
+  </li>
+  <li><a href='${url.for("%{area='sales', controller='salesorder', action='samplelist'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.soe-list} (${common.sample})</span></a>
+  </li>
+</ul>
+<ul>
+  <li><a href='${url.for("%{area='sales', controller='customer', action='list'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.customer}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='sales', controller='customer', action='new'}")}'>
+    <img src="${siteroot}/content/images/doc.png"/>
+    <span>${common.createnew} ${common.customer}</span></a>
+  </li>
+</ul>

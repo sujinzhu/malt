@@ -1,0 +1,2 @@
+<a class="fg-button ui-corner-all ui-state-default" href='${url.for("%{area='inv', controller='material', action='view', querystring='id=${id}'}")}' target="_blank">${common.masterdata}</a>
+<a class="fg-button ui-corner-all ui-state-default" href='${url.for("%{area='inv', controller='inventory', action='list', querystring='materials=${id}'}")}' target="_blank">${common.inventory}</a>

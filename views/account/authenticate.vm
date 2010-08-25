@@ -1,0 +1,5 @@
+#set($title=$commonText.login)
+#set($MyItemId="account_login")
+$ReturnURL
+<BR>
+$Session.User

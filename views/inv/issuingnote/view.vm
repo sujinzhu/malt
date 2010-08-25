@@ -1,0 +1,165 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #header-container a, #header-container h3 { float: left; }
+  #btnPrint { float: none; margin-left: 1.5em; }
+  #header-container, { width: 800px; }
+  #entries-container, #issued-inventories-container { margin-top: 1em; clear: both; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oEntries;
+    $(function(){
+      $('#header-container a').button();
+
+       $('#entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "so-id"},
+        {"sClass": "repository-id"},
+        {"sClass": "repository-desc"},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"sClass": "unit-id"},
+        {"sClass": "unit-desc"},
+        null
+        ],
+      });
+       $('#issued-inventories').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"sClass": "repository-id"},
+        {"sClass": "repository-desc"},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity"},
+        null, null, null, null
+        ]
+      });
+      fnClassTrigerMaterialMenu();
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.issuingnote}: ${issuingNote.Id}
+#end
+
+<div id="header-container">
+<h3>${common.issuingnote}: ${issuingNote.Id}</h3>
+#if($issuingNote.Printable)
+<a id="btnPrint" href='${url.for("%{action='print', querystring='id=$issuingNote.Id'}")}' target="_blank" class="button">${common.print}</a>
+#end
+
+<table class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Id</th>
+      <th>${common.workshop}</th>
+      <th>${common.applyby}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${issuingNote.Id}</td>
+      <td> ${r.getdescription($issuingNote.IssueTo)} </td>
+      <td>${issuingNote.ApplyBy}</td>
+      <td>${h.getenumname($issuingNote.Status)}</td>
+      <td>${issuingNote.CreateDate.ToShortDateString()}</td>
+    </form>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.ordernumber}</th>
+      <th>${common.repository}</th>
+      <th></th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.issuedquantity}</th>
+      <th>${common.unit}</th>
+      <th></th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $issuingNote.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>$!{entry.JobOrder}</td>
+      <td>$!{entry.IssueFrom}</td>
+      <td>$!{r.getdescription($entry.IssueFrom)}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>${entry.IssuedQuantity}</td>
+      <td>${m.trygetprimaryunit($entry.Material).Id}</td>
+      <td>${m.trygetprimaryunit($entry.Material).Description}</td>
+      <td>$!{entry.Notice}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+
+#if($h.getenumname($issuingNote.status) == "Issued")
+<h3>${common.affectedinventories}:</h3>
+<div id="issued-inventories-container">
+<table id="issued-inventories" class="display">
+  <thead>
+    <tr>
+      <th>${common.repository}</th>
+      <th></th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.quantity}</th>
+      <th>${common.createdate}</th>
+      <th>${common.lastupdatedate}</th>
+      <th>${common.allocatee}</th>
+      <th>${common.stub}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $issuingNote.Entries)
+    #foreach($inventory in $entry.IssuedInventories)
+    <tr>
+      <td>${inventory.Repository}</td>
+      <td>${r.getdescription($inventory.Repository)}</td>
+      <td>${inventory.Material}</td>
+      <td>${m.getname($inventory.Material)}</td>
+      <td>${m.getspecification($inventory.Material)}</td>
+      <td>${inventory.Quantity}</td>
+      <td>${inventory.CreateDate.ToString()}</td>
+      <td>${inventory.LastUpdateDate.ToString()}</td>
+      <td>$!{inventory.Allocatee}</td>
+      <td>$!{inventory.Stub}</td>
+    </tr>
+    #end
+  #end
+  </tbody>
+</table>
+</div>
+#end

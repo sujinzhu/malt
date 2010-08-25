@@ -1,0 +1,183 @@
+## Draft for maintains ReturnToWarehouse collections.
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3, #header-container a { float: left; }
+#header-container a { margin-left: 1em; }
+
+#new-instance-container, #instances-container { margin-top: 1em; }
+#new-instance-container { padding: .8em; width: 900px; }
+
+#entry_Material_Id, .material-menu-triger { float: left; }
+#select-material span { padding: 5px; margin: 0px; float: left; }
+#select-material button { margin-left: .3em;}
+
+#select-purchaseorder { width: 850px; }
+.poe { padding: 3px; margin-top: 5px; }
+.poe span { float: left; }
+.poe .quantity { padding-right: .5em; }
+.poedata { cursor: pointer; }
+
+/* ]]> */
+</style>
+
+${j.jquery_autocomplete()}
+${j.jquery_dataTable()}
+${j.jquery_form()}
+${j.jquery_validate()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('.button').button();
+
+    $('#form-new-entry').validate({
+      submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddEntry}); }
+    });
+
+    $('#entry_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")',{
+      width: 550,
+      matchContains: true,
+      formatItem: formatMaterialItem,
+      formatResult: formatResult,
+      max: 30
+    }).focusout(function(){
+      if($(this).val() > ""){
+        fnTrigerMaterialMenu(this, $(this).val());
+      }
+    }).focusin(function(){
+      $('.material-menu-triger').remove();
+    }).focus();
+
+    $('#entry_Unit_Id').autocomplete('$url.for("%{area='inv', controller='unit', action='autocomplete2'}")', {
+      width: 300,
+      matchContains: true,
+      formatItem: formatItem,
+      formatResult: formatResult
+    });
+
+    oDataTable = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "trade-type"},
+      {"sClass": "jo-id"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit"},
+      {"sClass": "notice"},
+      {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='removeentry'}")}');}, "bSortable": false}
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+  });
+
+  function fnAddEntry(data){
+    if(!fnHasError(data)){
+      $('#get-returned-quantity').fadeOut("slow");
+      $('#select-material').fadeIn("slow");      
+      oDataTable.fnAddData([data['Id'], data['TradeType'], data['OrderNumber'], data['MaterialId'],  data['MaterialName'], data['MaterialSpec'], data['Quantity'], data['UnitDesc'], data['Notice'], '${common.remove}']);
+      $('#entry_Material_Id').val("").focus();
+      $('#entry_Quantity').val("");
+      $('#entry_Notice').val("");
+      $('#entry_Unit_Id').val("");
+    }
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.sheet-for-return-to-vendor}: ${sheet.Id}
+#end
+
+<div id="header-container">
+<h3>${common.return-to-vendor}</h3>
+<a href='${url.for("%{action='finalize', querystring='id=$sheet.Id'}")}' class='button'>${common.finish}</a>
+<a href='${url.for("%{action='steering', querystring='id=$sheet.Id'}")}' class='button'>${common.according-to-orders}</a>
+
+<table class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>${common.id}</th>
+      <th>${common.return-from}</th>
+      <th>${common.returned-by}</th>
+      <th>${common.vendor}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${sheet.Id}</td>
+      <td>$!{r.getdescription($sheet.ReturnFrom)}</td>
+      <td>${sheet.ReturnedBy}</td>
+      <td>$!{sheet.Vendor.Name}</td>
+      <td>${h.getenumname($sheet.Status)}</td>
+      <td>${sheet.CreateDate.ToShortDateString()}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="new-instance-container" class="ui-helper-clearfix ui-widget-content ui-corner-all">
+
+${h.start_with_layout($url.for("%{action='addentry'}"), "form-new-entry")}
+${f.push("entry")}
+
+$f.hiddenfield("Sheet.Id")
+${h.field($common.tradetype, $f.select("TradeType", $f.enumtopairs("HJ.Malt.Domain.Common.TradeTypeEnum"), "%{value='first', class='required'}"), true)}
+${h.field($common.material, $f.textfield("Material.Id", "%{class='required'}"), true)}
+${h.field($common.quantity, $f.textfield("Quantity", "%{class='required', min='0.000000001'}"), true)}
+${h.field($common.unit, $f.textfield("Unit.Id", "%{class='required'}"), true)}
+${h.field($common.notice, $f.textfield("Notice"))}
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+${h.end_with_layout()}
+
+</div>
+
+<div id="instances-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.tradetype}</th>
+      <th>${common.ordernumber}</th>
+      <th>${common.material}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.quantity}</th>
+      <th>${common.unit}</th>
+      <th>${common.notice}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $sheet.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${h.getenumname($entry.TradeType)}</td>
+      <td>
+      #if($entry.OrderEntry)
+      <a href='${url.for("%{area='pur', controller='purchaseorder', action='view', querystring='id=$entry.OrderEntry.PO.Id'}")}' target='_blank'>
+      $!{entry.OrderEntry.PO.Id}
+      </a>
+      #end
+      </td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.Quantity}</td>
+      <td>$!{m.trygetprimaryunit($entry.Material).Description}</td>
+      <td>$!{entry.Notice}</td>
+      <td>${common.remove}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

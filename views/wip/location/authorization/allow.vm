@@ -1,0 +1,19 @@
+<!-- Allow -->
+##$loca means allowed location
+#foreach($loca in $allows)
+#beforeall
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr><th>Location</th><th></th></tr>
+#odd
+	<tr class="scaffoldaltrow">
+#even
+	<tr class="scaffoldrow">
+#each
+		<td>${loca.ID}</td>
+		<td>
+		$AjaxHelper.ButtonToRemote("Remove","RemoveAllowedAuthorization.rails","%{update='allow',with='locationId=${loca.ID}&type=${type}&name=${name}'}")
+		</td>
+	</tr>
+#afterall
+	</table>
+#end

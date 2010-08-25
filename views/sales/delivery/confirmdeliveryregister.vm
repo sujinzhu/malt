@@ -1,0 +1,6 @@
+<fieldset>
+<legend>$commonText.confirmtheregister?</legend>
+<p>
+<a href="${siteRoot}/Sales/Delivery/DoDeliveryRegister.rails?ivkey.DOCTYPE=$inv.Key.DOCTYPE&ivkey.DOCNUMBR=$inv.Key.DOCNUMBR&ivkey.LNSEQNBR=$inv.Key.LNSEQNBR&cpoitem.ID=$cpoitem.ID">Yes</a> | $AjaxHelper.LinkToRemote("Cancel", "${siteRoot}/Home/Nothing.rails", $DictHelper.CreateDict( "update=selectcpoitem"))
+</p>
+</fieldset>

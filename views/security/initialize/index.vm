@@ -1,0 +1,16 @@
+﻿#capturefor(head)
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  $(function(){
+    $('#result').load('${url.for("%{action='initializeuser'}")}');
+    $('#result').load('${url.for("%{action='initializerole'}")}');
+    $('#result').load('${url.for("%{action='initializeroleauthorization'}")}');
+    $('#result').load('${url.for("%{action='createdefaultrepositoriesandauthorizations'}")}');
+    $('#result').load('${url.for("%{action='initialbiproleandauthorizations'}")}');
+    $('#result').load('${url.for("%{action='InitialBipVendorCategories'}")}');
+  });
+  </script>
+#end
+<h3>Please wait for initialization complete...</h3>
+<div id="result">
+
+</div>

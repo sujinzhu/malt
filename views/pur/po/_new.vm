@@ -1,0 +1,6 @@
+﻿${form.push("po")}
+${h.start_with_layout($url.for("%{action='create'}"), "newPOForm")}
+#parse("${siteroot}/pur/po/_fields.vm")
+${h.field("", $form.submit($common.create))}
+${form.pop()}
+${h.end_with_layout()}

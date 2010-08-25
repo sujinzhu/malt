@@ -1,0 +1,45 @@
+#foreach($location in $locations)
+#beforeall
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr>
+		<th>Id</th><th>Category</th><th>Description</th><th>Under Department</th><th>DeptID</th>
+		<th>L1</th><th>L2</th><th>L3</th><th>L4</th><th>Is Active</th>
+		<th></th><th></th>
+	</tr>
+#odd
+	<tr class="scaffoldaltrow">
+#even
+	<tr class="scaffoldrow">
+#each
+		<td>${Html3Helper.LinkTo("${location.ID}","wip","location","show",${location.ID})}</td>
+		<td>${location.Category}</td>
+		<td>$!{location.Description}</td>
+		<td>${location.UnderDepartment}</td>
+		<td>
+		#if($location.UnderDepartment)
+		[${location.DeptID}] ${CoreHelper.GetDept($location.DeptID).DeptName.Trim()}
+		#end
+		</td>
+		<td>$!{location.LevelName1}</td>
+		<td>$!{location.LevelName2}</td>
+		<td>$!{location.LevelName3}</td>
+		<td>$!{location.LevelName4}</td>
+		<td>${location.IsActive}</td>
+		<td>
+		#if($location.IsActive)
+		$HtmlHelper.LinkToWithPost("Dis-Activate","Location","DisAcitvate",${location.ID},"Are you sure to dis-activate this Location?")
+		#else
+		$HtmlHelper.LinkToWithPost("Activate","Location","Acitvate",${location.ID},"Are you sure to activate this Location?")
+		#end
+		</td>
+		<td>
+		$HtmlHelper.LinkTo("${commonText.edit}","Location","Edit",${location.ID})
+		 | 
+		$HtmlHelper.LinkTo("${commonText.show}","Location","Show",${location.ID})
+		</td>
+	</tr>
+#afterall
+	</table>
+#nodata
+	<p>No any locations found.</p>
+#end

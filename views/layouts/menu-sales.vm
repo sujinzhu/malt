@@ -1,0 +1,33 @@
+<LI>${commonText.sales}
+<UL>
+	<LI>${commonText.customer}
+	<UL>
+		<LI>$Html3Helper.LinkTo("$commonText.list", "Core","Customer", "List")</LI>
+	</UL>
+	</LI>
+	<LI>${sales.customerpo}
+	<UL>
+		<LI>$Html3Helper.LinkTo("$commonText.search", "Sales","CustomerPO", "Search")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.list", "Sales","CustomerPO", "List")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.createnew", "Sales","CustomerPO", "New")</LI>
+	</UL>
+	</LI>
+	<LI>${sales.contractreviewreport}
+	<UL>
+		<LI>$Html3Helper.LinkTo("$commonText.createnew", "Sales","FGRequest", "New")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.list", "Sales","FGRequest", "List")</LI>
+	</UL>
+	</LI>
+	<LI>
+	$Html3Helper.LinkTo("$commonText.order $commonText.summary $commonText.report", "Sales","OrderSummary", "GetCriterions")
+	</LI>
+	<LI>${commonText.register} ${commonText.delivery}
+	<UL>
+		<LI>
+		$Html3Helper.LinkTo("$commonText.from $commonText.invoice", "Sales","Delivery", "RegisterInvoiceOnCustomerPO")
+		</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.from VMI", "Sales","Delivery", "RegisterDeliveryOnCustomerPO")</LI>
+	</UL>
+	</LI>
+</UL>
+</LI>

@@ -1,0 +1,9 @@
+<h2>Remove MonoRailURL [${url.ID}]</h2>
+
+<p>
+Do you really want to remove this MonoRailURL (${url.Area}].[${url.Controller}].[${url.Action}]) ?
+</p>
+
+<p>
+$Html3Helper.LinkTo("Yes", "sysadmin","monorailurl", "remove", $id) | <a href="javascript:history.go(-1);" >Cancel</a>
+</p>

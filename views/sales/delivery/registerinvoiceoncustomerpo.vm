@@ -1,0 +1,8 @@
+<h2>Find Invoices that need register on Customer PO:</h2>
+#parse("${siteRoot}/sales/delivery/criterions1.vm")
+<br/>
+#parse("${siteRoot}/sales/delivery/criterions2.vm")
+<br/>
+#parse("${siteRoot}/sales/delivery/criterions3.vm")
+<br/>
+#parse("${siteRoot}/sales/delivery/criterions4.vm")

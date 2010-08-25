@@ -1,0 +1,20 @@
+<fieldset>
+<legend>${commonText.select} ${commonText.vendor} 
+${AjaxHelper.ButtonToRemote("${commonText.close}", "${siteRoot}/Home/Nothing.rails", $DictHelper.CreateDict( "update=selectvendor" ) )}</legend>
+$HtmlHelper.Form("${siteRoot}/Core/Vendor/DoSearch1.rails", "searchforselect", "post")
+<p>
+$HtmlHelper.LabelFor("id", "Where ID like or is:")
+$HtmlHelper.InputText("id", "")
+</p>
+<p>
+$HtmlHelper.LabelFor("name", "Where Name like or is:")
+$HtmlHelper.InputText("name", "")
+</p>
+<p>
+$HtmlHelper.LabelFor("shortname", "Where ShortName like or is:")
+$HtmlHelper.InputText("shortname", "")
+</p>
+<p>${AjaxHelper.ButtonToRemote("${commonText.search}", "${siteRoot}/Core/Vendor/DoSearch1.rails", $DictHelper.CreateDict("update=vendorlist", "with=Form.serialize($('searchforselect'))"))}</p>
+
+$HtmlHelper.EndForm()
+</fieldset>

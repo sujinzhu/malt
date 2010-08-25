@@ -1,0 +1,64 @@
+#set ($i = 0)
+#foreach($vendor in $vendors)
+#beforeall
+<fieldset>
+<legend>
+$commonText.vendor $commonText.list 
+${AjaxHelper.ButtonToRemote("${commonText.close}", "${siteRoot}/Home/Nothing.rails", $DictHelper.CreateDict( "update=vendorlist" ) )}
+</legend>
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr>
+		<th></th>
+		<th>ID</th>
+		<th>ShortName</th>
+		<th>Name</th>
+		<th></th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>$HtmlHelper.InputCheckbox("selectedVendor[${i}].Id", ${vendor.Id})</td>
+		<td>${vendor.Id.Trim()}</td>
+		<td>$!{vendor.ShortName.Trim()}</td>
+		<td>$!{vendor.Name.Trim()}</td>
+		<td>${AjaxHelper.LinkToRemote("${commonText.select}", "${siteRoot}/Core/Vendor/DoSelectVendor.rails", $DictHelper.CreateDict( "update=selectedvendor", "with='id=${vendor.Id}'") )}</td>
+	</tr>
+	#set ($i = $i + 1)
+#afterall
+
+	#if($vendors.TotalItems > 0)
+	#set($options="id=$!{id}&name=$!{name}&shortname=$!{shortname}&page=")
+	<tr>
+		<td colspan="2">Showing $vendors.FirstItem - $vendors.LastItem of ${vendors.TotalItems}</td>
+		<td colspan="2" align="right">
+		#if($vendors.HasFirst)
+			 $AjaxHelper.LinkToRemote("first", "${Context.Request.FilePath}", $DictHelper.Create("update=vendorlist", "with='${options}1'"))
+		#else
+			first
+		#end
+		#if($vendors.HasPrevious)
+			 | $AjaxHelper.LinkToRemote("prev", "${Context.Request.FilePath}", $DictHelper.Create("update=vendorlist", "with='${options}${vendors.PreviousIndex}'"))
+		#else
+			 | prev
+		#end
+		#if($vendors.HasNext)
+			 | $AjaxHelper.LinkToRemote("next", "${Context.Request.FilePath}", $DictHelper.Create("update=vendorlist", "with='${options}${vendors.NextIndex}'"))
+		#else
+			 | next
+		#end
+		#if($vendors.HasLast)
+			 | $AjaxHelper.LinkToRemote("last", "${Context.Request.FilePath}", $DictHelper.Create("update=vendorlist", "with='${options}${vendors.LastIndex}'"))
+		#else
+			 | last
+		#end
+		</td>
+	</tr>
+	#end	
+
+</table>
+</fieldset>
+<br/>
+#end
+

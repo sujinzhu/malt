@@ -1,0 +1,3 @@
+$HtmlHelper.LabelFor("vendorId", "Vendor Id")
+$HtmlHelper.InputText("vendorId", "${vendor.Id}")
+[${vendor.ShortName.Trim()}] ${vendor.Name.Trim()}

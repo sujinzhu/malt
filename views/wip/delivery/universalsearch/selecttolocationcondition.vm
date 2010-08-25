@@ -1,0 +1,5 @@
+$HtmlHelper.LabelFor("toLocationId","$commonText.add $commonText.location:")
+$HtmlHelper.Select("toLocationId")
+$HtmlHelper.CreateOptions($locations, "ID", "ID")
+$HtmlHelper.EndSelect()
+$AjaxHelper.ButtonToRemote("+", "AddToLocationCondition.rails", $DictHelper.CreateDict( "update=toLocationConditions", "with=Form.serialize($('universalsearch'))" ) )

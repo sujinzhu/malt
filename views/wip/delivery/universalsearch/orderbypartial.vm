@@ -1,0 +1,32 @@
+#set ($i = 0)
+#foreach ($order in $orders)
+#beforeall	
+	<fieldset>
+		<legend>Order By:</legend>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tbody>
+#each
+		<tr class="scaffoldrow" id=order$i>
+		<td>
+			$HtmlHelper.InputHidden("propertyNames", "${order.Key}")
+			$order.Key
+		</td>
+		<td>
+			$HtmlHelper.InputHidden("ascendings", "${order.Value}")
+			#if($order.Value)
+			${commonText.ascending}
+			#else
+			${commonText.descending}
+			#end
+		</td>
+		<td>
+			$AjaxHelper.ButtonToRemote("-", "SubtractOrderByCondition.rails", $DictHelper.CreateDict( "update=order${i}" ))
+		</td>
+		</tr>
+	#set ($i = $i + 1)
+#afterall
+	</tbody>
+	</table>
+	</fieldset>
+	<br/>
+#end

@@ -1,0 +1,162 @@
+﻿#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+h3 { float: left; font-size: 123.1%; }
+#criteria-container p { margin-top: 1em; height: 25px; float: left; }
+#criteria-container span { float: left; }
+.label2 { width: 120px; text-align: right; padding-right: .3em; }
+.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
+.label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%; font-size: 93%; }
+
+.label-s { font-size: 77%; }
+.customer, .order-number, .include-finished-order, .part-number, .revision { width: 230px; }
+.required-date { width: 330px; }
+
+#header-container h3 { float: left; }
+#header-container .button { margin-left: 1em; }
+#criteria-container { width: 800px; }
+#instances-container { margin-top: 2em; }
+/* ]]> */
+</style>
+
+${j.jquery_autocomplete()}
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    oDataTable = $('#instances').dataTable({
+      "bProcessing": true,
+      "bServerSide": true,
+      "sAjaxSource": '$url.for("%{action='search'}")',
+      "bJQueryUI": true,
+      "fnServerData": function(sSource, aoData, fnCallback){
+        var url = sSource + '?customer=' + $('#customer').val() + '&orderNumber=' + $('#orderNumber').val() + '&fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val() + '&partNumber=' + $('#partNumber').val() + '&revision=' + $('#revision').val() + '&includeFinishedOrder=' + $('#includeFinishedOrder').val();
+        jQuery.get(url, aoData, function(json){
+          if(!fnHasError(json)){
+            fnCallback(json);
+          }
+        },
+       'json');
+      },
+      "aoColumns": [
+      {"bVisible": false},
+      {"bVisible": false},
+      {"sClass": "customer-name"},
+      {"sClass": "po-id", "fnRender": function(oObj){return fnGetLink(oObj.aData[1], oObj.aData[3]);}, "sType": "html"},
+      null,
+      null,
+      {"sClass": "short-date required-date"},
+      {"sClass": "quantity required-quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity margin"},
+      {"sClass": "unit-desc"},
+      ],
+    });
+
+    $('.button').button();
+    $('#btnSearch').click(function(){oDataTable.fnDraw();});
+
+    $('#customer').autocomplete('$url.for("%{controller='customer', action='autocomplete2'}")', {
+      width: 300,
+      matchContains: true,
+      formatItem: formatCustomerItem,
+      formatResult: formatResult
+    }).focus();
+
+    $('.date').datepicker();
+
+    fnDecorative();
+  });
+
+  function fnGetLink(iId, sOrderNumber){
+    var linkView =  '$url.for("%{action='view', querystring='id='}")' + iId;
+    var linkEdit =  '$url.for("%{action='edit', querystring='id='}")' + iId;
+    return "<a target='_blank' href='" + linkView + "'>" + sOrderNumber + "</a>&nbsp<a target='_blank' href='" + linkEdit + "'>${common.edit}</a>";
+  }
+
+  function fnDecorative(){
+    $('.label2').addClass('ui-state-active ui-corner-bl');
+    $('.field2').addClass('ui-state-hover ui-corner-tr');
+    $(':submit').button();
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.customerpo}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.customerpo}</h3>
+<a class="button" href='${url.for("%{action='new'}")}'>${common.createnew}</a>
+</div>
+
+<div id="criteria-container" class="ui-helper-clearfix">
+
+  <p>
+    <span class="label2">${common.customer}:</span>
+    <span class="field2 customer">
+      <input type="text" name="customer" value="" id="customer"/>
+    </span>
+  </p>
+
+  <p>
+    <span class="label2">${common.ordernumber}:</span>
+    <span class="field2 order-number">
+      <input type="text" name="orderNumber" value="" id="orderNumber"/>
+    </span>
+  </p>
+
+  <p>
+    <span class="label2">${common.materialid} (${common.customers}):</span>
+    <span class="field2 part-number">
+      <input type="text" name="partNumber" value="" id="partNumber"/>
+    </span>
+  </p>
+
+  <p>
+    <span class="label2">${common.revision}:</span>
+    <span class="field2 revision">
+      <input type="text" name="revision" value="" id="revision"/>
+    </span>
+  </p>
+
+  <p>
+    <span class="label2">${common.requireddate}:</span>
+    <span class="field2 required-date">
+      ${common.from}: <input type="text" name="fromDate" value="" size="10" id="fromDate" class="date"/>
+      ${common.to}: <input type="text" name="toDate" value="" size="10" id="toDate" class="date"/>
+    </span>
+  </p>
+
+  <p>
+    <span class="label2 label-s">${common.includefinishedorder}?</span>
+    <span class="field2 include-finished-order">
+      <input type="checkbox" name="includeFinishedOrder" value="" />
+    </span>
+  </p>
+
+<p><a id="btnSearch" class="button">${common.search}</a></p>
+</div>
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Id</th>
+      <th>${common.customer}</th>
+      <th>${common.ordernumber}</th>
+      <th>${common.materialid} (${common.customers})</th>
+      <th>${common.revision}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.deliveredquantity}</th>
+      <th>${common.ordermargin}</th>
+      <th>${common.baseunit}</th>
+    </tr>
+  </thead>
+</table>
+</div>

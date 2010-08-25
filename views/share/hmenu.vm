@@ -1,0 +1,10 @@
+<!-- load the menu stylesheet -->
+<style type="text/css">
+  @import url("${siteRoot}/hmenu/skin-xp.css");
+</style>
+<!-- declare the menu location -->
+<script type="text/javascript">
+  _dynarch_menu_url = "${siteRoot}/hmenu/";
+</script>
+<!-- load the menu program file -->
+<script type="text/javascript" src="${siteRoot}/hmenu/hmenu.js"></script>

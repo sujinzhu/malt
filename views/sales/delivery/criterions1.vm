@@ -1,0 +1,8 @@
+<fieldset>
+<legend>1. All:</legend>
+$HtmlHelper.Form("Search1.rails", "criterions1", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+$HtmlHelper.SubmitButton("$commonText.search")
+
+$HtmlHelper.EndForm()
+</fieldset>

@@ -1,0 +1,14 @@
+$HtmlHelper.Form("DoSearch4.rails", "4bylineandweek", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<p>$HtmlHelper.LabelFor("line", "Line#:")
+$HtmlHelper.InputText("line", "0", 3, 3, $DictHelper.Create("validators=number|0|1|999"))
+    $HtmlHelper.LabelFor("week", "${commonText.week}")
+$HtmlHelper.InputText("week", "${week}", 3, 3, $DictHelper.Create("validators=number|0|1|53"))
+
+#set($minyear = $year - 2)
+#set($maxyear = $year + 1)
+    $HtmlHelper.LabelFor("year", "${commonText.year}")
+$HtmlHelper.InputText("year", "${year}", 4, 4, $DictHelper.Create("validators=number|0|${minyear}|${maxyear}"))
+$HtmlHelper.SubmitButton(${commonText.search})
+</p>
+$HtmlHelper.EndForm()
+

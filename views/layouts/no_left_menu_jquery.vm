@@ -1,0 +1,56 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="shortcut icon" href="${siteRoot}/Content/favicon.ico" type="image/vnd.microsoft.icon" />
+${h.stylesheet_link("${siteRoot}/Content/css/yui/reset-fonts-grids.css")}
+${h.stylesheet_link("${siteRoot}/Content/css/malt.css")}
+${j.jquery_css('')}
+${j.jquery()}
+${j.jquery_ui()}
+${h.javascript_link("${siteRoot}/Content/js/malt.js")}
+$!{head}
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    #if(${error}) fnDialogError('${error}'); #end
+  });
+// ]]>
+</script>
+${h.javascript_link("${siteroot}/Content/js/site.js")}
+</head>
+<body>
+  <div id="doc2">
+
+    <div id="hd">
+    </div>
+
+    <div id="menu">
+    <!-- Site menu: begin -->
+
+      #parse("${siteRoot}/layouts/tab-menu.vm")
+
+    <!-- Site menu: end -->
+    </div>
+
+    <div id="info" title="Information" class="ui-state-highlight ui-corner-all ui-helper-hidden">
+     <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+     <span id="infoMsg">aa</span>
+     <span class="ui-icon ui-icon-circle-close" style="float: right; margin-left: .3em;" onclick="javascript:fnHideInfo();"></p>
+    </div>
+    <div id="bd" class="ui-widget">
+      $!{pageHeader}
+      <div class="pageBody">
+      ${childContent}
+      </div>
+    </div>
+    
+    <div id="error" title="Error!" class="ui-helper-hidden">
+     <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><span id="errorMsg"></span></p>
+    </div>
+  </div>
+  $!{foot}
+</body>
+</html>

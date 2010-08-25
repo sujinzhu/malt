@@ -1,0 +1,11 @@
+<p>$commonText.process:</p>
+#foreach($process in $processes)
+#beforeall
+<UL>
+#each
+<LI>
+<input type="checkbox" name="process[$process.ID].ID" value="$process.ID">$process.Name</input>
+</LI>
+#afterall
+</UL>
+#end

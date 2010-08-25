@@ -1,0 +1,101 @@
+﻿#capturefor(head)
+  <link rel="stylesheet" href="${siteroot}/content/css/inv/receiving/received.css" type="text/css" media="screen" charset="utf-8" />
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#rn-entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "po-id"},
+        {"sClass": "short-date"},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"sClass": "unit-id"},
+        {"bVisible": false},
+        null,
+        {"bVisible": false}
+        ]
+      });
+
+      $('.button').button();
+    });
+    function fnAccept(){
+      document.location='${url.for("%{action='accept', querystring='id=${rn.Id}'}")}';
+    }
+    function fnReject(){
+      document.location='${url.for("%{action='reject', querystring='id=${rn.Id}'}")}';
+    }
+  // ]]>
+  </script>
+#end
+
+<h3>${common.receivingnote} : ${rn.Id}</h3>
+
+<table id="rn-header" class="display">
+  <thead>
+    <tr class="ui-widget-header ui-corner-top">
+      <th>${common.vendor}</th>
+      <th>${common.receiveddate}</th>
+      <th>${common.deliverynoteid}</th>
+      <th>${common.consignee}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content ui-corner-bottom">
+      <td>${rn.Vendor.Id}</td>
+      <td>${dateformat.ToShortDate($rn.ReceivedDate)}</td>
+      <td>${rn.DeliveryNoteId}</td>
+      <td>${rn.Consignee}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button id="btnAccept" onclick="javascript:fnAccept();">${common.accept}</button>
+<button id="btnReject" onclick="javascript:fnReject();">${common.reject}</button>
+<a class="button" href='${url.for("%{action='print', querystring='id=$rn.Id'}")}'>${common.print} ${common.inspecting-application}</a>
+
+<table id="rn-entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.purchaseorder}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.material}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.receivedquantity}</th>
+      <th>${common.baseunit}</th>
+      <th>${common.packing}</th>
+      <th>${common.notice}</th>
+      <th>Accepted?</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($rne in $rn.Entries)
+    <tr>
+      <td>${rne.Id}</td>
+      <td><a href='${url.for("%{area='pur', controller='purchaseorder', action='view', querystring='id=$rne.POE.PO.Id'}")}' target='_blank'>${rne.POE.PO.Id}</a></td>
+      <td>${rne.POE.RequiredDate.ToShortDateString()}</td>
+      <td>${rne.POE.Material.Id}</td>
+      <td>${rne.POE.Material.Name}</td>
+      <td>${rne.POE.Material.Specification}</td>
+      <td>${rne.POE.RequiredQuantity}</td>
+      <td>${rne.ReceivedQuantity}</td>
+      <td>$!{rne.POE.Unit.Description}</td>
+      <td>$!{rne.Packing}</td>
+      <td>$!{rne.Notice}</td>
+      <td>${rne.Accepted}</td>
+    </tr>
+  #end
+  </tbody>
+</table>

@@ -1,0 +1,27 @@
+<ul>
+#foreach($instance in $instances)
+
+  <li class="bom ui-helper-clearfix">
+    <span class="material-id">${instance.Compound.Id}</span>
+    <span class="bom-desc">
+    #if(${instance.description})
+      ${instance.description}
+    #else
+      ${common.bomwithoutdescription}
+    #end
+    </span>
+    <a id="${instance.Id}" class="add-branch">${common.select}</a>
+    <a target='_blank' href='${url.for("%{area='inv', controller='bom', action='view', querystring='id=$instance.Id'}")}'>${common.view}</a>
+  </li>
+
+#end
+</ul>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $('.bom a').button();
+  $('.add-branch').click(function(){
+    fnAddBranch(this.id);
+  });
+// ]]>
+</script>

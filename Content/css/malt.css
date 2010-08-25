@@ -1,0 +1,106 @@
+#hd { margin-top: 7px;}
+#menu {font-size:93%; margin-top:10px;}
+#bd { margin-top: 10px;}
+
+h3 {font-size:108%;}
+h3 {padding-top: 1em; padding-bottom: 1em; }
+h2 {font-size:116%;}
+h1 {font-size:123.1%;}
+h1, h2, h3 {font-weight: bold; font-family: Serif; clear:both;}
+#header {font-size: 138.5%; padding: 15px 70px 10px 20px; }
+#pageHeader {font-size: 108%; padding: 5px 5px 5px 15px; font-weight: bold;}
+#pageHeader button {float: right; font-size: 85%;}
+#pageHeader button span{float: left;}
+#pageHeader {font-family: Serif;}
+#info { padding: 0.5em; margin-top: 10px; width: 80%; }
+.pageBody {font-size: 85%; margin-top: -1px; padding: 5px 3px 15px 3px; }
+/*.pageBody .ui-widget-header { padding: 3px 3px 3px 10px; }*/
+/*.pageBody .ui-widget-content { margin-top: -1px; padding: 5px 3px 5px 3px;}*/
+.ui-dialog {font-size: 85%;}
+#buttonContainer { padding: 30px 0 30px 0; text-align: center;}
+#buttonContainer span {padding: 0 5px 0 5px;}
+#buttonContainer, #buttonContainer button, #buttonContainer span{font-size: 153.9%; }
+
+.nosuiteddata {padding: 3px 3px 3px 15px; margin: 3px;}
+
+.page-title { font-size: 116%; padding-bottom:10px}
+.page-content { padding-left:10px; }
+.formbuild { margin: 10px 0 10px 10px; }
+.error { color: red; }
+  
+.header th, .header td, .list th, .list td, .formbuild td {padding: 3px 3px 3px 3px;}
+.header table, .list table {margin-top: 5px; }
+  
+  #footer {
+    margin-top: 7px;
+    padding: 5px 0 5px 0;
+    text-align: center;
+  }
+  #footer p { font-size: 77%; }
+  .paginator td, .paginator th { padding: 5px 5px 5px 5px; }
+  #pattern-head {margin-bottom:10px;}
+  #pattern-head th { text-align: center; padding: 3px 3px; font-size:77%; }
+  #pattern-head td { padding: 5px 5px 5px 5px; font-size:85%;}
+  .paginator th, .pname, .pcode { font-size: 85%; }
+  
+
+#prod_descs { font-size: 85%; }
+#prod_descs button { margin: 0 5px 5px 0; }
+  
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables features
+ */
+
+/*.dataTables_wrapper*/
+/*.dataTables_processing*/
+/*.dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}*/
+#btn_add span, #btn_open span, #btn_remove span, #btn_calendar span { float: left; }
+
+/*
+ * Theme list
+ */
+
+#themeGallery li { float: left; width: 96px; color: #fff; font-size: 1em; margin: .8em 5px .8em 0; list-style: none; }
+#themeGallery li img { width:90px; height: auto; display: block; padding-top: 3px; border: 0; position: relative; }
+#themeGallery li span {display: block; margin: .1em 4px; }
+
+/*
+ * mainMenu list
+ */
+#mainMenu { padding-left: .8em; }
+#mainMenu ul { clear: both; }
+#mainMenu li { float: left; width: 96px; font-size: 1em; margin: .8em 1em .8em 0; list-style: none; cursor: pointer;}
+#mainMenu li img { height: auto; display: block; padding-top: 3px; border: 0; position: relative; }
+#mainMenu li span {display: block; margin: .1em 4px; }
+
+#site-menu li { cursor: pointer; }
+
+/*
+ * for jquery autocomplete
+ */
+.ac_results li { text-align: left; }
+.ac_results ul span { float: left; margin-right: .2em; }
+.ac_results ul span { margin-right: .5em; }
+
+/*
+ * for using in DataTable and AutoComplete
+ */
+.jo-id .po-id, .pr-id { min-width: 80px; }
+.material-id { width: 95px; } /* for DataTable, you may override this in document. */
+.material-name { width: 200px; }
+.material-spec { width: 200px; }
+.short-date { min-width: 30px; max-width: 40px; }
+.price, .quantity { text-align: right; width: 100px; }
+.unit-id { width: 30px; }
+.unit, .unit-desc, .unit-description { width: 80px; }
+.address-id, .vendor-id, .customer-id { width: 60px; }
+.vendor, .vendor-name { width: 100px; }
+.address { width: 280px; }
+.repository-id { width: 50px; }
+.repository-desc { width: 150px; }
+.select-link, .remove-link { cursor: pointer; }
+.trade-type { min-width: 80px; max-width: 120px;}
+.sheet-id { width: 80; }

@@ -1,0 +1,64 @@
+#foreach($stock in $stocks)
+#beforeall
+	#set($summary = $WIPHelper.SummarizeStocks($stocks))
+	<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr>
+		<th>${commonText.material}</th>
+		<th>${commonText.location}</th>
+		<th>${commonText.customer}</th>
+		<th>Allocatee</th>
+		<th>${commonText.quantity}</th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>${stock.Key.Material}</td>
+		<td>${stock.Key.Location}</td>
+		<td>${stock.Key.Customer}</td>
+		<td>${stock.Key.Allocatee.Trim()}</td>
+		<td align="right">${StringHelper.Format("{0:0}", $stock.Quantity)}</td>
+	</th>
+#afterall
+	#foreach($item in $summary)
+	#odd
+		<tr class="scaffoldaltrow">
+	#even
+		<tr class="scaffoldrow">
+	#each
+			<td colspan="4" align="right"><b>${item.Key}</b></td>
+			<td align="right"><b>${StringHelper.Format("{0:0}",${item.Value})}</b></td>
+		</tr>
+	#end
+	#if($stocks.TotalItems > 0)
+	<tr>
+		<td colspan="2">Showing $stocks.FirstItem - $stocks.LastItem of ${stocks.TotalItems}</td>
+		<td colspan="3" align="right">
+		#if($stocks.HasFirst)
+			 $PaginationHelper.CreatePageLinkWithCurrentQueryString(1, "first", null)
+		#else
+			first
+		#end
+		#if($stocks.HasPrevious)
+			 | $PaginationHelper.CreatePageLinkWithCurrentQueryString(${stocks.PreviousIndex}, "prev", null)
+		#else
+			 | prev
+		#end
+		#if($stocks.HasNext)
+			 | $PaginationHelper.CreatePageLinkWithCurrentQueryString(${stocks.NextIndex}, "next", null)
+		#else
+			 | next
+		#end
+		#if($stocks.HasLast)
+			 | $PaginationHelper.CreatePageLinkWithCurrentQueryString(${stocks.LastIndex}, "last", null)
+		#else
+			 | last
+		#end
+		</td>
+	</tr>
+	#end
+	</table>
+#nodata
+	<p>No items.</p>
+#end

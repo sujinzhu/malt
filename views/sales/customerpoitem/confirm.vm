@@ -1,0 +1,12 @@
+<fieldset>
+<legend>Remove:</legend>
+
+<p>
+Do you really want to remove this Customer PO Item ?
+</p>
+
+<p>
+$Html3Helper.LinkTo("Yes", "Sales","CustomerPOItem", "Remove", $id) | $AjaxHelper.LinkToRemote("Cancel", "${siteRoot}/Home/Nothing.rails", $DictHelper.CreateDict( "update=cpoitemoperation"))
+</p>
+
+</fieldset>

@@ -1,0 +1,7 @@
+#if($delivery.Valid && !$delivery.IsSigned && $Session.User.Identity.IsAuthenticated)
+<p>
+$AjaxHelper.LinkToRemote("${commonText.sign}", "${siteRoot}/wip/delivery/confirmsign.rails", $DictHelper.CreateDict("update=operate", "with='id=${delivery.Id}'"))
+$AjaxHelper.LinkToRemote("${commonText.callback}", "${siteRoot}/wip/delivery/confirmcallback.rails", $DictHelper.CreateDict("update=operate", "with='id=${delivery.Id}'"))
+</p>
+<div id="operate"></div>
+#end

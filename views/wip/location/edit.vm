@@ -1,0 +1,40 @@
+$FormHelper.Push("location")
+$FormHelper.FormTag("%{action='Update.rails'}")
+$FormHelper.HiddenField("ID")
+<h3>Location: [${location.ID}]</h3>
+<p>$FormHelper.LabelFor("Category","Category:")
+$FormHelper.TextField("Category")
+</p>
+<p>$FormHelper.LabelFor("Description","Description:")
+$FormHelper.TextField("Description")
+</p>
+<p>$FormHelper.LabelFor("UnderDepartment","UnderDepartment?")
+$FormHelper.CheckboxField("UnderDepartment")
+</p>
+<p>$FormHelper.LabelFor("DeptID","Department:")
+$FormHelper.Select("DeptID",${depts},"%{Text='DeptName',Value='ID',firstoption='Select Dept'}")
+</p>
+<p>$FormHelper.LabelFor("LevelName1","Level Name1:")
+$FormHelper.TextField("LevelName1")
+</p>
+<p>$FormHelper.LabelFor("LevelName2","Level Name2:")
+$FormHelper.TextField("LevelName2")
+</p>
+<p>$FormHelper.LabelFor("LevelName3","Level Name3:")
+$FormHelper.TextField("LevelName3")
+</p>
+<p>$FormHelper.LabelFor("LevelName4","Level Name4:")
+$FormHelper.TextField("LevelName4")
+</p>
+<p>$FormHelper.LabelFor("IsActive","Is Active?")
+$FormHelper.CheckboxField("IsActive")
+</p>
+
+<p>${FormHelper.Submit("${commonText.submit}")}</p>
+$FormHelper.EndFormTag()
+$FormHelper.Pop()
+<p>
+${HtmlHelper.LinkTo("${commonText.show}","Location","Show",${location.ID})}
+ | 
+$HtmlHelper.LinkTo("${commonText.list}","Location","List")
+</p>

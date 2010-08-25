@@ -1,0 +1,131 @@
+﻿<!-- row 1 -->
+<ul>
+  <li><a href='${url.for("%{area='inv', controller='inventorythreshold', action='new'}")}'>
+    <img src="${siteroot}/content/images/excel.png"/>
+    <span>${common.set} ${common.safetystock}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='inventorythreshold', action='report'}")}'>
+    <img src="${siteroot}/content/images/ppt.png"/>
+    <span>${common.safetystockstatus} ${common.report}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='inventory', action='list'}")}'>
+    <img src="${siteroot}/content/images/inventory.png"/>
+    <span>${common.inventory} ${common.query}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='report', controller='warehousereport', action='index'}")}'>
+    <img src="${siteroot}/content/images/ppt.png"/>
+    <span>${common.inoutbalance} ${common.report}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='report', controller='dailyreport', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.transaction-detail}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='inventory', action='allocated'}")}'>
+    <img src="${siteroot}/content/images/inventory.png"/>
+    <span>${common.deallocate} ${common.inventory}</span></a>
+  </li>
+</ul>
+
+<!-- row 2 -->
+<ul>
+  <li><a href='${url.for("%{area='inv', controller='receiving', action='index'}")}'>
+    <img src="${siteroot}/content/images/receiving.png"/>
+    <span>${common.receivingaccordingpo}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='receivingnote', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.receivingnote}</span></a>
+  </li>
+</ul>
+
+<!-- row 3 -->
+<ul>
+  <li><a href='${url.for("%{area='inv', controller='issuing', action='listfinal'}")}'>
+    <img src="${siteroot}/content/images/warehouse2.png"/>
+    <span>${common.releasematerial}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='issuingnote', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.issuingnote}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='issuingnote', action='detaillist'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.issuingnote}(${common.detail})</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='issuing', action='newoutward'}")}'>
+    <img src="${siteroot}/content/images/warehouse2.png"/>
+    <span>${common.issueoutward}</span></a>
+  </li>
+</ul>
+
+<!-- row 4 -->
+<ul>
+  <li><a href='${url.for("%{area='inv', controller='submitting', action='listsfgfinal'}")}'>
+    <img src="${siteroot}/content/images/warehouse.png"/>
+    <span>${common.sfgsubmit}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='submission', action='listsfg'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.sfgsubmission}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='submitting', action='listfgfinal'}")}'>
+    <img src="${siteroot}/content/images/warehouse.png"/>
+    <span>${common.fgsubmit}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='submission', action='listfg'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.fgsubmission}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='prod', controller='returntowarehouse', action='listfinal'}")}'>
+    <img src="${siteroot}/content/images/customer3.png"/>
+    <span>${common.return-to-warehouse}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='prod', controller='sheet4returntowarehouse', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs3.png"/>
+    <span>${common.sheet-for-return-to-warehouse}</span></a>
+  </li>
+</ul>
+
+<!-- row 5 -->
+<ul>
+  <li><a href='${url.for("%{area='sales', controller='salesorder', action='exportlist'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.soe-list} (${common.export})</span></a>
+  </li>
+  <li><a href='${url.for("%{area='sales', controller='salesorder', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.salesorder}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='delivering', action='new'}")}'>
+    <img src="${siteroot}/content/images/shipment.png"/>
+    <span>${common.issuefinishedgoods}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='deliverynote', action='list'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.sheetforissuefg}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='returntovendor', action='new'}")}'>
+    <img src="${siteroot}/content/images/shipment3.png"/>
+    <span>${common.return-to-vendor}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='sheet4returntovendor', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs3.png"/>
+    <span>${common.sheet-for-return-to-vendor}</span></a>
+  </li>
+</ul>
+  <!--
+<ul>
+  <li><a href='${url.for("%{area='inv', controller='deliverynote', action='detail'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.receivingnote} ${common.detail}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='receivingd', action='index'}")}'>
+    <img src="${siteroot}/content/images/receiving.png"/>
+    <span>${common.receivingdirectly}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='receivingnoted', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.receivingnoted}</span></a>
+  </li>
+</ul>
+  -->

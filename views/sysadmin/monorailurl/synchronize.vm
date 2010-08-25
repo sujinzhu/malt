@@ -1,0 +1,6 @@
+﻿#set($MyItemId="monorailurl_synchronize")
+$actions.Count
+#foreach($action in $actions.Values)
+	$action
+#end
+<b>$errorController</b>

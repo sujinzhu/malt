@@ -1,0 +1,108 @@
+
+<h2>Create new MonoRail Authorization:</h2>
+
+$HtmlHelper.Form("createMonoRailAuthorization.rails", "scaffoldingform", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<div>
+#foreach($a in $urls)
+#beforeall
+<UL Class="mktree" ID="urls">
+$AjaxHelper.LinkToFunction("$commonText.expanding $commonText.all", "expandTree('urls')")
+&nbsp;
+$AjaxHelper.LinkToFunction("$commonText.collapsing $commonText.all", "collapseTree('urls')")
+
+#each
+<LI>$a.Key
+	#foreach($ctl in $a.Children)
+	#beforeall
+	<UL>
+	#each
+	#set($group="group$ctl.Key")
+	<SCRIPT LANGUAGE="JavaScript">
+	var $group = new CheckBoxGroup();
+	${group}.addToGroup("actions['$ctl.Key']");
+	${group}.setControlBox("$ctl.Key");
+	${group}.setMasterBehavior("all");
+	</SCRIPT>
+	<LI><INPUT TYPE="checkbox" NAME="$ctl.Key" VALUE="$ctl.Key" onClick="${group}.check(this)">$ctl.Key
+		<UL>
+		#foreach($act in $ctl.Children)
+			<LI><INPUT TYPE="checkbox" NAME="actions['$ctl.Key']" VALUE="$act.Key" onClick="${group}.check(this)">$act.Value
+		#end
+		</UL>
+	#afterall
+	</UL>
+	#end
+</LI>
+#afterall
+</UL>
+#end
+<p>
+<label for="MonoRailAuthorization.PrincipalType">Principal Type:</label>
+
+$Html2Helper.CreateSelectFromEnum("MonoRailAuthorization.PrincipalType", $mrAuthorization.PrincipalType.GetType(), $mrAuthorization.PrincipalType)
+</p>
+<p>
+<label for="MonoRailAuthorization.PermissionType">Permission Type:</label>
+
+$Html2Helper.CreateSelectFromEnum("MonoRailAuthorization.PermissionType", $mrAuthorization.PermissionType.GetType(), $mrAuthorization.PermissionType)
+</p>
+<p>
+<Label for="MonoRailAuthorization.PrincipalName">User ID or Role:</label>
+$HtmlHelper.InputText("MonoRailAuthorization.PrincipalName", $!mrAuthorization.PrincipalName, $DictHelper.Create("Validate=blank"))
+
+<style type="text/css">
+    body {
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 10px;
+		color: Black;
+		background-color: White;
+    }
+    
+    div.auto_complete {
+      position:absolute;
+      width:250px;
+      background-color:white;
+      border:1px solid #888;
+      margin:0px;
+      padding:0px;
+    }
+    ul.names  {
+      list-style-type: none;
+      margin:0px;
+      padding:0px;
+    }
+    ul.names li.selected { background-color: #ffb; }
+    li.name {
+      list-style-type: none;
+      display:block;
+      margin:0;
+      padding:2px;
+    }
+    #list {
+      margin:0;
+      margin-top:10px;
+      padding:0;
+      list-style-type: none;
+      width:250px;
+    }
+    #list li {
+      margin:0;
+      margin-bottom:4px;
+      padding:5px;
+      border:1px solid #888;
+      cursor:move;
+    }
+  </style>
+<div id="MonoRailAuthorization.PrincipalNameautocomplete" class="auto_complete"></div>
+$AjaxHelper.AutoCompleteInputText( "MonoRailAuthorization.PrincipalName", "${siteRoot}/sysadmin/rolelist/GetSearchItems.rails", null)
+</p>
+</div>
+
+$HtmlHelper.SubmitButton($commonText.create)
+
+$HtmlHelper.EndForm()
+
+<p>
+$Html3Helper.LinkTo("List", "sysadmin","monorailauthorization", "listmonorailauthorization")
+</p>

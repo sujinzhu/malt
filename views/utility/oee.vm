@@ -1,0 +1,96 @@
+$HtmlHelper.Form("OEECalculate.rails", "OEECalculator", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<table>
+	<tr>
+		<th>Parameter Name</th>
+		<th>Code</th>
+		<th>Value</th>
+	</tr>
+	<tr>
+		<th>${oeeText.a}</th>
+		<th>A</th>
+		<td>${FormHelper.TextField("a","%{validators='number|1|0|999999999'}")}</td>
+	</tr>
+	<tr>
+		<th>${oeeText.b}</th>
+		<th>B</th>
+		<td>${FormHelper.TextField("b","%{validators='number|1|1|999999999'}")}</td>
+	</tr>
+	<tr>
+		<th>${oeeText.c}</th>
+		<th>C</th>
+		<td>$!{oee.Round($oee.C, 0)}</td>
+	</tr>
+	<tr>
+		<th>${oeeText.d}</th>
+		<th>D</th>
+		<td>$!{oee.Round($oee.D, 0)}</td>
+	</tr>
+	<tr>
+		<th>${oeeText.e}</th>
+		<th>E</th>
+		<td>${FormHelper.TextField("e","%{validators='number|1|1|999999999'}")}</td>
+	</tr>
+	<tr>
+		<th>${oeeText.f}</th>
+		<th>F</th>
+		<td>${FormHelper.TextField("f","%{validators='number|1|1|999999999'}")}</td>
+	</tr>
+	<tr>
+		<th>${oeeText.g}</th>
+		<th>G</th>
+		<td>$!{oee.Round($oee.G, 0)}</td>
+	</tr>
+	<tr>
+		<th>${oeeText.h}</th>
+		<th>H</th>
+		<td>${FormHelper.TextField("h","%{validators='number|1|0|999999999'}")}</td>
+	</tr>
+	<tr>
+		<th>${oeeText.i}</th>
+		<th>I</th>
+		<td>${FormHelper.TextField("i","%{validators='number|1|1|999999999'}")}(H)</td>
+	</tr>
+	<tr>
+		<th>${oeeText.j}</th>
+		<th>J</th>
+		<td>${FormHelper.TextField("j","%{validators='number|1|0|999999999'}")}(Min.)</td>
+	</tr>
+
+	<tr>
+		<th>${oeeText.k}</th>
+		<th>K</th>
+		<td>${FormHelper.TextField("k","%{validators='number|0|0|999999999'}")}</td>
+	</tr>
+	<tr>
+		<th>${oeeText.l}</th>
+		<th>L</th>
+		<td>$!{oee.PercentRound($oee.L, 1)}%</td>
+	</tr>
+	<tr>
+		<th>${oeeText.o}</th>
+		<th>O</th>
+		<td>$!{oee.PercentRound($oee.O, 1)}%</td>
+	</tr>
+	<tr>
+		<th>${oeeText.p}</th>
+		<th>P</th>
+		<td>$!{oee.PercentRound($oee.P, 1)}%</td>
+	</tr>
+	<tr>
+		<th>${oeeText.q}</th>
+		<th>Q</th>
+		<td>$!{oee.PercentRound($oee.Q, 1)}%</td>
+	</tr>
+	<tr>
+		<th>${oeeText.r}</th>
+		<th>R</th>
+		<td>$!{oee.PercentRound($oee.R, 1)}%</td>
+	</tr>
+	<tr>
+		<th>OEE</th>
+		<th>S</th>
+		<td>$!{oee.PercentRound($oee.S, 1)}%</td>
+	</tr>
+</table>
+<p><input type="submit", value="Calculate" /></p>
+</form>

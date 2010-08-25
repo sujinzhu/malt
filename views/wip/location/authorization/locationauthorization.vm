@@ -1,0 +1,15 @@
+#macro(allow $type $name $locationId)
+	$AjaxHelper.LinkToRemote("${security.allow}","${siteRoot}/wip/location/allowauthorization.rails","%{with='type=${type}&name=${name}&locationId=${locationId}',update='l${locationId.Trim()}'}")
+#end
+
+#macro(deny $type $name $locationId)
+	$AjaxHelper.LinkToRemote("${security.deny}","${siteRoot}/wip/location/denyauthorization.rails","%{with='type=${type}&name=${name}&locationId=${locationId}',update='l${locationId.Trim()}'}")
+#end
+
+#macro(removeallowed $type $name $locationId)
+	$AjaxHelper.LinkToRemote("${commonText.cancel}","${siteRoot}/wip/location/removeallowedauthorization.rails?type=${type}&name=${name}&locationId=${locationId}","%{update='l${locationId.Trim()}'}")
+#end
+
+#macro(removedenied $type $name $locationId)
+	$AjaxHelper.LinkToRemote("${security.canceldenied}","${siteRoot}/wip/location/removedeniedauthorization.rails","%{with='type=${type}&name=${name}&locationId=${locationId}',update='l${locationId.Trim()}'}")
+#end

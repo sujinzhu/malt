@@ -1,0 +1,125 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+p { margin-top: 1em; height: 25px; float: left; }
+span { float: left; }
+.label2 { width: 100px; text-align: right; padding-right: .3em; }
+.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
+.label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+
+#header-container h3 { float: left; }
+#header-container a { margin-left: 2em; }
+#header-container .ui-widget-header th { padding: .3em; }
+#entries-container { margin-top: 1em; }
+.planned-material-quantity { width: 300px; }
+#instance { width: 800px; float: left; }
+#entry { margin-top: .5em; }
+
+#inventories-container { margin-top: .5em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+${j.jquery_editable()}
+${j.jquery_form()}
+${j.jquery_validate()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#planning-material-form').validate();
+    $('#header-container a').button();
+    fnDecorative();
+  });
+
+  function fnDecorative(){
+    $('.label2').addClass('ui-state-active ui-corner-bl');
+    $('.field2').addClass('ui-state-hover ui-corner-tr');
+    $(':submit').button();
+  }
+  
+  function fnRenderAllocatedQuantity(sId, dAllocatedQuantity)
+  {
+    return '<span id="' + sId + '" class="allocated-quantity">' + dAllocatedQuantity + "</span>";
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.planningmaterial}: ${soe.SO.Id}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.planningmaterial}: ${soe.SO.Id}</h3>
+<a href='${url.for("%{action='revieworder', querystring='id=$soe.SO.Id'}")}'>${common.planningmaterial}</a>
+<table id="instance" class="display">
+  <tr class="ui-widget-header">
+    <th>${common.customer}</th>
+    <th></th>
+    <th>${common.tradetype}</th>
+    <th>${common.salesman}</th>
+    <th>${common.createdate}</th>
+    <th>${common.status}</th>
+  </tr>
+  <tr class="ui-widget-content">
+    <td>$!{soe.SO.Customer.Id}</td>
+    <td>$!{soe.SO.Customer.Name}</td>
+    <td>$!{h.getenumname($soe.SO.TradeType)}</td>
+    <td>$!{soe.SO.SalesMan}</td>
+    <td>$!{soe.SO.CreatedDate.ToShortDateString()}</td>
+    <td>${h.getenumname($soe.SO.Status)}</td>
+  </tr>
+</table>
+
+<table id="entry" class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>${common.materialid}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requireddate}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.allocatedquantity}</th>
+      <th>${common.plannedmaterialquantity}</th>
+      <th>${common.deliveredquantity}</th>
+      <th>${common.ordermargin}</th>
+      <th>${common.baseunit}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${soe.Material.Id}</td>
+      <td>$!{soe.Material.Name}</td>
+      <td>$!{soe.Material.Specification}</td>
+      <td>${soe.RequiredDate.ToShortDateString()}</td>
+      <td>${soe.RequiredQuantity}</td>
+      <td id="allocated-quantity">${soe.AllocatedQuantity}</td>
+      <td>${soe.PlannedMaterialQuantity}</td>
+      <td>${soe.DeliveredQuantity}</td>
+      <td>${soe.RemainRequiredQuantity}</td>
+      <td>${soe.Unit.Id}</td>
+      <td>$!{soe.Unit.Description}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+#if($soe.PlannedMaterialQuantity != $soe.RequiredQuantity - $soe.AllocatedQuantity)
+<div id="planning-material-container" class="ui-helper-clearfix">
+<form id="planning-material-form" action='${url.for("%{action='changeplannedmaterialquantity'}")}' method="POST">
+  <p>
+    <span class="label2">*${common.plannedmaterialquantity}:</span>
+    <span class="field2 planned-material-quantity">
+      <input type="hidden" name="id" value="${soe.Id}" />
+      #set($quantity = $soe.RequiredQuantity - $soe.AllocatedQuantity)
+      <input type="text" name="quantity" class="required" min="0" value="${quantity}"/>
+    </span>
+  </p>
+
+  <p><input type="submit" value="${common.change}" /></p>
+
+</form>
+</div>
+#end

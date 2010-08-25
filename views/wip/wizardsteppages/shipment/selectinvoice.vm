@@ -1,0 +1,41 @@
+#foreach($invoice in $invoices)
+#beforeall
+	<H3>Please select Invoice for shipment:</H3>
+	$HtmlHelper.Form("SelectInvoice-Save.rails", "selectinvoice", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+	<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr>
+		<th>Select</th>
+		<th>Invoice Number</th>
+		<th>Item</th>
+		<th>From</th>
+		<th>Item Code</th>
+		<th>Customer</th>
+		<th>Unit</th>
+		<th>Quantity</th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>${FormHelper.RadioField("sop30300keystring",$invoice.Key)}</td>
+		<td>${invoice.Key.SOPNUMBE}</td>
+		<td>${invoice.Key.LNITMSEQ}</td>
+		<td>${invoice.Location}</td>
+		<td>${invoice.Material}</td>
+		<td><a title="${WIPHelper.GetCustomer($invoice.Customer).ShortName}">${invoice.Customer}</a></td>
+		<td>${invoice.UOFM}</td>
+		<td>${StringHelper.Format("{0:00}",$invoice.Quantity)}</td>
+	</tr>
+#afterall
+	</table>
+	<p>
+	#if($WizardHelper.HasPreviousStep())
+	$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+	#end
+	$HtmlHelper.SubmitButton($commonText.nextstep)
+	</p>
+	$HtmlHelper.EndForm()
+#nodata
+<p>No any invoice found waiting for shipment.</p>
+#end

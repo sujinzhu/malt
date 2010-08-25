@@ -1,0 +1,4 @@
+<p>Remark like:
+${FormHelper.TextField("remark","%{validators='blank'}")}
+$AjaxHelper.ButtonToRemote("-","SubtractRemarkCondition.rails","%{update='remarkConditions'}")
+</p>

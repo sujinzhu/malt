@@ -1,0 +1,44 @@
+#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      oReceivingNoteList = $('#lstReceivingNotes').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+    });
+    // ]]>
+    </script>
+#end
+
+<h3 style="float:left;">${common.inprocessreceivingnotes}:</h3>
+
+<a style="float:right;" class="fg-button ui-state-default ui-corner-all ui-priority-primary" href=$url.for("%{action='new'}")>${common.createnew} ${common.receivingnote}</a>
+
+<table id="lstReceivingNotes" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.vendor}</th>
+      <th>${common.deliverynoteid}</th>
+      <th>${common.receiveddate}</th>
+      <th>${common.consignee}</th>
+      <th>${common.rmwarehouse}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($rn in $rns)
+    <tr>
+    ##TODO: for other user's rn, link to view instead of receiving.
+      <td>${url.link($rn.Id, "%{action='steering', querystring='id=$rn.Id'}")}</td>
+      <td>${rn.Vendor.Id} $!{rn.Vendor.Name}</td>
+      <td>${rn.DeliveryNoteId}</td>
+      <td>${dateformat.ToShortDate($rn.ReceivedDate)}</td>
+      <td>${rn.Consignee}</td>
+      <td>${rn.Repository} ${r.getdescription($rn.Repository)}</td>
+    </tr>
+  #end
+  </tbody>
+</table>

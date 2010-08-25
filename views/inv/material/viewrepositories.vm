@@ -1,0 +1,30 @@
+﻿#if($material)
+
+<table id="repositories-units" class="display">
+  <thead>
+    <tr>
+      <th>${common.repository}</th>
+      <th></th>
+      <th>${common.capacity}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($mr in $mrs)
+    <tr>
+      <td>${mr.Repository}</td>
+      <td>$!{r.getdescription($mr.Repository)}</td>
+      <td>$!{mr.Capacity}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $('#repositories-units').dataTable({
+    "bJQueryUI": true,
+    "sPaginationType": "full_numbers"});
+// ]]>
+</script>
+#end
+

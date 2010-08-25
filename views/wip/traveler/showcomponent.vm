@@ -1,0 +1,8 @@
+<br/>
+<fieldset style="width:600px;">
+<legend>Components of Traveler[${traveler.Id}][${traveler.Times}] 
+$AjaxHelper.ButtonToRemote("${commonText.close}","${siteRoot}/Home/Nothing.rails","%{update='TravelerComponents'}")
+</legend>
+#parse("${siteRoot}/wip/traveler/show/itravelercomponent.vm")
+</fieldset>
+<br/>

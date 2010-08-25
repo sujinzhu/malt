@@ -1,0 +1,49 @@
+#capturefor(head)
+  <link rel="stylesheet" href="${siteroot}/content/css/inv/receivingnote/view.css" type="text/css" media="screen" title="ReceiningNote" charset="utf-8" />
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+  var olstrnes;
+    $(function(){
+      olstrnes = $('#rn-entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+<h3>${common.receivingnote} : ${rn.Id}</h3>
+#if($rn.Printable)
+<a id="btnPrint" href='${url.for("%{action='print', querystring='id=$rn.Id'}")}' target="_blank" class="fg-button ui-state-default ui-corner-all">${common.print}</a>
+#end
+
+#parse("${siteroot}/inv/receivingnote/_rn-header.vm")
+
+<table id="rn-entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.material}</th>
+      <th>${common.receivedquantity}</th>
+      <th>${common.baseunit}</th>
+      <th>${common.unitprice}</th>
+      <th>${common.notice}</th>
+      <th>Accepted?</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($rne in $rn.Entries)
+    <tr>
+      <td>${rne.Id}</td>
+      <td>${rne.Material.Id} $!{rne.Material.Name} [$!{rne.Material.Specification}]</td>
+      <td>${rne.ReceivedQuantity}</td>
+      <td>${rne.Unit.Id} $!{rne.Unit.Description}</td>
+      <td>$!{rne.UnitPrice}</td>
+      <td>$!{rne.Notice}</td>
+      <td>${rne.Accepted}</td>
+    </tr>
+  #end
+  </tbody>
+</table>

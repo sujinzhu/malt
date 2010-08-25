@@ -1,0 +1,218 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container .button { margin-left: 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('.button').button();
+
+    oDataTable = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "return-type"},
+      {"sClass": "trade-type"},
+      {"sClass": "jo-id"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit"},
+      {"sClass": "notice"},
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+
+    $('#entries1').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "return-type"},
+      {"sClass": "trade-type"},
+      {"sClass": "jo-id"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit"},
+      {"sClass": "notice"},
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+    
+    $('#entries2').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "return-type"},
+      {"sClass": "trade-type"},
+      {"sClass": "jo-id"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit"},
+      {"sClass": "notice"},
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+
+    $('#instances-container').tabs();
+  });
+
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.return-to-warehouse}: ${sheet.Id}
+#end
+
+<div id="header-container">
+<h3>${common.return-to-warehouse}</h3>
+<a href='${url.for("%{action='print', querystring='id=$sheet.Id'}")}' class='button'>${common.print}</a>
+<table class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>${common.id}</th>
+      <th>${common.return-from}</th>
+      <th>${common.returned-by}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${sheet.Id}</td>
+      <td>$!{r.getdescription($sheet.ReturnFrom)}</td>
+      <td>${sheet.ReturnedBy}</td>
+      <td>${h.getenumname($sheet.Status)}</td>
+      <td>${sheet.CreateDate.ToShortDateString()}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="instances-container">
+  <ul>
+    <li><a href="#rtw">${common.return-to-warehouse}</a></li>
+    <li><a href="#scrap">${common.return-scrap-to-warehouse}</a></li>
+    <li><a href="#rtv">${common.return-to-warehouse-for-rtv}</a></li>
+  </ul>
+
+  <div id='rtw'>
+    <table id="entries" class="display">
+      <thead>
+        <tr>
+          <th>${common.id}</th>
+          <th>${common.return-type}</th>
+          <th>${common.tradetype}</th>
+          <th>${common.ordernumber}</th>
+          <th>${common.material}</th>
+          <th>${common.name}</th>
+          <th>${common.specification}</th>
+          <th>${common.quantity}</th>
+          <th>${common.unit}</th>
+          <th>${common.notice}</th>
+        </tr>
+      </thead>
+      <tbody>
+      #foreach($entry in $sheet.entries0)
+        <tr>
+          <td>${entry.Id}</td>
+          <td>${entry.ReturnType}</td>
+          <td>${h.getenumname($entry.TradeType)}</td>
+          <td>$!{entry.OrderNumber}</td>
+          <td>${entry.Material.Id}</td>
+          <td>$!{entry.Material.Name}</td>
+          <td>$!{entry.Material.Specification}</td>
+          <td>${entry.Quantity}</td>
+          <td>$!{m.trygetprimaryunit($entry.Material).Description}</td>
+          <td>$!{entry.Notice}</td>
+        </tr>
+      #end
+      </tbody>
+    </table>
+  </div>
+
+  <div id='scrap'>
+    <table id="entries1" class="display">
+      <thead>
+        <tr>
+          <th>${common.id}</th>
+          <th>${common.return-type}</th>
+          <th>${common.tradetype}</th>
+          <th>${common.ordernumber}</th>
+          <th>${common.material}</th>
+          <th>${common.name}</th>
+          <th>${common.specification}</th>
+          <th>${common.quantity}</th>
+          <th>${common.unit}</th>
+          <th>${common.notice}</th>
+        </tr>
+      </thead>
+      <tbody>
+      #foreach($entry in $sheet.entries1)
+        <tr>
+          <td>${entry.Id}</td>
+          <td>${entry.ReturnType}</td>
+          <td>${h.getenumname($entry.TradeType)}</td>
+          <td>$!{entry.OrderNumber}</td>
+          <td>${entry.Material.Id}</td>
+          <td>$!{entry.Material.Name}</td>
+          <td>$!{entry.Material.Specification}</td>
+          <td>${entry.Quantity}</td>
+          <td>$!{m.trygetprimaryunit($entry.Material).Description}</td>
+          <td>$!{entry.Notice}</td>
+        </tr>
+      #end
+      </tbody>
+    </table>
+  </div>
+
+  <div id='rtv'>
+    <table id="entries2" class="display">
+      <thead>
+        <tr>
+          <th>${common.id}</th>
+          <th>${common.return-type}</th>
+          <th>${common.tradetype}</th>
+          <th>${common.ordernumber}</th>
+          <th>${common.material}</th>
+          <th>${common.name}</th>
+          <th>${common.specification}</th>
+          <th>${common.quantity}</th>
+          <th>${common.unit}</th>
+          <th>${common.notice}</th>
+        </tr>
+      </thead>
+      <tbody>
+      #foreach($entry in $sheet.entries2)
+        <tr>
+          <td>${entry.Id}</td>
+          <td>${entry.ReturnType}</td>
+          <td>${h.getenumname($entry.TradeType)}</td>
+          <td>$!{entry.OrderNumber}</td>
+          <td>${entry.Material.Id}</td>
+          <td>$!{entry.Material.Name}</td>
+          <td>$!{entry.Material.Specification}</td>
+          <td>${entry.Quantity}</td>
+          <td>$!{m.trygetprimaryunit($entry.Material).Description}</td>
+          <td>$!{entry.Notice}</td>
+        </tr>
+      #end
+      </tbody>
+    </table>
+  </div>
+
+</div>

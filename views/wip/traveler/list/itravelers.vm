@@ -1,0 +1,46 @@
+#foreach($traveler in $travelers)
+#beforeall
+	#set($totalQuantity=0)
+	<h3>$!{condition}</h3>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+		<tr>
+			<th>${commonText.travelerid}</th>
+			<th>${wip.usedtimes}</th>
+			<th>${commonText.createdat}</th>
+			<th>${commonText.lastupdatedat}</th>
+			<th>${commonText.lastupdatedby}</th>
+			<th>${commonText.archivetime}</th>
+			<th>${wip.currentlocation}</th>
+			<th>${commonText.material}</th>
+			<th>${commonText.quantity}</th>
+		</tr>
+#odd
+		<tr class="scaffoldaltrow">
+#even
+		<tr class="scaffoldrow">
+#each
+	#if($traveler.ArchiveTime)
+			<td>$Html3Helper.LinkTo("${traveler.TravelerId}", "wip","traveler", "showarchive", ${traveler.Id})</td>
+	#else
+			<td>$Html3Helper.LinkTo("${traveler.TravelerId}", "wip","traveler", "show", ${traveler.Id})</td>
+	#end
+			<td>${traveler.Times}</td>
+			<td>${traveler.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")}</td>
+			<td>${traveler.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss")}</td>
+			<td>${IdentityHelper.GetFullName($traveler.LastOperator)}</td>
+			<td>
+	#if($traveler.ArchiveTime)
+			${traveler.ArchiveTime.ToString("yyyy-MM-dd HH:mm:ss")}
+	#end
+			</td>
+			<td>$!{traveler.CurrentLocation.ID.Trim()}</td>
+			<td>$!{traveler.Material.ID.Trim()}</td>
+			<td align="right">${StringHelper.Format("{0:0}",$!traveler.Quantity)}</td>
+			#set($totalQuantity=$totalQuantity + $traveler.Quantity)
+		</tr>
+#afterall
+	</table>
+	<p><b>${commonText.total} ${commonText.quantity}</b>: $StringHelper.Format("{0:0}", ${totalQuantity})</p>
+#nodata
+	No Traveler(s) found.
+#end

@@ -1,0 +1,100 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .panel { float: left; width: 800px; padding: 0 .5em 1em .5em; }
+  h4 { padding: 3px; }
+  .panel div { margin-top: -1px; }
+  p, #repositories, #materials { width: 98%; margin: .5em;}
+
+  #materials-container span, #materials-container li, #status-criteria li { float: left; margin: .5em; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_autocomplete()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#materials').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        multiple: true,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      }).focus();
+      $('.material').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      });
+      $('.date').datepicker();
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.search} ${common.purchaserequisition}
+#end
+
+<form action='${url.for("%{action='search'}")}' method="POST" target="_blank">
+
+<div id='criteria-container' class="ui-helper-clearfix">
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.requireddate}</h4>
+    <div id="date-container" class="ui-widget-content">
+      <p>${common.from} : ${f.textfield("fromDate", "%{class='date'}")}
+      ${common.to} : ${f.textfield("toDate", "%{class='date'}")} </p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.purchaserequisition} ${common.id}</h4>
+    <div class="ui-widget-content">
+      <p>${f.textfield("id")}</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.material}</h4>
+    <div id="materials-container" class="ui-widget-content ui-helper-clearfix">
+      ${f.textarea("materials")}
+      <p>${common.from} : ${f.textfield("fromMaterial", "%{class='material'}")}
+      ${common.to} : ${f.textfield("toMaterial", "%{class='material'}")}
+      </p>
+
+      <ul class="ui-helper-clearfix"><span>${common.materialclass} : </span>
+      #foreach($class in $materialClasses)
+        <li><input type="checkbox" name="materialClasses" value='${class.Id}'/> $!{class.Description}</li>
+      #end
+      </ul>
+      <ul class="ui-helper-clearfix"><span>${common.inventoryclass} : </span>
+      #foreach($class in $inventoryClasses)
+        <li><input type="checkbox" name="inventoryClasses" value='${class.Id}'/> $!{class.Description}</li>
+      #end
+      </ul>
+    </div>
+  </div>
+  
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.purchaserequisition} ${common.status}</h4>
+    <div class="ui-widget-content">
+      <ul id="status-criteria" class="ui-helper-clearfix">
+        <li><input type="checkbox" name="requisitionStatuses" value='-1'/> ${common.status_void}</li>
+        <li><input type="checkbox" name="requisitionStatuses" value='0'/> ${common.status_draft}</li>
+        <li><input type="checkbox" name="requisitionStatuses" value='10'/> ${common.status_final}</li>
+        <li><input type="checkbox" name="requisitionStatuses" value='21' checked/> ${common.status_approved1}</li>
+        <li><input type="checkbox" name="requisitionStatuses" value='22'/> ${common.status_approved2}</li>
+        <li><input type="checkbox" name="requisitionStatuses" value='15'/> ${common.status_quoted}</li>
+        <li><input type="checkbox" name="requisitionStatuses" value='23'/> ${common.status_approved3}</li>
+        <li><input type="checkbox" name="requisitionStatuses" value='30'/> ${common.status_released}</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+ 
+<p><input type="submit" value="${common.query}" /></p>
+</form>

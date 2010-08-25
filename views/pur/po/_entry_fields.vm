@@ -1,0 +1,6 @@
+﻿${form.hiddenfield('PO.Id')}
+##${form.hiddenfield('Material.Id')}
+##${form.hiddenfield('RequiredQuantity')}
+${h.field($common.baseunit, $form.textfield('Unit.Id'))}
+${h.field($common.unitprice, $form.textfield('UnitPrice', "%{class='number required'}"))}
+${h.field($common.requireddate, $form.textfield('RequiredDate', "%{class='required'}"))}

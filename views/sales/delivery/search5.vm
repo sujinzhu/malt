@@ -1,0 +1,13 @@
+<td colspan=13 align="left" valign="top">
+$AjaxHelper.LinkToRemote("$commonText.hide", "${siteRoot}/Home/Nothing.rails", $DictHelper.CreateDict( "update=$update"))<br/>
+<br/>
+[From VMI:]
+#blockcomponent(IV30300ListComponent with "source=$invs")
+
+#end
+<br/>
+[Invoice:]
+#blockcomponent(SOP30300ListComponent with "source=$sops")
+
+#end
+</td>

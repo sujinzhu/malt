@@ -1,0 +1,27 @@
+<p>
+$HtmlHelper.LabelFor("cpo.Customer.ID", "$commonText.customer:")
+$HtmlHelper.Select("cpo.Customer.ID")
+$HtmlHelper.CreateOptions($customers, "ShortName", "ID", $!cpo.Customer.ID)
+$HtmlHelper.EndSelect()
+</p>
+
+<p>
+$HtmlHelper.LabelFor("cpo.OrderNumber", "$commonText.order $commonText.number:")
+$HtmlHelper.InputText("cpo.OrderNumber", "$!cpo.OrderNumber", $DictHelper.Create("validators=blank"))
+</p>
+
+<p>
+$HtmlHelper.LabelFor("cpo.ReceivedDate", "$commonText.received $commonText.date:")
+$HtmlHelper.InputText("cpo.ReceivedDate", "$!cpo.ReceivedDate.ToString('yyyy-MM-dd')", 10, 10, $DictHelper.Create("validators=blank"))
+<input type="reset" value=" ... " id="cpo.ReceivedDate_b" />
+</p>
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "cpo.ReceivedDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "cpo.ReceivedDate_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime		:	false
+    });
+</script>

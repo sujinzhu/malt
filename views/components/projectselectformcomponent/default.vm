@@ -1,0 +1,17 @@
+#foreach($series in $serieses)
+#beforeall
+<UL CLASS="mktree">
+#each
+<LI>$series.Name
+	#foreach($project in $series.IncludedProjects)
+	#beforeall
+	<UL>
+	#each
+	<LI>$HtmlHelper.InputCheckbox("projectids", $project.ID, $selectedprojects.Contains($project))$project.Name</LI>
+	#afterall
+	</UL>
+	#end
+</LI>
+#afterall
+</UL>
+#end

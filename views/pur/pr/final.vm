@@ -1,0 +1,131 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container a { margin-left: 1em; float: left; }
+/* ]]> */
+</style>
+
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  ${j.jquery_editable()}
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances;
+    $(function(){
+      $('a').button();
+      oInstances = $('#instances').dataTable({
+        "bJQueryUI": true,
+        "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity required-quantity"},
+        {"sClass": "unit"},
+        {"sClass": "short-date"},
+        {"sClass": "repository"},
+        null,
+        //{"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[10]);}, "bSortable": false}
+        ],
+        "fnDrawCallback": function(){
+          $('.required-quantity').editable('${url.for("%{action='changerequiredquantity'}")}');
+        }
+      });
+      $('#new-entry').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+      });
+      fnTrigerRemoveEntry();
+      $('#entry_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      }).focus();
+      $('#entry_Unit_Id').autocomplete('$url.for("%{area='inv', controller='unit', action='autocomplete2'}")', {
+        width: 300,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      });
+      $('#entry_RequiredDate').datepicker();
+    });
+
+    function fnGetRemoveLink(label)
+    {
+      return "<span style='cursor: pointer;'>"+label+"</span>";
+    }
+
+    function fnTrigerRemoveEntry()
+    {
+      $('#instances tbody td').click(function(){
+        var aPos = oInstances.fnGetPosition(this);
+        var aData = oInstances.fnGetData(aPos[0]);
+        if(aData[aPos[2]] == fnGetRemoveLink('${common.remove}'))
+        {
+          fnRemoveEntry(aData[0], aPos[0]);
+        }
+      });
+    }
+
+    function fnRemoveEntry(id, iRow)
+    {
+      var url = '${url.for("%{action='removeentry'}")}';
+      jQuery.post(url, {id: id}, function(data){
+        if(!fnHasError(data)){
+          oInstances.fnDeleteRow(iRow);
+        }
+      }, 'json');
+    }
+
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.review} ${common.purchaserequisition}: ${instance.Id}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+  <h3>${common.purchaserequisition}: ${instance.Id}</h3>
+#parse("${siteroot}/pur/purchaserequisition/_head.vm")
+  <a href='${url.for("%{action='approve1', querystring='id=$instance.Id'}")}'>${common.approve}</a>
+  <a href='${url.for("%{action='reject', querystring='id=$instance.Id'}")}'>${common.reject}</a>
+</div>
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.unit}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.responsible}</th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td id="${entry.Id}">${entry.RequiredQuantity}</td>
+      <td>$!{entry.Unit.Description}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
+      <td>$!{entry.Responsible}</td>
+      <td>$!{entry.Notice}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

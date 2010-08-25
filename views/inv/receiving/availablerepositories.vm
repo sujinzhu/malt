@@ -1,0 +1,35 @@
+<form id="placing-form" action='${url.for("%{action='place'}")}' method="POST">
+
+${f.installscripts()}
+<input type="hidden" name="entryId" value="${entry.Id}" />
+<p>
+  <span class="label2">${common.material}:</span>
+  <span class="field2 material">${entry.POE.Material.Id} $!{entry.POE.Material.Name} $!{entry.POE.Material.Specification}</span>
+</p>
+<p>
+  <span class="label2">${common.receivedquantity}:</span>
+  <span class="field2">${entry.ReceivedQuantity} ${entry.POE.Unit.Description}</span>
+</p>
+
+#foreach($repository in $repositories)
+<p>
+  <span class="label2 repository-with-desc">[${repository}] ${r.getdescription($repository)}:</span>
+  <span class="field2">
+  <input type="hidden" name="repository[]" value="${repository}" />
+  <input type="text" name="quantity[]" value="${entry.ReceivedQuantity}" max="${entry.ReceivedQuantity}"/>
+  ${entry.POE.Unit.Description}
+  </span>
+</p>
+#end
+
+<p><input type="submit" value="${common.placegoods}" /></p>
+</form>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  fnDecorative();
+  $('#placing-form').validate({
+    submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnClosePlacing}); }
+  });
+// ]]>
+</script>

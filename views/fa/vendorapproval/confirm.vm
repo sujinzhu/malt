@@ -1,0 +1,10 @@
+<fieldset style="width:600px;">
+<legend>${commonText.confirm}</legend>
+<p>
+Do you really want to <b>Remove</b> this VendorApproval?
+</p>
+<p>
+$Html3Helper.LinkTo("${commonText.yes}", "fa","vendorapproval", "remove", ${av.Id})
+$AjaxHelper.LinkToRemote("${commonText.cancel}", "${siteRoot}/home/nothing.rails", $DictHelper.CreateDict("update=operation"))
+</p>
+</fieldset>

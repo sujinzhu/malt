@@ -1,0 +1,17 @@
+﻿
+<h2>Edit MonoRail Authorization: [ID:$id]</h2>
+
+$HtmlHelper.Form("updateMonoRailAuthorization.rails", "scaffoldingform", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+$HtmlHelper.InputHidden("id", $id)
+$HtmlHelper.InputHidden("MonoRailAuthorization.ID", $mrAuthorization.ID)
+
+#parse("/sysadmin/monorailauthorization/form.vm")
+
+$HtmlHelper.SubmitButton($commonText.update)
+
+$HtmlHelper.EndForm()
+
+<p>
+$Html3Helper.LinkTo("List", "sysadmin","monorailauthorization", "listmonorailauthorization")
+</p>

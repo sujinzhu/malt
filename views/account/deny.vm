@@ -1,0 +1,2 @@
+#set($title="${commonText.notenoughpermission}!")
+#set($alarm="<b>${commonText.notenoughpermission}:</b></br>${commonText.notenoughpermissionmsg}(<a href='${Session.ReturnURL}'>URL</a>)!")

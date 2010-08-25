@@ -1,0 +1,166 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container a { margin-left: 1em; float: left; }
+/* ]]> */
+</style>
+
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  ${j.jquery_editable()}
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances;
+    $(function(){
+      $('a').button();
+      oInstances = $('#instances').dataTable({
+        "bJQueryUI": true,
+        "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity required-quantity"},
+        {"sClass": "unit"},
+        {"sClass": "price unit-price"},
+        {"sClass": "short-date"},
+        {"sClass": "vendor"},
+        {"sClass": "repository"},
+        null,
+        //{"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[12]);}, "bSortable": false}
+        ],
+        "fnDrawCallback": function(){
+          $('.unit-price').editable('${url.for("%{action='changeunitprice'}")}');
+          $('.vendor').editable('${url.for("%{action='changevendor'}")}', {
+            loadurl : '${url.for("%{action='changingvendor'}")}',
+          }).click(function(){
+              $('input', this).autocomplete('$url.for("%{area='pur', controller='vendor', action='autocomplete2'}")', {
+                width: 300,
+                matchContains: true,
+                formatItem: formatVendorItem,
+                formatResult: formatResult
+              });
+            });
+        },
+        /*"fnFooterCallback": 
+        function (nRow, aaData, iStart, iEnd, aiDisplay ){
+          var iTotalMarket = 0;
+          var iTotalMarket2 = 0;
+          for ( var i=0; i<aaData.length; i++)
+          {
+            iTotalMarket += aaData[i][4]*1;
+            iTotalMarket2 += aaData[i][8]*1;
+          }
+    
+          var iPageMarket = 0;
+          var iPageMarket2 = 0;
+          for ( var i=iStart; i<iEnd; i++)
+          {
+            iPageMarket += aaData[aiDisplay[i]][4]*1;
+            iPageMarket2 += aaData[aiDisplay[i]][8]*1;
+          }
+    
+          var nCells = nRow.getElementsByTagName('th');
+          nCells[1].innerHTML = iPageMarket + ' of ' + iTotalMarket;
+          nCells[3].innerHTML = iPageMarket2 + ' of ' + iTotalMarket2;
+	      }*/
+      });
+      $('#new-entry').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+      });
+      fnTrigerRemoveEntry();
+    });
+
+    function fnGetRemoveLink(label)
+    {
+      return "<span style='cursor: pointer;'>"+label+"</span>";
+    }
+
+    function fnTrigerRemoveEntry()
+    {
+      $('#instances tbody td').click(function(){
+        var aPos = oInstances.fnGetPosition(this);
+        var aData = oInstances.fnGetData(aPos[0]);
+        if(aData[aPos[2]] == fnGetRemoveLink('${common.remove}'))
+        {
+          fnRemoveEntry(aData[0], aPos[0]);
+        }
+      });
+    }
+
+    function fnRemoveEntry(id, iRow)
+    {
+      var url = '${url.for("%{action='removeentry'}")}';
+      jQuery.post(url, {id: id}, function(data){
+        if(!fnHasError(data)){
+          oInstances.fnDeleteRow(iRow);
+        }
+      }, 'json');
+    }
+
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.quote} ${common.purchaserequisition}: ${instance.Id}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+  <h3>${common.purchaserequisition}: ${instance.Id}</h3>
+#parse("${siteroot}/pur/purchaserequisition/_head.vm")
+  <a href='${url.for("%{action='quote', querystring='id=$instance.Id'}")}'>${common.finish}</a>
+</div>
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.unit}</th>
+      <th>${common.unitprice}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.vendor}</th>
+      <th>${common.responsible}</th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>$!{entry.Unit.Description}</td>
+      <td id="price${entry.Id}">$!{entry.UnitPrice}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
+      <td id="vendor${entry.Id}">$!{entry.Vendor.Name}</td>
+      <td>$!{entry.Responsible}</td>
+      <td>$!{entry.Notice}</td>
+    </tr>
+  #end
+  </tbody>
+  <!--
+  <tfoot>
+    <tr>
+      <th></th>
+      <th colspan="2"></th>
+      <th colspan="2" class="quantity"></th>
+      <th colspan="2"></th>
+      <th colspan="2" class="quantity"></th>
+      <th colspan="4"></th>
+    </tr>
+  </tfoot>
+  -->
+</table>
+</div>

@@ -1,0 +1,8 @@
+#if($traveler)
+	#parse("${siteRoot}/wip/traveler/show/itraveler.vm")
+#else
+	<p>No active traveler found with Id: <b>${Id}</b>.</p>
+	<p>
+$AjaxHelper.LinkToRemote("List Archives", "${siteRoot}/wip/traveler/listarchives.rails", $DictHelper.CreateDict( "update=archives", "with='travid=${Id}&skipLayout=true'" ) )</p>
+	<div id="archives"></div>
+#end

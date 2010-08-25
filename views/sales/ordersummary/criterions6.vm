@@ -1,0 +1,17 @@
+<fieldset>
+<legend>6. By Customer and Requested Date:</legend>
+$HtmlHelper.Form("Search6.rails", "criterions6", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<p>
+$HtmlHelper.LabelFor("customer.ID", "$commonText.customer:")
+$HtmlHelper.Select("customer.ID")
+$HtmlHelper.CreateOptions($customers, "ShortName", "ID", $!customer.ID)
+$HtmlHelper.EndSelect()
+</p>
+
+#parse("${siteRoot}/sales/ordersummary/daterange.vm")
+
+$HtmlHelper.SubmitButton("$commonText.search")
+
+$HtmlHelper.EndForm()
+</fieldset>

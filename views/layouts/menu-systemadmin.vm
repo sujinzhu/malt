@@ -1,0 +1,23 @@
+<LI>System Admin
+<UL>
+	<LI>Account
+		<UL>
+			<LI>$Html3Helper.LinkTo("New","", "Account", "newAccount")</LI>
+			<LI>$Html3Helper.LinkTo("Search","", "Account", "Search")</LI>
+		</UL>
+	<LI>mrUML
+	<UL>
+		<LI>$Html3Helper.LinkTo("List", "SysAdmin","MonoRailURL", "list")</LI>
+		<LI id="sysadmin_monorailurl_newmonorailruls">
+		$Html3Helper.LinkTo("New Many", "SysAdmin","MonoRailURL", "newMonoRailURLs")
+		</LI>
+		
+	</UL>
+	<LI>mrAuthorization
+	<UL>
+		<LI>$Html3Helper.LinkTo("List", "SysAdmin","MonoRailAuthorization", "listMonoRailAuthorization")</LI>
+		<LI>$Html3Helper.LinkTo("Maintain", "SysAdmin","MonoRailAuthorization", "Maintain")</LI>
+	</UL>
+	</LI>
+</UL>
+</LI>

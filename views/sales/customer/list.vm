@@ -1,0 +1,57 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .id { width: 150px; }
+  .customer-name, .customer-fullname { width: 150px; }
+  .status { width: 50px; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_autocomplete()}
+  ${j.jquery_dataTable()}
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      oDataTable = $('#instances').dataTable({
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": '$url.for("%{action='listtabledata'}")',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"fnRender": function(oObj){return fnGetLink(oObj.aData[0]);}, "sType": "html", "sClass": "id"},
+        {"sClass": "customer-name"},
+        {"sClass": "customer-fullname"},
+        {"sClass": "status"},
+        {"sClass": "address", "bSortable": false},
+        ]
+      });
+    });
+
+    function fnGetLink(id){
+      var linkView =  '$url.for("%{action='view', querystring='id='}")' + id;
+      var linkEdit =  '$url.for("%{action='edit', querystring='id='}")' + id;
+      return "<a target='_blank' href='" + linkView + "'>${common.view}</a>" + "&nbsp;&nbsp;&nbsp;" + "<a target='_blank' href='" + linkEdit + "'>${common.edit}</a>" + "&nbsp;&nbsp;&nbsp;" + id;
+    }
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+  ${common.customer} ${common.list}
+#end
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.name}</th>
+      <th>${common.fullname}</th>
+      <th>${common.is-active}</th>
+      <th>${common.address}</th>
+    </tr>
+  </thead>
+</table>
+</div>

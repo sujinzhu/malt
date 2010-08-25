@@ -1,0 +1,3 @@
+$HtmlHelper.LabelFor("allocatee", "Allocatee:")
+$HtmlHelper.InputText("allocatee", "", 30, 100,  $DictHelper.Create("validators=blank", "style=text-transform: uppercase;"))
+$AjaxHelper.ButtonToRemote("+", "AddAllocateeCondition.rails", $DictHelper.CreateDict( "update=allocateeConditions", "with=Form.serialize($('universalsearch'))" ) )

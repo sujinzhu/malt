@@ -1,0 +1,90 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container .button { margin-left: 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('.button').button();
+
+    oDataTable = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aaSorting": [[1, 'desc'], [0, 'asc']],
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "sheet-id"},
+      {"sClass": "status"},
+      {"sClass": "trade-type"},
+      {"sClass": "jo-id"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit"},
+      {"sClass": "notice"},
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+  });
+
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.sheet-for-return-to-vendor} ${common.list}
+#end
+
+<div id="header-container">
+<h3>${common.sheet-for-return-to-vendor} ${common.list}</h3>
+</div>
+
+<div id="instances-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.sheet-for-return-to-vendor}</th>
+      <th>${common.status}</th>
+      <th>${common.tradetype}</th>
+      <th>${common.ordernumber}</th>
+      <th>${common.material}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.quantity}</th>
+      <th>${common.unit}</th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td><a href='${url.for("%{action='view', querystring='id=$entry.Sheet.Id'}")}'>${entry.Sheet.Id}</a></td>
+      <td>${h.getenumname($entry.Sheet.Status)}</td>
+      <td>${h.getenumname($entry.TradeType)}</td>
+      <td>
+      #if($entry.OrderEntry)
+      <a href='${url.for("%{area='pur', controller='purchaseorder', action='view', querystring='id=$entry.OrderEntry.PO.Id'}")}' target='_blank'>
+      $!{entry.OrderEntry.PO.Id}
+      </a>
+      #end
+      </td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.Quantity}</td>
+      <td>$!{entry.Unit.Description}</td>
+      <td>$!{entry.Notice}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

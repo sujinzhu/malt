@@ -1,0 +1,17 @@
+<H3>User Account [${account.ID}]</H3>
+
+#set($employee = $account.Employee)
+<fieldset style="width:500px;">
+<legend>${commonText.employee} ${commonText.information}:</legend>
+#parse("${siteRoot}/core/employee/show/iemployee.vm")
+</fieldset>
+<br/>
+<fieldset style="width:650px;">
+<legend>${commonText.location} ${commonText.authorizations}</legend>
+#parse("${siteRoot}/account/show/locationauthorizations.vm")
+</fieldset>
+<br/>
+<fieldset style="width:650px;">
+<legend>${commonText.function} ${commonText.authorizations}</legend>
+#parse("${siteRoot}/account/show/functionauthorizations.vm")
+</fieldset>

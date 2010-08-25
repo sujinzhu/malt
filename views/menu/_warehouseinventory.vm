@@ -1,0 +1,4 @@
+﻿<li>
+  <img src="${siteroot}/content/images/inventory.png"/>
+  <span>${common.inventory} ${common.query}</span>
+</li>

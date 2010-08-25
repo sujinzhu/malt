@@ -1,0 +1,3 @@
+$HtmlHelper.LabelFor("employeeId", "$commonText.signee:")
+$HtmlHelper.InputText("employeeId", "", 31, 31,  $DictHelper.Create("validators=number|0|1|99999"))
+$AjaxHelper.ButtonToRemote("+", "AddSigneeCondition.rails", $DictHelper.CreateDict( "update=signeeConditions", "with=Form.serialize($('universalsearch'))" ) )

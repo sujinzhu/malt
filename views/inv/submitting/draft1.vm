@@ -1,0 +1,169 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#new-entry-container { width: 600px; float: left; }
+/* #new-entry-container h3, #formNewIN { float: left; } */
+#header-container { width: 800px; }
+#header-container h3 { float: left; }
+#entries-container { margin-top: 1em; clear: both; }
+#btnCancel { float: right; }
+#new-entry-container { padding-left: 1em; margin-top: 1em; margin-bottom: 1em; }
+.button { margin-left: 1em; }
+/* ]]> */
+</style>
+  
+${j.jquery_dataTable()}
+${j.jquery_form()}
+${j.jquery_validate()}
+${j.jquery_autocomplete()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('.button').button();
+
+    oDataTable = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {"bVisible": false},
+      null,
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      null,
+      {"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[oObj.iDataColumn]);}, "bSortable": false}
+      ],
+      "fnDrawCallback": function(){
+        fnTrigerRemove('${url.for("%{action='removeentry'}")}', '#entries', '${common.remove}');
+        fnClassTrigerMaterialMenu();
+      }
+    });
+
+    $('#formNewInstance').validate({
+      submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+      });
+
+    $('#entry_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")',{
+      width: 550,
+      matchContains: true,
+      formatItem: formatItem3,
+      formatResult: formatResult,
+      max: 30
+    });
+
+    $('#entry_JobOrder').autocomplete('$url.for("%{area='sales', controller='salesorder', action='autocomplete2'}")', {
+      width: 300,
+      matchContains: true,
+      formatItem: formatSalesOrderItem,
+      formatResult: formatResult,
+      max: 30
+    }).focus();
+  });
+
+  function fnAddToDT(data){
+    if(!fnHasError(data)){
+      oDataTable.fnAddData([data['Id'], data['JobOrder'], data['MaterialId'], data['MaterialName'], data['MaterialSpec'], data['SubmittedQuantity'], data['PackageQuantity'], data['Notice'], '${common.remove}']);
+      $('#entry_Material_Id').val("");
+      $('#entry_SubmittedQuantity').val("");
+      $('#entry_PackageQuantity').val("");
+      $('#entry_Notice').val("");
+      $('#entry_JobOrder').val("").focus();
+    }
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+  #if($h.getenumname($instance.MaterialType) == "SemiFinishGood")
+  ${common.sfgsubmit}
+  #else
+  ${common.fgsubmit}
+  #end
+  : ${instance.Id}
+#end
+
+<div id="header-container">
+#if($h.getenumname($instance.MaterialType) == "SemiFinishGood")
+<h3>${common.sfgsubmission}</h3>
+#else
+<h3>${common.fgsubmission}</h3>
+#end
+<a href='${url.for("%{action='steering', querystring='id=$instance.Id'}")}' class="button">${common.submit-according-to-order}</a>
+<a href='${url.for("%{action='finish', querystring='id=$instance.Id'}")}' class="button">${common.finish}</a>
+<a id="btnCancel" href='${url.for("%{action='cancel', querystring='id=$instance.Id'}")}' class="button">${common.cancel}</a>
+<table class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Id</th>
+      <th>${common.workshop}</th>
+      <th>${common.submitby}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${instance.Id}</td>
+      <td>${r.getdescription($instance.SubmitFrom)}</td>
+      <td>${instance.SubmitBy}</td>
+      <td>${h.getenumname($instance.Status)}</td>
+      <td>${instance.CreateDate.ToShortDateString()}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="new-entry-container" class="ui-widget-content ui-corner-all">
+<h3>${common.createnew} ${common.entry}</h3>
+
+${h.start_with_layout($url.for("%{action='addentry'}"), "formNewInstance")}
+${f.push("entry")}
+
+$f.hiddenfield("Submission.Id")
+${h.field($common.tradetype, $f.select("TradeType", $f.enumtopairs("HJ.Malt.Common.Domain.TradeTypeEnum, HJ.Malt.Common"), "%{value='first', class='required'}"), true)}
+${h.field($common.material, $f.textfield("Material.Id", "%{class='required'}"), true)}
+${h.field($common.quantity, $f.textfield("SubmittedQuantity", "%{class='required', min='0.000000001'}"), true)}
+${h.field($common.packagequantity, $f.textfield("PackageQuantity", "%{min='0'}"))}
+${h.field($common.notice, $f.textfield("Notice"))}
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+${h.end_with_layout()}
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.joborder}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.quantity}</th>
+      <th>${common.packagequantity}</th>
+      <th>${common.notice}</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>$!{entry.JobOrder}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.SubmittedQuantity}</td>
+      <td>${entry.PackageQuantity}</td>
+      <td>$!{entry.Notice}</td>
+      <td>${common.remove}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

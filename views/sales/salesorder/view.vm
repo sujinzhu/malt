@@ -1,0 +1,117 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container { width: 800px; }
+#header-container h3, #header-container p { float: left; }
+#header-container a { margin-left: 2em; }
+#header-container .ui-widget-header th { padding: .3em; }
+#entries-container { margin-top: 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('<p></p>').load('${url.for("%{controller='bipsales', action='linktocpo'}")}', {id: "$instance.Id"}).insertAfter('#header-container h3');
+
+    oDataTable = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "short-date required-date"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity margin"},
+      {"sClass": "unit-id"},
+      {"sClass": "unit-desc"},
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+
+    $('#header-container p a').button();
+  });
+
+function fnGetAllocateInventoryLink(iId, dAllocatedQuantity){
+  var sUrl = '${url.for("%{action='allocatedinventory', querystring='id='}")}' + iId;
+  return '<a href="' + sUrl + '">' + dAllocatedQuantity + "</a>";
+}
+
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.salesorder}: ${instance.Id}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.salesorder}: ${instance.Id}</h3>
+<p><a href='${url.for("%{area='inv', controller='formula', action='view', querystring='id=$instance.Id'}")}'>${common.bom}</a></p>
+<p><a href='${url.for("%{area='pmc', controller='mc', action='purchaserequisition', querystring='id=$instance.Id'}")}'>${common.purchaserequisition}</a></p>
+<p><a href='${url.for("%{area='inv', controller='materialcredit', action='list', querystring='creditor=$instance.Id'}")}'>${common.quota}</a></p>
+<table class="display">
+  <tr class="ui-widget-header">
+    <th>${common.customer}</th>
+    <th></th>
+    <th>${common.tradetype}</th>
+    <th>${common.salesman}</th>
+    <th>${common.createdate}</th>
+    <th>${common.status}</th>
+  </tr>
+  <tr class="ui-widget-content">
+    <td>$!{instance.Customer.Id}</td>
+    <td>$!{instance.Customer.Name}</td>
+    <td>$!{h.getenumname($instance.TradeType)}</td>
+    <td>$!{instance.SalesMan}</td>
+    <td>$!{instance.CreatedDate.ToShortDateString()}</td>
+    <td>${h.getenumname($instance.Status)}</td>
+  </tr>
+</table>
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.materialid}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requireddate}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.allocatedquantity}</th>
+      <th>${common.plannedmaterialquantity}</th>
+      <th>${common.deliveredquantity}</th>
+      <th>${common.ordermargin}</th>
+      <th>${common.baseunit}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td id="date${entry.Id}">${entry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>${entry.AllocatedQuantity}</td>
+      <td>${entry.PlannedMaterialQuantity}</td>
+      <td>${entry.DeliveredQuantity}</td>
+      <td id="quantity${entry.Id}">${entry.RemainRequiredQuantity}</td>
+      <td>${entry.Unit.Id}</td>
+      <td>$!{entry.Unit.Description}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+

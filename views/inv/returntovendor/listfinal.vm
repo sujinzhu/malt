@@ -1,0 +1,47 @@
+#capturefor(head)
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#instances').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers"
+    });
+  });
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.return-to-warehouse}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+  <h3>${common.return-to-warehouse}</h3>
+</div>
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.return-from}</th>
+      <th>${common.returned-by}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($final in $finals)
+    <tr>
+      <td>${url.link($final.Id, "%{action='steering', querystring='id=$final.Id'}")}</td>
+      <td>$!{r.getdescription($final.ReturnFrom)}</td>
+      <td>${final.ReturnedBy}</td>
+      <td>${h.getenumname($final.Status)}</td>
+      <td>${final.CreateDate.ToShortDateString()}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

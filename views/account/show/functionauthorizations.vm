@@ -1,0 +1,60 @@
+<h4>user:${account.ID}</h4>
+#foreach($url in $MonoRailAuthorizationHelper.GetPermissionsByUser($account))
+#beforeall
+	#set($i = 0)
+	#set($row = 0)
+	<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+#each
+	#if($i == 2)
+		#if($row == 0)
+			#set($row=1)
+			#set($class="scaffoldrow")
+		#else
+			#set($row=0)
+			#set($class="scaffoldaltrow")
+		#end
+	</tr>		
+	<tr class="${class}">
+		#set($i = 0)
+	#end
+	<td><b><font color="blue">${url.Area}</font> ${url.Controller}</b>.${url.Action}</td>
+	#set($i=$i+1)
+#afterall
+	</tr>
+	</table>
+#nodata
+	<p>No user special function authorizations set</p>
+#end
+
+#foreach($role in $account.Roles)
+#each
+	<h4>${role.Name}</h4>
+	#foreach($url in $MonoRailAuthorizationHelper.GetPermissionsByGroup($role))
+	#beforeall
+		#set($i = 0)
+		#set($row = 0)
+		<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+		<tr class="scaffoldrow">
+	#each
+		#if($i == 2)
+			#if($row == 0)
+				#set($row=1)
+				#set($class="scaffoldrow")
+			#else
+				#set($row=0)
+				#set($class="scaffoldaltrow")
+			#end
+		</tr>		
+		<tr class="${class}">
+			#set($i = 0)
+		#end
+		<td><b><font color="blue">${url.Area}</font> ${url.Controller}</b>.${url.Action}</td>
+		#set($i=$i+1)
+	#afterall
+		</tr>
+		</table>
+	#nodata
+		<p>No user special function authorizations set</p>
+	#end
+#end

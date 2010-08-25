@@ -1,0 +1,158 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #new-entry-container { width: 600px; float: left; }
+  /* #new-entry-container h3, #formNewIN { float: left; } */
+  #header-container, #entries-container { width: 800px; }
+  #entries-container { margin-top: 1em; clear: both; }
+  #btnIssue, #btnCancel { float: right; }
+  #btnIssue { font-size: 116%; }
+  #new-entry-container { padding-left: 1em; margin-top: 1em; margin-bottom: 1em; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_dataTable()}
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oEntries;
+    $(function(){
+      oEntries = $('#entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        null, null, null, null, null, null,
+        {"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[6]);}, "bSortable": false}
+        ]
+      });
+      $('#formNewInstance').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+        });
+      $('#entry_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")',{
+        width: 550,
+        matchContains: true,
+        formatItem: formatMaterialItem,
+        formatResult: formatResult,
+        max: 30
+      });
+      fnTrigerRemoveEntry();
+      $('#entry_JobOrder').autocomplete('$url.for("%{area='sales', controller='salesorder', action='autocomplete2'}")', {
+        width: 300,
+        matchContains: true,
+        formatItem: formatSalesOrderItem,
+        formatResult: formatResult,
+        max: 30
+      }).focus();
+    });
+    function fnAddToDT(data){
+      if(!fnHasError(data)){
+        oEntries.fnAddData([data['Id'], data['JobOrder'], data['Material'], data['IssuedQuantity'], data['PackageQuantity'], data['Notice'], '${common.remove}']);
+        fnTrigerRemoveEntry();
+        $('#entry_Material_Id').val("");
+        $('#entry_IssuedQuantity').val("");
+        $('#entry_PackageQuantity').val("");
+        $('#entry_Notice').val("");
+        $('#entry_JobOrder').val("").focus();
+      }
+    }
+    function fnGetRemoveLink(label)
+    {
+      return "<span style='cursor: pointer;'>"+label+"</span>";
+    }
+    function fnTrigerRemoveEntry()
+    {
+      $('#entries tbody td').click(function(){
+        var aPos = oEntries.fnGetPosition(this);
+        var aData = oEntries.fnGetData(aPos[0]);
+        if(aData[aPos[1]] == fnGetRemoveLink('${common.remove}'))
+        {
+          fnRemoveEntry(aData[0]);
+          oEntries.fnDeleteRow(aPos[0]);
+        }
+      });
+    }
+    function fnRemoveEntry(id)
+    {
+      var url = '${url.for("%{action='removeentry'}")}';
+      jQuery.post(url, {id: id}, function(data){fnHasError(data);}, 'json');
+    }
+  // ]]>
+  </script>
+#end
+<h3>${common.issuefinishedgoods}</h3>
+
+<div id="header-container">
+<table class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Id</th>
+      <th>${common.customer}</th>
+      <th>${common.repository}</th>
+      <th>${common.storekeeper}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${instance.Id}</td>
+      <td>[${instance.Customer.Id}]${instance.Customer.Name}</td>
+      <td>${r.getdescription($instance.IssuedFrom)}</td>
+      <td>${instance.IssuedBy}</td>
+      <td>${h.getenumname($instance.Status)}</td>
+      <td>${instance.CreateDate.ToShortDateString()}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="new-entry-container" class="ui-widget-content ui-corner-all">
+<h3>${common.createnew} ${common.entry}</h3>
+<a id="btnIssue" href='${url.for("%{action='issue', querystring='id=$instance.Id'}")}' class="fg-button ui-state-default ui-corner-all">${common.issue}</a>
+
+${h.start_with_layout($url.for("%{action='addentry'}"), "formNewInstance")}
+${f.push("entry")}
+
+$f.hiddenfield("Document.Id")
+${h.field($common.ordernumber, $f.textfield("JobOrder"))}
+${h.field($common.material, $f.textfield("Material.Id", "%{class='required'}"), true)}
+${h.field($common.quantity, $f.textfield("IssuedQuantity", "%{class='required', min='0.000000001'}"), true)}
+${h.field($common.packagequantity, $f.textfield("PackageQuantity", "%{min='0'}"))}
+${h.field($common.notice, $f.textfield("Notice"))}
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+${h.end_with_layout()}
+<a id="btnCancel" href='${url.for("%{action='cancel', querystring='id=$instance.Id'}")}' class="fg-button ui-state-default ui-corner-all">${common.cancel}</a>
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.joborder}</th>
+      <th>${common.material}</th>
+      <th>${common.quantity}</th>
+      <th>${common.packagequantity}</th>
+      <th>${common.notice}</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>$!{entry.JobOrder}</td>
+      <td>${entry.Material.Id}</td>
+      <td>${entry.IssuedQuantity}</td>
+      <td>${entry.PackageQuantity}</td>
+      <td>$!{entry.Notice}</td>
+      <td>${common.remove}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

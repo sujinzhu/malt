@@ -1,0 +1,40 @@
+<div id="selectcpoitem"></div>
+#foreach($item in $source)
+#beforeall
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr>
+		<th>SN No</th>
+		<th></th>
+		<th>$commonText.customer</th>
+		<th>$commonText.material</th>
+		<th>$commonText.quantity</th>
+		<th>UOFM</th>
+		<th>$commonText.from</th>
+		<th>$commonText.to</th>
+		<th></th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>$item.Key.DOCNUMBR</td>		
+		<td align="right">$StringHelper.Format("{0:0}", $item.LineNumber)</td>
+		<td>
+		#if($item.Customer.Trim()>"")
+		$Html3Helper.LinkTo("$WIPHelper.GetCustomer($item.Customer).ShortName", "Core","Customer", "Show", $item.Customer)
+		#end
+		</td>
+		<td>$item.Materiel</td>
+		<td align="right">$StringHelper.Format("{0:0}", $item.QuantityInPCS)</td>
+		<td>$item.UOFM</td>
+		<td>$!item.FromLocation</td>
+		<td>$!item.ToLocation</td>
+		<td>$AjaxHelper.LinkToRemote("$commonText.select", "${siteRoot}/Sales/CustomerPOItem/Search2.rails", $DictHelper.CreateDict( "update=selectcpoitem", "with='itemcode=$item.Materiel&ivkey.DOCTYPE=$item.Key.DOCTYPE&ivkey.DOCNUMBR=$item.Key.DOCNUMBR&ivkey.LNSEQNBR=$item.Key.LNSEQNBR'" ) )</td>
+#after
+	</tr>
+#afterall
+</table>
+#nodata
+<p>No deliveries need to register on Customer PO.</p>
+#end

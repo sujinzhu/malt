@@ -1,0 +1,2 @@
+<h3>${commonText.stock} ${commonText.list}</h3>
+#parse("${siteRoot}/wip/stock/list/ilist.vm")

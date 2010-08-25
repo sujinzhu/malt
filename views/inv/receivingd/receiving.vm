@@ -1,0 +1,156 @@
+#capturefor(head)
+  <link rel="stylesheet" href="${siteroot}/content/css/inv/receiving/receiving.css" type="text/css" media="screen" title="Receining" charset="utf-8" />
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+  var olstrnes;
+    $(function(){
+      function formatItem(row){ return row[0] + " " + row[1]; }
+      function formatResult(row) { return row[0]; }
+      olstrnes = $('#rn-entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        null, null, null, null, null, null,
+        {"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[6]);}, "bSortable": false}
+        ]
+      });
+      $('#rne_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete2'}")',{
+        width: 300,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      }).focus();
+      $('#rne_Unit_Id').autocomplete('$url.for("%{area='inv', controller='unit', action='autocomplete2'}")',{
+        width: 100,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      });
+      $('#formNewEntry').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+      });
+      fnTrigerRemoveEntry();
+    });
+    function fnGetRemoveLink(label)
+    {
+      return "<span style='cursor: pointer;'>"+label+"</span>";
+    }
+    function fnFinish(){
+      finishUrl = '${url.for("%{action='finishreceiving', querystring='id=${rn.Id}'}")}';
+      document.location=finishUrl;
+    }
+    function fnCancel(){
+      cancelUrl = '${url.for("%{action='cancel', querystring='id=${rn.Id}'}")}';
+      document.location=cancelUrl;
+    }
+    function fnAddToDT(data){
+      if(!fnHasError(data)){
+        olstrnes.fnAddData([data['Id'], data['Material'] + " " + data['MaterialName'], data['ReceivedQuantity'], data['BaseUnit'] + " " + data['UnitDescription'], data['UnitPrice'], data['Notice'], '${common.remove}']);
+        fnTrigerRemoveEntry();
+        $('#rne_Unit_Id').val("");
+        $('#rne_UnitPrice').val("");
+        $('#rne_ReceivedQuantity').val("");
+        $('#rne_Notice').val("");
+        $('#rne_Material_Id').val("").focus();
+      }
+    }
+    function fnTrigerRemoveEntry()
+    {
+      $('#rn-entries tbody td').click(function(){
+        var aPos = olstrnes.fnGetPosition(this);
+        var aData = olstrnes.fnGetData(aPos[0]);
+        if(aData[aPos[1]] == fnGetRemoveLink('${common.remove}'))
+        {
+          fnRemoveEntry(aData[0], aPos[0]);
+          //olstrnes.fnDeleteRow(aPos[0]);
+        }
+      });
+    }
+    function fnRemoveEntry(id, iRowId)
+    {
+      var url = '${url.for("%{action='removeentry'}")}';
+      jQuery.post(url, {id: id}, function(data){
+        if(!fnHasError(data)){
+          olstrnes.fnDeleteRow(iRowId);
+        }
+      }, 'json');
+    }
+  // ]]>
+  </script>
+#end
+
+<div id="new-entry-container">
+${h.start_with_layout($url.for("%{action='createreceivingnoteentry'}"), "formNewEntry")}
+
+${f.push("rne")}
+
+${f.hiddenfield("Document.Id")}
+${h.field($common.material, $f.textfield("Material.Id", "%{class='required'}"), true)}
+${h.field($common.unit, $f.textfield("Unit.Id", "%{class='required'}"), true)}
+${h.field($common.unitprice, $f.textfield("UnitPrice", "%{class='required', min=0.00000000001}"), true)}
+${h.field($common.receivedquantity, $f.textfield("ReceivedQuantity", "%{class='required', min=0.00000000001}"), true)}
+${h.field($common.notice, $f.textfield("Notice"))}
+${h.field("", $f.submit("$common.create"))}
+
+${f.pop()}
+
+${h.end_with_layout()}
+</div>
+
+<h3>${common.receivingnote} : ${rn.Id}</h3>
+
+<table id="rn-header" class="display">
+  <thead>
+    <tr class="ui-widget-header ui-corner-top">
+      <th>${common.vendor}</th>
+      <th>${common.receiveddate}</th>
+      <th>${common.deliverynoteid}</th>
+      <th>${common.consignee}</th>
+      <th>${common.rmwarehouse}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content ui-corner-bottom">
+      <td>${rn.Vendor.Id} $!{rn.Vendor.Name}</td>
+      <td>${dateformat.ToShortDate($rn.ReceivedDate)}</td>
+      <td>${rn.DeliveryNoteId}</td>
+      <td>${rn.Consignee}</td>
+      <td>${rn.Repository} ${r.getdescription($rn.Repository)}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="fg-buttonset fg-buttonset-single">
+  <button id="btnFinish" onclick="javascript:fnFinish();">${common.finish}</button>
+  <button id="btnCancel" onclick="javascript:fnCancel();">${common.cancel}</button>
+</div>
+<table id="rn-entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.material}</th>
+      <th>${common.receivedquantity}</th>
+      <th>${common.baseunit}</th>
+      <th>${common.unitprice}</th>
+      <th>${common.notice}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($rne in $rn.Entries)
+    <tr>
+      <td>${rne.Id}</td>
+      <td>${rne.Material.Id} $!{rne.Material.Name} [$!{rne.Material.Specification}]</td>
+      <td>${rne.ReceivedQuantity}</td>
+      <td>${rne.Unit.Id} $!{rne.Unit.Description}</td>
+      <td>$!{rne.UnitPrice}</td>
+      <td>$!{rne.Notice}</td>
+      <td>${common.remove}</td>
+    </tr>
+  #end
+  </tbody>
+</table>

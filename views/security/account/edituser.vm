@@ -1,0 +1,94 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#gallery { float: left; width: 65%; min-height: 12em; } * html #gallery { height: 12em; } /* IE6 */
+.gallery.custom-state-active { background: #eee; }
+.gallery li { float: left; width: 156px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
+.gallery li h5 { margin: 0 0 0.4em; cursor: move; font-size: 85%; }
+.gallery li a { float: right; }
+.gallery li a.ui-icon-zoomin { float: left; }
+.gallery li img { width: 44px; height: 57px; cursor: move; }
+
+#trash { float: right; width: 32%; min-height: 18em; padding: 1%;} * html #trash { height: 18em; } /* IE6 */
+#trash h4 { line-height: 16px; margin: 0 0 0.4em; }
+#trash h4 .ui-icon { float: left; }
+/* ]]> */
+</style>
+  
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#tabs').tabs();
+
+    $('li, #gallery').draggable({
+      revert: 'invalid',
+      helper: 'clone',
+      cursor: 'move'
+    });
+
+    $('#trash').droppable({
+      accept: '#gallery > li',
+      activeClass: 'ui-state-highlight',
+      drop: function(ev, ui){fnAddRole(ui.draggable);}
+    });
+
+    $('#gallery').droppable({
+      accept: '#trash li',
+      activeClass: 'ui-state-highlight',
+      drop: function(ev, ui){fnRemoveRole(ui.draggable);}
+    });
+  });
+
+  function fnAddRole(item){
+    $(item).fadeOut(function(){
+      $(item).appendTo('#current-roles').fadeIn();
+    });
+    var url = '${url.for("%{action='adduserrole'}")}';
+    jQuery.post(url,  {user: '$userId', role: $('h5', $(item)).text()}, function(data){fnHasError(data);}, 'json');
+  }
+
+  function fnRemoveRole(item){
+    $(item).fadeOut(function(){
+      $(item).appendTo('#gallery').fadeIn();
+    });
+    var url = '${url.for("%{action='removeuserrole'}")}';
+    jQuery.post(url,  {user: '$userId', role: $('h5', $(item)).text()}, function(data){fnHasError(data);}, 'json');
+  }
+// ]]>
+</script>
+#end
+
+<h3>${common.user} ${userId}</h3>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#membership">${common.membership}</a></li>
+    <li><a href='${url.for("%{action='edituserfauthorization', querystring='id=$userId'}")}'>${common.functionauthorization}</a></li>
+    <li><a href='${url.for("%{action='edituserrauthorization', querystring='id=$userId'}")}'>${common.repositoryauthorization}</a></li>
+  </ul>
+
+  <div id="membership" class="demo ui-widget ui-helper-clearfix">
+    <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+    #foreach($role in $roles)
+      <li class="ui-widget-content ui-corner-tr">
+        <h5 class="ui-widget-header">${role}</h5>
+        <img src="${siteroot}/content/images/meeting.png" alt="${role}"/>
+      </li>
+    #end
+    </ul>
+
+    <div id="trash" class="ui-widget-content ui-state-default">
+      <h4 class="ui-widget-header">${common.current} ${common.authorizations}</h4>
+      <ul id="current-roles" class="gallery ui-helper-resert">
+      #foreach($role in $userRoles)
+        <li class="ui-widget-content ui-corner-tr">
+          <h5 class="ui-widget-header">${role}</h5>
+          <img src="${siteroot}/content/images/meeting.png" alt="${role}"/>
+        </li>
+      #end
+      </ul>
+    </div>
+    
+  </div>
+
+</div>

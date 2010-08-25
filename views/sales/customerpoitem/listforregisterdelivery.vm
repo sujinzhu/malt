@@ -1,0 +1,49 @@
+#foreach($item in $cpoitems)
+#beforeall
+<fieldset>
+<legend>$commonText.order $commonText.items</legend>
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0" width=100%>
+	<tr>
+		<th>$commonText.customer</th>
+		<th>$commonText.order</th>
+		<th>Ship By</th>
+		<th>CRRNO</th>
+		<th>Cust. Drawing No.</th>
+		<th>Cust. P/N</th>
+		<th>Rev.</th>
+		<th>$commonText.material</th>
+		<th>$commonText.requested $commonText.date</th>
+		<th>$commonText.requested $commonText.quantity</th>
+		<th>$commonText.order $commonText.remnant</th>
+		<th></th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>$Html3Helper.LinkTo("$item.Order.Customer.ShortName", "Core","Customer", "Show", $item.Order.Customer.ID)</td>
+		<td>$Html3Helper.LinkTo("$item.Order.OrderNumber", "Sales","CustomerPO", "Show", $item.Order.ID)</td>
+		<td>$!item.ShipBy</td>
+		<td>$!item.FGRequest.CRRNO</td>
+		<td>$!item.FGRequest.CustomerDrawingNo</td>
+		<td>$!item.FGRequest.CustomerPN</td>
+		<td>$!item.FGRequest.CustomerPN_Rev</td>
+		<td>$!item.FGRequest.Material.ID</td>
+		<td>$!item.FGRequest.RequestedDate.ToString("yyyy-MM-dd")</td>
+		<td align="right">$item.FGRequest.RequestedQuantity</td>
+		<td align="right">$item.OrderRemnant</td>
+		<td>
+		#if($item.OrderRemnant >= $inv.QuantityInPCS)
+			$AjaxHelper.LinkToRemote("$commonText.register", "${siteRoot}/Sales/Delivery/ConfirmDeliveryRegister.rails", $DictHelper.CreateDict( "update=confirm", "with='ivkey.DOCTYPE=${inv.Key.DOCTYPE}&ivkey.DOCNUMBR=${inv.Key.DOCNUMBR}&ivkey.LNSEQNBR=${inv.Key.LNSEQNBR}&cpoitem.ID=${item.ID}'" ) )
+		#end
+		</td>
+#after
+	</tr>
+#afterall
+</table><br/>
+<div id="confirm"></div>
+</fieldset><br/>
+#nodata
+<p><font color="orange">No Customer PO Items found.</font></p>
+#end

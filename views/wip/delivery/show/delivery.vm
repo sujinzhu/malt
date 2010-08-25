@@ -1,0 +1,50 @@
+<h2>${delivery.Type}</h2>
+<h3>[$delivery.Id]</h3>
+<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th>${commonText.from}</th><td>${delivery.From.ID.Trim()}</td>
+		<th>${commonText.isvalid}</th><td>${delivery.Valid}</td>
+		<th>${commonText.operator}</th><td>${IdentityHelper.GetFullName($delivery.Operator)}</td>
+		<th>${commonText.date}</th><td>${delivery.Time.ToString("yyyy-MM-dd HH:mm:ss")}</td>
+	</tr>
+	<tr class="scaffoldaltrow" background="${siteRoot}/Content/images/${delivery.Type}.gif">
+		<th>${commonText.to}</th><td>${delivery.To.ID.Trim()}</td>
+		<th>${commonText.issigned}</th><td>${delivery.IsSigned}</td>
+		<th>${commonText.signee}</th><td>
+		#if($delivery.IsSigned)
+		${IdentityHelper.GetFullName($delivery.Signee)}
+		#end
+		</td>
+		<th>${commonText.signtime}</th><td>
+		#if($delivery.IsSigned)
+		${delivery.SignTime.ToString("yyyy-MM-dd HH:mm:ss")}
+		#end
+		</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th>${commonText.material}</th><td>${delivery.Material.ID.Trim()}</td>
+		<th>${commonText.customer}</th><td>${delivery.Customer.ID.Trim()}</td>
+		<th>${wip.allocatee}</th><td>${delivery.Allocatee.Trim()}</td>
+		<th>${commonText.quantity}</th><td>${StringHelper.Format("{0:0}", $delivery.Quantity)}</td>
+	</tr>
+	<tr class="scaffoldaltrow" background="${siteRoot}/Content/images/${delivery.Type}.gif">
+		<th>${commonText.remark}</th><td colspan="7">${delivery.Remark}</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th>${commonText.travelerid}</th><td>
+		#if(${delivery.TravelerId})
+		$Html3Helper.LinkTo("${delivery.TravelerId}",  "wip","traveler", "show", ${delivery.TravelerId})
+		#end
+		</td>
+		<th>${wip.usedtimes}</th><td>$!{delivery.TravelerUsedTimes}</td>
+		<td colspan="4">
+		#if($!{delivery.TravelerUsedTimes} > 0)
+		$AjaxHelper.LinkToRemote("Show Traveler Components","${siteRoot}/wip/traveler/ShowComponents.rails?id=${delivery.TravelerId}&usedTimes=${delivery.TravelerUsedTimes}","%{update='TravelerComponents'}")
+		#end
+		</td>
+	</tr>
+</table>
+<div id="TravelerComponents"></div>
+#parse("${siteRoot}/wip/delivery/show/deliverycomponent.vm")
+
+#parse("${siteRoot}/wip/delivery/show/operate.vm")

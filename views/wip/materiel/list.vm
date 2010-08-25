@@ -1,0 +1,29 @@
+#foreach($item in $source)
+#beforeall
+<h2>Order Summary Report:</h2>
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0" width=100%>
+	<tr>
+		<th>P/N</th>
+		<th>EAU</th>
+		<th>EOQ</th>
+		<th></th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+	<td>$item.ID.Trim()</td>
+	<td>$StringHelper.Format("{0:0}", $item.EAU)</td>
+	<td>$StringHelper.Format("{0:0}", $item.EOQ)</td>
+	<td>$Html3Helper.LinkTo("$commonText.Show", "WIP","Materiel", "Show", $item.ID.Trim())</td>
+#after
+	</tr>
+#afterall
+</table>
+#end
+
+#set($queryStringParams=$DictHelper.Create("itemcode=$itemcode"))
+#parse("${siteRoot}/share/pagination.vm")
+
+#parse("${siteRoot}/wip/materiel/search.vm")

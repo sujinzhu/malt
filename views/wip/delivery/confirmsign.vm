@@ -1,0 +1,10 @@
+<fieldset>
+<legend>${commonText.confirm}</legend>
+<p>
+Do you really want to <b>Sign</b> this Delivery?
+</p>
+<p>
+$Html3Helper.LinkTo("${commonText.yes}", "wip","delivery", "sign", $deliveryId)
+$AjaxHelper.LinkToRemote("${commonText.cancel}", "${siteRoot}/home/nothing.rails", $DictHelper.CreateDict("update=operate"))
+</p>
+</fieldset>

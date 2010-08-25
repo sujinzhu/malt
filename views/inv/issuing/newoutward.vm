@@ -1,0 +1,57 @@
+#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#formNewIS').validate();
+      $('#drafts').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aaSorting": [[4, 'desc']],
+      });
+    });
+  // ]]>
+  </script>
+#end
+<h3>${common.issueoutward}</h3>
+
+${h.start_with_layout($url.for("%{action='create'}"), "formNewIS")}
+${f.push("issuingNote")}
+${f.hiddenfield("IssueType")}
+
+${h.field("${common.issuingnote} ${common.id}", $f.textfield("Id"))}
+${h.field($common.workshop, $f.select("IssueTo", $repositories, "%{value='Id', class='required'}"), true)}
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+${h.end_with_layout()}
+
+<div id="header-container">
+<table id="drafts" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.workshop}</th>
+      <th>${common.applyby}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($issuingNote in $drafts)
+    <tr>
+      <td>${url.link($issuingNote.Id, "%{action='steering', querystring='id=$issuingNote.Id'}")}</td>
+      <td>
+      ${r.getdescription($issuingNote.IssueTo)}
+      </td>
+      <td>${issuingNote.ApplyBy}</td>
+      <td>${h.getenumname($issuingNote.Status)}</td>
+      <td>${issuingNote.CreateDate}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

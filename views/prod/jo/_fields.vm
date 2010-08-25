@@ -1,0 +1,3 @@
+﻿${h.field("Id", $form.TextField('Id'))}
+${h.field(${common.material}, $form.TextField('Material.Id', "%{class='required'}"))}
+${h.field(${common.baseunit}, $form.TextField('BaseUnit.Id', "%{class='required'}"))}

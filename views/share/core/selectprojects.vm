@@ -1,0 +1,27 @@
+<p>$commonText.project:</p>
+#foreach($series in $serieses)
+#beforeall
+$AjaxHelper.LinkToFunction("$commonText.expanding $commonText.all", "expandTree('serdeses')")
+&nbsp;
+$AjaxHelper.LinkToFunction("$commonText.collapsing $commonText.all", "collapseTree('serdeses')")
+<UL CLASS="mktree" ID="serdeses">
+#each
+<LI>$series.Name
+	#foreach($project in $series.IncludedProjects)
+	#beforeall
+	<UL>
+	#each
+	<LI>
+	<input type="checkbox" name="project[$project.ID].ID" value="$project.ID" 
+		#if($selectedprojects.Contains($project))
+		checked 
+		#end
+	/>${project.Name}
+	</LI>
+	#afterall
+	</UL>
+	#end
+</LI>
+#afterall
+</UL>
+#end

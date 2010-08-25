@@ -1,0 +1,159 @@
+﻿#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#date-criteria-container { float: left; width: 500px; padding: 0 .5em 1em .5em; }
+#repositories-criteria-container { float: left; width: 500px; padding: 0 .5em 1em .5em; }
+#materials-criteria-container { float: left; width: 500px; padding: 0 .5em 1em .5em; }
+h4 { padding: 3px; }
+#date-container, #repositories-container, #materials-container { margin-top: -1px; }
+p, #repositories, #materials { width: 98%; margin: .5em;}
+#button-container { float: none; text-align: center; }
+#btnQuery { float: none; }
+.repository-name { min-width: 100px; width: 12.5%; }
+.datetime { min-width: 100px; width: 12.5%; }
+.quantity { text-align: right; }
+
+.total-container { float: left; margin-right: 1em; padding: .3em; }
+.total-quantity { margin-left: -1px; text-align: right; min-width: 50px;}
+
+#criteria-container ul span, #criteria-container li { float: left; margin: .5em; }
+#criteria-container p { float: left; }
+/* ]]> */
+</style>
+  
+${j.jquery_autocomplete()}
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    oDataTable = $('#instances').dataTable({
+      "bProcessing": true,
+      "bServerSide": true,
+      "sAjaxSource": '$url.for("%{action='search'}")',
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "transaction-category"},
+      {"sClass": "transaction-date"},
+      {"sClass": "repository-id"},
+      {"sClass": "repository-desc", "bSortable": false},
+      {"sClass": "material-id"},
+      {"sClass": "material-name", "bSortable": false},
+      {"sClass": "material-spec", "bSortable": false, "bVisible": false},
+      {"sClass": "quantity", "bSortable": false},
+      {"sClass": "quantity", "bSortable": false},
+      {"sClass": "unit-id", "bSortable": false},
+      {"sClass": "unit-desc", "bSortable": false, "bVisible": false},
+      null,
+      null
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();},
+      "fnServerData": function(sSource, aoData, fnCallback){
+        var url = sSource + '?repositories=' + $('#repositories').val() + '&materials=' + $('#materials').val() + '&fromRepository=' + $('#fromRepository').val() + '&toRepository=' + $('#toRepository').val() + '&fromMaterial=' + $('#fromMaterial').val() + '&toMaterial=' + $('#toMaterial').val() + '&fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val();
+        jQuery.get(url, aoData, function(json){
+          if(!fnHasError(json)){
+            fnCallback(json);
+          }
+        },
+       'json');
+      },
+    });
+
+    $('#btnQuery').click(function(){oDataTable.fnDraw();});
+
+    $('#repositories').autocomplete('$url.for("%{area='inv', controller='repository', action='autocomplete2'}")', {
+      width: 250,
+      multiple: true,
+      matchContains: true,
+      formatItem: formatRepositoryItem,
+      formatResult: formatResult
+    }).focus();
+    $('.repository').autocomplete('$url.for("%{area='inv', controller='repository', action='autocomplete2'}")', {
+      width: 250,
+      matchContains: true,
+      formatItem: formatRepositoryItem,
+      formatResult: formatResult
+    });
+    $('#materials').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+      width: 550,
+      multiple: true,
+      matchContains: true,
+      formatItem: formatMaterialItem,
+      formatResult: formatResult,
+      max: 30
+    });
+    $('.material').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+      width: 550,
+      matchContains: true,
+      formatItem: formatMaterialItem,
+      formatResult: formatResult,
+      max: 30
+    });
+    $('.date').datepicker();
+  });
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.transaction-detail}
+#end
+
+<h3>${common.transaction-detail}:</h3>
+
+<div id='criteria-container' class="ui-helper-clearfix">
+  <div id='repositories-criteria-container'>
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.repository}</h4>
+    <div id="repositories-container" class="ui-widget-content ui-helper-clearfix">
+    ${f.textarea("repositories")}
+    <p>${common.from} : ${f.textfield("fromRepository", "%{class='repository'}")}
+    ${common.to} : ${f.textfield("toRepository", "%{class='repository'}")}
+    </p>
+    </div>
+  </div>
+
+  <div id='materials-criteria-container'>
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.material}</h4>
+    <div id="materials-container" class="ui-widget-content ui-helper-clearfix">
+      ${f.textarea("materials")}
+      <p>${common.from} : ${f.textfield("fromMaterial", "%{class='material'}")}
+      ${common.to} : ${f.textfield("toMaterial", "%{class='material'}")}
+      </p>
+    </div>
+  </div>
+
+  <div id='date-criteria-container'>
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.date}</h4>
+    <div id="date-container" class="ui-widget-content ui-helper-clearfix">
+    <p>${common.from} : ${f.textfield("fromDate", "%{class='date'}")}
+    ${common.to} : ${f.textfield("toDate", "%{class='date'}")}
+    </p>
+    </div>
+  </div>
+
+  <p><button id="btnQuery">${common.query}</button></p>
+</div>
+
+<div id="instance-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.transaction-category}</th>
+      <th>${common.transaction-date}</th>
+      <th>${common.repository}</th>
+      <th>${common.repository-desc}</th>
+      <th>${common.material}</th>
+      <th>${common.material-name}</th>
+      <th>${common.material-spec}</th>
+      <th>${common.in-quantity}</th>
+      <th>${common.out-quantity}</th>
+      <th>${common.unit}</th>
+      <th></th>
+      <th>${common.allocatee}</th>
+      <th>${common.stub}</th>
+    </tr>
+  </thead>
+</table>
+</div>

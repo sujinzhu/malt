@@ -1,0 +1,95 @@
+#capturefor(title)
+${common.inventory}: ${common.deallocate}
+#end
+
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+h3 { font-size: 123.1%; }
+p { margin-top: 1em; height: 25px; float: left; }
+span { float: left; }
+.label2 { width: 150px; text-align: right; padding-right: .3em; }
+.field2 { width: 300px; margin-right: .8em; padding-left: .3em; margin-left: -1px; }
+.label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+#panel { padding: 0 0 1em 1em; width: 500px; margin-bottom: 1em; }
+/* ]]> */
+</style>
+  
+${j.jquery_dataTable()}
+${j.jquery_validate()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    oDataTable = $('#instances').dataTable({
+      "bProcessing": true,
+      "bServerSide": true,
+      "sAjaxSource": '$url.for("%{action='listallocated'}")',
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "repository-id"},
+      {"sClass": "repository-name", "bSortable": false},
+      {"sClass": "material-id"},
+      {"sClass": "material-name", "bSortable": false},
+      {"sClass": "material-spec", "bSortable": false},
+      {"sClass": "quantity ui-state-highlight","fnRender": function(oObj){return fnRenderSelectLink3(oObj, "fnSelect");} },
+      {"sClass": "datetime"},
+      {"sClass": "datetime"},
+      null,
+      null
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();},
+    });
+
+    fnDecorative();
+
+    $('#deallocate-form').validate();
+
+  });
+
+  function fnSelect(id, iRow, sContent){
+    $('#id').val(id);
+    $('#quantity').val(sContent).focus();
+    $('#operation-container').show("slow");
+  }
+// ]]>
+  </script>
+#end
+
+<div id="operation-container" class="ui-helper-hidden">
+  <div id="panel" class="ui-widget-content ui-corner-all ui-helper-clearfix">
+  <form id="deallocate-form" action='${url.for("%{action='deallocate'}")}' method="POST">
+    ${f.installscripts()}
+    <input id="id" type="hidden" name="id" value="" /> 
+  <p>
+    <span class="label2">*${common.deallocate} ${common.quantity}:</span>
+    <span class="field2">$!{f.numberfield("quantity", "%{class='required', min='0.00000000001'}")}&nbsp;</span>
+  </p>
+  <p>
+    ${f.submit($common.deallocate)}
+  </p>
+  </form>
+  </div> 
+</div>
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th></th>
+      <th>${common.repository}</th>
+      <th>${common.repository} ${common.description}</th>
+      <th>${common.material}</th>
+      <th>${common.name}</th>
+      <th>${common.description}</th>
+      <th>${common.quantity}</th>
+      <th>${common.createdate}</th>
+      <th>${common.lastupdatedate}</th>
+      <th>${common.allocatee}</th>
+      <th>${common.stub}</th>
+    </tr>
+  </thead>
+</table>
+</div>

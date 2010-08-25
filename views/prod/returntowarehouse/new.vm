@@ -1,0 +1,61 @@
+#capturefor(head)
+${j.jquery_validate()}
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#new-instance-form').validate();
+    $('#drafts').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers"
+    });
+  });
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.return-to-warehouse}: ${common.createnew} ${common.sheet-for-return-to-warehouse}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+  <h3>${common.return-to-warehouse}</h3>
+</div>
+
+<div id="new-instance-container">
+${h.start_with_layout($url.for("%{action='create'}"), "new-instance-form")}
+${f.push("sheet")}
+
+${h.field("${common.return-to-warehouse} ${common.id}", $f.textfield("Id"))}
+${h.field($common.workshop, $f.select("ReturnFrom", $repositories, "%{value='Id', class='required'}"), true)}
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+${h.end_with_layout()}
+</div>
+
+<div id="instances-container">
+<table id="drafts" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.return-from}</th>
+      <th>${common.returned-by}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($draft in $drafts)
+    <tr>
+      <td>${url.link($draft.Id, "%{action='steering', querystring='id=$draft.Id'}")}</td>
+      <td>$!{r.getdescription($draft.ReturnFrom)}</td>
+      <td>${draft.ReturnedBy}</td>
+      <td>${h.getenumname($draft.Status)}</td>
+      <td>${draft.CreateDate.ToShortDateString()}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

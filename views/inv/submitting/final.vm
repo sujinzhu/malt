@@ -1,0 +1,136 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container { float: left; margin-bottom: 1em; }
+#header-container { width: 800px; }
+#entries-container { margin-top: 1em; clear: both; }
+
+.submitted-quantity { cursor: pointer; }
+
+#placing-container { padding-left: 1em; margin-top: 1em; margin-bottom: 1em; width: 800px; }
+#placing-container p { margin-top: 1em; float: left; }
+#placing-container p { height: 25px; }
+#placing-container span  { float: left; }
+.label2 { width: 100px; text-align: right; padding-right: .3em; }
+.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; width: 250px; }
+.label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+.material { width: 500px; }
+.repository-with-desc { width: 300px; }
+/* ]]> */
+</style>
+
+${j.jquery_form()}
+${j.jquery_validate()}
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  var oEntries;
+  $(function(){
+    oDataTable = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {"bVisible": false},
+      null,
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity submitted-quantity ui-state-active"},
+      {"sClass": "quantity"},
+      null,
+      ],
+      "fnDrawCallback": function(){
+        fnClassTrigerMaterialMenu();
+      }
+    });
+
+    $('.submitted-quantity').click(function(){
+      fnShowPlacing(this.id);
+    });
+  });
+
+  function fnShowPlacing(iId){
+    $('#placing-container').load('${url.for("%{action='availablerepositories'}")}', {id: iId}).show('slow');
+  }
+
+  function fnHidePlacing(){
+    $('#placing-container').hide('slow').html('');
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+  #if($h.getenumname($instance.MaterialType) == "SemiFinishGood")
+  ${common.sfgsubmit}
+  #else
+  ${common.fgsubmit}
+  #end
+  : ${instance.Id}
+#end
+
+#if($h.getenumname($instance.MaterialType) == "SemiFinishGood")
+<h3>${common.sfgsubmit}</h3>
+#else
+<h3>${common.fgsubmit}</h3>
+#end
+
+<div id="header-container">
+<table class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Id</th>
+      <th>${common.workshop}</th>
+      <th>${common.submitby}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${instance.Id}</td>
+      <td>${r.getdescription($instance.SubmitFrom)}</td>
+      <td>${instance.SubmitBy}</td>
+      <td>${h.getenumname($instance.Status)}</td>
+      <td>${instance.CreateDate.ToShortDateString()}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.joborder}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.quantity}</th>
+      <th>${common.packagequantity}</th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    #if(!$entry.Accepted)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>$!{entry.JobOrder}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td id='${entry.Id}'>${entry.SubmittedQuantity}</td>
+      <td>${entry.PackageQuantity}</td>
+      <td>$!{entry.Notice}</td>
+    </tr>
+    #end
+  #end
+  </tbody>
+</table>
+</div>
+
+<div id='placing-container' class="ui-helper-clearfix ui-helper-hidden">
+</div>

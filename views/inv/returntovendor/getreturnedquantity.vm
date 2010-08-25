@@ -1,0 +1,58 @@
+<button id="btnPreGetReceivedQuantity">${common.previousstep}</button>
+<h3>${common.finish}:</h3>
+
+<table id="selected-poe" class="display ui-helper-clearfix">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>${common.ordernumber}</th>
+      <th>${common.material}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.deliveredquantity}</th>
+      <th>${common.remainorderquantity}</th>
+      <th>${common.baseunit}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${entry.OrderEntry.PO.Id}</td>
+      <td>${entry.OrderEntry.Material.Id}</td>
+      <td>${entry.OrderEntry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.OrderEntry.RequiredQuantity}</td>
+      <td>${entry.OrderEntry.DeliveredQuantity}</td>
+      <td>${entry.OrderEntry.RemainRequiredQuantity}</td>
+      <td>${entry.OrderEntry.Unit.Id}</td>
+    </tr>
+  </tbody>
+</table>
+
+${h.start_with_layout($url.for("%{action='addentry'}"), "form-new-entry")}
+${f.push("entry")}
+
+$f.hiddenfield("Sheet.Id")
+$f.hiddenfield("OrderEntry.Id")
+$f.hiddenfield("Material.Id")
+${h.field($common.quantity, $f.textfield("Quantity", "%{class='required', min='0.000000001'}"), true)}
+${h.field($common.unit, $f.textfield("Unit.Id", "%{class='required'}"), true)}
+${h.field($common.notice, $f.textfield("Notice"))}
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+${h.end_with_layout()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  fnjQuerifyInput();
+  $('#entry_Unit_Id').autocomplete('$url.for("%{area='inv', controller='unit', action='autocomplete2'}")', {
+    width: 300,
+    matchContains: true,
+    formatItem: formatItem,
+    formatResult: formatResult
+  });
+  $('#entry_Quantity').focus();
+  $('#form-new-entry').validate({
+    submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddEntry}); }
+  });
+  $('#btnPreGetReceivedQuantity').click(function(){(fnPreGetReceivedQuantity("${entry.Sheet.Id}", "${entry.OrderEntry.Materil.Id}"));});
+// ]]>
+</script>

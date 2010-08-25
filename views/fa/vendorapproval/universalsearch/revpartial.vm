@@ -1,0 +1,24 @@
+#set ($i = 0)
+#foreach ($rev in $revs)
+#beforeall	
+	<fieldset>
+		<legend>Rev In:</legend>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tbody>
+#each
+		<tr class="scaffoldrow" id=rev$i>
+		<td>
+			$HtmlHelper.InputHidden("revs[$i]", "$rev")
+			$rev
+		</td>
+		<td>
+			$AjaxHelper.ButtonToRemote("-", "SubtractRevCondition.rails", $DictHelper.CreateDict( "update=rev${i}" ))
+		</td>
+		</tr>
+	#set ($i = $i + 1)
+#afterall
+	</tbody>
+	</table>
+	</fieldset>
+	<br/>
+#end

@@ -1,0 +1,104 @@
+#foreach($item in $source)
+#beforeall
+<h2>Order Summary Report:</h2>
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0" width=100%>
+	<tr>
+		<th>$commonText.material</th>
+		<th>$commonText.origin</th>
+		<th>$commonText.customer</th>
+		<th>Cust. Drawing No.</th>
+		<th>Ship By</th>
+		<th>$commonText.requested $commonText.date</th>
+		<th>$commonText.requested $commonText.quantity</th>
+		<th rowspan=2></th>
+	</tr>
+	<tr>
+		<th colspan=2>CRRNO</th>
+		<th>$commonText.order</th>
+		<th>Cust. P/N</th>
+		<th>Rev.</th>
+		<th>$sales.billedquantity</th>
+		<th>$commonText.order $commonText.remnant</th>
+	</tr>
+	#set($row=0)
+	#set($totalQuantity=0)
+	#set($totalRemnant=0)
+#odd
+	#set($class="scaffoldrow")
+#even
+	#set($class="scaffoldaltrow")
+#each
+	<tr class="${class}">
+	#if($item.GetType().Name=="FGRequest")
+		<td>$Html3Helper.LinkTo("$item.Material.ID", "WIP","Materiel", "Show", $item.Material.ID)</td>		
+		<td>$item.Origin</td>
+		<td>$Html3Helper.LinkTo("$item.Customer.ShortName", "Core","Customer", "Show", $item.Customer.ID)</td>
+		<td>$!item.CustomerDrawingNo</td>
+		<td></td>
+		<td><font 
+		#if($today > $item.RequestedDate)
+			color="red"
+		#else
+			color="blue"
+		#end
+			>
+			$item.RequestedDate.ToString("yyyy-MM-dd")
+		</font>
+		</td>
+		<td align="right">$item.RequestedQuantity</td>
+		#set($totalQuantity=$totalQuantity+$item.RequestedQuantity)
+		<td rowspan=2>
+			$Html3Helper.LinkTo("$commonText.show", "Sales","FGRequest", "Show", $item.ID)
+		</td>
+	</tr>
+	<tr class="${class}">
+		<td colspan=2>$!item.CRRNO</td>
+		<td></td>
+		<td>$!item.CustomerPN</td>
+		<td>$!item.CustomerPN_Rev</td>
+		<td align="right"></td>
+	#else
+		<td>$Html3Helper.LinkTo("$item.FGRequest.Material.ID", "WIP","Materiel", "Show", $item.FGRequest.Material.ID)</td>
+		<td>$item.FGRequest.Origin</td>
+		<td>$Html3Helper.LinkTo("$item.Order.Customer.ShortName", "Core","Customer", "Show", $item.Order.Customer.ID)</td>
+		<td>$!item.FGRequest.CustomerDrawingNo</td>
+		<td>$!item.ShipBy</td>
+		<td><font 
+		#if($today > $item.FGRequest.RequestedDate)
+			color="red"
+		#else
+			color="blue"
+		#end
+			>
+			$item.FGRequest.RequestedDate.ToString("yyyy-MM-dd")
+		</font></td>
+		<td align="right">$item.FGRequest.RequestedQuantity</td>
+		#set($totalQuantity=$totalQuantity+$item.FGRequest.RequestedQuantity)
+		<td rowspan=2>
+		$Html3Helper.LinkTo("$commonText.show", "Sales","CustomerPOItem", "Show", $item.ID)
+		#if($item.OrderRemnant < $item.FGRequest.RequestedQuantity)
+		$AjaxHelper.LinkToRemote("Deliveries", "${siteRoot}/Sales","Delivery/Search5.rails", $DictHelper.CreateDict( "update=row$row", "with='cpoitem.ID=$item.ID&update=row$row'" ) )
+		#end
+		</td>
+	</tr>
+	<tr class="$class">
+		<td colspan=2>$!item.FGRequest.CRRNO</td>
+		<td>$Html3Helper.LinkTo("$item.Order.OrderNumber", "Sales","CustomerPO", "Show", $item.Order.ID)</td>
+		<td>$!item.FGRequest.CustomerPN</td>
+		<td>$!item.FGRequest.CustomerPN_Rev</td>
+		<td align="right">$!item.BilledQuantity</td>
+		<td align="right">$!item.OrderRemnant</td>
+		#set($totalRemnant=$totalRemnant+$item.OrderRemnant)
+	#end
+#after
+	</tr>
+	#if($item.OrderRemnant < $item.FGRequest.RequestedQuantity)
+	<tr id="row$row"></tr>
+	#end
+	#set($row=$row+1)
+#afterall
+<tr class="scaffoldrow"><th colspan=6 align="right">Total:</th><td align="right"><b>$!totalQuantity</b><br/><font color="red">$!totalRemnant</font></td><td></td></tr>
+</table>
+#nodata
+<p>No items.</p>
+#end

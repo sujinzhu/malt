@@ -1,0 +1,48 @@
+${h.start_with_layout($url.for("%{action='addentry'}"), "formNewInstance")}
+${f.installscripts()}
+${f.push("entry")}
+
+$f.hiddenfield("Document.Id")
+$f.hiddenfield("SOE.Id")
+
+<p>
+  <span class="label2">${common.material}:</span>
+  <span class="field2 material">${entry.SOE.Material.Id} $!{entry.SOE.Material.Name} $!{entry.SOE.Material.Specification}</span>
+</p>
+<p>
+  <span class="label2">${common.requiredquantity}:</span>
+  <span class="field2">${entry.SOE.RequiredQuantity} ${entry.SOE.Unit.Description}</span>
+</p>
+<p>
+  <span class="label2">${common.deliveredquantity}:</span>
+  <span class="field2">${entry.SOE.deliveredquantity}  ${entry.SOE.Unit.Description}</span>
+</p>
+<p>
+  <span class="label2">*${common.deliveredquantity}:</span>
+  <span class="field2">${f.numberfield("DeliveredQuantity", "%{class='required', min='0.00000000001', max='$entry.SOE.RemainRequiredQuantity'}")}</span>
+</p>
+<p>
+  <span class="label2">${common.packagequantity}:</span>
+  <span class="field2">${f.numberfield("PackageQuantity")}</span>
+</p>
+<p>
+  <span class="label2">${common.notice}:</span>
+  <span class="field2">${f.textfield("Notice")}</span>
+</p>
+
+${f.submit($common.add)}
+<p><button id='btnShowOrderEntry'>${common.selectanother}</button></p>
+
+${f.pop()}
+${h.end_with_layout()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $('#entry_DeliveredQuantity').val('').focus();
+  fnDecorative();
+  $('#formNewInstance').validate({
+    submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+  });
+  $('#btnShowOrderEntry').click(function(){fnShowOrderEntry()});
+// ]]>
+</script>

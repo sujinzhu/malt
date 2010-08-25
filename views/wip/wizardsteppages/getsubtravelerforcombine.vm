@@ -1,0 +1,12 @@
+$HtmlHelper.Form("GetSubTravelerForCombine-Save.rails", "getsubtravelerforcombine", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<p>$HtmlHelper.LabelFor("subTravelerId", "<b>${wip.subtravelerid}</b>:")
+$HtmlHelper.InputText("subTravelerId", "", 15, 15, $DictHelper.Create("validators=blank", "style=text-transform: uppercase;"))
+<br/>(${wip.getsubtravelerforcombinecomment})</p>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$HtmlHelper.SubmitButton($commonText.nextstep)
+</p>
+$HtmlHelper.EndForm()
+

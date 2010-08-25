@@ -1,0 +1,13 @@
+##parse("${siteRoot}/Sales/CustomerPOItem/Show.vm")
+
+$HtmlHelper.Form("UpdateRequestedQuantity.rails", "editorderremnant", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<fieldset>
+<legend>$commonText.update $commonText.order $commonText.requested $commonText.quantity:</legend>
+$HtmlHelper.InputHidden("cpoitem.ID", $cpoitem.ID)
+$HtmlHelper.LabelFor("quantity", "$commonText.new $commonText.quantity:")
+$HtmlHelper.InputText("quantity", "$cpoitem.FGRequest.RequestedQuantity", $DictHelper.Create("validators=number|0|$cpoitem.DeliveredQuantity|9999999999"))
+$HtmlHelper.SubmitButton("$commonText.save")
+</fieldset>
+
+$HtmlHelper.EndForm()

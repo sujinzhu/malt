@@ -1,0 +1,29 @@
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#instance-head { width: 600px; float: left; margin-bottom: 1em; }
+#instance-head th { padding: .3em .3em .3em .5em; }
+/* ]]> */
+</style>
+
+<table id="instance-head" class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>${common.vendor}</th>
+      <th>${common.createdate}</th>
+      <th>${common.buyer}</th>
+      <th>${common.shipto}</th>
+      <th>${common.notice}</th>
+      <th>${common.status}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${instance.Vendor.Id} $!{instance.Vendor.Name}</td>
+      <td>${instance.CreatedDate.ToShortDateString()}</td>
+      <td>${instance.Buyer}</td>
+      <td>${instance.ShipTo.Id} $!{instance.ShipTo.Description}</td>
+      <td>$!{instance.Notice}</td>
+      <td>${h.getenumname($instance.Status)}</td>
+    </tr>
+  </tbody>
+</table>

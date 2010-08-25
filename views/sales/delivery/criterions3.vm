@@ -1,0 +1,15 @@
+<fieldset>
+<legend>3. By Customer:</legend>
+$HtmlHelper.Form("Search3.rails", "criterions3", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<p>
+$HtmlHelper.LabelFor("customer.ID", "$commonText.customer:")
+$HtmlHelper.Select("customer.ID")
+$HtmlHelper.CreateOptions($customers, "ShortName", "ID", $!customer.ID)
+$HtmlHelper.EndSelect()
+</p>
+
+$HtmlHelper.SubmitButton("$commonText.search")
+
+$HtmlHelper.EndForm()
+</fieldset>

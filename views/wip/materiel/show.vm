@@ -1,0 +1,25 @@
+<h2>$commonText.material:[$material.ID.Trim()]</h2>
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th>Description</th>		
+		<td>$material.Description</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th>EAU</th>		
+		<td>$StringHelper.Format("{0:0}", $material.EAU)</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th>EOQ</th>
+		<td>$StringHelper.Format("{0:0}", $material.EOQ)</td>
+	</tr>
+</table>
+
+<br/>
+<fieldset>
+<legend>$commonText.task:</legend>
+$AjaxHelper.LinkToRemote("$commonText.edit", "${siteRoot}/WIP/Materiel/Edit.rails", $DictHelper.CreateDict("update=materialoperation", "with='id=$material.ID.Trim()'"))
+$AjaxHelper.LinkToRemote("$commonText.show $commonText.price", "${siteRoot}/WIP/Materiel/GetPrice.rails", $DictHelper.CreateDict("update=materialoperation", "with='id=$material.ID.Trim()'"))
+</fieldset>
+
+<br/>
+<div id="materialoperation"></div>

@@ -1,0 +1,8 @@
+<li onclick="javascript:document.location='${url.for("%{area='',controller='home',action='setlocale',querystring='locale=zh-CN'}")}';">
+  <img src="${siteroot}/content/zh-CN.png"/>
+  <span>${common.simplifiedchinese}</span>
+</li>
+<li onclick="javascript:document.location='${url.for("%{area='',controller='home',action='setlocale',querystring='locale=zh-TW'}")}';">
+  <img src="${siteroot}/content/zh-HK.jpg"/>
+  <span>${common.traditionalchinese}</span>
+</li>

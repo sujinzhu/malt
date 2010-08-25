@@ -1,0 +1,24 @@
+#set ($i = 0)
+#foreach ($allocatee in $allocatees)
+#beforeall	
+	<fieldset>
+		<legend>Allocatee like:</legend>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tbody>
+#each
+		<tr class="scaffoldrow" id=allocatee$i>
+		<td>
+			$HtmlHelper.InputHidden("allocatees", "$allocatee")
+			$allocatee
+		</td>
+		<td>
+			$AjaxHelper.ButtonToRemote("-", "SubtractAllocateeCondition.rails", $DictHelper.CreateDict( "update=allocatee${i}" ))
+		</td>
+		</tr>
+	#set ($i = $i + 1)
+#afterall
+	</tbody>
+	</table>
+	</fieldset>
+	<br/>
+#end

@@ -1,0 +1,84 @@
+﻿#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container { width: 800px; }
+#header-container h3 { float: left; }
+#header-container a { margin-left: 2em; }
+#header-container .ui-widget-header th { padding: .3em; }
+#entries-container { margin-top: 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  var oEntries;
+  $(function(){
+    oEntries = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisble": false},
+      null,
+      null,
+      {"sClass": "quantity"},
+      {"sClass": "unit-desc"},
+      {"sClass": "short-date"},
+      {"sClass": "quantity"},
+      ]
+    });
+
+    $('.button').button();
+  });
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.customerpo}: ${instance.OrderNumber}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.customerpo}: ${instance.OrderNumber} [ $!{instance.Customer.Name} ]</h3>
+<a href='${url.for("%{action='edit', querystring='id=$instance.Id'}")}' class='button'>${common.edit}</a>
+<table class="display">
+  <tr class="ui-widget-header">
+    <th>${common.buyer}</th>
+    <th>${common.shipto}</th>
+    <th>${common.notice}</th>
+  </tr>
+  <tr class="ui-widget-content">
+    <td>${instance.Buyer}</td>
+    <td>$!{instance.ShipTo.Description} $!{instance.ShipTo.FullAddress}</td>
+  </tr>
+</table>
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>$!{common.partnumber}</th>
+      <th>$!{common.revision}</th>
+      <th>$!{common.requiredquantity}</th>
+      <th>$!{common.baseunit}</th>
+      <th>$!{common.requireddate}</th>
+      <th>$!{common.deliveredquantity}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.PartNumber}</td>
+      <td>${entry.Revision}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>${entry.Unit.Id}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.DeliveredQuantity}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

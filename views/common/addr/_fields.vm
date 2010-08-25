@@ -1,0 +1,11 @@
+${h.field($common.description, $f.textfield("Description"))}
+${h.field("${common.address}1", $f.textfield("Address1"))}
+${h.field("${common.address}2", $f.textfield("Address2"))}
+${h.field("${common.address}3", $f.textfield("Address3"))}
+${h.field("${common.fax}1", $f.textfield("Fax1"))}
+${h.field("${common.fax}2", $f.textfield("Fax2"))}
+${h.field("${common.tel}1", $f.textfield("Tel1"))}
+${h.field("${common.tel}2", $f.textfield("Tel2"))}
+${h.field("${common.tel}3", $f.textfield("Tel3"))}
+${h.field($common.zip, $f.textfield("Zip"))}
+${h.field($common.area, $f.textfield("Area"))}

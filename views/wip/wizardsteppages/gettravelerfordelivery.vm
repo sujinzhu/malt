@@ -1,0 +1,15 @@
+$HtmlHelper.Form("GetTravelerForDelivery-Save.rails", "gettravelerfordelivery", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<p>$HtmlHelper.LabelFor("travelerId", "Traveler ID:")
+$HtmlHelper.InputText("travelerId", "", 15, 15, $DictHelper.Create("validators=blank", "style=text-transform: uppercase;"))
+</p>
+<p>$HtmlHelper.LabelFor("travelerComment", "Traveler Remark:")
+$HtmlHelper.InputText("travelerComment", "", 30, 300)
+</p>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$HtmlHelper.SubmitButton($commonText.nextstep)
+</p>
+$HtmlHelper.EndForm()
+

@@ -1,0 +1,50 @@
+﻿<button id="btnPreGetReceivedQuantity">${common.previousstep}</button>
+<h3>${common.receiving} =&gt; 4. ${common.finish}:</h3>
+
+<table id="selected-poe" class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>${common.ordernumber}</th>
+      <th>${common.material}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.deliveredquantity}</th>
+      <th>${common.remainorderquantity}</th>
+      <th>${common.baseunit}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${rne.POE.PO.Id}</td>
+      <td>${rne.POE.Material.Id}</td>
+      <td>${rne.POE.RequiredDate.ToShortDateString()}</td>
+      <td>${rne.POE.RequiredQuantity}</td>
+      <td>${rne.POE.DeliveredQuantity}</td>
+      <td>${rne.POE.RemainRequiredQuantity}</td>
+      <td>${rne.POE.Unit.Id}</td>
+    </tr>
+  </tbody>
+</table>
+
+${form.push("rne")}
+${h.start_with_layout($url.for("%{action='createreceivingnoteentry'}"), "getreceivedquantity")}
+${form.hiddenfield("RN.Id")}
+${form.hiddenfield("POE.Id")}
+${h.field($common.receivedquantity, $form.textfield("ReceivedQuantity", "%{class='required', max=${rne.POE.RemainRequiredQuantity}}"))}
+${h.field($common.packing, $form.textfield("Packing"))}
+${h.field($common.notice, $form.textfield("Notice"))}
+${h.field("", $form.submit($common.ok))}
+${form.pop()}
+${form.endformtag()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  fnjQuerifyInput();
+  fnButtonEffect();
+  $('#rne_ReceivedQuantity').val("").focus();
+  $('#getreceivedquantity').validate({
+    submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+  });
+  $('#btnPreGetReceivedQuantity').click(function(){(fnPreGetReceivedQuantity("${rne.RN.Id}", "${rne.POE.Materil.Id}"));});
+// ]]>
+</script>

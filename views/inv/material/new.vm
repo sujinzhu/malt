@@ -1,0 +1,27 @@
+#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#formNewMaterial').validate();
+      $('#id').focus();
+    });
+  // ]]>
+  </script>
+#end
+<h3>${common.createnew} ${common.material}</h3>
+
+${h.start_with_layout($url.for("%{action='create'}"), "formNewMaterial")}
+
+${h.field($common.materialid, $f.textfield("id", "%{class='required'}"), true)}
+${h.field($common.name, $f.textfield("name", "%{class='required'}"), true)}
+${h.field($common.specification, $f.textfield("specification"))}
+${h.field($common.primaryunit, $f.select("primaryUnit", $u.findall(), "%{class='required', value='id'}"), true)}
+${h.field($common.secondunit, $f.select("secondUnit", $u.findall(), "%{value='id'}"))}
+${h.field("${common.rate}1", $f.textfield("rate1"), false, "$common.howmany $common.primaryunit", "", "")}
+${h.field("${common.rate}2", $f.textfield("rate2"), false, "$common.equalsto $common.howmany $common.secondunit", "", "")}
+${h.field($common.purchasingleadtime, $f.textfield("purchasingLeadTime"), false, "$common.days", "", "")}
+${h.field("", $f.submit($common.create))}
+
+${h.end_with_layout()}

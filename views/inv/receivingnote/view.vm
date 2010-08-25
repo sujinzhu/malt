@@ -1,0 +1,114 @@
+﻿#capturefor(head)
+  <link rel="stylesheet" href="${siteroot}/content/css/inv/receivingnote/view.css" type="text/css" media="screen" title="ReceiningNote" charset="utf-8" />
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var sPoViewUrl = '${url.for("%{area='pur', controller='purchaseorder', action='view', querystring='id='}")}';
+    $(function(){
+      $('#rn-entries').dataTable({
+        "bJQueryUI": true,
+       "sPaginationType": "full_numbers",
+       "aoColumns": [
+       {"bVisible": false},
+       {"sClass": "po-id", "fnRender": function(oObj){return '<a href="' + sPoViewUrl + oObj.aData[oObj.iDataColumn] + '" target="_blank">' + oObj.aData[oObj.iDataColumn] + "</a>";}},
+       {"sClass": "short-date"},
+       {"sClass": "material-id"},
+       {"sClass": "material-name"},
+       {"sClass": "material-spec"},
+       {"sClass": "quantity"},
+       {"sClass": "quantity"},
+       {"sClass": "unit-id"},
+       {"bVisible": false},
+       null, null
+       ]
+      });
+
+      $('#issued-inventories').dataTable({
+        "bJQueryUI": true,
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+<h3>${common.receivingnote} : ${rn.Id}</h3>
+#if($rn.Printable)
+<a id="btnPrint" href='${url.for("%{action='print', querystring='id=$rn.Id'}")}' target="_blank" class="fg-button ui-state-default ui-corner-all">${common.print}</a>
+#end
+
+#parse("${siteroot}/inv/receivingnote/_rn-header.vm")
+
+<table id="rn-entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.purchaseorder}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.material}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.receivedquantity}</th>
+      <th>${common.baseunit}</th>
+      <th>${common.packing}</th>
+      <th>${common.notice}</th>
+      <th>Accepted?</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($rne in $rn.Entries)
+    <tr>
+      <td>${rne.Id}</td>
+      <td>${rne.POE.PO.Id}</td>
+      <td>${rne.POE.RequiredDate.ToShortDateString()}</td>
+      <td>${rne.POE.Material.Id}</td>
+      <td>$!{rne.POE.Material.Name}</td>
+      <td>$!{rne.POE.Material.Specification}</td>
+      <td>${rne.POE.RequiredQuantity}</td>
+      <td>${rne.ReceivedQuantity}</td>
+      <td>$!{rne.POE.Unit.Description}</td>
+      <td>$!{rne.Packing}</td>
+      <td>$!{rne.Notice}</td>
+      <td>${rne.Accepted}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+
+<h3>${common.affectedinventories}:</h3>
+<div id="issued-inventories-container">
+<table id="issued-inventories" class="display">
+  <thead>
+    <tr>
+      <th>${common.repository}</th>
+      <th></th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.quantity}</th>
+      <th>${common.createdate}</th>
+      <th>${common.lastupdatedate}</th>
+      <th>${common.allocatee}</th>
+      <th>${common.stub}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $rn.Entries)
+    #foreach($inventory in $entry.ReceivedInventories)
+    <tr>
+      <td>${inventory.Repository}</td>
+      <td>${r.getdescription($inventory.Repository)}</td>
+      <td>${inventory.Material}</td>
+      <td>${m.getname($inventory.Material)}</td>
+      <td>${m.getspecification($inventory.Material)}</td>
+      <td>${inventory.Quantity}</td>
+      <td>${inventory.CreateDate.ToString()}</td>
+      <td>$!{inventory.LastUpdateDate.ToString()}</td>
+      <td>$!{inventory.Allocatee}</td>
+      <td>$!{inventory.Stub}</td>
+    </tr>
+    #end
+  #end
+  </tbody>
+</table>
+</div>

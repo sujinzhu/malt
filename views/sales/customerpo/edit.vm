@@ -1,0 +1,20 @@
+<h2>$commonText.edit $commonText.customer $commonText.order:[$cpo.ID]</h2>
+
+$HtmlHelper.Form("Update.rails", "edit", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<div id="scaffoldmain">
+
+$HtmlHelper.InputHidden("cpo.ID", $cpo.ID)
+
+#parse("${siteRoot}/sales/customerpo/form.vm")
+
+$HtmlHelper.SubmitButton($commonText.save)
+
+</div>
+<br />
+<FIELDSET>
+<LEGEND>Items:</LEGEND>
+#blockcomponent(CustomerPOItemListComponent with "source=$cpo.Items")
+
+#end
+</FIELDSET>

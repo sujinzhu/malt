@@ -1,0 +1,116 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+.bom-rate { color: blue; width: 190px; float: left; }
+.bom-rate2 { color: orange; }
+.bom-loss { float: left; width: 120px; font-size: 85%; }
+.bom-desc { float: left; width: 200px; }
+.material-id { float: left; width: 110px; }
+.material-name { float: left; }
+.material-name, .material-spec { width: 310px; }
+h3 { font-size: 120%; }
+.panel .header { padding: 4px; margin-top: .5em; }
+.panel .content { margin-top -1px; padding: .5em; }
+
+#auto-expandable-container li { margin-bottom: .3em; }
+#bom-selector-container { padding: .5em; margin-bottom: 1em; }
+#manually-expandable-container li { margin-bottom: .3em; }
+#header-container h3 { float: left; }
+#header-container a { margin-left: 1em; }
+
+.bom { margin-top: .3em; }
+
+.tree li { float: none; }
+.tree-container { margin-top: .8em; }
+.tree-container h4 { font-weight: bolder; }
+/* ]]> */
+</style>
+
+${j.jquery_treeview()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    var sUrl = '${url.for("%{action='getleaves', querystring='id=${id}'}")}';
+    $('#auto-expandable-container a').button();
+    $('#manually-expandable-container .content li').button().click(function(){
+      var url = '${url.for("%{action='listavailableboms', querystring='materialId='}")}' + this.id.substr(1);
+      $('#bom-selector-container').empty().load(url).show("slow");
+    });
+    $('.tree').each(function(){
+        url = sUrl + '&' + 'materialId=' + this.id;
+        $(this).treeview({url: url});
+      });
+    $('#header-container a').button();
+  });
+
+  function fnAddBranch(iBomId){
+    jQuery.post('${url.for("%{action='addbranch'}")}', {id: '$id', bomId: iBomId}, function(data){
+      if(!fnHasError(data)){
+        var id = '#m' + data['CompoundId'];
+        $(id).remove();
+        $('#bom-selector-container').empty().hide();
+      }
+    }, 'json');
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.bom}: ${owner}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.bom}: ${owner}</h3>
+</div>
+
+#if($autoExpandable && $autoExpandable.Count > 0)
+<div id="auto-expandable-container" class="panel ui-helper-clearfix">
+  <a href='${url.for("%{action='autoaddbranch', querystring='id=$id'}")}'>${common.auto-select} ${common.bom}</a>
+  <h4 class="header ui-widget-header ui-corner-top">${common.auto-expandable} ${common.material}</h4>
+  <ul class="content ui-widget-content ui-corner-bottom">
+  #foreach($material in $autoExpandable)
+    <li class="material">
+      <span class="material-id">${material.Id}</span>
+      <span class="material-name">${material.Name}</span>
+      <span class="material-spec">${material.Specification}</span>
+    </li>
+  #end
+  </ul>
+</div>
+#end
+
+#if($manuallyExpandable && $manuallyExpandable.Count > 0)
+<div id="manually-expandable-container" class="panel ui-helper-clearfix">
+  <h4 class="header ui-widget-header ui-corner-top">${common.manual-expandable} ${common.material}</h4>
+  <div class="content ui-widget-content ui-corner-bottom">
+    <div id="bom-selector-container" class="ui-helper-hidden ui-widget-content ui-corner-all"></div>
+    <ul>
+    #foreach($material in $manuallyExpandable)
+      <li id="m${material.Id}" class="material">
+        <span class="material-id">${material.Id}</span>
+        <span class="material-name">${material.Name}</span>
+        <span class="material-spec">${material.Specification}</span>
+      </li>
+    #end
+    </ul>
+  </div>
+</div>
+#end
+
+#if($rootBranchs)
+<div id="bom-tree-container">
+#foreach($root in $rootBranchs)
+  <div class="panel tree-container">
+    <h4 class="header ui-widget-header ui-corner-top">
+      <span class="material-id">${root.Id}</span>
+      <span class="material-name">${root.Name}</span>
+      <span class="material-spec">${root.Specification}</span>
+    </h4>
+    <ul id="${root.Id}" class="tree content ui-widget-content ui-corner-bottom">
+    </ul>
+  </div>
+#end
+</div>
+#end

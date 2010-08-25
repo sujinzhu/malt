@@ -1,0 +1,72 @@
+<p>
+$Html3Helper.LinkTo("Create new MonoRailAuthorization", "$controller.AreaName","$controller.Name", "newmonorailauthorization")
+</p>
+<div style="border: 1px solid black;">
+
+#foreach($item in $items)
+
+#beforeall
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0" width="100%">
+  <tr>
+    <th>&nbsp;</th>
+	<th>Area</th>
+    <th>Controller</th>
+    <th>Action</th>
+    <th>Permission Type</th>
+    <th>Principal Type</th>
+    <th>Role or Account ID</th>
+    <th>&nbsp;</th>
+  </tr>
+  
+
+#nodata
+  <tr>
+    <td colspan="9" align="center">Empty</td>
+  </tr>
+#before
+  
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+    <td>$item.ID</td>
+	<td>$item.MonoRailURL.Area</td>
+    <td>$item.MonoRailURL.Controller</td>
+    <td>$Html3Helper.LinkTo("$item.MonoRailURL.Action", "$item.MonoRailURL.Area","$item.MonoRailURL.Controller", "$item.MonoRailURL.Action")</td>
+    <td>
+    ##$MonoRailAuthorizationEnumHelper.GetPermissionTypeName($item.PermissionType)
+    $item.PermissionType
+    </td>
+    <td>
+    ##$MonoRailAuthorizationEnumHelper.GetPrincipalTypeName($item.PrincipalType)
+    $item.PrincipalType
+    </td>
+    <td>$item.principalName</td>
+    <td>
+    	$Html3Helper.LinkTo("$commonText.edit", "$controller.AreaName","$controller.Name", "editMonoRailAuthorization", ${item.ID}) 
+    	$Html3Helper.LinkTo("$commonText.delete", "$controller.AreaName","$controller.Name", "confirmMonoRailAuthorization", ${item.ID})
+    </td>
+  </tr>
+#afterall
+	</table>
+#end
+
+<div class="pagination">
+<table width="100%" border="0">
+  <tr>
+  <td>Showing $items.FirstItem - $items.LastItem of $items.TotalItems</td>
+  <td align="right">
+#if($items.HasFirst) $PaginationHelper.CreatePageLink( 1, "first" ) #end
+#if(!$items.HasFirst) first #end
+#if($items.HasPrevious) | $PaginationHelper.CreatePageLink( $items.PreviousIndex, "prev" ) #end
+#if(!$items.HasPrevious) | prev #end
+#if($items.HasNext) | $PaginationHelper.CreatePageLink( $items.NextIndex, "next" ) #end
+#if(!$items.HasNext) | next #end
+#if($items.HasLast) | $PaginationHelper.CreatePageLink( $items.LastIndex, "last" ) #end
+#if(!$items.HasLast) | last #end
+  </td>
+  </tr>
+</table>
+</div>
+</div>

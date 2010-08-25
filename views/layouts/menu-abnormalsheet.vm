@@ -1,0 +1,41 @@
+<LI>$abnormality.abnormalsheet
+<UL>
+	<LI>$Html3Helper.LinkTo("$commonText.search","Abnormality","AbnormalSheet","Search")</LI>
+	<LI>$commonText.list
+	<UL>
+		<LI>$Html3Helper.LinkTo("$commonText.opening ...","Abnormality","AbnormalSheet", "OpeningSheets")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.closed ...","Abnormality","AbnormalSheet", "ClosedSheets")</LI>
+	</UL>
+	</LI>
+	<LI>$commonText.wizard
+	<UL>
+		<LI>$Html3Helper.LinkTo("$commonText.create $abnormality.abnormalsheet","","CreateAbnormalSheetWizard","Start")</LI>
+	</UL>
+	</LI>
+	<LI>$commonText.masterdata $commonText.maintain
+	<UL>
+		<LI>$commonText.defect
+		<UL>
+			<LI>$Html3Helper.LinkTo("$commonText.list","Abnormality","Defect","List")</LI>
+			<LI>$Html3Helper.LinkTo("$commonText.listbyproject","Abnormality","Defect","ListByProject")</LI>
+		</UL>
+		</LI>
+		<LI>$Html3Helper.LinkTo("Correction Measure","Abnormality","CorrectionMeasure","ListCorrectionMeasure")</LI>
+	</UL>
+	</LI>
+	<LI>$commonText.report
+	<UL>
+		<LI>$Html3Helper.LinkTo("1. $abnormality.countbyproject [$abnormality.sheetquantity]", "Abnormality","AbnormalSheetQuery", "Criterions1")</LI>
+		<LI>$Html3Helper.LinkTo("2. $abnormality.countbyline [$abnormality.sheetquantity]", "Abnormality","AbnormalSheetQuery", "Criterions2")</LI>
+		<LI>$Html3Helper.LinkTo("3. $abnormality.countbymachine [$abnormality.sheetquantity]", "Abnormality","AbnormalSheetQuery", "Criterions3")</LI>
+		<LI>$Html3Helper.LinkTo("4. $abnormality.countbydefect [$abnormality.sheetquantity]", "Abnormality","AbnormalSheetQuery", "Criterions4")</LI>
+		<LI>$Html3Helper.LinkTo("5.1 $abnormality.countbyprojectanddefectcause [$abnormality.sheetquantity]", "Abnormality","AbnormalSheetQuery", "Criterions5")</LI>
+		<LI>$Html3Helper.LinkTo("5.2 $abnormality.countbyprojectandcrrectionmeasure [$abnormality.sheetquantity]", "Abnormality","AbnormalSheetQuery", "Criterions52")</LI>
+		<LI>$Html3Helper.LinkTo("6. $abnormality.countbyprojectandlocation [$abnormality.sheetquantity]", "Abnormality","AbnormalSheetQuery", "Criterions6")</LI>
+		<LI>$Html3Helper.LinkTo("7. $abnormality.listbyprojectanddefect", "Abnormality","AbnormalSheetQuery", "Criterions7")</LI>
+		<LI>$Html3Helper.LinkTo("8. $abnormality.listopening", "Abnormality","AbnormalSheetQuery", "Criterions8")</LI>
+		<LI>$Html3Helper.LinkTo("9. $commonText.list", "Abnormality","AbnormalSheetQuery", "Criterions9")</LI>
+	</UL>
+	</LI>
+</UL>
+</LI>

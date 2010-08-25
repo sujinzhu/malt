@@ -1,0 +1,13 @@
+<h2>$commonText.createnew&nbsp;$sales.contractreviewreport</h2>
+
+$HtmlHelper.Form("Create.rails", "new", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<div id="scaffoldmain">
+
+#parse("${siteRoot}/share/sales/fgrequestform.vm")
+
+$HtmlHelper.SubmitButton($commonText.create)
+
+</div>
+
+$HtmlHelper.EndForm()

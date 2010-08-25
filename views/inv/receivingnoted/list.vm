@@ -1,0 +1,53 @@
+#capturefor(head)
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      oMaterialList = $('#rn-list').dataTable({
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": '$url.for("%{action='listtabledata'}")',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"fnRender": function(oObj){return fnGetLink(oObj.aData[0]);}, "sType": "html"},
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+                ]
+      });
+    });
+    function fnGetLink(id){
+      var linkView =  '$url.for("%{action='view', querystring='id='}")' + id;
+      return "<a href='" + linkView + "'>"+id+"</a>";
+    }
+  // ]]>
+  </script>
+#end
+
+<h3 id="pageHeader">${common.receivingnote}:</h3>
+
+<table id="rn-list" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.vendor}</th>
+      <th>${common.deliverynoteid}</th>
+      <th>${common.consignee}</th>
+      <th>${common.status}</th>
+      <th>${common.receiveddate}</th>
+      <th>${common.acceptdate}</th>
+      <th>${common.rejectdate}</th>
+      <th>${common.returndate}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>

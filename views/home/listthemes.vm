@@ -1,0 +1,17 @@
+﻿#capturefor(head)
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){$('.pageBody').css("float", "left");});
+// ]]>
+</script>
+#end
+
+<div id="themeGallery">
+  <ul>
+  #foreach($theme in $h.Themes)
+    <li><a href="${url.for("%{action='settheme', querystring='theme=$theme.ShortName'}")}">
+    <img src="${siteRoot}/Content/css/theme-roller/${theme.IconUrl}" alt="${theme.Name}" title="${theme.Name}"/>
+    <span class="themeName">${theme.Name}</span></a></li>
+  #end
+  </ul>
+</div>

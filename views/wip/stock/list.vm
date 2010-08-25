@@ -1,0 +1,3 @@
+#blockcomponent(StockListComponent with"source=$source")
+
+#end

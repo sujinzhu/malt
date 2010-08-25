@@ -1,0 +1,100 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #date-field { float: right; }
+  #report-header span { padding: .3em; }
+  #report-body { margin-top: .8em; }
+
+  .quantity { text-align: right; font-family: monospace; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_dataTable()}
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances;
+    $(function(){
+      TableToolsInit.sSwfPath = "${siteroot}/Content/dataTables-1.6.2/extras/TableTools/media/swf/ZeroClipboard.swf";
+      oInstances = $('#instances').dataTable({
+        "sDom": 'T<"clear">lfrtip',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"sClass": "repository-id"},
+        {"sClass": "repository-desc"},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"sClass": "unit-desc"},
+        {"sClass": "quantity"},
+        {"sClass": "unit-desc"},
+        {"sClass": "quantity"},
+        {"sClass": "unit-desc"},
+        ]
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.inoutbalance}
+#end
+
+<div id="report-header" class="ui-helper-clearfix">
+  <div id="date-field">
+    <span class="ui-widget-header ui-corner-left">${common.date}:</span>
+    <span class="ui-widget-content ui-corner-right">
+    ${common.from} ${fromDate.ToShortDateString()} ${common.to} ${toDate.ToShortDateString()}</span>
+  </div>
+</div>
+
+<div id="report-body">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.repository}</th>
+      <th>${common.repository} ${common.description}</th>
+      <th>${common.materialid}</th>
+      <th>${common.material} ${common.name}</th>
+      <th>${common.material} ${common.specification}</th>
+      <th>${common.beginingbalance}</th>
+      <th>${common.currentincome}</th>
+      <th>${common.currentoutlay}</th>
+      <th>${common.endingbalance}</th>
+      <th>${common.unit}</th>
+      <th>${common.quantity}</th>
+      <th>${common.secondunit}</th>
+      <th>${common.quantity}</th>
+      <th>${common.thirdunit}</th>
+    </tr>
+  </thead>
+  #foreach($item in $data)
+    #foreach($subItem in $item.Value)
+    <tr>
+      <td>${item.Key}</td>
+      <td>$!{r.getdescription($item.Key)}</td>
+      <td>${subItem.Value.MaterialId}</td>
+      <td>${subItem.Value.MaterialName}</td>
+      <td>${subItem.Value.MaterialSpecification}</td>
+      <td>${subItem.Value.LeftBalance.ToString('N')}</td>
+      <td>${subItem.Value.Income.ToString('N')}</td>
+      <td>${subItem.Value.OutLay.ToString('N')}</td>
+      <td>${subItem.Value.RightBalance.ToString('N')}</td>
+      <td>$!{u.getdescription($subItem.Value.Unit1Id)}</td>
+      <td>${subItem.Value.RightBalance2.ToString('N')}</td>
+      <td>$!{u.getdescription($subItem.Value.Unit2Id)}</td>
+      <td>${subItem.Value.RightBalance3.ToString('N')}</td>
+      <td>$!{u.getdescription($subItem.Value.Unit3Id)}</td>
+    </tr>
+    #end
+  #end
+  <tbody>
+  </tbody>
+</table>
+</div>

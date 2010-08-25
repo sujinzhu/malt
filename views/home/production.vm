@@ -1,0 +1,15 @@
+﻿#capturefor(head)
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#btnJobOrder').click(function(){document.location='${url.for("%{area='prod', controller='jo', action='list'}")}';});
+    });
+  // ]]>
+  </script>
+#end
+    
+<div id="buttonContainer">
+  <span class="ui-widget-content ui-state-active ui-corner-all">${common.customerdemand}</span>
+  ==&gt;
+  <button id="btnJobOrder">${common.joborder}</button>
+</div>

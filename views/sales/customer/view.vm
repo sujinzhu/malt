@@ -1,0 +1,57 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  h3 { float: left; font-size: 123.1%; }
+  p { margin-top: .4em; }
+  span { float: left; }
+  .label2 { width: 100px; text-align: right; padding-right: .3em; }
+  .field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
+  .label2, .field2 { padding-top: .2em; padding-bottom: .2em; }
+
+  .customer-name, .customer-fullname { width: 300px; }
+  .address { width: 350px; }
+
+  #linkEdit { margin: 0 0 1.5em 1.5em; }
+  #instance-container { width: 550px; }
+  /* ]]> */
+  </style>
+  
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#linkEdit').button();
+      $('p').addClass('ui-helper-clearfix');
+      fnDecorative();
+    });
+
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+  ${common.customer}: ${instance.Id} $!{instance.Name}
+#end
+
+<div id="header-container">
+  <h3>${common.customer}: ${instance.Id} [$!{instance.Name}]</h3>
+  <a id="linkEdit" href='${url.for("%{action='edit', querystring='id=$instance.Id'}")}'>${common.edit}</a>
+</div>
+
+<div id="instance-container" class="ui-helper-clearfix">
+  <p>
+    <span class="label2">${common.name}:</span>
+    <span class="field2 customer-name">$!{instance.Name}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">${common.fullname}:</span>
+    <span class="field2 customer-fullname">$!{instance.Fullname}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">${common.address}:</span>
+    <span class="field2 address">$!{instance.Address}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">${common.is-active}:</span>
+    <span class="field2 status">$!{instance.IsActive}&nbsp;</span>
+  </p>
+</div>

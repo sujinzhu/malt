@@ -1,0 +1,7 @@
+﻿${form.push("jo")}
+${h.start_with_layout($url.for("%{action='create'}"), "new_jo_form")}
+#parse("${siteRoot}/prod/jo/_fields.vm")
+${form.pop()}
+${h.field(${common.autocopyconfig}, $form.checkboxfield('autocopyconfig', "%{checked='checked'}"))}
+${h.field("", $form.submit(${common.create}))}
+${h.end_with_layout()}

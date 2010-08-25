@@ -1,0 +1,68 @@
+﻿#if($material)
+    <div id="units-header">
+      <ul>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.primaryunit}:</span>
+          <span class="value ui-widget-content ui-corner-right">
+          #if(${m.trygetprimaryunit($material)})
+            ${m.trygetprimaryunit($material).Id}
+          #end
+          &nbsp;</span>
+        </li>
+        <li>
+          <span class="ui-widget-header ui-corner-left label">${common.secondunit}:</span>
+          <span class="value ui-widget-content ui-corner-right">
+          #if(${m.getsecondunit($material)})
+            ${m.getsecondunit($material).Id}
+          #end
+          &nbsp;</span>
+        </li>
+      </ul>
+    </div>
+
+<table id="material-units" class="display">
+  <thead>
+    <tr>
+      <th></th>
+      <th>${common.rate}1</th>
+      <th>${common.primaryunit}</th>
+      <th></th>
+      <th>${common.rate}2</th>
+      <th>${common.unit}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($mu in $mus)
+    <tr>
+      <td>${mu.Unit.Id}</td>
+      <td>${mu.Rate}</td>
+      <td>
+      #if(${m.trygetprimaryunit($material)})
+        ${m.trygetprimaryunit($material).Id} ${m.trygetprimaryunit($material).Description}
+      #end
+      </td>
+      <td> = </td>
+      <td>${mu.Rate2}</td>
+      <td>${mu.Unit.Id} $!{mu.Unit.Description}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $('#material-units').dataTable({
+    "bJQueryUI": true,
+    "sPaginationType": "full_numbers",
+    "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "rate", "sType": "numeric"},
+      {"bSortable": false},
+      {"bSortable": false, "sClass": "operator"},
+      {"sClass": "rate", "sType": "numeric"},
+      null
+    ]
+  });
+// ]]>
+</script>
+#end

@@ -1,0 +1,8 @@
+﻿${h.field("Id", $form.TextField('Id'))}
+${h.field($common.vendor, $form.textfield("Vendor.Id", "%{class='required'}"))}
+${h.field($common.buyer, $form.textfield("Buyer"))}
+${h.field($common.paymentterm, $form.select("PaymentTerm.Id", $h.PaymentTerms, "%{text='Id', value='Id', firstoption='Select PaymentTerm'}"))}
+${h.field($common.trademode, $form.select("TradeMode.Id", $h.TradeModes, "%{text='Id', value='Id', firstoption='Select TradeMode'}"))}
+${h.field($common.shipto, $form.textfield("ShipTo.Id"))}
+${h.field($!{common.notice}, $form.TextArea('Notice'))}
+${h.field($common.createdate, $form.textfield("CreatedDate"))}

@@ -1,0 +1,119 @@
+﻿#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #bill-components-container { margin-top: 1em; }
+  h3 { float: left; }
+  #btnEdit { margin-bottom: 1.5em; margin-left: 1.5em; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      TableToolsInit.sSwfPath = "${siteroot}/Content/dataTables-1.6.2/extras/TableTools/media/swf/ZeroClipboard.swf";
+      $('#bill-components').dataTable({
+        "sDom": 'T<"clear">lfrtip',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+          {'bVisible': false},
+          {'sClass': 'material-id'},
+          {'sClass': 'material-name'},
+          {'sClass': 'material-spec'},
+          {'sClass': 'quantity'},
+          {'sClass': 'unit-description'},
+          {'sClass': 'quantity'},
+          {'sClass': 'unit-description'},
+          null,
+          null,
+          {'sClass': 'short-date'},
+          {'sClass': 'short-date'},
+        ]
+      });
+      $('#btnEdit').click(function(){document.location='${url.for("%{action='edit', querystring='id=$bill.Id'}")}';});
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.bom}: ${bill.Compound.Id} [${bill.Id}]
+#end
+
+<h3>${common.bom}</h3>
+  <button id="btnEdit">${common.edit}</button>
+
+<div id="bill-header-container">
+<table id="bill-header" class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Id</th>
+      <th>${common.name}</th>
+      <th>${common.compound}</th>
+      <th></th>
+      <th></th>
+      <th>${common.status}</th>
+      <th>${common.priority}</th>
+      <th>${common.effectivedate}</th>
+      <th>${common.createdate}</th>
+      <th>${common.modifydate}</th>
+      <th>${common.obsoletedate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${bill.Id}</td>
+      <td>$!{bill.Description}</td>
+      <td>${bill.Compound.Id}</td>
+      <td>$!{bill.Compound.Name}</td>
+      <td>$!{bill.Compound.Specification}</td>
+      <td>${h.getenumname($bill.Status)}</td>
+      <td>${bill.Priority}</td>
+      <td>${bill.EffectiveDate.ToShortDateString()}</td>
+      <td>${bill.CreateDate.ToShortDateString()}</td>
+      <td>${bill.ModifyDate.ToShortDateString()}</td>
+      <td>${bill.ObsoleteDate.ToShortDateString()}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="bill-components-container">
+<table id="bill-components" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.component}</th>
+      <th></th>
+      <th></th>
+      <th>${common.rate}(${common.component})</th>
+      <th>${common.unit}(${common.component})</th>
+      <th>${common.rate}(${common.compound})</th>
+      <th>${common.unit}(${common.compound})</th>
+      <th>${common.loss}</th>
+      <th>${common.status}</th>
+      <th>${common.effectivedate}</th>
+      <th>${common.obsoletedate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($component in $bill.BOMComponents)
+    <tr>
+      <td>${component.Id}</td>
+      <td>${component.Component.Id}</td>
+      <td>$!{component.Component.Name}</td>
+      <td>$!{component.Component.Specification}</td>
+      <td>${component.Rate}</td>
+      <td>${m.trygetprimaryunit($component.Component).Description}</td>
+      <td>${component.Rate2}</td>
+      <td>${m.trygetprimaryunit($bill.Compound).Description}</td>
+      <td>${component.Loss}%</td>
+      <td>${h.getenumname($component.Status)}</td>
+      <td>${component.EffectiveDate.ToShortDateString()}</td>
+      <td>${component.ObsoleteDate.ToShortDateString()}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,12 @@
+﻿#set($customerSelector = ${form.Select("Customer.ID", $h.Customers, "%{Text='ID', Value='ID', firstoption='Select Customer'}")})
+#set($paymentTermSelector = ${form.Select("PaymentTerm.Id", $h.PaymentTerms, "%{Text='Id', Value='Id', firstoption='Select PaymentTerm'}")})
+#set($tradeModeSelector = ${form.Select("TradeMode.Id", $h.TradeModes, "%{Text='Id', Value='Id', firstoption='Select TradeMode'}")})
+
+${h.field($!{common.ordernumber}, $form.TextField('OrderNumber', "%{class='required'}"))}
+${h.field($!{common.customer}, $customerSelector)}
+${h.field($!{common.orderdate}, $form.TextField('OrderedDate', "%{class='required'}"))}
+${h.field($!{common.buyer}, $form.TextField('Buyer', "%{class='required'}"))}
+${h.field($!{common.paymentterm}, $paymentTermSelector)}
+${h.field($!{common.trademode}, $tradeModeSelector)}
+${h.field($!{common.shipto}, $form.TextField('ShipTo.Id', "%{class='required'}"))}
+${h.field($!{common.notice}, $form.TextArea('Notice'))}

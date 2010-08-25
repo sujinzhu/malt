@@ -1,0 +1,27 @@
+$HtmlHelper.Form("GetOutputBInfo-Save.rails", "getoutputbinfo", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<table>
+	<tr>
+		<th colspan="2">Output Information:</th>
+	</tr>
+	<tr>
+		<td>$HtmlHelper.LabelFor("itemcode", "$commonText.material:")</td>
+		<td>$HtmlHelper.InputText("itemcode", "", 31, 31,  $DictHelper.Create("validators=blank", "style=text-transform: uppercase;"))</td>
+	</tr>
+	<tr>
+		<td>$HtmlHelper.LabelFor("customerId", "$commonText.customer")</td>
+		<td>$HtmlHelper.Select("customerId")
+		$HtmlHelper.CreateOptions($customers, "ShortName", "ID")
+		$HtmlHelper.EndSelect()</td>
+	</tr>
+	<tr>
+		<td>$HtmlHelper.LabelFor("allocatee", "$wip.allocatee:")</td>
+		<td>$HtmlHelper.InputText("allocatee", "", 30, 100)</td>
+	</tr>
+</table>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$HtmlHelper.SubmitButton($commonText.nextstep)
+</p>
+$HtmlHelper.EndForm()

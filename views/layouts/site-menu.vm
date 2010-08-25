@@ -1,0 +1,74 @@
+<div id="site-menu">
+  
+  <!-- Base Data -->
+  <h3 onclick="javascript:navigate('${common.basedata}',
+    '${url.for("%{area='', controller='menu', action='basedata'}")}');">
+    <a href="#">${common.basedata}</a></h3>
+  <ul>
+    <li onclick="javascript:navigate('${common.usefulinformation}',
+      '${url.for("%{area='', controller='menu', action='basedatausefulinformation'}")}');">
+      ${common.usefulinformation}</li>
+    <li onclick="javascript:navigate('${common.basedata}',
+      '${url.for("%{area='', controller='menu', action='basedatabasedata'}")}');">
+      ${common.basedata}</li>
+  </ul>
+
+  <!-- PMC Management -->
+  <h3 onclick="javascript:navigate('${common.planningmanagement}', '${url.for("%{area='', controller='menu', action='planningmanagement'}")}');">
+    <a href="#">${common.planningmanagement}</a>
+  </h3>
+  <ul>
+    <li onclick="javascript:navigate('${common.planningmanagement}', '${url.for("%{area='', controller='menu', action='planningmanagement'}")}');">${common.planningmanagement}</li>
+  </ul>
+
+  <!-- Purchasing Management -->
+  <h3 onclick="javascript:navigate('${common.purchasingmanagement}', '${url.for("%{area='', controller='menu', action='purchasingmanagement'}")}');"><a href="#">${common.purchasingmanagement}</a></h3>
+  <ul>
+    <li onclick="javascript:navigate('${common.usefulinformation}', '${url.for("%{area='', controller='menu', action='basedatausefulinformation'}")}');">${common.purchasingmanagement}</li>
+  </ul>
+
+  <!-- Warehouse Management -->
+  <h3 onclick="javascript:navigate('${common.warehousemanagement}',
+    '${url.for("%{area='', controller='menu', action='warehousemanagement'}")}');">
+    <a href="#">${common.warehousemanagement}</a></h3>
+  <ul>
+    <li onclick="javascript:navigate('${common.basedata}',
+      '${url.for("%{area='', controller='menu', action='warehousebasedata'}")}');">
+      ${common.basedata}</li>
+    <li onclick="javascript:navigate('${common.ordinarycourseofbusiness}',
+      '${url.for("%{area='', controller='menu', action='warehouseordinarycourseofbusiness'}")}');">
+      ${common.ordinarycourseofbusiness}</li>
+    <li onclick="javascript:navigate('${common.inventorymanagement}',
+      '${url.for("%{area='', controller='menu', action='warehouseinventory'}")}');">
+      ${common.inventorymanagement}</li>
+  </ul>
+
+  <!-- Workshop -->
+  <h3 onclick="javascript:navigate('${common.workshop}',
+   '${url.for("%{area='', controller='menu', action='workshop'}")}');"><a href="#">${common.workshop}</a></h3>
+  <ul>
+    <li onclick="javascript:navigate('${common.candyws}',
+     '${url.for("%{area='', controller='menu', action='workshopcandy'}")}');">${common.candyws}</li>
+    <li onclick="javascript:navigate('${common.plasticws}',
+     '${url.for("%{area='', controller='menu', action='workshopplastic'}")}');">${common.plasticws}</li>
+    <li onclick="javascript:navigate('${common.packagingws}',
+     '${url.for("%{area='', controller='menu', action='workshoppackaging'}")}');">${common.packagingws}</li>
+  </ul>
+
+  <!-- System Management -->
+  <h3 onclick="javascript:navigate('${common.systemmanagement}', '${url.for("%{area='', controller='menu', action='systemmanagement'}")}');"><a href="#">${common.systemmanagement}</a></h3>
+  <ul>
+    <li onclick="javascript:navigate('${common.usefulinformation}', '${url.for("%{area='', controller='menu', action='basedatausefulinformation'}")}');">${common.userpermissions}</li>
+    <li onclick="javascript:navigate('${common.systemsettings}', '${url.for("%{area='', controller='menu', action='systemmanagementsystemsettings'}")}');">${common.systemsettings}</li>
+    <li onclick="javascript:navigate('${common.colorscheme}', '${url.for("%{area='', controller='menu', action='systemmanagementcolorscheme'}")}');">${common.colorscheme}</li>
+  </ul>
+
+  <!-- Logout -->
+  <h3><a href="#">${common.logout}</a></h3>
+  <ul>
+    <li><a target="_self" href='${url.for("%{area='security', controller='authentication', action='logout'}")}'>${common.logout}</a>&nbsp;</li>
+  </ul>
+</div>
+
+<!-- Logo -->
+<img id="logo" src="${siteroot}/content/images/bip.png" alt="BIP Logo" height="104" width="148" />

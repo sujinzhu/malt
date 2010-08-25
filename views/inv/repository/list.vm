@@ -1,0 +1,68 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .id { width: 120px; }
+  .description, .level-name1, .level-name2 { width: 200px; }
+  .level-name3, .level-name4 { width: 180px; }
+  .level-name5, .level-name6 { width: 160px; }
+  #subject-container h3, #subject-container link { float: left; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_dataTable()}
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances;
+    $(function(){
+      $('a').button();
+      oInstances = $('#instances').dataTable({
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": '$url.for("%{action='listtabledata'}")',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"fnRender": function(oObj){return fnGetLink(oObj.aData[0]);}, "sType": "html", "sClass": "id"},
+        {"sClass": "description"},
+        {"sClass": "level-name1"},
+        {"sClass": "level-name2"},
+        {"sClass": "level-name3"},
+        {"sClass": "level-name4"},
+        {"sClass": "level-name5"},
+        {"sClass": "level-name6"},
+        null
+        ]
+      });
+    });
+    function fnGetLink(id){
+      var linkEdit =  '$url.for("%{action='edit', querystring='id='}")' + id;
+      return "<a target='_blank' href='" + linkEdit + "'>${common.edit}</a>" + "&nbsp;&nbsp;&nbsp;" + id;
+    }
+  // ]]>
+  </script>
+#end
+
+<div id="subject-container" class="ui-helper-clearfix">
+<h3>${common.repository}</h3>
+<a href='${url.for("%{action='new'}")}' target='_blank'>${common.createnew}</a>
+</div>
+<div id="instances-container">
+
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.description}</th>
+      <th>${common.name}1</th>
+      <th>${common.name}2</th>
+      <th>${common.name}3</th>
+      <th>${common.name}4</th>
+      <th>${common.name}5</th>
+      <th>${common.name}6</th>
+      <th>${common.enabled}</th>
+    </tr>
+  </thead>
+</table>
+</div>
+

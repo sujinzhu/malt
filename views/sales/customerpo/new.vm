@@ -1,0 +1,13 @@
+<h2>$commonText.createnew&nbsp;$commonText.customer $commonText.order</h2>
+
+$HtmlHelper.Form("Create.rails", "new", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<div id="scaffoldmain">
+
+#parse("${siteRoot}/sales/customerpo/form.vm")
+
+$HtmlHelper.SubmitButton($commonText.create)
+
+</div>
+
+$HtmlHelper.EndForm()

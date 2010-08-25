@@ -1,0 +1,6 @@
+<H2>${commonText.search} ${commonText.delivery}(Transaction)</H2>
+
+<fieldset>
+#parse("${siteRoot}/wip/delivery/search/1byrtno.vm")
+</fieldset>
+<br/>

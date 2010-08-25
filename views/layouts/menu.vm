@@ -1,0 +1,24 @@
+<UL id="menu">
+<!-- Home -->
+	<LI id="home_index">$Html3Helper.LinkTo("$commonText.homepage","","Home","Index")</LI>
+<!-- CNCState -->
+	#parse("${siteRoot}/layouts/menu-cncstate.vm")
+<!-- AbnormalSheet -->
+	#parse("${siteRoot}/layouts/menu-abnormalsheet.vm")
+<!-- WIP -->
+	#parse("${siteRoot}/layouts/menu-wip.vm")
+<!-- FA -->
+	#parse("${siteRoot}/layouts/menu-fa.vm")
+<!-- Sales -->
+	#parse("${siteRoot}/layouts/menu-sales.vm")
+<!-- System Admin -->
+	#parse("${siteRoot}/layouts/menu-systemadmin.vm")
+
+	<LI id="account_login">
+	#if($Session.User.Identity.IsAuthenticated)
+		$Html3Helper.LinkTo("$commonText.logout","","Account","Logout")
+	#else
+		$Html3Helper.LinkTo("$commonText.login","","Account","Login")
+	#end
+	</LI>
+</UL>

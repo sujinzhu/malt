@@ -1,0 +1,6 @@
+﻿${form.push("cpoe")}
+${h.start_with_layout($url.for("%{action='createentry'}"), "new_cpoe_form")}
+#parse("${siteRoot}/sales/cpo/_entry_fields.vm")
+${h.field("", $form.submit("$common.create"))}
+${h.end_with_layout()}
+${form.pop()}

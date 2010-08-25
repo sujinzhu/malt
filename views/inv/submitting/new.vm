@@ -1,0 +1,68 @@
+#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#formNewInstance').validate();
+      $('#instance_SubmitFrom').focus();
+      $('#drafts').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+#if($h.getenumname($instance.MaterialType) == "SemiFinishGood")
+  ${common.sfgsubmit}
+#else
+  ${common.fgsubmit}
+#end
+#end
+
+#if($h.getenumname($instance.MaterialType) == "SemiFinishGood")
+<h3>${common.sfgsubmit}</h3>
+#else
+<h3>${common.fgsubmit}</h3>
+#end
+
+${h.start_with_layout($url.for("%{action='create'}"), "formNewInstance")}
+${f.push("instance")}
+
+${h.field("${common.id}", $f.textfield("Id"))}
+${f.hiddenfield("MaterialType")}
+${h.field($common.workshop, $f.select("SubmitFrom", $workshops, "%{value='Id', class='required'}"), true)}
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+${h.end_with_layout()}
+
+<div id="header-container">
+<table id="drafts" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.workshop}</th>
+      <th>${common.submitby}</th>
+      <th>${common.status}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($draft in $drafts)
+    <tr>
+      <td>${url.link($draft.Id, "%{action='steering', querystring='id=$draft.Id'}")}</td>
+      <td>${r.getdescription($draft.SubmitFrom)}</td>
+      <td>${draft.SubmitBy}</td>
+      <td>${h.getenumname($draft.Status)}</td>
+      <td>${draft.CreateDate.ToShortDateString()}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

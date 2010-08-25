@@ -1,0 +1,58 @@
+$HtmlHelper.Form("QueryQADailyReport.rails", "wipreport", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<div id="projectConditions"></div>
+<table>
+	<tr class="scaffoldrow">
+		<th>$AjaxHelper.LinkToRemote("${commonText.project}", "SelectProjectCondition.rails", $DictHelper.CreateDict( "update=listProject"))</th>
+		<td id="listProject" colspan="2">&nbsp;</td>
+	</tr>
+	<tr class="scaffoldaltrow">
+		<th>${commonText.date}</th>
+		<td>
+		<label  for="fromDate">${commonText.from}</label>
+		$HtmlHelper.InputText("fromDate", "$!today.ToString('yyyy-MM-dd')", 10, 10)
+		<input type="reset" value=" ... " id="fromMoment_b" />
+		</td>
+		<td>
+		<label  for="toDate">${commonText.to}</label>
+		$HtmlHelper.InputText("toDate", "$!today.ToString('yyyy-MM-dd')", 10, 10)
+		<input type="reset" value=" ... " id="toMoment_b" />
+		</td>
+	</tr>
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "fromDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "fromMoment_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime	:	false
+    });
+</script>
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "toDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "toMoment_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime	:	false
+    });
+</script>
+	<tr class="scaffoldrow">
+		<th>${commonText.location}</th>
+		<td>
+		$HtmlHelper.LabelFor("fromLocation.ID", "${commonText.from}")
+		$HtmlHelper.Select("fromLocation.ID")
+		$HtmlHelper.CreateOptions(${locations}, "ID", "ID", "520-FQA        ")
+		$HtmlHelper.EndSelect()
+		</td>
+		<td>
+		$HtmlHelper.LabelFor("toLocation.ID", "${commonText.to}")
+		$HtmlHelper.Select("toLocation.ID")
+		$HtmlHelper.CreateOptions(${locations}, "ID", "ID", "550-Packing    ")
+		$HtmlHelper.EndSelect()
+		</td>
+	</tr>
+</table>
+$HtmlHelper.SubmitButton("$commonText.query")
+$HtmlHelper.EndForm()

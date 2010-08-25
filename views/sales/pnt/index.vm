@@ -1,0 +1,76 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .panel { float: left; width: 600px; padding: 0 .5em 1em .5em; }
+  h4 { padding: 3px; }
+  .panel div { margin-top: -1px; }
+  p { width: 98%; margin: .5em;}
+  #button-container { float: none; text-align: center; }
+  #btnQuery { float: none; }
+  /* ]]> */
+  </style>
+
+  ${j.jquery_autocomplete()}
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+   $(function(){ 
+      $('#customer').autocomplete('$url.for("%{area='sales', controller='customer', action='autocomplete2'}")', {
+        width: 300,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      }).focus();
+      $('#materialId').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 420,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      });
+   });
+  // ]]>
+  </script>
+    
+#end
+
+#capturefor(title)
+${common.partnumbertranslation}
+#end
+
+<h3>${common.customer} ${common.partnumbertranslation}</h3>
+<form action='${url.for("%{action='search'}")}' method="POST" target="_blank">
+
+<div id='criteria-container' class="ui-helper-clearfix">
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.customer}</h4>
+    <div class="ui-widget-content">
+      <p>${f.textfield("customer")}</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.materialid}(${common.customer})</h4>
+    <div class="ui-widget-content">
+      <p>${f.textfield("partNumber")}</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.revision}</h4>
+    <div class="ui-widget-content">
+      <p>${f.textfield("revision")}</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.materialid}(${common.self})</h4>
+    <div class="ui-widget-content">
+      <p>${f.textfield("materialId")}</p>
+    </div>
+  </div>
+
+</div>
+ 
+<p><input type="submit" value="${common.query}" /></p>
+</form>

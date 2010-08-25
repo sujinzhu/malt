@@ -1,0 +1,6 @@
+#parse("${siteRoot}/sales/delivery/searchresults.vm")
+
+#set($queryStringParams=$DictHelper.Create("customer.ID=$customer.ID"))
+#parse("${siteRoot}/sales/delivery/pagination.vm")
+<br/>
+#parse("${siteRoot}/sales/delivery/criterions3.vm")

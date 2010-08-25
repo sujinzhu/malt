@@ -1,0 +1,24 @@
+#set ($i = 0)
+#foreach ($location in $locations)
+#beforeall	
+	<fieldset>
+		<legend>Location In:</legend>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tbody>
+#each
+		<tr class="scaffoldrow" id=location$i>
+		<td>
+			$HtmlHelper.InputHidden("locations[$i]", "$location.ID")
+			$location.ID
+		</td>
+		<td>
+			$AjaxHelper.ButtonToRemote("-", "SubtractLocationCondition.rails", $DictHelper.CreateDict( "update=location${i}" ))
+		</td>
+		</tr>
+	#set ($i = $i + 1)
+#afterall
+	</tbody>
+	</table>
+	</fieldset>
+	<br/>
+#end

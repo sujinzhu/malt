@@ -1,0 +1,37 @@
+	<h2>${commonText.traveler} </h2>
+	<h3>${traveler.TravelerId} [${traveler.Times}]</h3>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+		<tr class="scaffoldrow">
+			<th>${wip.currentlocation}</th>
+			<td>$!{traveler.CurrentLocation.ID.Trim()}</td>
+			<th>${commonText.contained} ${commonText.material}</th>
+			<td>$!{traveler.Material.ID.Trim()}</td>
+			<th>${commonText.customer}</th>
+			<td>$!{traveler.Customer.ID.Trim()}</td>
+			<th>${wip.allocatee}</th>
+			<td>$!{traveler.Allocatee.Trim()}</td>
+		</tr>
+		<tr class="scaffoldaltrow">
+			<th>${commonText.quantity}</th>
+			<td>${StringHelper.Format("{0:0}",$!traveler.Quantity)}</td>
+			<th>${commonText.state}</th>
+			<td>$!{traveler.State}</td>
+			<th>${commonText.lastupdatedby}</th>
+			<td>$!{IdentityHelper.GetFullName($traveler.LastOperator)}</td>
+			<th>${commonText.version}</th>
+			<td>$!{traveler.Version}</td>
+		</tr>
+		<tr class="scaffoldrow">
+			<th>${commonText.remark}</th>
+			<td colspan="7">$!{traveler.Remark}</td>
+		</tr>
+		<tr class="scaffoldaltrow">
+			<th>${commonText.createdat}</th>
+			<td colspan="7">$!{traveler.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")}</td>
+		</tr>
+		<tr class="scaffoldrow">
+			<th>${commonText.lastupdatedat}</th>
+			<td colspan="7">$!{traveler.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss")}</td>
+		</tr>
+	</table>
+

@@ -1,0 +1,8 @@
+<p>
+<span id="selectedvendor">
+$HtmlHelper.LabelFor("vendorId", "Vendor Id:")
+$HtmlHelper.InputText("vendorId", "")
+</span>
+$AjaxHelper.ButtonToRemote("...", "${siteRoot}/Core/Vendor/SelectVendor.rails", $DictHelper.CreateDict( "update=selectvendor") )
+$AjaxHelper.ButtonToRemote("+", "AddVendorCondition.rails", $DictHelper.CreateDict( "update=vendorConditions", "with=Form.serialize($('universalsearch'))" ) )
+</p>

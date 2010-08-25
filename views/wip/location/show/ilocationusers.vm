@@ -1,0 +1,27 @@
+#foreach($owner in $authorizedUsers)
+#beforeall
+	#set($i = 0)
+	#set($row = 0)
+	<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+#each
+	#if($i == 5)
+		#if($row == 0)
+			#set($row=1)
+			#set($class="scaffoldrow")
+		#else
+			#set($row=0)
+			#set($class="scaffoldaltrow")
+		#end
+	</tr>		
+	<tr class="${class}">
+		#set($i = 0)
+	#end
+	<td>${owner.WorkerID}</td><td>${owner.Employee.Name}</td>
+	#set($i=$i+1)
+#afterall
+	</tr>
+	</table>
+#nodata
+	<p>Empty list.</p>
+#end

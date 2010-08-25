@@ -1,0 +1,23 @@
+#set($MyItemId="sysadmin_monorailurl_newmonorailruls")
+
+<h2>Create many URLs in one time:</h2>
+$HtmlHelper.Form("createMonoRailURLS.rails", "scaffoldingform", "post", "return validateForm( this, false, false, false, false, 1 );")
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr>
+		<th>Area</th>
+		<th><label for="controller">Controller</label></th>
+		<th>Action(s)</th>
+	</tr>
+	<tr class="scaffoldrow">
+		<td valign="top">$HtmlHelper.InputText("area", "")</td>
+		<td valign="top">$HtmlHelper.InputText("controller", "", $DictHelper.Create("validate=blank"))</td>
+		<td valign="top">
+		#foreach($i in [0,1,2,3,4,5,6,7,8,9])
+		<p>$i.$HtmlHelper.InputText("actions", "")</p>
+		#end
+		<p>$HtmlHelper.SubmitButton("Create")</p>
+		</td>
+	</tr>
+</table>
+
+$HtmlHelper.EndForm()

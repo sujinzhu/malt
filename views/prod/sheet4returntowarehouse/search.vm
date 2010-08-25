@@ -1,0 +1,204 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container .button { margin-left: 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+
+    oDataTable = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "sheet-id"},
+      {"sClass": "status"},
+      {"sClass": "trade-type"},
+      {"sClass": "jo-id"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity returned-quantity ui-state-active"},
+      {"sClass": "unit"},
+      {"sClass": "notice"},
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+
+    $('#entries1').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "sheet-id"},
+      {"sClass": "status"},
+      {"sClass": "trade-type"},
+      {"sClass": "jo-id"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit"},
+      {"sClass": "notice"},
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+    
+    $('#entries2').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "sheet-id"},
+      {"sClass": "status"},
+      {"sClass": "trade-type"},
+      {"sClass": "jo-id"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit"},
+      {"sClass": "notice"},
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+    $('#instances-container').tabs();
+  });
+
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.sheet-for-return-to-warehouse} ${common.list}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.sheet-for-return-to-warehouse} ${common.list}</h3>
+</div>
+
+<div id="instances-container">
+  <ul>
+    <li><a href="#rtw">${common.return-to-warehouse}</a></li>
+    <li><a href="#scrap">${common.return-scrap-to-warehouse}</a></li>
+    <li><a href="#rtv">${common.return-to-warehouse-for-rtv}</a></li>
+  </ul>
+
+  <div id='rtw'>
+    <table id="entries" class="display">
+      <thead>
+        <tr>
+          <th>${common.id}</th>
+          <th>${common.sheet-for-return-to-warehouse}</th>
+          <th>${common.status}</th>
+          <th>${common.tradetype}</th>
+          <th>${common.ordernumber}</th>
+          <th>${common.material}</th>
+          <th>${common.name}</th>
+          <th>${common.specification}</th>
+          <th>${common.quantity}</th>
+          <th>${common.unit}</th>
+          <th>${common.notice}</th>
+        </tr>
+      </thead>
+      <tbody>
+      #foreach($entry in $entries0)
+        <tr>
+          <td>${entry.Id}</td>
+          <td><a href='${url.for("%{action='view', querystring='id=$entry.Sheet.Id'}")}' target="_blank">${entry.Sheet.Id}</a></td>
+          <td>${h.getenumname($entry.Sheet.Status)}</td>
+          <td>${h.getenumname($entry.TradeType)}</td>
+          <td><a href='${url.for("%{area='sales', controller='salesorder', action='view', querystring='id=$entry.OrderNumber'}")}' target="_blank">$!{entry.OrderNumber}</a></td>
+          <td>${entry.Material.Id}</td>
+          <td>$!{entry.Material.Name}</td>
+          <td>$!{entry.Material.Specification}</td>
+          <td id='${entry.Id}'>${entry.Quantity}</td>
+          <td>$!{m.trygetprimaryunit($entry.Material).Description}</td>
+          <td>$!{entry.Notice}</td>
+        </tr>
+      #end
+      </tbody>
+    </table>
+  </div>
+
+  <div id='scrap'>
+    <table id="entries1" class="display">
+      <thead>
+        <tr>
+          <th>${common.id}</th>
+          <th>${common.sheet-for-return-to-warehouse}</th>
+          <th>${common.status}</th>
+          <th>${common.tradetype}</th>
+          <th>${common.ordernumber}</th>
+          <th>${common.material}</th>
+          <th>${common.name}</th>
+          <th>${common.specification}</th>
+          <th>${common.quantity}</th>
+          <th>${common.unit}</th>
+          <th>${common.notice}</th>
+        </tr>
+      </thead>
+      <tbody>
+      #foreach($entry in $entries1)
+        <tr>
+          <td>${entry.Id}</td>
+          <td><a href='${url.for("%{action='view', querystring='id=$entry.Sheet.Id'}")}' target="_blank">${entry.Sheet.Id}</a></td>
+          <td>${h.getenumname($entry.Sheet.Status)}</td>
+          <td>${h.getenumname($entry.TradeType)}</td>
+          <td><a href='${url.for("%{area='sales', controller='salesorder', action='view', querystring='id=$entry.OrderNumber'}")}' target="_blank">$!{entry.OrderNumber}</a></td>
+          <td>${entry.Material.Id}</td>
+          <td>$!{entry.Material.Name}</td>
+          <td>$!{entry.Material.Specification}</td>
+          <td>${entry.Quantity}</td>
+          <td>$!{m.trygetprimaryunit($entry.Material).Description}</td>
+          <td>$!{entry.Notice}</td>
+        </tr>
+      #end
+      </tbody>
+    </table>
+  </div>
+
+  <div id='rtv'>
+    <table id="entries2" class="display">
+      <thead>
+        <tr>
+          <th>${common.id}</th>
+          <th>${common.sheet-for-return-to-warehouse}</th>
+          <th>${common.status}</th>
+          <th>${common.tradetype}</th>
+          <th>${common.ordernumber}</th>
+          <th>${common.material}</th>
+          <th>${common.name}</th>
+          <th>${common.specification}</th>
+          <th>${common.quantity}</th>
+          <th>${common.unit}</th>
+          <th>${common.notice}</th>
+        </tr>
+      </thead>
+      <tbody>
+      #foreach($entry in $entries2)
+        <tr>
+          <td>${entry.Id}</td>
+          <td><a href='${url.for("%{action='view', querystring='id=$entry.Sheet.Id'}")}' target="_blank">${entry.Sheet.Id}</a></td>
+          <td>${h.getenumname($entry.Sheet.Status)}</td>
+          <td>${h.getenumname($entry.TradeType)}</td>
+          <td><a href='${url.for("%{area='sales', controller='salesorder', action='view', querystring='id=$entry.OrderNumber'}")}' target="_blank">$!{entry.OrderNumber}</a></td>
+          <td>${entry.Material.Id}</td>
+          <td>$!{entry.Material.Name}</td>
+          <td>$!{entry.Material.Specification}</td>
+          <td>${entry.Quantity}</td>
+          <td>$!{m.trygetprimaryunit($entry.Material).Description}</td>
+          <td>$!{entry.Notice}</td>
+        </tr>
+      #end
+      </tbody>
+    </table>
+  </div>
+
+</div>

@@ -1,0 +1,23 @@
+#set($source=[0..9])
+
+$HtmlHelper.Form("TestResult.rails")
+
+#parse("${siteRoot}/share/sysadmin/selectmonorailurls.vm")
+
+#foreach($item in $source)
+#beforeall
+<UL>
+#each
+<LI>$HtmlHelper.InputCheckbox("checkbox", "$item") Item${item}</LI>
+#afterall
+</UL>
+#end
+
+$HtmlHelper.Select("select", $DictHelper.Create("MULTIPLE", "Size=5"))
+#foreach($item in $source)
+$HtmlHelper.CreateOption("Item${item}", $item)
+#end
+$HtmlHelper.EndSelect()
+
+$HtmlHelper.SubmitButton("Test it.")
+$HtmlHelper.EndForm()

@@ -1,0 +1,33 @@
+	#foreach($component in $traveler.Components)
+	#beforeall
+		<h3>Components:</h3>
+		<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+			<tr>
+				<th>${commonText.material}</th>
+				<th>${wip.rtno}</th>
+				<th>${wip.lineno}</th>
+				<th>${wip.wdweek}</th>
+				<th></th>
+				<th></th>
+		</tr>
+	#odd
+			<tr class="scaffoldrow">
+	#even
+			<tr class="scaffoldaltrow">
+	#each
+				<td>${component.Material.ID.Trim()}</td>
+				<td>${component.RTNo}</td>
+				<td>$!{component.LineNo}</td>
+				<td>$!{component.WeekNo}</td>
+				<td>
+				#if($component.BOMID > 0)
+					$Html3Helper.LinkTo("BOM", "wip","bom", "show", ${component.BOMID})
+				#end
+				</td>
+				<td>${Html3Helper.LinkTo("${component.DeliveryId}", "wip","delivery", "show", ${component.DeliveryId})}</td>
+
+			</tr>
+	#afterall
+		</table>
+	#end
+

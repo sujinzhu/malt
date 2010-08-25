@@ -1,0 +1,24 @@
+$Form.Push("authorization", "%{disablevalidation='false'}")
+$FormHelper.UsePrototypeValidation()
+$FormHelper.FormTag("%{action='SubmitAuthorizationRequest'}")
+<p>Principal Name:
+$FormHelper.TextField("PrincipalName")
+</p>
+<p>Location:
+$FormHelper.Select("Location.ID", $locations, "%{text='ID', value='ID'}")
+</p>
+<p>Principal Type:
+$FormHelper.RadioField("PrincipalType", "User") User   
+$FormHelper.RadioField("PrincipalType", "Role") Role
+</p>
+<p>
+$FormHelper.Submit("Add", "%{name='operation'}")   |   
+$FormHelper.Submit("Revome", "%{name='operation'}")   |   
+$FormHelper.Submit("Deny", "%{name='operation'}")
+</p>
+$FormHelper.EndFormTag()
+$Form.Pop()
+
+#if($authorizations && $authorizations.Length > 0)
+#parse("${siteRoot}/wip/location/list/locationauthorization.vm")
+#end

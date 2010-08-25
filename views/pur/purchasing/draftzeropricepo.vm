@@ -1,0 +1,178 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #new-entry-container { width: 780px; padding-top: 1em; }
+  .fg-button { float: right; font-size: 123.1%; }
+  #doc-header { padding: 1em 0 1em; }
+  #instance { float: left; width: 800px; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+ 
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oEntries;
+    $(function(){
+      oEntries = $('#entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+         null, null, null, null,
+        {"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[8]);}, "bSortable": false}
+        ]
+      });
+      $('#new-entry').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+      });
+      $('#entry_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      }).focus();
+      $('#entry_Unit_Id').autocomplete('$url.for("%{area='inv', controller='unit', action='autocomplete2'}")', {
+        width: 300,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      });
+      $('#entry_RequiredDate').datepicker();
+      fnTrigerRemoveEntry();
+    });
+    function fnGetRemoveLink(label)
+    {
+      return "<span style='cursor: pointer;'>"+label+"</span>";
+    }
+    function fnTrigerRemoveEntry()
+    {
+      $('#entries tbody td').click(function(){
+        var aPos = oEntries.fnGetPosition(this);
+        var aData = oEntries.fnGetData(aPos[0]);
+        if(aData[aPos[2]] == fnGetRemoveLink('${common.remove}'))
+        {
+          fnRemoveEntry(aData[0], aPos[0]);
+        }
+      });
+    }
+    function fnRemoveEntry(id, iRow)
+    {
+      var url = '${url.for("%{action='removeentry'}")}';
+      jQuery.post(url, {id: id}, function(data){
+        if(!fnHasError(data)){
+          oEntries.fnDeleteRow(iRow);
+        }
+      }, 'json');
+    }
+    function fnAddToDT(data){
+      if(!fnHasError(data)){
+        oEntries.fnAddData([data['Id'], data['Material'], data['MaterialName'], data['MaterialSpecification'], data['BaseUnit'] + " " + data['UnitDescription'], data['UnitPrice'], data['RequiredQuantity'], data['RequiredDate'], '${common.remove}']);
+        fnTrigerRemoveEntry();
+        $('#entry_UnitPrice').val("");
+        $('#entry_Unit_Id').val("");
+        $('#entry_RequiredQuantity').val("");
+        $('#entry_RequiredDate').val("");
+        $('#entry_Material_Id').val("").focus();
+      }
+    }
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.zeropricepo}: ${instance.Id}
+#end
+
+<div class="ui-helper-clearfix">
+<a href='${url.for("%{action='finalize', querystring='id=$instance.Id'}")}' class="fg-button ui-state-default ui-corner-all">${common.finalize}</a>
+</div>
+
+<div id="doc-header" class="ui-helper-clearfix">
+<table id="instance" class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Id</th>
+      <th>${common.vendor}</th>
+      <th>${common.createdate}</th>
+      <th>${common.buyer}</th>
+      <th>${common.shipto}</th>
+      <th>${common.notice}</th>
+      <th>${common.status}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${instance.Id}</td>
+      <td>${instance.Vendor.Id} $!{instance.Vendor.Name}</td>
+      <td>${instance.CreatedDate.ToShortDateString()}</td>
+      <td>${instance.Buyer}</td>
+      <td>${instance.ShipTo.Id} $!{instance.ShipTo.Description}</td>
+      <td>$!{instance.Notice}</td>
+      <td>${h.getenumname($instance.Status)}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="new-entry-container" class="ui-helper-clearfix">
+
+${h.start_with_layout($url.for("%{action='addzeropriceentry'}"), "new-entry")}
+${f.push("entry")}
+
+${f.hiddenfield("PO.Id")}
+${h.field($common.tradetype, $f.select("TradeType", $f.enumtopairs("HJ.Malt.Common.Domain.TradeTypeEnum, HJ.Malt.Common"), "%{value='first', class='required'}"), true)}
+${h.field($common.material, $f.textfield("Material.Id", "%{class='required'}"), true)}
+${h.field($common.unit, $f.textfield("Unit.Id", "%{class='required'}"), true)}
+${h.field($common.requiredquantity, $f.textfield("RequiredQuantity", "%{class='required', min='0.00000000001'}"), true)}
+${h.field($common.requireddate, $f.textfield('RequiredDate', "%{class='required'}"), true)}
+${h.field("", $form.submit($common.create))}
+
+${f.pop()}
+
+${h.end_with_layout()}
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.unit}</th>
+      <th>${common.unitprice}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.requireddate}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.Unit.Id} $!{entry.Unit.Description}</td>
+      <td>${entry.UnitPrice}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>${entry.RequiredDate}</td>
+      <td>${common.remove}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+
+<div class="ui-helper-clearfix">
+<a href='${url.for("%{action='finalize', querystring='id=$instance.Id'}")}' class="fg-button ui-state-default ui-corner-all">${common.finalize}</a>
+</div>

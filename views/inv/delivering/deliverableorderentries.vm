@@ -1,0 +1,67 @@
+<h4>${common.order}:</h4>
+<table id="sales-order-entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.ordernumber}</th>
+      <th>${common.materialid}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requireddate}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.allocatedquantity}</th>
+      <th>${common.plannedmaterialquantity}</th>
+      <th>${common.deliveredquantity}</th>
+      <th>${common.ordermargin}</th>
+      <th>${common.baseunit}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $soes)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.SO.Id}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>${entry.AllocatedQuantity}</td>
+      <td>${entry.PlannedMaterialQuantity}</td>
+      <td>${entry.DeliveredQuantity}</td>
+      <td id="${entry.Id}">${entry.RemainRequiredQuantity}</td>
+      <td>${entry.Unit.Id}</td>
+      <td>$!{entry.Unit.Description}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $('#sales-order-entries').dataTable({
+    'bJQueryUI': true,
+    "aoColumns": [
+    {"bVisible": false},
+    {"sClass": "so-id"},
+    {"sClass": "material-id"},
+    {"sClass": "material-name"},
+    {"sClass": "material-spec"},
+    {"sClass": "short-date required-date"},
+    {"sClass": "quantity"},
+    {"sClass": "quantity"},
+    {"sClass": "quantity"},
+    {"sClass": "quantity"},
+    {"sClass": "quantity margin ui-state-hover", "fnRender": function(oObj){return fnRenderSelectLink(oObj, "fnSelectOrderEntry");}},
+    {"sClass": "unit-id"},
+    {"sClass": "unit-desc"},
+    ],
+    "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+  });
+
+  /*$('.margin').click(function(){
+    fnSelectOrderEntry(this.id);
+  });*/
+// ]]>
+</script>

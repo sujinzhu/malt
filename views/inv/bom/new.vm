@@ -1,0 +1,35 @@
+#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#formNewBOM').validate();
+      $('#bill_Compound_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        matchContains: true,
+        formatItem: formatMaterialItem,
+        formatResult: formatResult,
+        max: 30
+      }).focus();
+      $('#bill_EffectiveDate').datepicker();
+      $('#bill_ObsoleteDate').datepicker();
+    });
+  // ]]>
+  </script>
+#end
+<h3>${common.createnew} ${common.bom}</h3>
+
+${h.start_with_layout($url.for("%{action='create'}"), "formNewBOM")}
+${f.push("bill")}
+
+${h.field($common.compound, $f.textfield("Compound.Id", "%{class='required'}"), true)}
+${h.field($common.description, $f.textfield("Description"))}
+${h.field($common.effectivedate, $f.textfield("EffectiveDate"))}
+${h.field($common.obsoletedate, $f.textfield("ObsoleteDate"))}
+${h.field("", $f.submit($common.create))}
+
+${f.pop()}
+${h.end_with_layout()}
+

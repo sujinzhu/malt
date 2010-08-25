@@ -1,0 +1,19 @@
+﻿<ul>
+  <li>${url.link($common.purchase, "%{area='', controller='home', action='purchase'}")}</li>
+  <li>${url.link($common.sales, "%{area='', controller='home', action='sales'}"))}</li>
+  <li>${url.link($common.production, "%{area='', controller='home', action='production'}")}</li>
+  <li><a href='#lang'>${common.language}</a></li>
+  <li>${url.link($common.theme, "%{area='', controller='home', action='ListThemes'}")}</li>
+</ul>
+
+<div id="lang">
+    <button
+    onclick="javascript:document.location='${url.for($DictHelper.N("area", "").N("controller", "home").N("action","setlocale").N("querystring","locale=en"))}';">
+    ${h.image("${siteRoot}/Content/en.ico", "English")}</button>
+    <button
+    onclick="javascript:document.location='${url.for("%{area='',controller='home',action='setlocale',querystring='locale=zh-CN'}")}';">
+    ${h.image("${siteRoot}/Content/zh-CN.ico", "English")}</button>
+    <button
+    onclick="javascript:document.location='${url.for("%{area='',controller='home',action='setlocale',querystring='locale=zh-TW'}")}';">
+    ${h.image("${siteRoot}/Content/zh-TW.ico", "English")}</button>
+</div>

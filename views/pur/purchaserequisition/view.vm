@@ -1,0 +1,78 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container a { margin: 0 0 1em 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('.button').button();
+    $('#entries').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "quantity"},
+      {"sClass": "unit"},
+      {"sClass": "short-date"},
+      {"sClass": "quantity"},
+      null,
+      null
+      ],
+    });
+  });
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.purchaserequisition}: ${instance.Id}
+#end
+
+<div id="header-container">
+<h3>${common.purchaserequisition}: ${instance.Id}</h3>
+<a class="button" href='${url.for("%{action='viewwithprice', querystring='id=$instance.Id'}")}'>${common.viewwithprice}</a>
+#parse("${siteroot}/pur/purchaserequisition/_head.vm")
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.unit}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.orderedquantity}</th>
+      <th>${common.responsible}</th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>$!{entry.Unit.Description}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.OrderedQuantity}</td>
+      <td>$!{entry.Responsible}</td>
+      <td>$!{entry.Notice}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

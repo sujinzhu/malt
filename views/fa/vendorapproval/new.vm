@@ -1,0 +1,259 @@
+<h3>Approved Vendor List</h3>
+$HtmlHelper.Form("Create.rails", "newavl", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<p>
+<span id="selectedvendor">
+$HtmlHelper.LabelFor("vendorId", "Vendor Id:")
+$HtmlHelper.InputText("vendorId", "")
+</span>
+$AjaxHelper.ButtonToRemote("...", "${siteRoot}/Core/Vendor/SelectVendor.rails", $DictHelper.CreateDict( "update=selectvendor") )
+</p>
+<p>
+$HtmlHelper.LabelFor("projectId", "Prject:")
+$HtmlHelper.Select("projectId")
+$HtmlHelper.CreateOptions(${projects}, "Name", "ID")
+$HtmlHelper.EndSelect()
+</p>
+
+<table>
+	<tr>
+		<th>P/N</th>
+		<th>Rev</th>
+		<th>FA Ref. No.</th>
+		<th>Approved Date</th>
+	</tr>
+	<tr>
+		<td>
+		${HtmlHelper.InputText("materialArray[0]", "", 31, 31,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>${HtmlHelper.InputText("revs[0]", "", 1, 1,  $DictHelper.Create("style=text-transform: uppercase;"))}</td>
+		<td>
+		${HtmlHelper.InputText("farefnos[0]", "", 10, 20,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>
+			${HtmlHelper.InputText("approvedDates[0]", "$!{today.ToString('yyyy-MM-dd')}", 10, 10)}
+			<input type="reset" value=" ... " id="approvedDate_b0" />
+			<script type="text/javascript">
+			Calendar.setup({
+				inputField     :    "approvedDates[0]",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "approvedDate_b0",  // trigger for the calendar (button ID)
+				align          :    "Br",           // alignment (defaults to "Bl")
+				weekNumbers    :    false,
+				showsTime	:	false
+			});
+			</script>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		${HtmlHelper.InputText("materialArray[1]", "", 31, 31,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>${HtmlHelper.InputText("revs[1]", "", 1, 1,  $DictHelper.Create("style=text-transform: uppercase;"))}</td>
+		<td>
+		${HtmlHelper.InputText("farefnos[1]", "", 10, 20,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>
+			${HtmlHelper.InputText("approvedDates[1]", "$!{today.ToString('yyyy-MM-dd')}", 10, 10)}
+			<input type="reset" value=" ... " id="approvedDate_b1" />
+			<script type="text/javascript">
+			Calendar.setup({
+				inputField     :    "approvedDates[1]",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "approvedDate_b1",  // trigger for the calendar (button ID)
+				align          :    "Br",           // alignment (defaults to "Bl")
+				weekNumbers    :    false,
+				showsTime	:	false
+			});
+			</script>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		${HtmlHelper.InputText("materialArray[2]", "", 31, 31,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>${HtmlHelper.InputText("revs[2]", "", 1, 1,  $DictHelper.Create("style=text-transform: uppercase;"))}</td>
+		<td>
+		${HtmlHelper.InputText("farefnos[2]", "", 10, 20,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>
+			${HtmlHelper.InputText("approvedDates[2]", "$!{today.ToString('yyyy-MM-dd')}", 10, 10)}
+			<input type="reset" value=" ... " id="approvedDate_b2" />
+			<script type="text/javascript">
+			Calendar.setup({
+				inputField     :    "approvedDates[2]",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "approvedDate_b2",  // trigger for the calendar (button ID)
+				align          :    "Br",           // alignment (defaults to "Bl")
+				weekNumbers    :    false,
+				showsTime	:	false
+			});
+			</script>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		${HtmlHelper.InputText("materialArray[3]", "", 31, 31,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>${HtmlHelper.InputText("revs[3]", "", 1, 1,  $DictHelper.Create("style=text-transform: uppercase;"))}</td>
+		<td>
+		${HtmlHelper.InputText("farefnos[3]", "", 10, 20,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>
+			${HtmlHelper.InputText("approvedDates[3]", "$!{today.ToString('yyyy-MM-dd')}", 10, 10)}
+			<input type="reset" value=" ... " id="approvedDate_b3" />
+			<script type="text/javascript">
+			Calendar.setup({
+				inputField     :    "approvedDates[3]",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "approvedDate_b3",  // trigger for the calendar (button ID)
+				align          :    "Br",           // alignment (defaults to "Bl")
+				weekNumbers    :    false,
+				showsTime	:	false
+			});
+			</script>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		${HtmlHelper.InputText("materialArray[4]", "", 31, 31,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>${HtmlHelper.InputText("revs[4]", "", 1, 1,  $DictHelper.Create("style=text-transform: uppercase;"))}</td>
+		<td>
+		${HtmlHelper.InputText("farefnos[4]", "", 10, 20,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>
+			${HtmlHelper.InputText("approvedDates[4]", "$!{today.ToString('yyyy-MM-dd')}", 10, 10)}
+			<input type="reset" value=" ... " id="approvedDate_b4" />
+			<script type="text/javascript">
+			Calendar.setup({
+				inputField     :    "approvedDates[4]",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "approvedDate_b4",  // trigger for the calendar (button ID)
+				align          :    "Br",           // alignment (defaults to "Bl")
+				weekNumbers    :    false,
+				showsTime	:	false
+			});
+			</script>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		${HtmlHelper.InputText("materialArray[5]", "", 31, 31,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>${HtmlHelper.InputText("revs[5]", "", 1, 1,  $DictHelper.Create("style=text-transform: uppercase;"))}</td>
+		<td>
+		${HtmlHelper.InputText("farefnos[5]", "", 10, 20,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>
+			${HtmlHelper.InputText("approvedDates[5]", "$!{today.ToString('yyyy-MM-dd')}", 10, 10)}
+			<input type="reset" value=" ... " id="approvedDate_b5" />
+			<script type="text/javascript">
+			Calendar.setup({
+				inputField     :    "approvedDates[5]",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "approvedDate_b5",  // trigger for the calendar (button ID)
+				align          :    "Br",           // alignment (defaults to "Bl")
+				weekNumbers    :    false,
+				showsTime	:	false
+			});
+			</script>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		${HtmlHelper.InputText("materialArray[6]", "", 31, 31,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>${HtmlHelper.InputText("revs[6]", "", 1, 1,  $DictHelper.Create("style=text-transform: uppercase;"))}</td>
+		<td>
+		${HtmlHelper.InputText("farefnos[6]", "", 10, 20,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>
+			${HtmlHelper.InputText("approvedDates[6]", "$!{today.ToString('yyyy-MM-dd')}", 10, 10)}
+			<input type="reset" value=" ... " id="approvedDate_b6" />
+			<script type="text/javascript">
+			Calendar.setup({
+				inputField     :    "approvedDates[6]",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "approvedDate_b6",  // trigger for the calendar (button ID)
+				align          :    "Br",           // alignment (defaults to "Bl")
+				weekNumbers    :    false,
+				showsTime	:	false
+			});
+			</script>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		${HtmlHelper.InputText("materialArray[7]", "", 31, 31,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>${HtmlHelper.InputText("revs[7]", "", 1, 1,  $DictHelper.Create("style=text-transform: uppercase;"))}</td>
+		<td>
+		${HtmlHelper.InputText("farefnos[7]", "", 10, 20,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>
+			${HtmlHelper.InputText("approvedDates[7]", "$!{today.ToString('yyyy-MM-dd')}", 10, 10)}
+			<input type="reset" value=" ... " id="approvedDate_b7" />
+			<script type="text/javascript">
+			Calendar.setup({
+				inputField     :    "approvedDates[7]",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "approvedDate_b7",  // trigger for the calendar (button ID)
+				align          :    "Br",           // alignment (defaults to "Bl")
+				weekNumbers    :    false,
+				showsTime	:	false
+			});
+			</script>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		${HtmlHelper.InputText("materialArray[8]", "", 31, 31,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>${HtmlHelper.InputText("revs[8]", "", 1, 1,  $DictHelper.Create("style=text-transform: uppercase;"))}</td>
+		<td>
+		${HtmlHelper.InputText("farefnos[8]", "", 10, 20,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>
+			${HtmlHelper.InputText("approvedDates[8]", "$!{today.ToString('yyyy-MM-dd')}", 10, 10)}
+			<input type="reset" value=" ... " id="approvedDate_b8" />
+			<script type="text/javascript">
+			Calendar.setup({
+				inputField     :    "approvedDates[8]",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "approvedDate_b8",  // trigger for the calendar (button ID)
+				align          :    "Br",           // alignment (defaults to "Bl")
+				weekNumbers    :    false,
+				showsTime	:	false
+			});
+			</script>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		${HtmlHelper.InputText("materialArray[9]", "", 31, 31,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>${HtmlHelper.InputText("revs[9]", "", 1, 1,  $DictHelper.Create("style=text-transform: uppercase;"))}</td>
+		<td>
+		${HtmlHelper.InputText("farefnos[9]", "", 10, 20,  $DictHelper.Create("style=text-transform: uppercase;"))}
+		</td>
+		<td>
+			${HtmlHelper.InputText("approvedDates[9]", "$!{today.ToString('yyyy-MM-dd')}", 10, 10)}
+			<input type="reset" value=" ... " id="approvedDate_b9" />
+			<script type="text/javascript">
+			Calendar.setup({
+				inputField     :    "approvedDates[9]",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "approvedDate_b9",  // trigger for the calendar (button ID)
+				align          :    "Br",           // alignment (defaults to "Bl")
+				weekNumbers    :    false,
+				showsTime	:	false
+			});
+			</script>
+		</td>
+	</tr>
+</table>
+<p>${HtmlHelper.SubmitButton("${commonText.submit}")}</p>
+$HtmlHelper.EndForm()
+
+<div id="vendorlist"></div>
+<div id="selectvendor"></div>

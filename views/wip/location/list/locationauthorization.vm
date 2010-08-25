@@ -1,0 +1,26 @@
+#foreach($authorization in $authorizations)
+#beforeall
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr>
+		<th>Location</th><th>PermissionType</th><th>PrincipalType</th><th>PrincipalName</th>
+	</tr>
+#odd
+	<tr class="scaffoldaltrow">
+#even
+	<tr class="scaffoldrow">
+#each
+		<td>${authorization.Location.ID}</td>
+		<td>${authorization.PermissionType}</td>
+		<td>${authorization.PrincipalType}</td>
+		<td>
+		${authorization.PrincipalName}
+		#if(${authorization.PrincipalType}=="User")
+		(${IdentityHelper.GetFullName($authorization.PrincipalName)})
+		#end
+		</td>
+	</tr>
+#afterall
+	</table>
+#nodata
+	<p>No any authorizations found.</p>
+#end

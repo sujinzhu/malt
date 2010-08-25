@@ -1,0 +1,18 @@
+<h2>$commonText.search $commonText.customer $commonText.order:</h2>
+$HtmlHelper.Form("DoSearch1.rails", "Search", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<p>
+$HtmlHelper.LabelFor("customer", "$commonText.customer:")
+$HtmlHelper.Select("customer")
+$HtmlHelper.CreateOptions($customers, "ShortName", "ID")
+$HtmlHelper.EndSelect()
+</p>
+
+<p>
+$HtmlHelper.LabelFor("orderNumber", "$commonText.order $commonText.number:")
+$HtmlHelper.InputText("orderNumber", "", $DictHelper.Create("validators=blank"))
+</p>
+
+$HtmlHelper.SubmitButton("$commonText.search")
+
+$HtmlHelper.EndForm()

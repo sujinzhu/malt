@@ -1,0 +1,35 @@
+#foreach($item in $source)
+#beforeall
+<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr>
+		<th>SN No</th>
+		<th>$commonText.customer</th>
+		<th>$commonText.material</th>
+		<th>$commonText.quantity</th>
+		<th>UOFM</th>
+		<th>From</th>
+		<th>To</th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>$item.Key.DOCNUMBR [$StringHelper.Format("{0:0}", $item.LineNumber)]</td>
+		<td>
+		#if($item.Customer.Trim()>"")
+		${item.Customer.Trim()}
+		#end
+		</td>
+		<td>$item.Materiel</td>
+		<td align="right">$StringHelper.Format("{0:0}", $item.QuantityInPCS)</td>
+		<td>$item.UOFM</td>
+		<td>$item.FromLocation</td>
+		<td>$item.ToLocation</td>
+#after
+	</tr>
+#afterall
+</table>
+#nodata
+<p>No MSGP Transaction Records.</p>
+#end

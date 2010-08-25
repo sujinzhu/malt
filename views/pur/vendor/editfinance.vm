@@ -1,0 +1,40 @@
+<div class="ui-helper-clearfix">
+  #if(${isnew})
+  <form action='${url.for("%{action='createfinance'}")}' method="POST">
+  #else
+  <form action='${url.for("%{action='updatefinance'}")}' method="POST">
+  #end
+  ${f.push("extension")}
+  ${f.hiddenfield("Id")}
+  <p>
+    <span class="label2">${common.currency}:</span>
+    <span class="field2 currency">${f.select("HomeCurrency.Id", $currencies, "%{text='Description', value='Id'}")}</span>
+  </p>
+  <p>
+    <span class="label2">${common.vendorcategory}:</span>
+    <span class="field2 vendor-category">${f.select("Category.Id", $categories, "%{text='Description', value='Id'}")}</span>
+  </p>
+  <p>
+    <span class="label2">${common.settlementmode}:</span>
+    <span class="field2 settlement">${f.select("Settlement.Id", $settlements, "%{text='Description', value='Id'}")}</span>
+  </p>
+  <p>
+    <span class="label2">${common.paymentterm}:</span>
+    <span class="field2 payment">${f.select("Payment.Id", $payments, "%{text='Description', value='Id'}")}</span>
+  </p>
+  <p>
+    <span class="label2">${common.transport}:</span>
+    <span class="field2 transport">${f.select("Transport.Id", $transports, "%{text='Description', value='Id'}")}</span>
+  </p>
+  ${f.pop()}
+  <p>
+    ${f.submit($common.submit)}
+  </p>
+  </form>
+</div>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  fnDecorative();
+// ]]>
+</script>

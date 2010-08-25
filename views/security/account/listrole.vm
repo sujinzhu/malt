@@ -1,0 +1,42 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+    h3 { float: left; }
+    #btnNew { float: none; margin-left: 700px; }
+    #instances-container { width: 800px; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#instances').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+<h3>${common.group}</h3>
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.group}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($role in $roles)
+    <tr>
+      <td>${role}</td>
+      <td>${url.link($common.edit, "%{action='editrole', querystring='id=$role'}")}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,5 @@
+$HtmlHelper.LabelFor("customerId","$commonText.add $commonText.customer:")
+$HtmlHelper.Select("customerId")
+$HtmlHelper.CreateOptions($customers, "ID", "ID")
+$HtmlHelper.EndSelect()
+$AjaxHelper.ButtonToRemote("+", "AddCustomerCondition.rails", $DictHelper.CreateDict( "update=customerConditions", "with=Form.serialize($('universalsearch'))" ) )

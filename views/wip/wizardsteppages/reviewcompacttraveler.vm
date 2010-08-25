@@ -1,0 +1,19 @@
+<Fieldset style="width=600;">
+<Legend><b>Info:</b></Legend>
+	$StringHelper.Format("${wip.confirmcompacttraveler}", $Session.travelerId, $Session.extrudedQuantity)
+</FieldSet>
+
+$FormHelper.FormTag("%{action='ReviewCompactTraveler-Save'}")
+<p>
+$FormHelper.LabelFor("deliveryComment","${wip.deliverycomment}")
+$FormHelper.TextField("deliveryComment", "%{size='70',maxlength='300'}")
+</p>
+<p>Please double check above information you have inputed before you press "OK".</p>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+<input type="Submit" onClick="this.value='Submitting...';this.disabled=true;" value="${commonText.submit}">
+$HtmlHelper.LinkTo("Cancel", "ReviewSplitTraveler-Cancel")
+</p>
+$FormHelper.EndFormTag()

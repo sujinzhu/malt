@@ -1,0 +1,50 @@
+﻿<ul>
+  <li><a href='${url.for("%{area='inv', controller='material', action='new'}")}'>
+    <img src="${siteroot}/content/images/doc.png"/>
+    <span>${common.createnew} ${common.material}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='material', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.material} ${common.list}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='bom', action='new'}")}'>
+    <img src="${siteroot}/content/images/doc.png"/>
+    <span>${common.createnew} ${common.bom}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='bom', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.bom}</span></a>
+  </li>
+</ul>
+<ul>
+  <li><a href='${url.for("%{area='common', controller='transport', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.transport}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='common', controller='settlementmode', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.settlementmode}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='common', controller='paymentterm', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.paymentterm}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='common', controller='currency', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.currency}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='common', controller='addr', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.address}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='pur', controller='vendorcategory', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.vendorcategory}</span></a>
+  </li>
+</ul>
+<ul>
+  <li><a href='${siteroot}/Malt-Manual.PDF'>
+    <img src="${siteroot}/content/images/help.png" width="64" height="64"/>
+    <span>${common.malt-manual}</span></a>
+  </li>
+</ul>

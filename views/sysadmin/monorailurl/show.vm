@@ -1,0 +1,79 @@
+<h2>MonoRailURL: [${url.Area}].[${url.Controller}].[${url.Action}] [${url.ID}]</h2>
+#foreach($authorization in $authorizations)
+#beforeall
+	<h3>Authorizations:</h3>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr>
+		<th></th>
+		<th>PermissionType</th>
+		<th>PrincipalType</th>
+		<th>PrincipalName</th>
+		<th></th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>${authorization.ID}</td>
+		<td>${authorization.PermissionType}</td>
+		<td>${authorization.PrincipalType}</td>
+		<td>${authorization.PrincipalName}</td>
+		<td>
+		${Html3Helper.LinkTo("${commonText.remove}", "sysadmin","monorailauthorization", "confirm", ${authorization.ID})}
+		</td>
+	</tr>
+#afterall
+</table>
+#nodata
+<p>No authorizations.</p>
+#end
+<br/>
+<fieldset>
+<legend>Add authorization:</legend>
+
+$HtmlHelper.Form("${siteRoot}/sysadmin/monorailauthorization/createMonoRailAuthorization.rails", "scaffoldingform", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<!--
+<style type="text/css">    
+    div.auto_complete {
+      position:absolute;
+      width:250px;
+      background-color:white;
+      border:1px solid #888;
+      margin:0px;
+      padding:0px;
+    }
+    ul.names  {
+      list-style-type: none;
+      margin:0px;
+      padding:0px;
+    }
+    ul.names li.selected { background-color: #ffb; }
+  </style>
+-->
+
+$HtmlHelper.InputHidden("MonoRailURL.ID", $url.ID)
+
+<p>
+<label for="MonoRailAuthorization.PrincipalType">Principal Type:</label>
+$HtmlHelper.Select("MonoRailAuthorization.PrincipalType")
+$HtmlHelper.CreateOptions($principaltypes, "Value", "Key")
+$HtmlHelper.EndSelect()
+</p>
+<p>
+<label for="MonoRailAuthorization.PermissionType">Permission Type:</label>
+$HtmlHelper.Select("MonoRailAuthorization.PermissionTyp")
+$HtmlHelper.CreateOptions($permissiontypes, "Value", "Key")
+$HtmlHelper.EndSelect()
+</p>
+<p>
+<label for="MonoRailAuthorization.PrincipalName">User ID or Role:</label>
+${HtmlHelper.InputText("MonoRailAuthorization.PrincipalName", $!mrAuthorization.PrincipalName, $DictHelper.Create("validators=blank"))}
+</p>
+<div id="MonoRailAuthorization.PrincipalNameautocomplete" class="auto_complete"></div>
+$AjaxHelper.AutoCompleteInputText( "MonoRailAuthorization.PrincipalName", "${siteRoot}/sysadmin/rolelist/GetSearchItems.rails", null)
+
+$HtmlHelper.SubmitButton($commonText.create)
+
+$HtmlHelper.EndForm()
+</fieldset>

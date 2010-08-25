@@ -1,0 +1,4 @@
+<h3>Approved Vendor List</h3>
+#parse("${siteRoot}/fa/vendorapproval/list/ilist.vm")
+<br/>
+<div id="operation"></div>

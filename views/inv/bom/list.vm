@@ -1,0 +1,65 @@
+﻿#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .bom-id { width: 220px; }
+  .bom-description { width: 100px;}
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_dataTable()}
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      oMaterialList = $('#bom-list').dataTable({
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": '$url.for("%{action='listtabledata'}")',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"fnRender": function(oObj){return fnGetLink(oObj.aData[0]);}, "sClass": "bom-id", "sType": "html"},
+        {"sClass": "bom-description"},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "status"},
+        {"sClass": "priority"},
+        {"sClass": "short-date"},
+        {"sClass": "short-date"},
+        {"sClass": "short-date"},
+        {"sClass": "short-date"},
+        ],
+        "fnDrawCallback": function(){fnClassTrigerMaterialMenu();},
+      });
+    });
+    function fnGetLink(id){
+      var linkView =  '$url.for("%{action='view', querystring='id='}")' + id;
+      var linkTreeView =  '$url.for("%{action='treeview', querystring='id='}")' + id;
+      var linkEdit =  '$url.for("%{action='edit', querystring='id='}")' + id;
+      return "<a target='_blank' href='" + linkView + "'>${common.view}</a>" + "&nbsp;<a target='_blank' href='" + linkTreeView + "'>${common.treeview}</a>" + "&nbsp;" + "<a target='_blank' href='" + linkEdit + "'>${common.edit}</a>" + "&nbsp;" + id;
+    }
+  // ]]>
+  </script>
+#end
+
+<h3 id="pageHeader">${common.bom}:</h3>
+
+<table id="bom-list" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.name}</th>
+      <th>${common.compound}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.status}</th>
+      <th>${common.priority}</th>
+      <th>${common.effectivedate}</th>
+      <th>${common.createdate}</th>
+      <th>${common.modifydate}</th>
+      <th>${common.obsoletedate}</th>
+    </tr>
+  </thead>
+</table>
+

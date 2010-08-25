@@ -1,0 +1,6 @@
+#if($traveler)
+	[${commonText.archivetime} : ${traveler.ArchiveTime}]
+	#parse("${siteRoot}/wip/traveler/show/itraveler.vm")
+#else
+	<p>No traveler archive found with Id: <b>${id}</b>.</p>
+#end

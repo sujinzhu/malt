@@ -1,0 +1,50 @@
+﻿#capturefor(head)
+  ${h.jquery_dataTable()}
+  ${h.javascript_link("${siteRoot}/Content/js/sales/demand/list.js")}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      fnAppendAddButton("${common.forecastnewdemand}");
+      $('#btn_add').click(function(){
+        $('#new_forecast_demand').slideToggle('slow');
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(pageHeader)
+  <h3 id="pageHeader">${common.customerdemand}</h3>
+#end
+
+<div id="new_forecast_demand" class="ui-helper-hidden">
+</div>
+
+<table id="demandlist" class="display ui-widget">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.source}</th>
+      <th>${common.customer}</th>
+      <th>${common.material}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.baseunit}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.scheduledquantity}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($demand in $demands)
+    <tr>
+      <td>${demand.Id}</td>
+      <td>${demand.Source}</td>
+      <td>#if($demand.Customer) $demand.Customer.ShortName #end</td>
+      <td>${demand.Material.ID}</td>
+      <td>${demand.RequiredQuantity}</td>
+      <td>${demand.BaseUnit.Id}</td>
+      <td>${demand.RequiredDate.ToShortDateString()}</td>
+      <td>${demand.ScheduledQuantity}</td>
+    </tr>
+  #end
+  </tbody>
+</table>

@@ -1,0 +1,22 @@
+<fieldset>
+<legend>4. By Customer and Materiel:</legend>
+$HtmlHelper.Form("Search4.rails", "criterions4", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<p>
+$HtmlHelper.LabelFor("customer.ID", "$commonText.customer:")
+$HtmlHelper.Select("customer.ID")
+$HtmlHelper.CreateOptions($customers, "ShortName", "ID", $!customer.ID)
+$HtmlHelper.EndSelect()
+</p>
+
+<div><p>
+$HtmlHelper.LabelFor("itemcode", "$commonText.material:")
+$HtmlHelper.InputText("itemcode", "$!itemcode", $DictHelper.Create("validators=blank"))
+<div id="itemcodeautocomplete" class="auto_complete"></div>
+$AjaxHelper.AutoCompleteInputText( "itemcode", "${siteRoot}/WIP/Materiel/GetSearchItems.rails", null)
+</p></div>
+
+$HtmlHelper.SubmitButton("$commonText.search")
+
+$HtmlHelper.EndForm()
+</fieldset>

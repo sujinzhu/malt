@@ -1,0 +1,31 @@
+#foreach($component in $delivery.Components)
+#beforeall
+	<h3>Components:</h3>
+	<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+		<tr>
+			<th>${commonText.material}</th>
+			<th>${commonText.customer}</th>
+			<th>${wip.allocatee}</th>
+			<th>${commonText.quantity}</th>
+			<th>${wip.rtno}</th>
+			<th>${wip.lineno}</th>
+			<th>${wip.wdweek}</th>
+		</tr>
+#odd
+		<tr class="scaffoldaltrow">
+#even
+		<tr class="scaffoldrow">
+#each
+			<td>${component.Material.ID.Trim()}</td>
+			<td>${component.Customer.ID.Trim()}</td>
+			<td>${component.Allocatee.Trim()}</td>
+			<td>${StringHelper.Format("{0:0}", $component.Quantity)}</td>
+			<td>$!{component.RTNo}</th>
+			<td>$!{component.LineNo}</th>
+			<td>$!{component.WeekNo}</td>
+		</tr>
+#afterall
+	</table>
+#nodata
+	No DeliveryComponent(s) found.
+#end

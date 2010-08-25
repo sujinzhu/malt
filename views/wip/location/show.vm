@@ -1,0 +1,11 @@
+<h3>Location: ${location.ID}</h3>
+<fieldset style="width:700px;">
+<legend>${commonText.basic} ${commonText.information}:</legend>
+#parse("${siteRoot}/wip/location/show/location.vm")
+</fieldset>
+
+<p>
+${HtmlHelper.LinkTo("${commonText.edit}","Location","Edit",${location.ID})}
+ | 
+$HtmlHelper.LinkTo("${commonText.list}","Location","List")
+</p>

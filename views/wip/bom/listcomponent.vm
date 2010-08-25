@@ -1,0 +1,32 @@
+##(BOMComponent[])components
+#foreach($component in $components)
+#beforeall
+<Fieldset>
+<Legend>Components:</Legend>
+<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr>
+		<th>Id</th>
+		<th>$commonText.itemcode</th>
+		<th>$commonText.quantity</th>
+		<th>$commonText.state</th>
+		<th>$commonText.effectivedate</th>
+		<th>$commonText.obsoletedate</th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>$component.Id</td>
+		<td>$component.Component.ID</td>
+		<td>$component.DesignQuantity</td>
+		<td>$component.State</td>
+		<td>$component.EffectiveDate</td>
+		<td>$component.ObsoleteDate</td>
+#after
+	</tr>
+#afterall
+</table></Fieldset>
+#nodata
+<p>No Components found!</p>
+#end

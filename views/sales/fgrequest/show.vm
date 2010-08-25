@@ -1,0 +1,55 @@
+#if($fgr.Origin!="CustomerPO")
+<h2>$sales.contractreviewreport:</h2>
+#end
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th align="right">CRR:</th>
+		<th colspan=5>$fgr.CRRNO</th>
+		<th>$commonText.task</th>
+	</tr>
+	<tr class="scaffoldaltrow">
+		<th align="right">$commonText.customer:</th>
+		<td>$fgr.Customer.ShortName</td>
+		<th align="right">$commonText.origin:</th>
+		<td>$fgr.Origin</td>
+		#if($fgr.Origin!="CustomerPO")
+			#set($panel="crroperation")
+			$AjaxHelper.LinkToRemote("$commonText.remove", "${siteRoot}/Sales/FGRequest/Confirm.rails", $DictHelper.CreateDict( "update=crroperation", "with='id=$fgr.ID'"))
+		#else
+			#set($panel="cpoitemoperation")
+		#end
+		</td>
+		<th>EAU</th>
+		<td align="right">$!fgr.Materiel.EAU</td>
+		<td rowspan=4 valign="top">
+	</tr>
+	<tr class="scaffoldrow">
+		<th align="right">Cust. P/N:</th>
+		<td>$!fgr.CustomerPN</td>
+		<th align="right">$commonText.material:</th>
+		<td>$fgr.Material.ID</td>
+		<th>EOQ</th>
+		<td align="right">$!fgr.Materiel.EOQ</td>
+	</tr>
+	<tr class="scaffoldaltrow">
+		<th align="right">Cust. Drawing:</th>
+		<td>$!fgr.CustomerDrawingNo</td>
+		<th align="right">$commonText.requested $commonText.quantity:</th>
+		<td align="right">$fgr.RequestedQuantity</td>
+		<th>FG</th>
+		<td align="right">$AjaxHelper.LinkToRemote("$StringHelper.Format('{0:0}', $!fgstock)", "${siteRoot}/WIP/Stock/ListFGStocks.rails", $DictHelper.CreateDict( "update=$panel", "with='itemcode=$fgr.Material.ID'"))</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th align="right">Rev.</th>
+		<td>$!fgr.CustomerPN_Rev</td>
+		<th align="right">$commonText.requested $commonText.date:</th>
+		<td>$!fgr.RequestedDate.ToString("yyyy-MM-dd")</td>
+		<th>WIP</th>
+		<td align="right">$AjaxHelper.LinkToRemote("$StringHelper.Format('{0:0}', $!wipstock)", "${siteRoot}/WIP/Stock/ListWIPStocks.rails", $DictHelper.CreateDict( "update=$panel", "with='itemcode=$fgr.Material.ID'"))</td>
+	</tr>
+</table>
+
+#if($fgr.Origin!="CustomerPO")
+<br/>
+<div id="crroperation"></div>
+#end

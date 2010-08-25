@@ -1,0 +1,6 @@
+<fieldset>
+<legend>$commonText.confirmtheregister?</legend>
+<p>
+<a href="${siteRoot}/Sales/Delivery/DoInvoiceRegister.rails?sopkey.SOPNUMBE=$sop.Key.SOPNUMBE&sopkey.LNITMSEQ=$sop.Key.LNITMSEQ&sopkey.CMPNTSEQ=$sop.Key.CMPNTSEQ&sopkey.SOPTYPE=$sop.Key.SOPTYPE&cpoitem.ID=$cpoitem.ID">Yes</a> | $AjaxHelper.LinkToRemote("Cancel", "${siteRoot}/Home/Nothing.rails", $DictHelper.CreateDict( "update=selectcpoitem"))
+</p>
+</fieldset>

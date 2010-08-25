@@ -1,0 +1,24 @@
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th>Name:</th>
+		<td>${employee.Name}</td>
+		<th>In-service?</th>
+		<td><b>
+		#if(${employee.IsInActiveService})
+		<font color="green">Yes</font>
+		#else
+		<font color="red">No</font>
+		#end
+		</b></td>
+		<th>Duty:</th>
+		<td>${employee.Duty.DutyName}</td>
+	</tr>
+	<tr class="scaffoldaltrow">
+		<th>Employee ID:</th>
+		<td>${employee.ID}</td>
+		<th>Department:</th>
+		<td>${employee.Dept.DeptName}</td>
+		<th>Join Date:</th>
+		<td>${employee.JoinedDate.ToString("yyyy-MM-dd")}</td>
+	</tr>
+</table>

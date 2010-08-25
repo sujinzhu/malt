@@ -1,0 +1,58 @@
+﻿#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  ${h.javascript_link("${siteRoot}/Content/js/sales/cpo/list.js")}
+  #set($urlAddrComplete = ${url.for("%{area='', controller='addr', action='AutoComplete'}")})
+  #set($urlViewCPO = ${url.for("%{area='sales', controller='cpo', action='view'}")})
+  #set($urlRemoveCPO = ${url.for("%{area='sales', controller='cpo', action='remove'}")})
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      fnAppendAddButton("${common.neworder}");$('#btn_add').click(function(){$('#new_cpo').slideToggle('slow');});fnAppendRemoveButton("$common.remove");fnAppendOpenButton("$!{common.open}");$('#cpo_ShipTo_Id').autocomplete("${urlAddrComplete}");
+      fnAppendButton1("${common.extractdemand}");
+      $('#btn_button1').click(function(){fnExtractDemand('${url.for("%{controller='demand', action='extract'}")}');});
+      $('#btn_open').click(function(){fnOpenCPO("$urlViewCPO");});
+      $('#btn_remove').click(function(){fnRemoveCPO("$urlRemoveCPO");});
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(pageHeader)
+  <h3 id="pageHeader">$!{common.customerpo}:</h3>
+#end
+
+<div class="ui-helper-hidden" id="new_cpo">
+  #parse("${siteRoot}/sales/cpo/_new.vm")
+</div>
+
+<table id="cpolist" class="display ui-widget">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>$!{common.ordernumber}</th>
+      <th>$!{common.customer}</th>
+      <th>$!{common.orderdate}</th>
+      <th>$!{common.buyer}</th>
+      <th>$!{common.paymentterm}</th>
+      <th>$!{common.trademode}</th>
+      <th>$!{common.shipto}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($po in $cpos)
+    <tr>
+      <td>${po.Id}</td>
+      <td>${po.OrderNumber}</td>
+      <td>${po.Customer.ShortName}</td>
+      <td>${po.OrderedDate.ToShortDateString()}</td>
+      <td>${po.Buyer}</td>
+      <td>${po.PaymentTerm.Id}</td>
+      <td>${po.TradeMode.Id}</td>
+      <td>${po.ShipTo.Id}</td>
+    </tr>
+  #end
+  </tbody>
+</table>

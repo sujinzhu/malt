@@ -1,0 +1,14 @@
+
+<h2>Create new MonoRail Authorization:</h2>
+
+$HtmlHelper.Form("createMonoRailAuthorization.rails", "scaffoldingform", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+#parse("/sysadmin/monorailauthorization/form.vm")
+
+$HtmlHelper.SubmitButton($commonText.create)
+
+$HtmlHelper.EndForm()
+
+<p>
+$Html3Helper.LinkTo("List", "sysadmin","monorailauthorization", "listmonorailauthorization")
+</p>

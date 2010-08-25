@@ -1,0 +1,53 @@
+<UL>
+<LI>
+$HtmlHelper.LabelFor("account.ID", "By User:")
+$HtmlHelper.Form("ByUser.rails", "byuser", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+$HtmlHelper.InputText("account.ID", "", $DictHelper.Create("validators=blank"))
+$HtmlHelper.SubmitButton("Go")
+$HtmlHelper.EndForm()
+</LI>
+<LI>By Group:
+	#foreach($subsystem in $groups)
+	#beforeall
+	<UL class="mktree">
+	#each
+		#foreach($role in $subsystem.Children)
+		#beforeall
+		<LI>$subsystem.Value
+		<UL>
+		#each
+		<LI>$Html3Helper.LinkTo("$role.Value", "SysAdmin","MonoRailAuthorization", "ByGroup", ${role.Value})</LI>
+		#afterall
+		</UL>
+		</LI>
+		#end
+		
+	#afterall
+	</UL>
+	#end
+</LI>
+<LI>By URL:
+	#foreach($a in $urls)
+	#beforeall
+	<UL Class="mktree">
+	#each
+	<LI>$a.Key
+		#foreach($ctl in $a.Children)
+		#beforeall
+		<UL>
+		#each
+		<LI>$ctl.Key
+			<UL>
+			#foreach($act in $ctl.Children)
+				<LI>$Html3Helper.LinkTo("$act.Value", "SysAdmin","MonoRailAuthorization", "ByURL", $act.Key)</LI>
+			#end
+			</UL>
+		#afterall
+		</UL>
+		#end
+	</LI>
+	#afterall
+	</UL>
+	#end
+</LI>
+</UL>

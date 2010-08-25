@@ -1,0 +1,38 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #login-panel { padding-top: 100px; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#id').focus();
+      $('#login-form').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnVerify}); }
+      });
+      var left = ($('#login-form').width() - $('#login-form table').width()) / 2;
+      $('#login-form').css('padding-left', left);
+    });
+    function fnVerify(data){
+      if(fnHasError(data)){
+        $('#password').val("");
+        $('#id').val("").focus();
+      }else{
+        document.location=data['ReturnUrl'];
+      }
+    }
+  // ]]>
+  </script>
+#end
+
+<div id="login-panel">
+${h.start_with_layout($url.for("%{action='authenticate'}"), "login-form")}
+${h.field($common.user, $form.textfield("id", "%{class='required'}"))}
+${h.field($common.password, $form.passwordfield("password", "%{class='required'}"))}
+${h.field("", $form.submit("$common.login"))}
+${h.end_with_layout()}
+</div>

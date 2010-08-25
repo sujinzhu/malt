@@ -1,0 +1,37 @@
+##(BOM)$bill
+<h2>$wip.BOM [$bill.Id]</h2>
+<p>[$bill.Description]</p>
+<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th>$commonText.itemcode</th>
+		<td>$bill.Material.ID</td>
+		<th>$wip.madeat</th>
+		<td>$bill.MadeAt.ID</td>
+		<th>$commonText.state</th>
+		#if($bill.State==1)
+			#set($color="Green")
+		#end
+		#if($bill.State=="Pending")
+			#set($color="Blue")
+		#else
+			#set($color="Red")
+		#end
+		<td><font color="$color">$bill.State</font></td>
+	</tr>
+	<tr class="scaffoldaltrow">
+		<th>$commonText.effectivedate</th>
+		<td>$bill.EffectiveDate</td>
+		<th>$commonText.obsoletedate</th>
+		<td>$bill.ObsoleteDate</td>
+		<th>$commonText.priority</td>
+		<td>$bill.Priority</td>
+	</tr>
+</table>
+<p><b>Created At:</b> [$bill.CreateDate],   <b>Last Modified:</b> [$bill.ModifyDate]</p>
+
+#set($components=$bill.BOMComponents)
+##$components.Count()
+#parse("/wip/bom/listcomponent.vm")
+##foreach($component in $bill.Components)
+##$component.Key.ID
+##end

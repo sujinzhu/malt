@@ -1,0 +1,9 @@
+<h2>Remove MonoRailAuthorization [${authorization.ID}]</h2>
+
+<p>
+Do you really want to remove this MonoRailAuthorization ([${authorization.PermissionType}] [${authorization.PrincipalType}] [${authorization.PrincipalName}]) at ([${authorization.MonoRailURL.Area}].[${authorization.MonoRailURL.Controller}].[${authorization.MonoRailURL.Action}]) ?
+</p>
+
+<p>
+$Html3Helper.LinkTo("Yes", "sysadmin","monorailauthorization", "remove", $id) | <a href="javascript:history.go(-1);" >Cancel</a>
+</p>

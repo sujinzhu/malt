@@ -1,0 +1,5 @@
+<p>$HtmlHelper.LabelFor("toLocation", "$commonText.to:")
+$HtmlHelper.Select("toLocation")
+$HtmlHelper.CreateOptions($alllocations, "ID", "ID", $!Session.toloc.ID)
+$HtmlHelper.EndSelect()
+</p>

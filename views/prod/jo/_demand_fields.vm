@@ -1,0 +1,3 @@
+﻿${form.HiddenField('JobOrder.Id')}
+${form.HiddenField('CustomerDemand.Id')}
+${h.field($common.scheduledquantity, $form.TextField('ScheduledQuantity', "%{class='required number'}"))}

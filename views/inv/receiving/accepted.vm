@@ -1,0 +1,129 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#doc-header { width: 780px; float: left; margin-right: 1em; margin-bottom: 1em; }
+
+.received-quantity { cursor: pointer; }
+
+#placing-container { padding-left: 1em; margin-top: 1em; margin-bottom: 1em; width: 800px; }
+#placing-container p { margin-top: 1em; float: left; }
+#placing-container p { height: 25px; }
+#placing-container span  { float: left; }
+.label2 { width: 100px; text-align: right; padding-right: .3em; }
+.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; width: 250px; }
+.label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+.material { width: 500px; }
+.repository-with-desc { width: 300px; }
+/* ]]> */
+</style>
+
+${j.jquery_form()}
+${j.jquery_dataTable()}
+${j.jquery_validate()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    $('#entries').dataTable({
+      "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [
+      {'bVisible': false},
+      {'sClass': 'po-id'},
+      {'sClass': 'short-date'},
+      {'sClass': 'material-id'},
+      {'sClass': 'material-name'},
+      {'sClass': 'material-spec'},
+      {'sClass': 'quantity'},
+      {'sClass': 'received-quantity ui-state-active'},
+      {'sClass': 'unit-id'},
+      {'sClass': 'unit-desc'},
+      null,
+      ]
+    });
+
+    $('.received-quantity').click(function(){
+      fnShowPlacing(this.id);
+    });
+  });
+
+  function fnShowPlacing(iId){
+    $('#placing-container').load('${url.for("%{action='availablerepositories'}")}', {id: iId}).show('slow');
+  }
+
+  function fnHidePlacing(){
+    $('#placing-container').hide('slow').html('');
+  }
+// ]]>
+</script>
+#end
+
+<div id="doc-header-container" class="ui-helper-clearfix">
+<h3>${common.receivingnote} : ${rn.Id}</h3>
+
+<table id="doc-header" class="display">
+  <thead>
+    <tr class="ui-widget-header ui-corner-top">
+      <th>${common.vendor}</th>
+      <th></th>
+      <th>${common.receiveddate}</th>
+      <th>${common.deliverynoteid}</th>
+      <th>${common.consignee}</th>
+      <th>${common.status}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content ui-corner-bottom">
+      <td>${rn.Vendor.Id}</td>
+      <td>${rn.Vendor.Name}</td>
+      <td>${dateformat.ToShortDate($rn.ReceivedDate)}</td>
+      <td>${rn.DeliveryNoteId}</td>
+      <td>${rn.Consignee}</td>
+      <td>${h.getenumname($rn.Status)}</td>
+    </tr>
+  </tbody>
+</table>
+
+<a href='${url.for("%{controller='receivingnote', action='print', querystring='id=$rn.Id'}")}' class="fg-button ui-corner-all ui-state-default">
+${common.print}</a>
+</div>
+
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.purchaseorder}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.receivedquantity}</th>
+      <th>${common.baseunit}</th>
+      <th></th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($rne in $rn.Entries)
+    #if(!$rne.Placed)
+    <tr>
+      <td>${rne.Id}</td>
+      <td><a href='${url.for("%{area='pur', controller='purchaseorder', action='view', querystring='id=$rne.POE.PO.Id'}")}'>${rne.POE.PO.Id}</a></td>
+      <td>${rne.POE.RequiredDate.ToShortDateString()}</td>
+      <td>${rne.POE.Material.Id}</td>
+      <td>$!{rne.POE.Material.Name}</td>
+      <td>$!{rne.POE.Material.Specification}</td>
+      <td>${rne.POE.RequiredQuantity}</td>
+      <td id='${rne.Id}'>${rne.ReceivedQuantity}</td>
+      <td>${rne.POE.Unit.Id}</td>
+      <td>$!{rne.POE.Unit.Description}</td>
+      <td>$!{rne.Notice}</td>
+    </tr>
+    #end
+  #end
+  </tbody>
+</table>
+
+<div id='placing-container' class="ui-helper-clearfix ui-helper-hidden">
+</div>

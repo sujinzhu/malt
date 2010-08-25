@@ -1,0 +1,170 @@
+﻿#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#rn-header { margin-bottom: .5em; width: 750px; float: left; }
+#select-purchaseorder { width: 850px; }
+
+.poe span {float: left; vertical-align: middle; }
+.poe .quantity { padding-right: .5em; }
+.poe { padding: 3px; margin-top: 5px; }
+.poedata { cursor: pointer; }
+#selected-poe { width: 750px; }
+#select-material, #get-received-quantity, #get-received-quantity table { float: left; }
+#select-material span { padding: 5px; margin: 0px; float: left; }
+#select-material button { margin-left: .3em;}
+#btnFinish { margin-left: 1.5em; }
+#btnCancel { margin-left: .5em; float: right; }
+/* ]]> */
+</style>
+
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_autocomplete()}
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+  var olstrnes;
+    $(function(){
+      olstrnes = $('#rn-entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "po-id"},
+        {"sClass": "short-date"},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity"},
+        {"sClass": "quantity"},
+        {"sClass": "unit-id"},
+        null, null,
+        {"bVisible": false},
+        ],
+        "fnDrawCallback": function(){fnClassTrigerMaterialMenu();},
+      });
+      $('#select-material span:first').height($('#select-material span:last').height()).css('margin-right', -1);
+      $('#materialId').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 420,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      }).focus();
+      $('#btnSelectMaterial').click(function(){
+        $('#select-material').fadeOut("slow");
+        $('#select-purchaseorder')
+        .load('${url.for("%{action='selectpurchaseorderentry'}")}', {rnId: '${rn.Id}', materialId: $('#materialId').val()})
+        .fadeIn("slow");
+      });
+      //$('#btnFinish').click(function(){document.location=finishUrl;});
+    });
+    function fnFinish(){
+      finishUrl = '${url.for("%{action='finishreceiving', querystring='id=${rn.Id}'}")}';
+      document.location=finishUrl;
+    }
+    function fnCancel(){
+      cancelUrl = '${url.for("%{action='cancel', querystring='id=${rn.Id}'}")}';
+      document.location=cancelUrl;
+    }
+    function fnPreSelectPurchaseOrder(){
+        $('#select-purchaseorder').fadeOut("slow");
+        $('#select-material').fadeIn("slow");
+    }
+    function fnSelectPOE(poeId)
+    {
+        $('#select-purchaseorder').fadeOut("slow");
+        $('#get-received-quantity')
+        .load('${url.for("%{action='getreceivedquantity'}")}', {rnId: '${rn.Id}', poeId: poeId})
+        .fadeIn("slow");
+    }
+    function fnPreGetReceivedQuantity(rnId, materialId)
+    {
+        $('#get-received-quantity').fadeOut("slow");
+        $('#select-purchaseorder')
+        .load('${url.for("%{action='selectpurchaseorderentry'}")}', {rnId: rnId, materialId: materialId})
+        .fadeIn("slow");
+    }
+    function fnAddToDT(data){
+      if(!fnHasError(data)){
+        $('#get-received-quantity').fadeOut("slow");
+        $('#select-material').fadeIn("slow");
+        olstrnes.fnAddData([data['Id'], data['PoId'], data['RequiredDate'], data['Material'], data['MaterialName'], data['MaterialSpec'], data['RequiredQuantity'], data['ReceivedQuantity'], data['UnitDesc'], data['Packing'], data['Notice'], data['Accepted']]);
+      }
+    }
+  // ]]>
+  </script>
+#end
+
+<div id="select-material" class="ui-widget-content ui-corner-all">
+  <h3>${common.receiving} =&gt; 2. ${common.select} ${common.material}:</h3>
+  <span class="ui-widget-header ui-corner-left">${common.material}:</span>
+  <span class="ui-widget-content ui-corner-right">${form.textfield("materialId")}</span>
+  <button id="btnSelectMaterial">${common.nextstep}</button>
+</div>
+
+<div id="select-purchaseorder" class="ui-helper-hidden"> </div>
+
+<div id="get-received-quantity" class="ui-helper-hidden ui-widget-content ui-corner-all"></div>
+
+<h3>${common.receivingnote} : ${rn.Id}</h3>
+
+<table id="rn-header" class="display">
+  <thead>
+    <tr class="ui-widget-header ui-corner-top">
+      <th>${common.vendor}</th>
+      <th>${common.receiveddate}</th>
+      <th>${common.deliverynoteid}</th>
+      <th>${common.consignee}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content ui-corner-bottom">
+      <td>${rn.Vendor.Id}</td>
+      <td>${dateformat.ToShortDate($rn.ReceivedDate)}</td>
+      <td>${rn.DeliveryNoteId}</td>
+      <td>${rn.Consignee}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="fg-buttonset fg-buttonset-single">
+  <button id="btnFinish" onclick="javascript:fnFinish();">${common.finish}</button>
+  <button id="btnCancel" onclick="javascript:fnCancel();">${common.cancel}</button>
+</div>
+<table id="rn-entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.purchaseorder}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.material}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.receivedquantity}</th>
+      <th>${common.baseunit}</th>
+      <th>${common.packing}</th>
+      <th>${common.notice}</th>
+      <th>Accepted?</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($rne in $rn.Entries)
+    <tr>
+      <td>${rne.Id}</td>
+      <td><a href='${url.for("%{area='pur', controller='purchaseorder', action='view', querystring='id=$rne.POE.PO.Id'}")}' target='_blank'>${rne.POE.PO.Id}</a></td>
+      <td>${rne.POE.RequiredDate.ToShortDateString()}</td>
+      <td>${rne.POE.Material.Id}</td>
+      <td>${rne.POE.Material.Name}</td>
+      <td>${rne.POE.Material.Specification}</td>
+      <td>${rne.POE.RequiredQuantity}</td>
+      <td>${rne.ReceivedQuantity}</td>
+      <td>$!{rne.POE.Unit.Description}</td>
+      <td>$!{rne.Packing}</td>
+      <td>$!{rne.Notice}</td>
+      <td>${rne.Accepted}</td>
+    </tr>
+  #end
+  </tbody>
+</table>

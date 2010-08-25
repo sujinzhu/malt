@@ -1,0 +1,67 @@
+﻿#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #pageHeader { margin-bottom: 1em; float: left; }
+  #btnAdd { float: right; }
+  #newPO { float: left; }
+  /* ]]> */
+  </style>
+  
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oPOs;
+    $(function(){
+      oPOs = $('#poList').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+      $('#poList tbody').click(function(event){ $(oPOs.fnSettings().aoData).each(function(){ $(this.nTr).removeClass('row_selected'); });
+        $(event.target.parentNode).addClass('row_selected');
+      });
+      $('#btnAdd').click(function(){$('#newPO').slideToggle("slow");});
+      $('#newPOForm').validate();
+      $('#po_Vendor_Id').autocomplete('$url.for("%{controller='vendor', action='autocomplete'}")');
+      $('#po_ShipTo_Id').autocomplete('$url.for("%{area='', controller='addr', action='autocomplete'}")');
+      $('#po_CreatedDate').datepicker();
+    });
+  // ]]>
+  </script>
+#end
+
+<h3 id="pageHeader">${common.purchaseorder} ${common.list}:</h3>
+<button id="btnAdd">${common.neworder}</button>
+
+<div id="newPO" class="ui-helper-hidden ">
+#parse("${siteroot}/pur/po/_new.vm")
+</div>
+
+<table id="poList" class="display ui-widget">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.vendor}</th>
+      <th>${common.createdate}</th>
+      <th>${common.buyer}</th>
+      <th>${common.paymentterm}</th>
+      <th>${common.trademode}</th>
+      <th>${common.shipto}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($po in $pos)
+    <tr>
+      <td>${url.link($po.Id, "%{action='view', querystring='id=$po.Id'}")}</td>
+      <td>${po.Vendor.Id}</td>
+      <td>${po.CreatedDate}</td>
+      <td>${po.Buyer}</td>
+      <td>${po.PaymentTerm.Id}</td>
+      <td>${po.TradeMode.Id}</td>
+      <td>${po.ShipTo.Id}</td>
+    </tr>
+  #end
+  </tbody>
+</table>

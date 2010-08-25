@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/xml; charset=utf-8" />
+<title>
+#if($title)
+	$title
+#else
+	$commonText.title
+#end
+</title>
+
+<link rel="STYLESHEET" type="text/css" href="${siteRoot}/Content/css/style.css" />
+
+$AjaxHelper.GetJavascriptFunctions()
+$ScriptaculousHelper.GetJavascriptFunctions()
+##$Effects2Helper.GetJavascriptFunctions()
+$ValidationHelper.InstallScripts()
+$ValidationHelper.SetSubmitOptions(false,true,true,2)
+
+#parse("/share/jscalendar.vm")
+
+#parse("/share/hmenu.vm")
+
+<link rel="STYLESHEET" type="text/css" href="${siteRoot}/Content/css/mktree.css"/>	
+<SCRIPT type="text/javascript" SRC="${siteRoot}/Content/Scripts/mktree.js"></SCRIPT>
+<SCRIPT type="text/javascript" SRC="${siteRoot}/Content/Scripts/CheckBoxGroup.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+<!--
+var menu;
+function initPage() {
+	menu = DynarchMenu.setup('menu', { shadows: [-1, 0, 5, 5], scrolling: true });
+	#if($MyItemId)
+	menu.items["$MyItemId"].disable();
+	#end
+}
+//-->
+</SCRIPT>
+
+<link rel="stylesheet" type="text/css" href="${siteRoot}/Content/ajaxtabs/ajaxtabs.css" />
+
+<script type="text/javascript" src="${siteRoot}/Content/ajaxtabs/ajaxtabs.js">
+
+/***********************************************
+* Ajax Tabs Content script- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+</script>
+
+</head>
+<body onload="initPage(); ">
+	<div id="header"> </div>
+	<div id="navigation">
+	#parse("/Layouts/menu.vm")<br/>
+	</div>
+	<div id="message">
+	#if($error)
+	<p></p>
+	<FIELDSET bordercolor="red">
+		<LEGEND><font color="red">$commonText.error!</font></LEGEND>
+		<font color="red">$error</font>
+	</FIELDSET>
+	#end
+	#if($errors)
+	<p></p>
+	<FIELDSET bordercolor="red">
+		<LEGEND><font color="red">$commonText.error!</font></LEGEND>
+	#foreach($err in $errors)
+		<font color="red">$err</font><br/>
+	#end
+	</FIELDSET>
+	#end
+	#if($alarm)
+	<p></p>
+	<FIELDSET bordercolor="#FF9900">
+		<LEGEND><font color="orange">$commonText.alarm!</font></LEGEND>
+		<font color="orange">$alarm</font>
+	</FIELDSET>
+	#end
+	#if($information)
+	<p></p>
+	<FIELDSET bordercolor="green">
+		<LEGEND><font color="green">$commonText.information!</font></LEGEND>
+		<font color="green">$information</font>
+	</FIELDSET>
+	#end
+	</div>
+	<div id="content">
+		$childContent
+	</div>
+	<div id="footer"></div>
+</body>
+</html>

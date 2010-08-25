@@ -1,0 +1,66 @@
+#capturefor(head)
+  ${j.jquery_autocomplete()}
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      oReceivingNoteList = $('#instances').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+      });
+      $('#new-instance').validate();
+      function formatItem(row){ return row[0] + " " + row[1]; }
+      function formatResult(row) { return row[0]; }
+      $('#instance_Vendor_Id').autocomplete('$url.for("%{area='pur', controller='vendor', action='autocomplete2'}")', {
+        width: 300,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      }).focus();
+    });
+    // ]]>
+    </script>
+#end
+
+<h3>${common.receiving}</h3>
+
+${f.push("instance")}
+${h.start_with_layout($url.for("%{action='create'}"), "new-instance")}
+
+${h.field($common.receivingnoteid, $f.TextField('Id'))}
+${h.field($common.vendor, $f.textfield("Vendor.Id", "%{class='required'}"), true)}
+${h.field($common.deliverynoteid, $f.textfield("DeliveryNoteId", "%{class='required'}"), true)}
+
+${h.field("", $f.submit($common.create))}
+${f.pop()}
+${h.end_with_layout()}
+
+<div id="instances-container">
+<h3 style="float:left;">${common.inprocessreceivingnotes}:</h3>
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.vendor}</th>
+      <th>${common.deliverynoteid}</th>
+      <th>${common.receiveddate}</th>
+      <th>${common.consignee}</th>
+      <th>${common.status}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($instance in $instances)
+    <tr>
+      <td>${url.link($instance.Id, "%{action='steering', querystring='id=$instance.Id'}")}</td>
+      <td>${instance.vendor.Id}</td>
+      <td>${instance.DeliveryNoteId}</td>
+      <td>${dateformat.ToShortDate($instance.ReceivedDate)}</td>
+      <td>${instance.Consignee}</td>
+      <td>${instance.Status}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

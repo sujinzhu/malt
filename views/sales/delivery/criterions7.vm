@@ -1,0 +1,15 @@
+<fieldset>
+<legend>2. By Materiel:</legend>
+$HtmlHelper.Form("Search7.rails", "criterions7", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<div><p>
+$HtmlHelper.LabelFor("itemcode", "$commonText.material:")
+$HtmlHelper.InputText("itemcode", "$!itemcode", $DictHelper.Create("validators=blank"))
+<div id="itemcodeautocomplete" class="auto_complete"></div>
+$AjaxHelper.AutoCompleteInputText( "itemcode", "${siteRoot}/WIP/Materiel/GetSearchItems.rails", null)
+</p></div>
+
+$HtmlHelper.SubmitButton("$commonText.search")
+
+$HtmlHelper.EndForm()
+</fieldset>

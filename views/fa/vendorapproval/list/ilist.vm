@@ -1,0 +1,61 @@
+#foreach($av in $avl)
+#beforeall
+	<p>[<font  color="blue">Move the mouse over P/N, you can get the Description of that Item.</font>]</p>
+	<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr>
+		<th>Vendor</th>
+		<th>Project</th>
+		<!-- <th>Description</th> -->
+		<th>ETIL P/N</th>
+		<th>ETIL Rev</th>
+		<th>FA Ref. No.</th>
+		<th>Approved Date</th>
+		<th></th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>${av.Vendor.ShortName.Trim()}</td>
+		<td>${av.Project.Name.Trim()}</td>
+		<td><a title="${av.Materiel.Description.Trim()}">${av.Material.ID.Trim()}</a></td>
+		<td>${av.Rev.Trim()}</td>
+		<td>${av.FAReferenceNo.Trim()}</td>
+		<td>${av.ApprovedDate.ToString("yyyy-MM-dd")}</td>
+		<td>
+		$AjaxHelper.LinkToRemote("${commonText.remove}", "${siteRoot}/fa/vendorapproval/confirm.rails", $DictHelper.Create("update=operation", "with='id=${av.Id}'"))
+		</td>
+	</th>
+#afterall
+	#if($avl.TotalItems > 0)
+	<tr>
+		<td colspan="2">Showing $avl.FirstItem - $avl.LastItem of ${avl.TotalItems}</td>
+		<td colspan="6" align="right">
+		#if($avl.HasFirst)
+			 $PaginationHelper.CreatePageLinkWithCurrentQueryString(1, "first", null)
+		#else
+			first
+		#end
+		#if($avl.HasPrevious)
+			 | $PaginationHelper.CreatePageLinkWithCurrentQueryString(${avl.PreviousIndex}, "prev", null)
+		#else
+			 | prev
+		#end
+		#if($avl.HasNext)
+			 | $PaginationHelper.CreatePageLinkWithCurrentQueryString(${avl.NextIndex}, "next", null)
+		#else
+			 | next
+		#end
+		#if($avl.HasLast)
+			 | $PaginationHelper.CreatePageLinkWithCurrentQueryString(${avl.LastIndex}, "last", null)
+		#else
+			 | last
+		#end
+		</td>
+	</tr>
+	#end
+	</table>
+#nodata
+	<p>No vendor approval found.</p>
+#end

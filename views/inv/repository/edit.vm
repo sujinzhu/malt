@@ -1,0 +1,86 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  h3 { font-size: 123.1%; }
+  p { margin-top: 1em; height: 120%; float: left; }
+  span { float: left; }
+  .label2 { width: 100px; text-align: right; padding-right: .3em; }
+  .field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
+  .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+
+  .description .leven-name { width: 250; }
+  /* ]]> */
+  </style>
+
+  ${j.jquery_autocomplete()}
+  
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#repository-info').tabs({selected: ${tab}}).width("500px");
+      fnDecorative();
+      $('#instance_Description').focus();
+    });
+
+    function fnDecorative(){
+      $('.label2').addClass('ui-state-active ui-corner-bl');
+      $('.field2').addClass('ui-state-hover ui-corner-tr');
+      $(':submit').button();
+    }
+  // ]]>
+  </script>
+#end
+
+<h3>${common.repository}: ${instance.Id}</h3>
+
+<div id="repository-info" class="ui-helper-clearfix">
+  <ul>
+    <li><a href='#basedata'>${common.basedata}</a></li>
+    <li><a href='${url.for("%{action='editfinance', querystring='id=$instance.Id'}")}'>${common.finance}</a></li>
+    <li><a href='${url.for("%{action='editcooperatingdate', querystring='id=$instance.Id'}")}'>${common.cooperatingdate}</a></li>
+    <li><a href='${url.for("%{action='editaddress', querystring='id=$instance.Id'}")}'>${common.address}</a></li>
+  </ul>
+
+  <div id="basedata" class="ui-helper-clearfix">
+    <form action='${url.for("%{action='update'}")}' method="POST">
+    ${f.push("instance")}
+    ${f.hiddenfield("Id")}
+    <p>
+      <span class="label2">${common.description}:</span>
+      <span class="field2 description">${f.textfield("Description", "%{size='30'}")}&nbsp;</span>
+    </p>
+    <p>
+      <span class="label2">${common.name}1:</span>
+      <span class="field2 level-name">${f.textfield("LevelName1", "%{size='30'}")}&nbsp;</span>
+    </p>
+    <p>
+      <span class="label2">${common.name}2:</span>
+      <span class="field2 level-name">${f.textfield("LevelName2", "%{size='30'}")}&nbsp;</span>
+    </p>
+    <p>
+      <span class="label2">${common.name}3:</span>
+      <span class="field2 level-name">${f.textfield("LevelName3", "%{size='30'}")}&nbsp;</span>
+    </p>
+    <p>
+      <span class="label2">${common.name}4:</span>
+      <span class="field2 level-name">${f.textfield("LevelName4", "%{size='30'}")}&nbsp;</span>
+    </p>
+    <p>
+      <span class="label2">${common.name}5:</span>
+      <span class="field2 level-name">${f.textfield("LevelName5", "%{size='30'}")}&nbsp;</span>
+    </p>
+    <p>
+      <span class="label2">${common.name}6:</span>
+      <span class="field2 level-name">${f.textfield("LevelName6", "%{size='30'}")}&nbsp;</span>
+    </p>
+    <p>
+      <span class="label2">${common.enabled}?</span>
+      <span class="field2 level-name">${f.checkboxfield("IsActive")}&nbsp;</span>
+    </p>
+    ${f.pop()}
+    <p>
+      ${f.submit($common.submit)}
+    </p>
+    </form>
+  </div>
+</div>

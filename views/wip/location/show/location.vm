@@ -1,0 +1,36 @@
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr class="scaffoldrow">
+		<th>Name:</th>
+		<td>${location.ID.Trim()}</td>
+		<th>Category</th>
+		<td>${location.Category.Trim()}</td>
+		<th>Dept:</th>
+		<td>
+		#if(${location.UnderDepartment})
+		${CoreHelper.GetDept($location.DeptID).DeptName.Trim()}
+		#end
+		</td>
+		<th>IsActive?</th>
+		<td><b>
+		#if(${location.IsActive})
+		<font color="green">Yes</font>
+		#else
+		<font color="red">No</font>
+		#end
+		</b></td>
+	</tr>
+	<tr class="scaffoldaltrow">
+		<th>Lavel Name 1:</th>
+		<td>${location.LevelName1.Trim()}</td>
+		<th>Lavel Name 2:</th>
+		<td>${location.LevelName2.Trim()}</td>
+		<th>Lavel Name 3:</th>
+		<td>${location.LevelName3.Trim()}</td>
+		<th>Lavel Name 4:</th>
+		<td>${location.LevelName4.Trim()}</td>
+	</tr>
+	<tr class="scaffoldrow">
+		<th>Description:</th>
+		<td colspan="7">$!{location.Description}</td>
+	</tr>
+</table>

@@ -1,0 +1,46 @@
+$HtmlHelper.Form("DoUniversalSearch.rails", "universalsearch", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<div id="projectConditions"></div>
+<div id="customerConditions"></div>
+<div id="locationConditions"></div>
+<div id="remarkConditions"></div>
+<div id="orderbyConditions"></div>
+
+<p>Include:
+$HtmlHelper.InputRadio("include", "0", $DictHelper.Create("checked"))Only Traveler
+ 
+$HtmlHelper.InputRadio("include", "1")Only TravelerArchive
+ 
+$HtmlHelper.InputRadio("include", "2")Both
+</p>
+<p>State:
+$HtmlHelper.Select("state")
+$HtmlHelper.CreateOptions(${states}, "Value", "Key", 1)
+$HtmlHelper.EndSelect()
+</p>
+<p>${HtmlHelper.SubmitButton("${commonText.search}")}</p>
+
+<ul id="maintab" class="shadetabs">
+<li class="selected"><a href="#default" rel="ajaxcontentarea">${commonText.intro}</a></li>
+<li><a href="selectprojectcondition.rails" rel="ajaxcontentarea">${commonText.project}</a></li>
+<li><a href="selectcustomercondition.rails" rel="ajaxcontentarea">${commonText.customer}</a></li>
+<li><a href="selectlocationcondition.rails" rel="ajaxcontentarea">${wip.currentlocation}</a></li>
+<li><a href="selectremarkcondition.rails" rel="ajaxcontentarea">${commonText.remark}</a></li>
+<li><a href="selectorderbycondition.rails" rel="ajaxcontentarea">${commonText.orderby}</a></li>
+</ul>
+
+<div id="ajaxcontentarea" class="contentstyle">
+<p>For each condition in following tabs, if you don't specify any options, system will assume you have selected all options for that condition. <p>
+<p>For example: if you don't specify any Customer for query condition, then system will retrive records for all Customers.</p>
+</div>
+
+$HtmlHelper.EndForm()
+
+<script type="text/javascript">
+//Start Ajax tabs script for UL with id="maintab" Separate multiple ids each with a comma.
+startajaxtabs("maintab")
+</script>
+
+</body>
+
+</html>

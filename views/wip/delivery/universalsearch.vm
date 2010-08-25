@@ -1,0 +1,80 @@
+$HtmlHelper.Form("DoUniversalSearch.rails", "universalsearch", "get", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<div id="fromLocationConditions"></div>
+<div id="toLocationConditions"></div>
+<div id="projectConditions"></div>
+<div id="materielConditions"></div>
+<div id="customerConditions"></div>
+<div id="signeeConditions"></div>
+<div id="orderbyConditions"></div>
+<div id="typeConditions"></div>
+
+<p>${commonText.isvalid}:
+$HtmlHelper.InputRadio("isvalid", "1", $DictHelper.Create("checked"))$commonText.only ${commonText.valid}
+ 
+$HtmlHelper.InputRadio("isvalid", "0")$commonText.only ${commonText.invalid}
+ 
+$HtmlHelper.InputRadio("isvalid", "2")${commonText.both}
+</p>
+<p>${commonText.issigned}:
+$HtmlHelper.InputRadio("issigned", "1", $DictHelper.Create("checked"))$commonText.only ${commonText.recognized}
+ 
+$HtmlHelper.InputRadio("issigned", "0")$commonText.only ${commonText.pending}
+ 
+$HtmlHelper.InputRadio("issigned", "2")${commonText.both}
+</p>
+<p>${commonText.date}:
+<label  for="fromDate">${commonText.from}</label>
+$HtmlHelper.InputText("fromDate", "$!{today.AddMinutes(435)}", 19, 19)
+<input type="reset" value=" ... " id="fromMoment_b" />
+ 
+<label  for="toDate">${commonText.to}</label>
+$HtmlHelper.InputText("toDate", "$!{today.AddDays(1).AddMinutes(435)}", 19, 19)
+<input type="reset" value=" ... " id="toMoment_b" />
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "fromDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d %H:%M:%S",      // format of the input field
+        button         :    "fromMoment_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime	:	true
+    });
+</script>
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "toDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d %H:%M:%S",      // format of the input field
+        button         :    "toMoment_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime	:	true
+    });
+</script>
+</p>
+<p>${HtmlHelper.SubmitButton("${commonText.search}")}</p>
+
+<ul id="maintab" class="shadetabs">
+<li class="selected"><a href="#default" rel="ajaxcontentarea">${commonText.intro}</a></li>
+<li><a href="selectfromlocationcondition.rails" rel="ajaxcontentarea">${commonText.from}</a></li>
+<li><a href="selecttolocationcondition.rails" rel="ajaxcontentarea">${commonText.to}</a></li>
+<li><a href="selectprojectcondition.rails" rel="ajaxcontentarea">${commonText.project}</a></li>
+<li><a href="selectmaterielcondition.rails" rel="ajaxcontentarea">${commonText.material}</a></li>
+<li><a href="selectcustomercondition.rails" rel="ajaxcontentarea">${commonText.customer}</a></li>
+<li><a href="selectsigneecondition.rails" rel="ajaxcontentarea">${commonText.signee}</a></li>
+<li><a href="selectorderbycondition.rails" rel="ajaxcontentarea">${commonText.orderby}</a></li>
+<li><a href="selecttypecondition.rails" rel="ajaxcontentarea">Type</a></li>
+</ul>
+
+<div id="ajaxcontentarea" class="contentstyle">
+<p>For each condition in following tabs, if you don't specify any options, system will assume you have selected all options for that condition. <p>
+<p>For example: if you don't specify any Customer for query condition, then system will retrive records for all Customers.</p>
+</div>
+
+$HtmlHelper.EndForm()
+
+<script type="text/javascript">
+//Start Ajax tabs script for UL with id="maintab" Separate multiple ids each with a comma.
+startajaxtabs("maintab")
+</script>
+

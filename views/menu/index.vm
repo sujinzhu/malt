@@ -1,0 +1,8 @@
+﻿#capturefor(pageHeader)
+  <h3 id="pageHeader">${common.basedata}</h3>
+#end
+
+<ul>
+  #parse("${siteroot}/menu/_basedata.vm")
+  #parse("${siteroot}/menu/_usefulinformation.vm")
+</ul>

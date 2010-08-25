@@ -1,0 +1,100 @@
+#capturefor(head)
+${j.jquery_datatable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    TableToolsInit.sSwfPath = "${siteroot}/Content/dataTables-1.6.2/extras/TableTools/media/swf/ZeroClipboard.swf";
+
+    oDataTable = $('#entries').dataTable({
+      "sDom": 'T<"clear">lfrtip',
+      "bJQueryUI": true,
+      "aaSorting": [[1, 'asc']],
+      "aoColumns": [
+      {"bVisible": false},
+      null,
+      {"sClass": "so-id"},
+      {"sClass": "po-id"},
+      {"sClass": "customer-name"},
+      {"sClass": "product-id"},
+      {"sClass": "material-id"},
+      {"sClass": "material-name2"},
+      {"sClass": "material-name"},
+      {"sClass": "quantity carton-quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "short-date required-date"},
+      {"sClass": "short-date "},
+      null,
+      null,
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+  });
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.soe-list}(${list-type})
+#end
+
+<h3>${common.soe-list}(${list-type}):</h3>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.id}</th>
+      <th>${common.ordernumber}</th>
+      <th>${common.po-id}</th>
+      <th>${common.customer}</th>
+      <th>${common.product-id}</th>
+      <th>${common.materialid}</th>
+      <th></th>
+      <th></th>
+      <th>${common.quantity-in-this-container}</th>
+      <th>${common.size}</th>
+      <th>${common.box-quantity}</th>
+      <th>${common.pieces-quantity}</th>
+      <th>${common.total-pieces-quantity}</th>
+      <th>${common.total-size}</th>
+      <th>${common.planning-deliver-date}</th>
+      <th>${common.original-required-date}</th>
+      <th>${common.container-model}</th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($pair in $pairs)
+    #set($total-quantity = $pair.ContainedQuantity * $pair.Goods.BoxQuantity * $pair.Goods.PiecesQuantity)
+    #set($total-size = $pair.ContainedQuantity * $pair.Goods.Size)
+    <tr>
+      <td>${pair.Goods.Id}</td>
+      <td>$!{pair.Container.Id}</td>
+      <td>${pair.Goods.SO.Id}</td>
+      <td>${pair.Goods.OrderNumber}</td>
+      <td>${pair.Goods.SO.Customer.Name}</td>
+      <td>$!{pair.Goods.ProductId}</td>
+      <td>${pair.Goods.Material.Id}</td>
+      <td>$!{pair.Goods.Material.Name2}</td>
+      <td>$!{pair.Goods.Material.Name}</td>
+      <td>${pair.ContainedQuantity.ToString("F0")}</td>
+      <td>${pair.Goods.Size.ToString("F3")}</td>
+      <td>${pair.Goods.BoxQuantity.ToString("F0")}</td>
+      <td>${pair.Goods.PiecesQuantity.ToString("F0")}</td>
+      <td>$!{total-quantity.ToString("F0")}</td>
+      <td>${total-size.ToString("F2")}</td>
+      <td>$!{pair.Container.PlanningDeliverDate.ToShortDateString()}</td>
+      <td>${pair.Goods.OriginalRequiredDate.ToShortDateString()}</td>
+      <td>$!{pair.Container}</td>
+      <td>$!{pair.Goods.Notice}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

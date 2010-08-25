@@ -1,0 +1,30 @@
+﻿<ul>
+  <li><a href='${url.for("%{area='inv', controller='inventory', action='directlyincrease'}")}'>
+    <img src="${siteroot}/content/images/receivable.png"/>
+    <span>${common.directly} ${common.increase}${common.inventory}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='inv', controller='inventory', action='directlydecrease'}")}'>
+    <img src="${siteroot}/content/images/payable.png"/>
+    <span>${common.directly} ${common.decrease}${common.inventory}</span></a>
+  </li>
+</ul>
+<ul>
+  <li><a href='${url.for("%{area='security', controller='account', action='listuser'}")}'>
+    <img src="${siteroot}/content/images/user.png"/>
+    <span>${common.user}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='security', controller='account', action='listrole'}")}'>
+    <img src="${siteroot}/content/images/meeting.png"/>
+    <span>${common.group}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='security', controller='account', action='changepassword'}")}'>
+    <img src="${siteroot}/content/images/user.png"/>
+    <span>${common.changepassword}</span></a>
+  </li>
+</ul>
+<ul>
+  #parse("${siteroot}/menu/_systemmanagementsystemsettings.vm")
+</ul>
+<ul>
+  #parse("${siteroot}/menu/_systemmanagementcolorscheme.vm")
+</ul>

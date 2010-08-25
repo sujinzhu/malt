@@ -1,0 +1,114 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .material { min-width: 300px; }
+  .fg-button { float: left; font-size: 123.1%; }
+  #instance { width: 800px; float: left; }
+  #doc-header { padding: 1em 0 1em; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  ${j.jquery_editable()}
+ 
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oEntries;
+    $(function(){
+      oEntries = $('#entries').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+         null,
+        {"sClass": "unit-price"},
+         null, null
+        ]
+      });
+
+      $('.unit-price').editable('${url.for("%{action='changeunitprice'}")}');
+      $('#${instance.Id}').editable('${url.for("%{action='changevendor'}")}', {
+        loadurl : '${url.for("%{action='changingvendor'}")}',
+      }).click(function(){
+          $('input', this).autocomplete('$url.for("%{area='pur', controller='vendor', action='autocomplete2'}")', {
+            width: 300,
+            matchContains: true,
+            formatItem: formatVendorItem,
+            formatResult: formatResult
+          });
+        });
+    });
+  // ]]>
+  </script>
+#end
+
+<div class="ui-helper-clearfix">
+<a href='${url.for("%{action='release', querystring='id=$instance.Id'}")}'
+ class="fg-button ui-state-default ui-corner-all">${common.approve}</a>
+</div>
+
+<div id="doc-header" class="ui-helper-clearfix">
+<table id="instance" class="display">
+  <thead>
+    <tr class="ui-widget-header">
+      <th>Id</th>
+      <th>${common.vendor}</th>
+      <th>${common.createdate}</th>
+      <th>${common.buyer}</th>
+      <th>${common.shipto}</th>
+      <th>${common.notice}</th>
+      <th>${common.status}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content">
+      <td>${instance.Id}</td>
+      <td id='${instance.Id}'>${instance.Vendor.Name}</td>
+      <td>${instance.CreatedDate.ToShortDateString()}</td>
+      <td>${instance.Buyer}</td>
+      <td>${instance.ShipTo.Id} $!{instance.ShipTo.Description}</td>
+      <td>$!{instance.Notice}</td>
+      <td>${h.getenumname($instance.Status)}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.unit}</th>
+      <th>${common.unitprice}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.requireddate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.Unit.Id} $!{entry.Unit.Description}</td>
+      <td id="price${entry.Id}">${entry.UnitPrice}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>${entry.RequiredDate}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+
+<div class="ui-helper-clearfix">
+<a href='${url.for("%{action='release', querystring='id=$instance.Id'}")}'
+ class="fg-button ui-state-default ui-corner-all">${common.approve}</a>
+</div>

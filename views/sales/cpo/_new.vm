@@ -1,0 +1,7 @@
+﻿#set($action = $url.for("%{action='create'}"))
+${form.push("cpo")}
+${h.start_with_layout("$action", "new_cpo_form")}
+#parse("${siteRoot}/sales/cpo/_fields.vm")
+${h.field("", $form.Submit($!{common.create}))}
+${h.end_with_layout()}
+${form.pop()}

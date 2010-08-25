@@ -1,0 +1,98 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+    #gallery { float: left; width: 47%; min-height: 12em; } * html #gallery { height: 12em; } /* IE6 */
+    #other-authorizations { float: left; width: 47%; min-height: 12em; } * html #other-authorizations { height: 12em; }
+		.gallery.custom-state-active { background: #eee; }
+		.gallery li { float: left; width: 96px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
+		.gallery li h5 { margin: 0 0 0.4em; cursor: move; }
+		.gallery li a { float: right; }
+		.gallery li a.ui-icon-zoomin { float: left; }
+		.gallery li img { width: 44px; height: 57px; cursor: move; }
+    .gallery p { font-size: 77%; }
+
+		#trash { float: right; width: 47%; min-height: 18em; padding: 1%;} * html #trash { height: 18em; } /* IE6 */
+    #current-authorizations-container { float: right; width: 47%; min-height: 18em; padding: 1%;} * html #current-authorizations-container { height: 18em; } /* IE6 */
+		#trash h4, #current-authorizations-container h4 { line-height: 16px; margin: 0 0 0.4em; }
+    
+  /* ]]> */
+  </style>
+  
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#tabs').tabs();
+
+      $('li, #gallery').draggable({
+        revert: 'invalid',
+        helper: 'clone',
+        cursor: 'move'
+      });
+
+      $('#trash').droppable({
+        accept: '#gallery > li',
+        activeClass: 'ui-state-highlight',
+        drop: function(ev, ui){fnAddRole(ui.draggable);}
+      });
+
+      $('#gallery').droppable({
+        accept: '#trash li',
+        activeClass: 'ui-state-highlight',
+        drop: function(ev, ui){fnRemoveRole(ui.draggable);}
+      });
+    });
+
+    function fnAddRole(item){
+      $(item).fadeOut(function(){
+        $(item).appendTo('#current-roles').fadeIn();
+      });
+      var url = '${url.for("%{action='addrolerepository'}")}';
+      jQuery.post(url,  {role: '$role', repository: $('h5', $(item)).text()}, function(data){fnHasError(data);}, 'json');
+    }
+
+    function fnRemoveRole(item){
+      $(item).fadeOut(function(){
+        $(item).appendTo('#gallery').fadeIn();
+      });
+      var url = '${url.for("%{action='removerolerepository'}")}';
+      jQuery.post(url,  {role: '$role', repository: $('h5', $(item)).text()}, function(data){fnHasError(data);}, 'json');
+    }
+  // ]]>
+  </script>
+#end
+
+<h3>${common.group} ${role}</h3>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#repositoryauthorization">${common.repositoryauthorization}</a></li>
+    <li><a href='${url.for("%{action='editrolefauthorization', querystring='id=$role'}")}'>${common.functionauthorization}</a></li>
+  </ul>
+
+  <div id="repositoryauthorization" class="demo ui-widget ui-helper-clearfix">
+    <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+    #foreach($repository in $otherRepositories)
+      <li class="ui-widget-content ui-corner-tr">
+        <h5 class="ui-widget-header">${repository.Id}</h5>
+        <img src="${siteroot}/content/images/bank.png" alt="${repository.Description}"/>
+        <p>${repository.Description}</p>
+      </li>
+    #end
+    </ul>
+
+    <div id="trash" class="ui-widget-content ui-state-default">
+      <h4 class="ui-widget-header">${common.current} ${common.authorizations}</h4>
+      <ul id="current-roles" class="gallery ui-helper-resert">
+      #foreach($repository in $currentRepositories)
+        <li class="ui-widget-content ui-corner-tr">
+          <h5 class="ui-widget-header">${repository.Id}</h5>
+          <img src="${siteroot}/content/images/bank.png" alt="${repository.Description}"/>
+          <p>${repository.Description}</p>
+        </li>
+      #end
+      </ul>
+    </div>
+    
+  </div>
+
+</div>

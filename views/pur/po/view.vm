@@ -1,0 +1,117 @@
+﻿#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .sourceList {padding-left: 10px; padding-bottom: 10px;}
+  .sourceList li {padding: 3px 3px 3px 10px; margin-top: 3px; width: 500px; cursor: pointer; }
+  .source {width: 150px; float:left;}
+  .quantity { width: 100px; float:left;}
+  .unit { width: 100px; float:left;}
+  .date { width: 200px;}
+  h3 { float: left; font-size: 116%; }
+  #btnAdd { margin: 0 0 1em 1em; }
+  /* ]]> */
+  </style>
+
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+var oObjectList;
+    $(function(){
+      $('#btnAdd').button().click(function(){$('#newPOE').fadeOut();$('#selectPR').html("");$('#selectPR').load('$url.for("%{controller='pr', action='availableprs'}")', {poid: '${po.Id}'});$('#selectPR').fadeIn("slow");});
+      $('#poe_Unit_Id').autocomplete('$url.for("%{area='inv', controller='unit', action='autocomplete'}")');
+      oObjectList = $('#poeList').dataTable({
+        "bJQueryUI": true,
+        "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay ){
+          var iTotalMarket = 0;
+          var iTotalMarket2 = 0;
+          for ( var i=0; i<aaData.length; i++)
+          {
+            iTotalMarket += aaData[i][2]*1.0;
+            iTotalMarket2 += aaData[i][7]*1.0;
+          }
+
+          var iPageMarket = 0;
+          var iPageMarket2 = 0;
+          for ( var i=iStart; i<iEnd; i++)
+          {
+            iPageMarket += aaData[aiDisplay[i]][2]*1.0;
+            iPageMarket2 += aaData[aiDisplay[i]][7]*1.0;
+          }
+        
+          var nCells = nRow.getElementsByTagName('th');
+          nCells[1].innerHTML = iPageMarket + ' of ' + iTotalMarket;
+          nCells[3].innerHTML = iPageMarket2 + ' of ' + iTotalMarket2;
+        }
+      });
+      $('#newPOEForm').validate({submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }});
+    });
+
+    function fnSelectPR(item){
+      $('#poe_Unit_Id').val($(item).find('.unit').text());
+      $('#poe_UnitPrice').val('');
+      $('#poe_RequiredDate').val($(item).find('.date').text());
+      $('#prid').val(item.id);
+      $('#selectPR').fadeOut();
+      $('#newPOE').fadeIn("slow");
+    }
+
+    function fnAddToDT(data){
+      if(!fnHasError(data))
+      {
+        oObjectList.fnAddData([data['Id'], data['Material'], data['RequiredQuantity'], data['RequiredDate'], data['BaseUnit'], data['UnitPrice'], data['DeliveredQuantity'], data['UnitPrice'] * data['RequiredQuantity']]);
+        $('#newPOE').fadeOut("slow");
+      }
+    }
+  // ]]>
+  </script>
+#end
+
+<h3>${common.purchaseorder}</h3>
+<a href="#" id="btnAdd">${common.newentry}</a>
+
+<div id="selectPR" class="ui-helper-hidden"></div>
+
+<div id="newPOE" class="ui-helper-hidden">
+#parse("${siteroot}/pur/po/_new_entry.vm")
+</div>
+
+<table id="poeList" class="display ui-widget">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.material}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.baseunit}</th>
+      <th>${common.unitprice}</th>
+      <th>${common.deliveredquantity}</th>
+      <th>${common.amount}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($poe in $po.Entries)
+    #set($amount = $poe.RequiredQuantity * $poe.UnitPrice)
+    <tr>
+      <td>${poe.Id}</td>
+      <td>${poe.Material.ID}</td>
+      <td>${poe.RequiredQuantity}</td>
+      <td>${poe.RequiredDate.ToShortDateString()}</td>
+      <td>${poe.Unit.Id}</td>
+      <td>${poe.UnitPrice}</td>
+      <td>${poe.DeliveredQuantity}</td>
+      <td>${amount}</td>
+    </tr>
+  #end
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="2" style="text-align: right;">${common.total}:</th>
+      <th colspan="2"></th>
+      <th colspan="3" style="text-align: right;">${common.total}:</th>
+      <th></th>
+    </tr>
+  </tfoot>
+</table>

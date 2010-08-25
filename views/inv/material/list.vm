@@ -1,0 +1,61 @@
+﻿#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .id { min-width: 200px; }
+  .name { min-width: 120px; }
+  .specification { min-width: 160px; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  ${h.javascript_link("${siteRoot}/Content/js/inv/material/list.js")}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      oMaterialList = $('#lstMaterials').dataTable({
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": '$url.for("%{action='listtabledata'}")',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"fnRender": function(oObj){return fnGetLink(oObj.aData[0]);}, "sType": "html", "sClass": "id"},
+        {"sClass": "name"},
+        {"sClass": "specification"},
+        {"bSortable": false},
+        {"bSortable": false},
+        {"sCass": "short-date"}
+        ]
+      });
+    });
+    function fnGetLink(id){
+      var linkView =  '$url.for("%{action='view', querystring='id='}")' + id;
+      var linkEdit =  '$url.for("%{action='edit', querystring='id='}")' + id;
+      return "<a target='_blank' href='" + linkView + "'>${common.view}</a>" + "&nbsp;&nbsp;&nbsp;" + "<a target='_blank' href='" + linkEdit + "'>${common.edit}</a>" + "&nbsp;&nbsp;&nbsp;" + id;
+    }
+  // ]]>
+  </script>
+#end
+
+#capturefor(pageHeader)
+  <h3 id="pageHeader">${common.material}:</h3>
+#end
+
+<div class="ui-helper-hidden" id="new_jo">
+</div>
+
+<table id="lstMaterials" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.primaryunit}</th>
+      <th>${common.secondunit}</th>
+      <th>${common.createdate}</th>
+    </tr>
+  </thead>
+</table>

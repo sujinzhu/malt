@@ -1,0 +1,73 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  h3 { float: left; font-size: 123.1%; }
+  p { margin-top: 1em; height: 25px; float: left; }
+  span { float: left; }
+  .label2 { width: 100px; text-align: right; padding-right: .3em; }
+  .field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
+  .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+
+  .vendor-name, .vendor-fullname, .notice { width: 300px; }
+  .currency, .vendor-category, .settlement, .payment, .transport { width: 150px; }
+  .address { width: 500px; }
+  .short-date { width: 200px; }
+
+  #linkView { margin: 0 0 1.5em 1.5em; }
+  /* ]]> */
+  </style>
+
+  ${j.jquery_autocomplete()}
+  
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#vendor-info').tabs({selected: ${tab}}).width("800px");
+      $('#linkView').button();
+      fnDecorative();
+    });
+
+    function fnDecorative(){
+      $('.label2').addClass('ui-state-active ui-corner-bl');
+      $('.field2').addClass('ui-state-hover ui-corner-tr');
+      //$('p').addClass('ui-helper-clearfix');
+      $(':submit').button();
+    }
+  // ]]>
+  </script>
+#end
+
+<h3>${common.vendor}: ${instance.Id} [$!{instance.Name}]</h3>
+<a id="linkView" href='${url.for("%{action='view', querystring='id=$instance.Id'}")}'>${common.view}</a>
+
+<div id="vendor-info" class="ui-helper-clearfix">
+  <ul>
+    <li><a href='#basedata'>${common.basedata}</a></li>
+    <li><a href='${url.for("%{action='editfinance', querystring='id=$instance.Id'}")}'>${common.finance}</a></li>
+    <li><a href='${url.for("%{action='editcooperatingdate', querystring='id=$instance.Id'}")}'>${common.cooperatingdate}</a></li>
+    <li><a href='${url.for("%{action='editaddress', querystring='id=$instance.Id'}")}'>${common.address}</a></li>
+  </ul>
+
+  <div id="basedata" class="ui-helper-clearfix">
+    <form action='${url.for("%{action='update'}")}' method="POST">
+    ${f.push("instance")}
+    ${f.hiddenfield("Id")}
+    <p>
+      <span class="label2">${common.name}:</span>
+      <span class="field2 vendor-name">${f.textfield("Name", "%{size='30'}")}&nbsp;</span>
+    </p>
+    <p>
+      <span class="label2">${common.fullname}:</span>
+      <span class="field2 vendor-fullname">${f.textfield("Fullname", "%{size='30'}")}&nbsp;</span>
+    </p>
+    <p>
+      <span class="label2">${common.notice}:</span>
+      <span class="field2 notice">${f.textfield("Notice", "%{size='30'}")}&nbsp;</span>
+    </p>
+    ${f.pop()}
+    <p>
+      ${f.submit($common.submit)}
+    </p>
+    </form>
+  </div>
+</div>

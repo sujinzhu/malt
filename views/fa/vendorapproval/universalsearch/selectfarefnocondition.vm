@@ -1,0 +1,3 @@
+$HtmlHelper.LabelFor("farefno", "FA Ref. No.")
+$HtmlHelper.InputText("farefno", "", 15, 15,  $DictHelper.Create("validators=blank", "style=text-transform: uppercase;"))
+$AjaxHelper.ButtonToRemote("+", "AddFaRefNoCondition.rails", $DictHelper.CreateDict( "update=farefnoConditions", "with=Form.serialize($('universalsearch'))" ) )

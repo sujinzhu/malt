@@ -1,0 +1,26 @@
+﻿<table id="rn-header" class="display">
+  <thead>
+    <tr class="ui-widget-header ui-corner-top">
+      <th>${common.vendor}</th>
+      <th>${common.receiveddate}</th>
+      <th>${common.deliverynoteid}</th>
+      <th>${common.consignee}</th>
+      <th>${common.status}</th>
+      <th>${common.acceptdate}</th>
+      <th>${common.rejectdate}</th>
+      <th>${common.returndate}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ui-widget-content ui-corner-bottom">
+      <td>${rn.Vendor.Id} $!{rn.Vendor.Name}</td>
+      <td>${dateformat.ToShortDate($rn.ReceivedDate)}</td>
+      <td>${rn.DeliveryNoteId}</td>
+      <td>${rn.Consignee}</td>
+      <td>${h.getenumname($rn.status)}</td>
+      <td>${dateformat.ToShortDate($rn.AcceptDate)}</td>
+      <td>${dateformat.ToShortDate($rn.RejectDate)}</td>
+      <td>${dateformat.ToShortDate($rn.ReturnDate)}</td>
+    </tr>
+  </tbody>
+</table>

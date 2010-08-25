@@ -1,0 +1,69 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+h3 { float: left; }
+.fg-button { margin-left: 1em; }
+/* ]]> */
+</style>
+  
+${j.jquery_dataTable()}
+${j.jquery_form()}
+${j.jquery_validate()}
+${j.jquery_autocomplete()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    oDataTable = $('#instances').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "customer-id"},
+        {"sClass": "customer-name"},
+        {"sClass": "material-id"},
+        null,
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='remove'}")}');}, "bSortable": false}
+      ]
+    });
+  });
+// ]]>
+</script>
+#end
+
+<h3>${common.customer} ${common.partnumbertranslation}</h3>
+<a href='${url.for("%{action='new'}")}' class="fg-button ui-corner-all ui-state-default">${common.createnew}</a>
+<div id="recently-created-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.customer}</th>
+      <th></th>
+      <th>${common.materialid}(${common.customer})</th>
+      <th>${common.revision}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($instance in $instances)
+    <tr>
+      <td>${instance.Id}</td>
+      <td>${instance.Customer.Id}</td>
+      <td>${instance.Customer.Name}</td>
+      <td>${instance.PartNumber}</td>
+      <td>${instance.Revision}</td>
+      <td>${instance.Material.Id}</td>
+      <td>${instance.Material.Name}</td>
+      <td>${instance.Material.Specification}</td>
+      <td>${common.remove}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

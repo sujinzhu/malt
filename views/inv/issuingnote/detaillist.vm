@@ -1,0 +1,58 @@
+#capturefor(head)
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      oDataTable = $('#instances').dataTable({
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": '$url.for("%{action='listdetails'}")',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"bVisible": false},
+        {"fnRender": function(oObj){return fnGetLink(oObj.aData[oObj.iDataColumn]);}, "sType": "html"},
+        {"sClass": ""},
+        {"sClass": "repository-id"},
+        {"sClass": "status"},
+        {"sClass": "jo-id"},
+        {"sClass": "", "bSortable": false},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity"},
+        {"sClass": "quantity"}
+        ]
+      });
+    });
+    function fnGetLink(id){
+      var linkView =  '$url.for("%{action='view', querystring='id='}")' + id;
+      return "<a href='" + linkView + "'>" + id + "</a>";
+    }
+  // ]]>
+  </script>
+#end
+
+<h3>${common.issuingnote}</h3>
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.id}</th>
+      <th>${common.applyby}</th>
+      <th>${common.workshop}</th>
+      <th>${common.status}</th>
+      <th>${common.joborder}</th>
+      <th>${common.issue}</th>
+      <th>${common.material}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.issuedquantity}</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div>

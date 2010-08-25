@@ -1,0 +1,40 @@
+<LI>CNCState
+<UL>
+	<LI>CNC $commonText.layout
+	<UL>
+		<LI>$Html3Helper.LinkTo("$commonText.workshop", "CNCState","WorkShop", "list")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.productline", "CNCState","ProductLine", "list")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.cncmachine", "CNCState","CNCMachine", "list")</LI>
+	</UL>
+	</LI>
+	<LI>$Html3Helper.LinkTo("$commonText.search $commonText.cncmachine", "CNCState","CNCMachine", "Search")</LI>
+	<LI>$Html3Helper.LinkTo("Switch Process and Project", "CNCState","CNCMachine", "SwitchProcessAndProject")
+	<LI>$commonText.cncmachine $commonText.event
+	<UL>
+		<LI>$Html3Helper.LinkTo("$commonText.all $commonText.event $commonText.list", "CNCState","CNCMachineEvent", "List")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.query", "CNCState","CNCMachineEvent", "SelectQueryCondition")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.createnew $commonText.event", "CNCState","CNCMachineEvent", "New")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.createnewmany $commonText.event", "CNCState","CNCMachineEvent", "NewMany")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.createnewmany $commonText.event [2]", "CNCState","CNCMachineEvent", "NewMany2")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.createnew $cncstate.event307 $commonText.event", "CNCState","CNCMachineEvent", "NewEvent307")</LI>
+		<LI><A HREF="${siteRoot}/dailynonplanproductevent/Start.rails">${commonText.createnew} ${cncstate.event305} ${commonText.event}</A></LI>
+		<LI>$Html3Helper.LinkTo("$commonText.createnew $cncstate.event306 $commonText.event", "CNCState","CNCMachineEvent", "NewEvent306")</LI>
+		<LI>$Html3Helper.LinkTo("$commonText.createnew $cncstate.event404 $commonText.event", "CNCState","CNCMachineEvent", "NewEvent404")</LI>
+	</UL>
+	</LI>
+	<LI>Admin
+		<UL>
+			<LI>$Html3Helper.LinkTo("Calculate Utilization", "CNCState","Admin", "DefaultAction")</LI>
+			<LI>$Html3Helper.LinkTo("Total Machine Quantity", "CNCState","CNCMachineQuantity", "ListCNCMachineQuantity")</LI>
+		</UL>
+	</LI>
+	<LI>$commonText.report
+	<UL>
+		<LI>$Html3Helper.LinkTo("$cncstate.utilization", "CNCState","UtilizationReport", "SelectRange")</LI>					
+		<LI>$Html3Helper.LinkTo("$cncstate.listmachinesbyproject", "CNCState","CNCMachine", "ListMachineByProducingProjects")</LI>
+	</UL>
+	</LI>
+	<LI>$Html3Helper.LinkTo("Show State", "CNCState","CNCMachine", "ShowState")</LI>
+	<LI>${Html3Helper.LinkTo("OEE Calculator","","Utility","OEECalculator")}</LI>
+</UL>
+</LI>

@@ -1,0 +1,4 @@
+﻿<li>
+  <img src="${siteroot}/content/images/closed-folder.png"/>
+  <span>${common.repository} ${common.setting}</span>
+</li>

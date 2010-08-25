@@ -1,0 +1,63 @@
+$HtmlHelper.Form("DoUniversalSearch.rails", "universalsearch", "get", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<div id="projectConditions"></div>
+<div id="materielConditions"></div>
+<div id="revConditions"></div>
+<div id="farefnoConditions"></div>
+<div id="vendorConditions"></div>
+
+<p>${commonText.approveddate}:
+<label  for="fromDate">${commonText.from}</label>
+$HtmlHelper.InputText("fromDate", "$!{today.AddYears(-1).ToString('yyyy-MM-dd')}", 10, 10)
+<input type="reset" value=" ... " id="fromMoment_b" />
+ 
+<label  for="toDate">${commonText.to}</label>
+$HtmlHelper.InputText("toDate", "$!{today.ToString('yyyy-MM-dd')}", 10, 10)
+<input type="reset" value=" ... " id="toMoment_b" />
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "fromDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "fromMoment_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime	:	false
+    });
+</script>
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "toDate",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "toMoment_b",  // trigger for the calendar (button ID)
+        align          :    "Br",           // alignment (defaults to "Bl")
+        weekNumbers    :    false,
+        showsTime	:	false
+    });
+</script>
+</p>
+<p>${HtmlHelper.SubmitButton("${commonText.search}")}</p>
+
+<ul id="maintab" class="shadetabs">
+<li class="selected"><a href="#default" rel="ajaxcontentarea">${commonText.intro}</a></li>
+<li><a href="selectprojectcondition.rails" rel="ajaxcontentarea">${commonText.project}</a></li>
+<li><a href="selectmaterielcondition.rails" rel="ajaxcontentarea">${commonText.material}</a></li>
+<li><a href="selectrevcondition.rails" rel="ajaxcontentarea">Rev</a></li>
+<li><a href="selectfarefnocondition.rails" rel="ajaxcontentarea">FA Ref. No.</a></li>
+<li><a href="selectvendorcondition.rails" rel="ajaxcontentarea">${commonText.vendor}</a></li>
+</ul>
+
+<div id="ajaxcontentarea" class="contentstyle">
+<p>For each condition in following tabs, if you don't specify any options, system will assume you have selected all options for that condition. <p>
+<p>For example: if you don't specify any Customer for query condition, then system will retrive records for all Customers.</p>
+</div>
+
+<div id="vendorlist"></div>
+$HtmlHelper.EndForm()
+<div id="selectvendor"></div>
+
+<script type="text/javascript">
+//Start Ajax tabs script for UL with id="maintab" Separate multiple ids each with a comma.
+startajaxtabs("maintab")
+</script>
+
+

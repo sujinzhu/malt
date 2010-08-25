@@ -1,0 +1,23 @@
+﻿<ul class="sourceList">
+  #foreach($customerDemand in $availableDemands)
+    #beforeall
+    <li id="${customerDemand.Id}" class="ui-state-highlight" onclick="javascript:fnSelectDemand(this);">
+      <span class="customer">${common.customer}</span>
+      <span class="source">${common.source}</span>
+      <span class="quantity">${common.quantity}</span>
+      <span class="unit">${common.baseunit}</span>
+      <span class="date">${common.requireddate}</span>
+    </li>
+    #each
+      #set($quantity = $customerDemand.RequiredQuantity - $customerDemand.ScheduledQuantity)
+    <li id="${customerDemand.Id}" class="ui-state-default" onclick="javascript:fnSelectDemand(this);">
+      <span class="customer">${customerDemand.Customer.ShortName}</span>
+      <span class="source">${customerDemand.Source}</span>
+      <span class="quantity">${quantity}</span>
+      <span class="unit">${customerDemand.BaseUnit.Id}</span>
+      <span class="date">${customerDemand.RequiredDate.ToShortDateString()}</span>
+    </li>
+  #nodata
+    <p class="ui-state-highlight nosuiteddata">${common.nosuiteddata}.</p>
+  #end
+</ul>

@@ -1,0 +1,24 @@
+<h2>$commonText.createnew&nbsp;$sales.contractreviewreport</h2>
+
+$HtmlHelper.Form("New_Step2.rails", "new", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<div id="scaffoldmain">
+
+<p>
+$HtmlHelper.LabelFor("fgr.Customer.ID", "$commonText.customer:")
+$HtmlHelper.Select("fgr.Customer.ID")
+$HtmlHelper.CreateOptions($customers, "ShortName", "ID", $!fgr.Customer.ID)
+$HtmlHelper.EndSelect()
+</p>
+
+<p>
+$HtmlHelper.LabelFor("fgr.Origin","$commonText.origin:")
+$HtmlHelper.Select("fgr.Origin")
+$HtmlHelper.CreateOptions($origins, "Value", "Key")
+$HtmlHelper.EndSelect()
+</p>
+$HtmlHelper.SubmitButton($commonText.nextstep)
+
+</div>
+
+$HtmlHelper.EndForm()

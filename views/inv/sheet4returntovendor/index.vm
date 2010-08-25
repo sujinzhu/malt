@@ -1,0 +1,90 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .panel { float: left; width: 800px; padding: 0 .5em 1em .5em; }
+  h4 { padding: 3px; }
+  .panel div { margin-top: -1px; }
+  p, #repositories, #materials { width: 98%; margin: .5em;}
+  #button-container { float: none; text-align: center; }
+  #btnQuery { float: none; }
+
+  ul span, li { float: left; margin: .5em; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_autocomplete()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('#materials').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 420,
+        multiple: true,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      }).focus();
+      $('.material').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 420,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      });
+      $('#vendor').autocomplete('$url.for("%{area='pur', controller='vendor', action='autocomplete2'}")', {
+        width: 300,
+        matchContains: true,
+        formatItem: formatVendorItem,
+        formatResult: formatResult
+      });
+      $('.date').datepicker();
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.search} ${common.sheet-for-return-to-vendor}
+#end
+
+<h3>${common.search} ${common.sheet-for-return-to-vendor}</h3>
+
+<form action='${url.for("%{action='search'}")}' method="POST" target="_blank">
+
+<div id='criteria-container' class="ui-helper-clearfix">
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.date}</h4>
+    <div id="date-container" class="ui-widget-content">
+      <p>${common.from} : ${f.textfield("fromDate", "%{class='date'}")}
+      ${common.to} : ${f.textfield("toDate", "%{class='date'}")} </p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.vendor}</h4>
+    <div class="ui-widget-content">
+      <p>${f.textfield("vendor")}</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.sheet-for-return-to-vendor} ${common.id}</h4>
+    <div class="ui-widget-content">
+      <p>${f.textfield("id")}</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.material}</h4>
+    <div id="materials-container" class="ui-widget-content ui-helper-clearfix">
+      ${f.textarea("materials")}
+      <p>${common.from} : ${f.textfield("fromMaterial", "%{class='material'}")}
+      ${common.to} : ${f.textfield("toMaterial", "%{class='material'}")}
+      </p>
+    </div>
+  </div>
+
+</div>
+ 
+<p><input type="submit" value="${common.query}" /></p>
+</form>

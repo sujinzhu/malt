@@ -1,0 +1,169 @@
+﻿#capturefor(title)
+${common.inventory}
+#end
+
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  #criteria-container { margin-top: 1em; }
+
+  #repositories-criteria-container { float: left; width: 800px; padding: 0 .5em 1em .5em; }
+  #materials-criteria-container { float: left; width: 800px; padding: 0 .5em 1em .5em; }
+  h4 { padding: 3px; }
+  #repositories-container, #materials-container { margin-top: -1px; }
+  p, #repositories, #materials { width: 98%; margin: .5em;}
+  #button-container { float: none; text-align: center; }
+  #btnQuery { float: none; margin-top: 1em; }
+
+  .total-container { float: left; margin-right: 1em; padding: .3em; }
+  .total-quantity { margin-left: -1px; text-align: right; min-width: 50px;}
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_autocomplete()}
+  ${j.jquery_dataTable()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances
+    $(function(){
+      TableToolsInit.sSwfPath = "${siteroot}/Content/dataTables-1.6.2/extras/TableTools/media/swf/ZeroClipboard.swf";
+      oInstances = $('#instances').dataTable({
+        "sDom": 'T<"clear">lfrtip',
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": '$url.for("%{action='listtabledata'}")',
+        "bJQueryUI": true,
+        "fnServerData": function(sSource, aoData, fnCallback){
+          var url = sSource + '?repositories=' + $('#repositories').val() + '&materials=' + $('#materials').val() + '&fromRepository=' + $('#fromRepository').val() + '&toRepository=' + $('#toRepository').val() + '&fromMaterial=' + $('#fromMaterial').val() + '&toMaterial=' + $('#toMaterial').val();
+          jQuery.get(url, aoData, function(json){
+            if(!fnHasError(json)){
+              fnCallback(json);
+            }
+          },
+         'json');
+        },
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"sClass": "repository-id"},
+        {"sClass": "repository-name", "bSortable": false},
+        {"sClass": "material-id"},
+        {"sClass": "material-name", "bSortable": false},
+        {"sClass": "material-spec", "bSortable": false},
+        {"sClass": "quantity"},
+        {"sClass": "datetime"},
+        {"sClass": "datetime"},
+        null,
+        null
+        ],
+        "fnFooterCallback": function( nRow, aaData, iStart, iEnd, aiDisplay ) {
+          var aId = [];
+          var aQuantity = [];
+          for (var i=0; i<aaData.length; i++)
+          {
+            if(aId.indexOf(aaData[aiDisplay[i]][2]) == -1)
+            {
+              aId[aId.length] = aaData[aiDisplay[i]][2];
+              aQuantity[aQuantity.length] = aaData[aiDisplay[i]][5] * 1;
+            }else
+              aQuantity[aId.indexOf(aaData[aiDisplay[i]][2])] += aaData[aiDisplay[i]][5] * 1;
+          }
+          var nCells = nRow.getElementsByTagName('th');
+          nCells[1].innerHTML = fnTotalQuantity(aId, aQuantity);
+        }
+      });
+      function fnTotalQuantity(aId, aQuantity)
+      {
+        var content = "";
+        for(var i=0; i<aId.length; i++)
+        {
+          content += "<div class='total-container'><span class='material-id ui-state-default ui-corner-tl'>" + aId[i] + ":</span><span class='total-quantity ui-state-active ui-corner-br '>" + aQuantity[i] + "</span></div>";
+        }
+        return content;
+      }
+      $('#btnQuery').click(function(){oInstances.fnDraw();});
+      $('#repositories').autocomplete('$url.for("%{area='inv', controller='repository', action='autocomplete2'}")', {
+        width: 200,
+        multiple: true,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      }).focus();
+      $('.repository').autocomplete('$url.for("%{area='inv', controller='repository', action='autocomplete2'}")', {
+        width: 200,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      });
+      $('#materials').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        multiple: true,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      });
+      $('.material').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      });
+    });
+  // ]]>
+  </script>
+#end
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.repository}</th>
+      <th>${common.repository} ${common.description}</th>
+      <th>${common.material}</th>
+      <th>${common.name}</th>
+      <th>${common.description}</th>
+      <th>${common.quantity}</th>
+      <th>${common.createdate}</th>
+      <th>${common.lastupdatedate}</th>
+      <th>${common.allocatee}</th>
+      <th>${common.stub}</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th align="right">${common.total}:</th>
+      <th colspan="9"></th>
+    </tr>
+  </tfoot>
+</table>
+</div>
+
+<div id='criteria-container' class="ui-helper-clearfix">
+  <div id='repositories-criteria-container'>
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.repository}</h4>
+    <div id="repositories-container" class="ui-widget-content">
+    ${f.textarea("repositories")}
+    <p>${common.from} : ${f.textfield("fromRepository", "%{class='repository'}")}
+    ${common.to} : ${f.textfield("toRepository", "%{class='repository'}")}
+    </p>
+    </div>
+  </div>
+
+  <div id='materials-criteria-container'>
+    <h4 class="ui-widget-header ui-corner-top">${common.select} ${common.material}</h4>
+    <div id="materials-container" class="ui-widget-content ui-helper-clearfix">
+      ${f.textarea("materials")}
+      <p>${common.from} : ${f.textfield("fromMaterial", "%{class='material'}")}
+      ${common.to} : ${f.textfield("toMaterial", "%{class='material'}")}
+      </p>
+      <div >
+      </div>
+    </div>
+
+  <div id="button-container" class="ui-helper-clearfix">
+    <button id='btnQuery' class="ui-helper-clearfix">${common.query}</button>
+  </div>
+</div>

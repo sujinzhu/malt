@@ -1,0 +1,14 @@
+$HtmlHelper.Form("GetSubTravelerForSplitTo-Save.rails", "getsubtravelerforsplitto", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<p>$HtmlHelper.LabelFor("subTravelerId", "<b>${wip.subtravelerid}</b>:")
+$HtmlHelper.InputText("subTravelerId", "$!Session.travid", 15, 15, $DictHelper.Create("validators=blank", "style=text-transform: uppercase;"))
+</p>
+<p>$HtmlHelper.LabelFor("subTravelerQuantity", "$commonText.quantity:")
+$HtmlHelper.InputText("subTravelerQuantity", "", $DictHelper.Create("validators=number|0|1|999999"))</p>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$HtmlHelper.SubmitButton($commonText.nextstep)
+</p>
+$HtmlHelper.EndForm()
+

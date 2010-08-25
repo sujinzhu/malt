@@ -1,0 +1,6 @@
+﻿${form.hiddenfield("PO.Id")}
+${h.field("$!{common.partnumber}", $form.textfield('PartNumber', "%{class='required'}"))}
+${h.field("${common.revision}", $form.textfield('Revision'))}
+${h.field("$common.requiredquantity", $form.textfield('RequiredQuantity', "%{class='required number'}"))}
+${h.field("$common.baseunit", $form.textfield('BaseUnit.Id', "%{class='required'}"))}
+${h.field("$common.requireddate", $form.textfield('RequiredDate'))}

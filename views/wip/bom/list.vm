@@ -1,0 +1,34 @@
+##(BOM[])$bills
+
+#foreach($bill in $bills)
+#beforeall
+Found BOMs:
+<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr>
+		<th>Id</th>
+		<th>$commonText.itemcode</th>
+		<th>$wip.madeat</th>
+		<th>$commonText.state</th>
+		<th>$commonText.effectivedate</th>
+		<th>$commonText.obsoletedate</th>
+		<th>$commonText.description</th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>$Html3Helper.LinkTo("$bill.Id", "WIP","BOM", "Show", $bill.Id)</td>
+		<td>$bill.Material.ID</td>
+		<td>$bill.MadeAt.ID</td>
+		<td>$bill.State</td>
+		<td>$bill.EffectiveDate</td>
+		<td>$bill.ObsoleteDate</td>
+		<td>$bill.Description</td>
+#after
+	</tr>
+#afterall
+</table>
+#nodata
+<p>No BOMs found!</p>
+#end

@@ -1,0 +1,53 @@
+﻿#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  ${h.javascript_link("${siteRoot}/Content/js/prod/jo/list.js")}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      fnAppendAddButton("${common.newjoborder}");
+      $('#btn_add').click(function(){ $('#new_jo').slideToggle('slow'); });
+      fnAppendRemoveButton("$common.remove");
+      $('#btn_remove').click(function(){fnRemoveJO('${url.for("%{action='remove'}")}');});
+      fnAppendOpenButton("$!{common.open}");
+      $('#btn_open').click(function(){fnOpenJO('${url.for("%{action='view'}")}');});
+
+      $('#jo_Material_Id').autocomplete('${url.for("%{area='inv', controller='material', action='autocomplete'}")}');
+      $('#jo_BaseUnit_Id').autocomplete('${url.for("%{area='inv', controller='unit', action='autocomplete'}")}');
+    });
+  // ]]>
+  </script>
+#end
+
+#capturefor(pageHeader)
+  <h3 id="pageHeader">${common.joborder}:</h3>
+#end
+
+<div class="ui-helper-hidden" id="new_jo">
+  #parse("${siteRoot}/prod/jo/_new.vm")
+</div>
+
+<table id="jolist" class="display ui-widget">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.material}</th>
+      <th>${common.scheduledquantity}</th>
+      <th>${common.baseunit}</th>
+      <th>${common.requireddate}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($jo in $jos)
+    <tr>
+      <td>${jo.Id}</td>
+      <td>${jo.Material.Id}</td>
+      <td>${jo.ScheduledQuantity}</td>
+      <td>${jo.BaseUnit.Id}</td>
+      <td>${jo.RequiredDate.ToShortDateString()}</td>
+    </tr>
+  #end
+  </tbody>
+</table>

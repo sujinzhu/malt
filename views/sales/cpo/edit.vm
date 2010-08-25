@@ -1,0 +1,141 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container { width: 800px; }
+#header-container h3 { float: left; }
+#header-container .button { margin-left: 2em; }
+#header-container .ui-widget-header th { padding: .3em; }
+#entries-container { margin-top: 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_autocomplete()}
+${j.jquery_dataTable()}
+${j.jquery_form()}
+${j.jquery_validate()}
+${j.jquery_editable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    oDataTable = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false},
+      null,
+      null,
+      {"sClass": "quantity required-quantity"},
+      {"sClass": "unit-desc"},
+      {"sClass": "short-date required-date"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity margin"},
+      {"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[8]);}, "bSortable": false}
+      ],
+      "fnDrawCallback": function(){fnTrigerRemove('${url.for("%{action='removeentry'}")}', '#entries', '${common.remove}');}
+    });
+
+    $('.button').button();
+
+    $('.margin').editable('${url.for("%{action='changemargin'}")}');
+    $('.required-date').editable('${url.for("%{action='changerequireddate'}")}',{
+      type: 'datepicker',
+    });
+
+    $('#new-entry-form').validate({
+      submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+    });
+
+    $('#entry_RequiredDate').datepicker();
+    $('#entry_Unit_Id').autocomplete('$url.for("%{area='inv', controller='unit', action='autocomplete2'}")', {
+      width: 300,
+      matchContains: true,
+      formatItem: formatUnitItem,
+      formatResult: formatResult
+    });
+
+    $('#entry_PartNumber').val("").focus();
+  });
+
+function fnAddToDT(data){
+  if(!fnHasError(data)){
+    oDataTable.fnAddData([data['Id'], data['PartNumber'], data['Revision'], data['RequiredQuantity'], data['BaseUnit'] + " " + data['UnitDescription'], data['RequiredDate'], 0, data['RequiredQuantity'], '${common.remove}']);
+    $('#entry_PartNumber').val("").focus();
+    $('#entry_RequiredQuantity').val("");
+    $('#entry_Unit_Id').val("");
+  }
+}
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.customerpo}: ${instance.OrderNumber}
+#end
+
+<div id="header-container">
+<h3>${common.customerpo}: ${instance.OrderNumber} [ $!{instance.Customer.Name} ]</h3>
+<a href='${url.for("%{controller='bipsales', action='syncsalesorder', querystring='id=$instance.Id'}")}' class="button">${common.sync} ${common.salesorder}</a>
+<table class="display">
+  <tr class="ui-widget-header">
+    <th>${common.buyer}</th>
+    <th>${common.shipto}</th>
+    <th>${common.notice}</th>
+  </tr>
+  <tr class="ui-widget-content">
+    <td>${instance.Buyer}</td>
+    <td>$!{instance.ShipTo.Description} $!{instance.ShipTo.FullAddress}</td>
+  </tr>
+</table>
+</div>
+
+<div id="new-entry-container">
+${h.start_with_layout($url.for("%{action='createentry'}"), "new-entry-form")}
+
+${f.installscripts()}
+${f.push("entry")}
+
+${f.hiddenfield("PO.Id")}
+${h.field("$common.materialid ($common.customers)", $f.textfield('PartNumber', "%{class='required'}"), true)}
+${h.field($common.revision, $f.textfield('Revision'))}
+${h.field($common.requiredquantity, $f.numberfield('RequiredQuantity', "%{class='required number', min='0.00000000001'}"), true)}
+${h.field($common.baseunit, $f.textfield('Unit.Id', "%{class='required'}"), true)}
+${h.field($common.requireddate, $f.textfield('RequiredDate', "%{class='required'}"), true)}
+${h.field("", $f.submit("$common.create"))}
+
+${f.pop()}
+
+${h.end_with_layout()}
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.materialid} (${common.customers})</th>
+      <th>${common.revision}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.baseunit}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.deliveredquantity}</th>
+      <th>${common.ordermargin}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $instance.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.PartNumber}</td>
+      <td>${entry.Revision}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>${entry.Unit.Id}</td>
+      <td id="date${entry.Id}">${entry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.DeliveredQuantity}</td>
+      <td id="quantity${entry.Id}">${entry.RemainRequiredQuantity}</td>
+      <td>${common.remove}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

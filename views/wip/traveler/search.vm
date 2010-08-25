@@ -1,0 +1,21 @@
+<H2>${commonText.search} ${commonText.traveler}</H2>
+
+<fieldset>
+#parse("${siteRoot}/wip/traveler/search/1byid.vm")
+</fieldset>
+<br/>
+
+<fieldset>
+#parse("${siteRoot}/wip/traveler/search/2byidandtimes.vm")
+</fieldset>
+<br/>
+
+<fieldset>
+#parse("${siteRoot}/wip/traveler/search/3byrtno.vm")
+</fieldset>
+<br/>
+
+<fieldset>
+#parse("${siteRoot}/wip/traveler/search/4bylineandweek.vm")
+</fieldset>
+<br/>

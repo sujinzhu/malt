@@ -1,0 +1,7 @@
+$HtmlHelper.Form("DoSearch1.rails", "1byid", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+<p>$HtmlHelper.LabelFor("travid", "Traveler ID:")
+$HtmlHelper.InputText("travid", "", 15, 15, $DictHelper.Create("validators=blank", "style=text-transform: uppercase;"))
+$HtmlHelper.SubmitButton(${commonText.search})
+</p>
+$HtmlHelper.EndForm()
+

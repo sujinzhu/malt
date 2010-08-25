@@ -1,0 +1,13 @@
+<h3>Select From Location:</h3>
+$HtmlHelper.Form("SelectFromFGLocation-Save.rails")
+<p>$HtmlHelper.LabelFor("fromLocation", "$commonText.from:")
+$FormHelper.Select("fromLocation",${locations},"%{Value='ID', Text='ID'}")
+</p>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$HtmlHelper.SubmitButton("${commonText.nextstep}")
+</p>
+$HtmlHelper.EndForm()
+

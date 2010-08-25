@@ -1,0 +1,32 @@
+#foreach($item in $source)
+#beforeall
+<table class="scaffoldtable" cellpadding="2" cellspacing="0" border="0">
+	<tr>
+		<th>SN No</th>
+		<th>$commonText.customer</th>
+		<th>$commonText.material</th>
+		<th>$commonText.quantity</th>
+		<th>UOFM</th>
+		<th>Location</th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>$item.Key.SOPNUMBE [$item.LineNumber]</td>
+		<td>
+		${item.Customer.Trim()}
+		</td>
+
+		<td>$item.Materiel</td>
+		<td align="right">$StringHelper.Format("{0:0}", $item.Quantity)</td>
+		<td>$item.UOFM</td>
+		<td>$item.Location</td>
+#after
+	</tr>
+#afterall
+</table>
+#nodata
+<p>No MSGP Invoices.</p>
+#end

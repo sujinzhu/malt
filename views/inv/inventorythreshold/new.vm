@@ -1,0 +1,112 @@
+﻿#capturefor(head)
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    var oInstances;
+    $(function(){
+      oInstances = $('#instances').dataTable({
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": '$url.for("%{action='listtabledata'}")',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "fnServerData": function(sSource, aoData, fnCallback){
+          jQuery.get(sSource, aoData, function(json){if(!fnHasError(json)){fnCallback(json);}}, 'json');
+        },
+        "aoColumns": [
+        null, null, null, null, null, null, null, null,
+        {"fnRender": function(oObj){return fnGetRemoveLink('${common.remove}');}, "bSortable": false}
+        ]
+      });
+      function formatItem(row){ return row[0] + " " + row[1]; }
+      function formatResult(row) { return row[0]; }
+      $('#instance_Material').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete2'}")',{
+        width: 300,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      }).focus();
+      $('.repository').autocomplete('$url.for("%{area='inv', controller='repository', action='autocomplete2'}")',{
+        width: 300,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      });
+      $('#new-instance').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+      });
+      fnTrigerRemoveEntry();
+    });
+    function fnGetRemoveLink(label)
+    {
+      return "<span style='cursor: pointer;'>"+label+"</span>";
+    }
+    function fnAddToDT(data){
+      if(!fnHasError(data)){
+        oInstances.fnAddData([data['Id'], data['Material'], data['Repository1'], data['Repository2'], data['Repository3'], data['Repository4'], data['SafetyStock'], data['StockLimit'], '${common.remove}']);
+        fnTrigerRemoveEntry();
+      }
+    }
+    function fnTrigerRemoveEntry()
+    {
+      $('#instances tbody td').click(function(){
+        var aPos = oInstances.fnGetPosition(this);
+        var aData = oInstances.fnGetData(aPos[0]);
+        if(aData[aPos[1]] == fnGetRemoveLink('${common.remove}'))
+        {
+          fnRemoveEntry(aData[0], aPos[0]);
+        }
+      });
+    }
+    function fnRemoveEntry(id, iRowId)
+    {
+      var url = '${url.for("%{action='remove'}")}';
+      jQuery.post(url, {id: id}, function(data){
+        if(!fnHasError(data)){
+          oInstances.fnDeleteRow(iRowId);
+        }
+      }, 'json');
+    }
+  // ]]>
+  </script>
+#end
+
+<div id="new-instance-container">
+${h.start_with_layout($url.for("%{action='create'}"), "new-instance")}
+${f.push("instance")}
+
+${h.field($common.material, $f.textfield("Material", "%{class='required'}"), true)}
+${h.field("${common.repository}1", $f.textfield("Repository1", "%{class='repository'}"))}
+${h.field("${common.repository}2", $f.textfield("Repository2", "%{class='repository'}"))}
+${h.field("${common.repository}3", $f.textfield("Repository3", "%{class='repository'}"))}
+${h.field("${common.repository}4", $f.textfield("Repository4", "%{class='repository'}"))}
+${h.field($common.safetystock, $f.textfield("SafetyStock", "%{min='0'}"))}
+${h.field($common.stocklimit, $f.textfield("StockLimit", "%{min='0'}"))}
+${h.field("", $f.submit("$common.create"))}
+
+${f.pop()}
+${h.end_with_layout()}
+</div>
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.material}</th>
+      <th>${common.repository}1</th>
+      <th>${common.repository}2</th>
+      <th>${common.repository}3</th>
+      <th>${common.repository}4</th>
+      <th>${common.safetystock}</th>
+      <th>${common.stocklimit}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div>

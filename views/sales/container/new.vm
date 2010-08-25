@@ -1,0 +1,109 @@
+#capturefor(head)
+${j.jquery_form()}
+${j.jquery_validate()}
+${j.jquery_dataTable()}
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    oDataTable = $('#instances').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+        {'bVisible': false},
+        {"fnRender": function(oObj){return fnRenderAssignLink(oObj);}, "bSortable": false},
+        null, null, null, null,
+        {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='remove'}")}');}, "bSortable": false},
+        {"fnRender": function(oObj){return fnRenderSelectLink(oObj);}, "bSortable": false}
+      ]
+    });
+
+    $('#instance_Name').focus();
+    $('#instance_PlanningDeliverDate').datepicker();
+
+    $('#new-instance-form').validate({
+      submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+    });
+  });
+
+  function fnRenderAssignLink(oObj){
+    var iId = oObj.aData[0];
+    var link = iId + ' <a href="';
+    link = link + '$url.for("%{action='assignedgoods', querystring='id='}")' + iId;
+    link = link + '">$common.plan-container</a>';
+    return link;
+  }
+
+  function fnAddToDT(data){
+    if(!fnHasError(data)){
+      oDataTable.fnAddData([data['Id'], "", data['Name'], data['Model'], data['PlanningDeliverDate'], data['Delivered'], '${common.remove}', '${common.deliver}']);
+      $('#instance_Name').val("").focus();
+      $('#instance_Model').val("");
+      $('#instance_PlanningDeliverDate').val("");
+    }
+  }
+
+  function fnSelect(id, iRow)
+  {
+    jQuery.post('$url.for("%{action='deliver'}")', {id: id}, function(data){
+      if(!fnHasError(data)){
+        oDataTable.fnDeleteRow(iRow)
+      }
+    },
+    'json');
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.container}
+#end
+
+<div id="header-container">
+<h3>${common.container}:</h3>
+</div>
+
+<div id="new-instance-container">
+${h.start_with_layout($url.for("%{action='add'}"), "new-instance-form")}
+
+${f.push("instance")}
+
+${h.field($common.name, $f.textfield("Name"))}
+${h.field($common.container-model, $f.textfield("Model"))}
+${h.field($common.planning-deliver-date, $f.textfield("PlanningDeliverDate", "%{class='required'}"), true)}
+${h.field("", $f.submit($common.submit))}
+
+${f.pop()}
+
+${h.end_with_layout()}
+</div>
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.id}</th>
+      <th>${common.name}</th>
+      <th>${common.container-model}</th>
+      <th>${common.planning-deliver-date}</th>
+      <th>${common.delivered}</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($instance in $instances)
+    <tr>
+      <td>${instance.Id}</td>
+      <td></td>
+      <td>${instance.Name}</td>
+      <td>${instance.Model}</td>
+      <td>${instance.PlanningDeliverDate.ToShortDateString()}</td>
+      <td>${instance.Delivered}</td>
+      <td>${common.remove}</td>
+      <td>${common.deliver}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,12 @@
+﻿<li><a href='${url.for("%{area='inv', controller='receiving', action='index'}")}'>
+  <img src="${siteroot}/content/images/receiving.png"/>
+  <span>${common.receivingaccordingpo}</span></a>
+</li>
+<li><a href='${url.for("%{area='inv', controller='receivingnote', action='index'}")}'>
+  <img src="${siteroot}/content/images/docs.png"/>
+  <span>${common.receivingnote}</span></a>
+</li>
+<li><a href='${url.for("%{area='inv', controller='issuing', action='listfinal'}")}'>
+  <img src="${siteroot}/content/images/warehouse.png"/>
+  <span>${common.releasematerial}</span></a>
+</li>

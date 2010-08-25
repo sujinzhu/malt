@@ -1,0 +1,11 @@
+$HtmlHelper.LabelFor("propertyName", "${commonText.add} ${commonText.orderby}:")
+$HtmlHelper.Select("propertyName")
+$HtmlHelper.CreateOption("${commonText.material}", "Material.ID")
+$HtmlHelper.CreateOption("${commonText.customer}", "Customer.ID")
+$HtmlHelper.CreateOption("${commonText.from}", "From.ID")
+$HtmlHelper.CreateOption("${commonText.to}", "To.ID")
+$HtmlHelper.CreateOption("${commonText.date}", "Time")
+$HtmlHelper.EndSelect()
+$HtmlHelper.InputRadio("ascending", 1, $DictHelper.Create("checked"))${commonText.ascending}
+$HtmlHelper.InputRadio("ascending", 0)${commonText.descending}
+$AjaxHelper.ButtonToRemote("+", "AddOrderByCondition.rails", $DictHelper.CreateDict( "update=orderbyConditions", "with=Form.serialize($('universalsearch'))" ) )

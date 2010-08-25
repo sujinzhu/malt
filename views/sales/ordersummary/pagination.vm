@@ -1,0 +1,17 @@
+<div class="pagination">
+<table width="100%" border="0">
+  <tr>
+  <td>Showing $source.FirstItem - $source.LastItem of $source.TotalItems</td>
+  <td align="right">
+#if($source.HasFirst) $PaginationHelper.CreatePageLink( 1, "first", null, $queryStringParams ) #end
+#if(!$source.HasFirst) first #end
+#if($source.HasPrevious) | $PaginationHelper.CreatePageLink( $source.PreviousIndex, "prev", null, $queryStringParams ) #end
+#if(!$source.HasPrevious) | prev #end
+#if($source.HasNext) | $PaginationHelper.CreatePageLink( $source.NextIndex, "next", null, $queryStringParams ) #end
+#if(!$source.HasNext) | next #end
+#if($source.HasLast) | $PaginationHelper.CreatePageLink( $source.LastIndex, "last", null, $queryStringParams ) #end
+#if(!$source.HasLast) | last #end
+  </td>
+  </tr>
+</table>
+</div>

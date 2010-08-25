@@ -1,0 +1,53 @@
+<h2>$commonText.search $wip.BOM:</h2>
+
+<fieldset>
+	<legend>By Item Code and Location:</legend>
+$HtmlHelper.Form("Search.rails", "Default", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<p>$HtmlHelper.LabelFor("itemCode", "Item Code:")
+$HtmlHelper.InputText("itemCode", "", 31, 31, $DictHelper.Create("validators=blank"))
+</p>
+<p>$HtmlHelper.LabelFor("makeAt", "Make At:")
+$HtmlHelper.Select("makeAt")
+$HtmlHelper.CreateOptionsFromArray($locations, "ID", "ID")
+$HtmlHelper.EndSelect()
+</p>
+<p>$FormHelper.CheckboxField("includeActiveOnly")Include Active Only?
+</p>
+<p>
+$HtmlHelper.SubmitButton("$commonText.search")
+</p>
+$HtmlHelper.EndForm()
+</fieldset>
+
+<br/>
+
+<fieldset>
+	<legend>By Item Code only:</legend>
+$HtmlHelper.Form("Search1.rails", "Default1", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<p>$HtmlHelper.LabelFor("itemCode", "Item Code:")
+$HtmlHelper.InputText("itemCode", "", 31, 31, $DictHelper.Create("validators=blank"))
+</p>
+<p>
+$HtmlHelper.SubmitButton("$commonText.search")
+</p>
+$HtmlHelper.EndForm()
+</fieldset>
+
+<br/>
+
+<fieldset>
+	<legend>By Location only:</legend>
+$HtmlHelper.Form("Search2.rails", "Default2", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+<p>$HtmlHelper.LabelFor("madeAt", "Make At:")
+$HtmlHelper.Select("madeAt")
+$HtmlHelper.CreateOptionsFromArray($locations, "ID", "ID")
+$HtmlHelper.EndSelect()
+</p>
+<p>
+$HtmlHelper.SubmitButton("$commonText.search")
+</p>
+$HtmlHelper.EndForm()
+</fieldset>

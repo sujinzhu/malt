@@ -1,0 +1,34 @@
+<div id="selectcpoitem"></div>
+#foreach($item in $source)
+#beforeall
+<table class="scaffoldtable" cellpadding="5" cellspacing="0" border="0">
+	<tr>
+		<th>SN No</th>
+		<th></th>
+		<th>$commonText.customer</th>
+		<th>$commonText.material</th>
+		<th>$commonText.quantity</th>
+		<th>UOFM</th>
+		<th>Location</th>
+		<th></th>
+	</tr>
+#odd
+	<tr class="scaffoldrow">
+#even
+	<tr class="scaffoldaltrow">
+#each
+		<td>$item.Key.SOPNUMBE</td>		
+		<td>$item.LineNumber</td>
+		<td>$Html3Helper.LinkTo("$WIPHelper.GetCustomer($item.Customer).ShortName", "Core","Customer", "Show", $item.Customer)</td>
+		<td>$item.Materiel</td>
+		<td align="right">$StringHelper.Format("{0:0}", $item.Quantity)</td>
+		<td>$item.UOFM</td>
+		<td>$!item.Location</td>
+		<td>$AjaxHelper.LinkToRemote("$commonText.select", "${siteRoot}/Sales/CustomerPOItem/Search.rails", $DictHelper.CreateDict( "update=selectcpoitem", "with='itemcode=$item.Materiel&customer.ID=$item.Customer&sopkey.SOPNUMBE=$item.Key.SOPNUMBE&sopkey.LNITMSEQ=$item.Key.LNITMSEQ&sopkey.CMPNTSEQ=$item.Key.CMPNTSEQ&sopkey.SOPTYPE=$item.Key.SOPTYPE'" ) )</td>
+#after
+	</tr>
+#afterall
+</table>
+#nodata
+<p>No deliveries need to register on Customer PO.</p>
+#end

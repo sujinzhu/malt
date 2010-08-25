@@ -1,0 +1,13 @@
+$FormHelper.FormTag("%{action='GetExtrudedQuantity-Save'}")
+$FormHelper.InstallScripts()
+<p>
+$FormHelper.LabelFor("extrudedQuantity","Extruded Quantity:")
+$FormHelper.NumberField("extrudedQuantity")
+</p>
+<p>
+#if($WizardHelper.HasPreviousStep())
+$WizardHelper.LinkToPrevious("${commonText.previousstep}")
+#end
+$FormHelper.Submit("${commonText.submit}")
+</p>
+$FormHelper.EndFormTag()

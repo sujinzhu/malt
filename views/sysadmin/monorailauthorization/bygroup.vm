@@ -1,0 +1,11 @@
+<h2>Maintain MonoRail Authorization by Group:[$group.Name]</h2>
+
+$HtmlHelper.Form("SaveGroupAuthorizations.rails", "scaffoldingform", "post", "$ValidationHelper.GetValidationTriggerFunction()")
+
+$HtmlHelper.InputHidden("group.ID", $group.ID)
+
+#parse("${siteRoot}/share/sysadmin/selectmonorailurls.vm")
+
+$HtmlHelper.SubmitButton($commonText.update)
+
+$HtmlHelper.EndForm()

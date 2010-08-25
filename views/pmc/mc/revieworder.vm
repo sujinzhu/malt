@@ -1,0 +1,115 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container { width: 880px; }
+#header-container h3, #header-container p { float: left; }
+#header-container a { margin-left: 2em; }
+#header-container .ui-widget-header th { padding: .3em; }
+#entries-container { margin-top: 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    oDataTable = $('#entries').dataTable({
+      "bJQueryUI": true,
+      "aoColumns": [
+      {"bVisible": false},
+      {"sClass": "material-id"},
+      {"sClass": "material-name"},
+      {"sClass": "material-spec"},
+      {"sClass": "short-date required-date"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity"},
+      {"sClass": "quantity", "fnRender": function(oObj){return fnGetPlannedMaterialLink(oObj.aData[0], oObj.aData[oObj.iDataColumn]);}},
+      {"sClass": "quantity", "bVisible": false},
+      {"sClass": "quantity"},
+      {"sClass": "quantity margin"},
+      {"sClass": "unit-desc"},
+      ],
+      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+    });
+
+    $('#header-container p a').button();
+  });
+
+  function fnGetPlannedMaterialLink(iId, dQuantity){
+    var sUrl = '${url.for("%{action='plannedmaterialquantity', querystring='id='}")}' + iId;
+    return '<a target="_blank" href="' + sUrl + '">' + dQuantity + "</a>";
+  }
+// ]]>
+</script>
+#end
+#capturefor(title)
+${common.planningmaterial}: ${so.Id}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.salesorder}: ${so.Id}</h3>
+<p><a href='${url.for("%{area='inv', controller='formula', action='view', querystring='id=$so.Id'}")}' target="_blank">${common.bom}</a></p>
+<p><a href='${url.for("%{area='quota', controller='materialquota', action='index', querystring='sheetId=$so.Id'}")}' target="_blank">${common.quota}</a></p>
+<p><a href='${url.for("%{action='purchaserequisition', querystring='id=$so.Id'}")}' target="_blank">${common.purchaserequisition}</a></p>
+<p><a href='${url.for("%{action='allocatable', querystring='id=$so.Id'}")}' target="_blank">${common.allocateinventory}</a></p>
+<p><a href='${url.for("%{action='autoallocate', querystring='id=$so.Id'}")}' class="button">${common.auto-allocate-inventory}</a></p>
+<p><a href='${url.for("%{action='autodisallocate', querystring='id=$so.Id'}")}' class="button">${common.auto-disallocate-inventory}</a></p>
+<table class="display">
+  <tr class="ui-widget-header">
+    <th>${common.customer}</th>
+    <th></th>
+    <th>${common.tradetype}</th>
+    <th>${common.salesman}</th>
+    <th>${common.createdate}</th>
+    <th>${common.status}</th>
+  </tr>
+  <tr class="ui-widget-content">
+    <td>$!{so.Customer.Id}</td>
+    <td>$!{so.Customer.Name}</td>
+    <td>$!{h.getenumname($so.TradeType)}</td>
+    <td>$!{so.SalesMan}</td>
+    <td>$!{so.CreatedDate.ToShortDateString()}</td>
+    <td>${h.getenumname($so.Status)}</td>
+  </tr>
+</table>
+</div>
+
+<div id="entries-container">
+<table id="entries" class="display">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>${common.materialid}</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.allocatedquantity}</th>
+      <th>${common.plannedmaterialquantity}</th>
+      <th>${common.plannedproducingquantity}</th>
+      <th>${common.deliveredquantity}</th>
+      <th>${common.ordermargin}</th>
+      <th>${common.unit}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($entry in $so.Entries)
+    <tr>
+      <td>${entry.Id}</td>
+      <td>${entry.Material.Id}</td>
+      <td>$!{entry.Material.Name}</td>
+      <td>$!{entry.Material.Specification}</td>
+      <td id="date${entry.Id}">${entry.RequiredDate.ToShortDateString()}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>${entry.AllocatedQuantity}</td>
+      <td>${entry.PlannedMaterialQuantity}</td>
+      <td>${entry.PlannedProducingQuantity}</td>
+      <td>${entry.DeliveredQuantity}</td>
+      <td id="quantity${entry.Id}">${entry.RemainRequiredQuantity}</td>
+      <td>$!{entry.Unit.Description}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>

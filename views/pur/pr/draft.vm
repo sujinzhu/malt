@@ -1,0 +1,138 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#header-container h3 { float: left; }
+#header-container a { margin-left: 1em; float: left; }
+/* ]]> */
+</style>
+
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_autocomplete()}
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+    $(function(){
+      $('a').button();
+      oDataTable = $('#instances').dataTable({
+        "bJQueryUI": true,
+        "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "material-id"},
+        {"sClass": "material-name"},
+        {"sClass": "material-spec"},
+        {"sClass": "quantity"},
+        {"sClass": "unit"},
+        {"sClass": "short-date"},
+        {"sClass": "repository"},
+        null,
+        {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='removeentry'}")}');}, "bSortable": false}
+        ],
+        "fnDrawCallback": function(){fnClassTrigerMaterialMenu();},
+      });
+      
+      //fnTrigerRemove('${url.for("%{action='removeentry'}")}', '#instances', '${common.remove}');
+
+      $('#new-entry').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+      });
+
+      $('#entry_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
+        matchContains: true,
+        formatItem: formatItem3,
+        formatResult: formatResult,
+        max: 30
+      }).focus();
+
+      $('#entry_Unit_Id').autocomplete('$url.for("%{area='inv', controller='unit', action='autocomplete2'}")', {
+        width: 300,
+        matchContains: true,
+        formatItem: formatItem,
+        formatResult: formatResult
+      });
+
+      $('#entry_RequiredDate').datepicker();
+    });
+
+    function fnAddToDT(data){
+      if(!fnHasError(data)){
+        oDataTable.fnAddData([data['Id'], data['Material'], data['MaterialName'], data['MaterialSpecification'], data['RequiredQuantity'], data['UnitDescription'], data['RequiredDate'], data['Responsible'], data['Notice'], '${common.remove}']);
+        //fnTrigerRemove('${url.for("%{action='removeentry'}")}', '#instances', '${common.remove}');
+        $('#entry_RequiredQuantity').val("");
+        $('#entry_Unit_Id').val("");
+        $('#entry_Responsible').val("");
+        $('#entry_Notice').val("");
+        $('#entry_Material_Id').val("").focus();
+      }
+    }
+    
+  // ]]>
+  </script>
+#end
+
+#capturefor(title)
+${common.write} ${common.purchaserequisition}: ${instance.Id}
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+<h3>${common.purchaserequisition}: ${instance.Id}</h3>
+#parse("${siteroot}/pur/purchaserequisition/_head.vm")
+<a href='${url.for("%{action='finalize', querystring='id=$instance.Id'}")}'>${common.finish}</a>
+</div>
+
+<div id="new-instance-container">
+${h.start_with_layout($url.for("%{action='addentry'}"), "new-entry")}
+
+${f.push("entry")}
+${f.hiddenfield("PR.Id")}
+
+${h.field($common.material, $f.textfield("Material.Id", "%{class='required'}"), true)}
+${h.field($common.requiredquantity, $f.textfield("RequiredQuantity", "%{class='required', min='0.00000000001'}"), true)}
+${h.field($common.unit, $f.textfield("Unit.Id", "%{class='required'}"), true)}
+${h.field($common.requireddate, $f.textfield("RequiredDate", "%{class='required'}"), true)}
+${h.field($common.tradetype, $f.select("TradeType", $f.EnumToPairs("HJ.Malt.Common.Domain.TradeTypeEnum, HJ.Malt.Common"), "%{class='required', text='second', value='first'}"))}
+${h.field($common.responsible, $f.textfield("Responsible"))}
+${h.field($common.notice, $f.textarea("Notice"))}
+
+${h.field("", $f.submit($common.submit))}
+
+${f.pop()}
+${h.end_with_layout()}
+</div>
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.material}</th>
+      <th></th>
+      <th></th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.unit}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.responsible}</th>
+      <th>${common.notice}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($pr in $instance.Entries)
+    <tr>
+      <td>${pr.Id}</td>
+      <td>${pr.Material.Id}</td>
+      <td>$!{pr.Material.Name}</td>
+      <td>$!{pr.Material.Specification}</td>
+      <td>${pr.RequiredQuantity}</td>
+      <td>$!{pr.Unit.Description}</td>
+      <td>${pr.RequiredDate.ToShortDateString()}</td>
+      <td>$!{pr.Responsible}</td>
+      <td>$!{pr.Notice}</td>
+      <td>${common.remove}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</div>
+

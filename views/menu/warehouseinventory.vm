@@ -1,0 +1,3 @@
+﻿<ul>
+  #parse("${siteroot}/menu/_warehouseinventory.vm")
+</ul>
