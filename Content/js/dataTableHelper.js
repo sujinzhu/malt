@@ -121,14 +121,3 @@ function fnRemove2(sUrl, id, oTbl, iRow)
     }
   }, 'json');
 }
-
-function fnRenderRemoveLink(oObj, sUrl)
-{
-  var link = "<span class='remove-link' onclick=";
-  link = link + '"javascript:fnRemove(';
-  link = link + "'" + sUrl + "', ";
-  link = link + oObj.aData[0] + ", ";
-  link = link + oObj.iDataRow + ');">';
-  link = link + oObj.aData[oObj.iDataColumn] + "</span>";
-  return link;
-}
