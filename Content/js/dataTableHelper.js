@@ -63,7 +63,12 @@ function fnRemove(sUrl, id, iRow)
 {
   jQuery.post(sUrl, {id: id}, function(data){
     if(!fnHasError(data)){
-      oDataTable.fnDeleteRow(iRow);
+      $(oDataTable.fnGetData()).each(function(index, aData){
+        if(aData[0] == id){
+          oDataTable.fnDeleteRow(index);
+          return false;
+        }
+      });
     }
   }, 'json');
 }
@@ -118,28 +123,6 @@ function fnRemove2(sUrl, id, oTbl, iRow)
   jQuery.post(sUrl, {id: id}, function(data){
     if(!fnHasError(data)){
       oTbl.fnDeleteRow(iRow);
-    }
-  }, 'json');
-}
-
-/*
- * from v1.7.0, the behaviour of fnDeleteRow changed.
- * see http://datatables.net/forums/comments.php?DiscussionID=2617&page=1#Item_1
- */
-function fnRenderDelLink()
-{
-  return "<span class='ui-icon ui-icon-closethick'></span>";
-}
-
-function fnDeleteTR(oDT, oTD, sUrl)
-{
-  var aPos = oDT.fnGetPosition(oTD);
-  alert(aPos);
-  var id = oDT.fnGetData(aPos[0]);
-  alert(id);
-  jQuery.post(sUrl, {id: id[0]}, function(data){
-    if(!fnHasError(data)){
-      oDT.fnDeleteRow(aPos[0]);
     }
   }, 'json');
 }
