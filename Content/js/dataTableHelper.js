@@ -121,3 +121,25 @@ function fnRemove2(sUrl, id, oTbl, iRow)
     }
   }, 'json');
 }
+
+/*
+ * from v1.7.0, the behaviour of fnDeleteRow changed.
+ * see http://datatables.net/forums/comments.php?DiscussionID=2617&page=1#Item_1
+ */
+function fnRenderDelLink()
+{
+  return "<span class='ui-icon ui-icon-closethick'></span>";
+}
+
+function fnDeleteTR(oDT, oTD, sUrl)
+{
+  var aPos = oDT.fnGetPosition(oTD);
+  alert(aPos);
+  var id = oDT.fnGetData(aPos[0]);
+  alert(id);
+  jQuery.post(sUrl, {id: id[0]}, function(data){
+    if(!fnHasError(data)){
+      oDT.fnDeleteRow(aPos[0]);
+    }
+  }, 'json');
+}
