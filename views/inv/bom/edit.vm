@@ -2,9 +2,10 @@
 <style type="text/css" media="screen">
 /* <![CDATA[ */
 #header-container h3 { float: left; }
-#header-container a { float: right; }
+#header-container label, #header-container a, #header-container span, #header-container input { float: right; }
 #bill-new-component-container { width: 750px; padding-left: 1em; margin-top: 1em; }
 #bill-components-container { margin-top: 1em; }
+#toMaterialId { padding: 3px 10px 3px 5px; margin: 3px 10px 3px 5px; }
 /* ]]> */
 </style>
   
@@ -41,6 +42,14 @@ ${j.jquery_autocomplete()}
     $('#formNewComponent').validate({
       submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
     });
+    $('#form-copy-to-new').validate();
+    $('#toMaterialId').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+      width: 550,
+      matchContains: true,
+      formatItem: formatMaterialItem,
+      formatResult: formatResult,
+      max: 30
+    });
 
     $('#component_Component_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
       width: 550,
@@ -62,6 +71,9 @@ ${j.jquery_autocomplete()}
 
     $('#component_EffectiveDate').datepicker();
     $('#component_ObsoleteDate').datepicker();
+
+    $('#copy-to').button().click(function(){
+    });
   });
 
   function fnAddToDT(data){
@@ -84,6 +96,12 @@ ${common.bom}: ${bill.Compound.Id} [${bill.Id}]
 <h3>${common.bom}</h3>
 <a href='${url.for("%{action='setasdefault', querystring='id=$bill.Id'}")}'>${common.set-as-default}</a>
 <a href='${url.for("%{action='new'}")}'>${common.createnew}</a>
+<form action='${url.for("%{action='copy'}")}' method="POST" id="form-copy-to-new">
+${form.textfield("toMaterialId", "%{class='required'}")}
+${form.hiddenfield("fromBomId", ${bill.Id})}
+${form.submit("${common.copy-to}")}
+</form>
+
 </div>
 
 <div id="bill-header-container">

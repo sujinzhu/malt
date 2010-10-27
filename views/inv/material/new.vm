@@ -16,6 +16,7 @@ ${h.start_with_layout($url.for("%{action='create'}"), "formNewMaterial")}
 
 ${h.field($common.materialid, $f.textfield("id", "%{class='required'}"), true)}
 ${h.field($common.name, $f.textfield("name", "%{class='required'}"), true)}
+${h.field("${common.name}2", $f.textfield("name2"))}
 ${h.field($common.specification, $f.textfield("specification"))}
 ${h.field($common.primaryunit, $f.select("primaryUnit", $u.findall(), "%{class='required', value='id'}"), true)}
 ${h.field($common.secondunit, $f.select("secondUnit", $u.findall(), "%{value='id'}"))}

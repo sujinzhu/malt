@@ -22,6 +22,7 @@
     $(function(){
       $('#category').tabs({selected: ${tab}}).width('800px');
       $('#btnEdit').button().click(function(){document.location='${url.for("%{action='edit', querystring='id=$material.Id'}")}';});
+      $('#header-container a').button();
     });
   // ]]>
   </script>
@@ -30,6 +31,7 @@
   <div id="header-container">
   <h3>${common.material} : ${material.Id}</h3>
   <a id="btnEdit">${common.edit}</a>
+  <a id="copy" href='${url.for("%{action='copy', querystring='fromMaterialId=$material.Id'}")}'>${common.copy}</a>
   </div>
 
   <div id="category">

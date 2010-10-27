@@ -43,6 +43,8 @@
       $('#formPurchasingLeadTime').validate({submitHandler: function(form){$(form).ajaxSubmit({dataType: 'json', success: fnHasError});}});
       $('#formMPQ').validate({submitHandler: function(form){$(form).ajaxSubmit({dataType: 'json', success: fnHasError});}});
       $('#formMOQ').validate({submitHandler: function(form){$(form).ajaxSubmit({dataType: 'json', success: fnHasError});}});
+
+      $('a').button();
     });
     function fnAdjustHeight(element) { $(element + ' .label').height($(element + ' .value').height()); }
     function fnAddToDT(data){
@@ -133,6 +135,7 @@
           <span class="ui-widget-header ui-corner-left label">${common.specification}:</span>
           <span class="value ui-widget-content ui-corner-right">${f.textfield("Specification")}</span>
           ${f.submit($common.update, "%{style='margin-left: 1em;'}")}
+          <a id="copy" href='${url.for("%{action='copy', querystring='fromMaterialId=$material.Id'}")}'>${common.copy}</a>
         </li>
       </form>
       ${f.pop()}
