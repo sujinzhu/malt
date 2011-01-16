@@ -11,7 +11,7 @@
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
     $(function(){
-      TableToolsInit.sSwfPath = "${siteroot}/Content/dataTables-1.6.2/extras/TableTools/media/swf/ZeroClipboard.swf";
+      TableToolsInit.sSwfPath = "${j.sSwfPath()}";
       $('#bill-components').dataTable({
         "sDom": 'T<"clear">lfrtip',
         "bJQueryUI": true,

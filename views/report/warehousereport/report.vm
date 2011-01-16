@@ -15,7 +15,7 @@
   // <![CDATA[
     var oInstances;
     $(function(){
-      TableToolsInit.sSwfPath = "${siteroot}/Content/dataTables-1.6.2/extras/TableTools/media/swf/ZeroClipboard.swf";
+      TableToolsInit.sSwfPath = "${j.sSwfPath()}";
       oInstances = $('#instances').dataTable({
         "sDom": 'T<"clear">lfrtip',
         "bJQueryUI": true,

@@ -15,7 +15,7 @@
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
     var oInstances;
-    TableToolsInit.sSwfPath = "${siteroot}/Content/dataTables-1.6.2/extras/TableTools/media/swf/ZeroClipboard.swf";
+    TableToolsInit.sSwfPath = "${j.sSwfPath()}";
     $(function(){
       $('a').button();
       oInstances = $('#instances').dataTable({
