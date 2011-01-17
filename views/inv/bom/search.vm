@@ -1,0 +1,103 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+/* ]]> */
+</style>
+  
+${j.jquery_autocomplete()}
+${j.jquery_dataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+$(function(){
+  $('#materialId').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+    width: 550,
+    matchContains: true,
+    formatItem: formatMaterialItem,
+    formatResult: formatResult,
+    max: 30
+  }).focus();
+
+  TableToolsInit.sSwfPath = "${j.sSwfPath()}";
+  oDataTable = $('#instances').dataTable({
+    "sDom": 'T<"clear">lfrtip',
+    "bProcessing": true,
+    "bServerSide": true,
+    "sAjaxSource": '$url.for("%{action='dosearch'}")',
+    "bJQueryUI": true,
+    "fnServerData": function(sSource, aoData, fnCallback){
+      var url = sSource + '?queryDirection=' + $('input[name="queryDirection"][checked!=""]').val() + '&materialId=' + $('#materialId').val() + '&materialName=' + $('#materialName').val() + '&materialDesc=' + $('#materialDesc').val() + '&bomDesc=' + $('#bomDesc').val();
+      jQuery.get(url, aoData, function(json){
+        if(!fnHasError(json)){
+          fnCallback(json);
+        }
+      },
+      'json');
+    },
+    "sPaginationType": "full_numbers",
+    "aoColumns": [
+    {"sClass": "bom-desc"},
+    {"sClass": "material-id"},
+    {"sClass": "material-name"},
+    {"sClass": "material-desc"},
+    {"sClass": "material-id"},
+    {"sClass": "material-name"},
+    {"sClass": "material-desc"},
+    {"sClass": "quantity"},
+    {"sClass": "quantity"},
+    {"sClass": "quantity"},
+    ]
+  });
+
+  $('#btnQuery').button().click(function(){oDataTable.fnDraw();});
+});
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.query} ${common.bom}
+#end
+
+<div id="query-form">
+<h3>${common.query} ${common.bom}</h3>
+
+${h.start_with_layout("")}
+<tr class="field">
+  <td class="label" valign="top">
+    <label>${common.query-direction}:</label>
+  </td>
+  <td class="input" valign="top" colspan="2">
+  <input type="radio" name="queryDirection" value="1" checked="checked" />${common.forward-query}
+  <input type="radio" name="queryDirection" value="2" />${common.backward-query}
+  <input type="radio" name="queryDirection" value="3" />${common.two-way-query}
+  </td>
+</tr>
+
+${h.field("$common.material $common.id", $f.textfield("materialId"))}
+${h.field("$common.material $common.name", $f.textfield("materialName"))}
+${h.field("$common.material $common.description", $f.textfield("materialDesc"))}
+${h.field("$common.bom $common.description", $f.textfield("bomDesc"))}
+${h.end_with_layout()}
+
+<button id='btnQuery'>${common.query}</button>
+</div>
+
+<div id="instance-container">
+<table class="display" id="instances">
+  <thead>
+    <tr>
+      <th>BOM${common.description}</th>
+      <th>${common.compound} ${common.id}</th>
+      <th>${common.compound} ${common.name}</th>
+      <th>${common.compound} ${common.description}</th>
+      <th>${common.component} ${common.id}</th>
+      <th>${common.component} ${common.name}</th>
+      <th>${common.component} ${common.description}</th>
+      <th>${common.rate}1</th>
+      <th>${common.rate}2</th>
+      <th>${common.loss}</th>
+    </tr>
+  </thead>
+</table>
+</div>
