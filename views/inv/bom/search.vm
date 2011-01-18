@@ -20,6 +20,8 @@ $(function(){
 
   TableToolsInit.sSwfPath = "${j.sSwfPath()}";
   oDataTable = $('#instances').dataTable({
+    "aaSorting": [[1, 'asc'], [4, 'asc']],
+    "iDisplayLength": 100,
     "sDom": 'T<"clear">lfrtip',
     "bProcessing": true,
     "bServerSide": true,
@@ -46,11 +48,21 @@ $(function(){
     {"sClass": "quantity"},
     {"sClass": "quantity"},
     {"sClass": "quantity"},
-    ]
+    {"fnRender": function(oObj){return fnGetLink(oObj.aData[10]);}, "sClass": "bom-id", "sType": "html"},
+    ],
+    "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
   });
 
   $('#btnQuery').button().click(function(){oDataTable.fnDraw();});
 });
+
+function fnGetLink(id){
+  var linkView =  '$url.for("%{action='view', querystring='id='}")' + id;
+  //var linkTreeView =  '$url.for("%{action='treeview', querystring='id='}")' + id;
+  //var linkEdit =  '$url.for("%{action='edit', querystring='id='}")' + id;
+  //return "<a target='_blank' href='" + linkView + "'>${common.view}</a>" + "&nbsp;<a target='_blank' href='" + linkTreeView + "'>${common.treeview}</a>" + "&nbsp;" + "<a target='_blank' href='" + linkEdit + "'>${common.edit}</a>" + "&nbsp;" + id;
+  return "<a target='_blank' href='" + linkView + "'>${common.view}</a>";
+}
 // ]]>
 </script>
 #end
@@ -97,6 +109,7 @@ ${h.end_with_layout()}
       <th>${common.rate}1</th>
       <th>${common.rate}2</th>
       <th>${common.loss}</th>
+      <th>Link&nbsp;</th>
     </tr>
   </thead>
 </table>
