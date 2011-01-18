@@ -15,6 +15,10 @@
     <img src="${siteroot}/content/images/docs.png"/>
     <span>${common.bom}</span></a>
   </li>
+  <li><a href='${url.for("%{area='inv', controller='bom', action='search'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.bom} ${common.query}</span></a>
+  </li>
 </ul>
 <ul>
   <li><a href='${url.for("%{area='common', controller='transport', action='index'}")}'>
