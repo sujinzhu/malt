@@ -88,14 +88,14 @@ h1, h2, h3 {font-weight: bold; font-family: Serif; clear:both;}
 /*
  * for using in DataTable and AutoComplete
  */
-.jo-id .po-id, .pr-id { min-width: 80px; }
+.jo-id, .po-id, .pr-id { min-width: 80px; }
 .material-id { width: 95px; } /* for DataTable, you may override this in document. */
 .material-name { width: 200px; }
 .material-spec { width: 200px; }
-.short-date { min-width: 30px; max-width: 40px; }
+.short-date { min-width: 50px; max-width: 80px; }
 .price, .quantity { text-align: right; width: 100px; }
 .unit-id { width: 30px; }
-.unit, .unit-desc, .unit-description { width: 80px; }
+.unit, .unit-desc, .unit-description { min-width: 40px; max-width: 80px; }
 .address-id, .vendor-id, .customer-id { width: 60px; }
 .vendor, .vendor-name { width: 100px; }
 .address { width: 280px; }
@@ -103,4 +103,6 @@ h1, h2, h3 {font-weight: bold; font-family: Serif; clear:both;}
 .repository-desc { width: 150px; }
 .select-link, .remove-link { cursor: pointer; }
 .trade-type { min-width: 80px; max-width: 120px;}
-.sheet-id { width: 80; }
+.sheet-id { width: 80px; }
+.rate, .loss { max-width: 50px; text-align: right; }
+.bom-state { max-width: 50px; }

@@ -23,7 +23,7 @@ $!{head}
 
   function fnClassTrigerMaterialMenu()
   {
-    $('.material-id').css("cursor", "pointer").click(function(){fnShowMaterialMenu($(this).text());});
+    $('table > tbody > tr > .material-id').css("cursor", "pointer").click(function(){fnShowMaterialMenu($(this).text());});
   }
 
   function fnShowMaterialMenu(sMaterialId)

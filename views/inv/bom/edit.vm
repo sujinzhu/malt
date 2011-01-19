@@ -13,28 +13,47 @@ ${j.jquery_dataTable()}
 ${j.jquery_form()}
 ${j.jquery_validate()}
 ${j.jquery_autocomplete()}
+${j.jquery_editable()}
 
 <script type="text/javascript" language="javascript" charset="utf-8">
 // <![CDATA[
+  TableToolsInit.sSwfPath = "${j.sSwfPath()}";
   $(function(){
     oDataTable = $('#bill-components').dataTable({
+      "sDom": 'T<"clear">lfrtip',
       "bJQueryUI": true,
       "sPaginationType": "full_numbers",
+      "sScrollX": "100%",
+      "sScrollXInner": "150%",
       "aoColumns": [
       {'bVisible': false},
       {'sClass': 'material-id'},
       {'sClass': 'material-name'},
       {'sClass': 'material-spec'},
-      null, null, 
-      null, null, 
-      null, null, 
+      {'sClass': 'rate rate1'},
+      {'sClass': 'unit-desc'},
+      {'sClass': 'rate rate2'},
+      {'sClass': 'unit-desc'},
+      {'sClass': 'loss'},
+      {'sClass': 'bom-state'},
       {'sClass': 'short-date'},
       {'sClass': 'short-date'},
       {'sClass': 'short-date'},
       {'sClass': 'short-date'},
       {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='removecomponent'}")}');}, "bSortable": false}
       ],
-      "fnDrawCallback": function(){fnClassTrigerMaterialMenu();}
+      "fnDrawCallback": function(){
+        fnClassTrigerMaterialMenu();
+        $('table > tbody > tr > .rate1').editable('${url.for("%{action='changerate1'}")}');
+        $('table > tbody > tr > .rate2').editable('${url.for("%{action='changerate2'}")}');
+        $('table > tbody > tr > .bom-state').editable('${url.for("%{action='changestate'}")}', {
+          data: "{'1':'Active','2':'Pending','3':'Obsolete','selected':'1'}",
+          type: 'select',
+          submit: 'OK'
+        });
+        $('table > tbody > tr > .loss').editable('${url.for("%{action='changeloss'}")}', {
+          loadurl: '${url.for("%{action='changingloss'}")}'});
+      }
     });
 
     $('#header-container a').button();
@@ -167,12 +186,12 @@ ${h.end_with_layout()}
     <tr>
       <th>Id</th>
       <th>${common.component}</th>
-      <th></th>
-      <th></th>
-      <th>${common.rate}(${common.component})</th>
-      <th>${common.unit}(${common.component})</th>
-      <th>${common.rate}(${common.compound})</th>
-      <th>${common.unit}(${common.compound})</th>
+      <th>${common.name}</th>
+      <th>${common.specification}</th>
+      <th>${common.rate}<br/>(${common.component})</th>
+      <th>${common.unit}<br/>(${common.component})</th>
+      <th>${common.rate}<br/>(${common.compound})</th>
+      <th>${common.unit}<br/>(${common.compound})</th>
       <th>${common.loss}</th>
       <th>${common.status}</th>
       <th>${common.effectivedate}</th>
@@ -189,12 +208,12 @@ ${h.end_with_layout()}
       <td>${component.Component.Id}</td>
       <td>$!{component.Component.Name}</td>
       <td>$!{component.Component.Specification}</td>
-      <td>${component.Rate}</td>
+      <td id="rate1${component.Id}">${component.Rate}</td>
       <td>${m.trygetprimaryunit($component.Component).Description}</td>
-      <td>${component.Rate2}</td>
+      <td id="rate2${component.Id}">${component.Rate2}</td>
       <td>${m.trygetprimaryunit($bill.Compound).Description}</td>
-      <td>${component.Loss}%</td>
-      <td>${h.getenumname($component.Status)}</td>
+      <td id="loss${component.Id}">${component.Loss}%</td>
+      <td id="state${component.Id}">${h.getenumname($component.Status)}</td>
       <td>${component.EffectiveDate.ToShortDateString()}</td>
       <td>${component.ObsoleteDate.ToShortDateString()}</td>
       <td>${component.CreateDate.ToShortDateString()}</td>

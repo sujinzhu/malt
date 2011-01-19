@@ -20,6 +20,7 @@
       $('a').button();
       oInstances = $('#instances').dataTable({
         "sDom": 'T<"clear">lfrtip',
+        "sPaginationType": "full_numbers",
         "bJQueryUI": true,
         "aoColumns": [
         {"bVisible": false},
