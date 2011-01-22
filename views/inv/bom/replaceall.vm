@@ -1,0 +1,57 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+/* ]]> */
+</style>
+  
+${j.jquery_autocomplete()}
+${j.jquery_form()}
+${j.jquery_validate()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+$(function(){
+  $('.required').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+    width: 550,
+    matchContains: true,
+    formatItem: formatMaterialItem,
+    formatResult: formatResult,
+    max: 30
+  });
+
+  $('#origin_Id').focus();
+
+  $('#replace-all').validate({
+    submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnClearForm}); }
+  });
+});
+
+function fnClearForm(data) {
+  if(!fnHasError(data)){
+    $('.required').val("");
+    $('#origin_Id').focus();
+  }
+}
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.bom}: ${common.replace-all-component}
+#end
+
+<div id="query-form">
+<h3>${common.bom}: ${common.replace-all-component}</h3>
+
+${h.start_with_layout($url.for("%{action='doreplaceall'}"), "replace-all")}
+
+${h.field($common.origin-component, $f.textfield("origin.Id", "%{class='required'}"))}
+${h.field($common.replace-with, $f.textfield("current.Id", "%{class='required'}"))}
+${h.field("", $f.submit($common.replace-all))}
+${h.end_with_layout()}
+</div>
+
+<div id="warning">
+  <h3 id="warning-header">${common.warning}</h3>
+  <div id=warning-message">${warn.w1080001}</div>
+</div>
