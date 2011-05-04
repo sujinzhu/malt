@@ -58,7 +58,7 @@ ${j.jquery_editable()}
       submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
     });
 
-    $('#entry_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+    $('#entry_Product_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
       width: 550,
       matchContains: true,
       formatItem: formatMaterialItem,
@@ -81,7 +81,7 @@ ${j.jquery_editable()}
     $('#entry_OrderNumber').focus();
 
     $('#entry_ProductId').focusout(function(){
-      jQuery.get('${url.for("%{controller='pnt', action='translate', querystring='customerId=$instance.Customer.Id'}")}', {customerMaterialId: $(this).val(), revision: $('#revision').val()}, function(data){$('#entry_Material_Id').val(data);});
+      jQuery.get('${url.for("%{controller='pnt', action='translate', querystring='customerId=$instance.Customer.Id'}")}', {customerMaterialId: $(this).val(), revision: $('#revision').val()}, function(data){$('#entry_Product_Id').val(data);});
     });
   });
 
@@ -93,7 +93,7 @@ function fnGetAllocateInventoryLink(iId, dAllocatedQuantity){
 function fnAddToDT(data){
   if(!fnHasError(data)){
     oDataTable.fnAddData([data['Id'], data['OrderNumber'], data['ProductId'], data['MaterialId'], data['MaterialName2'], data['MaterialName'], data['CartonQuantity'], data['Size'], data['BoxQuantity'], data['PiecesQuantity'], data['RequiredQuantity'], data['TotalSize'], data['RequiredDate'], data['OriginalRequiredDate'], data['AllocatedQuantity'], data['PlannedMaterialQuantity'], data['DeliveredQuantity'], data['RemainRequiredQuantity'], data['UnitId'], data['UnitDesc'], '${common.remove}']);
-    $('#entry_Material_Id').val("");
+    $('#entry_Product_Id').val("");
     $('#entry_ProductId').val("").focus();
     $('#entry_CartonQuantity').val("1");
     $('#entry_BoxQuantity').val("1");
@@ -144,7 +144,7 @@ ${f.push("entry")}
 ${f.hiddenfield("SO.Id")}
 ${h.field($common.po-id, $f.textfield('OrderNumber', "%{class='required'}"), true)}
 ${h.field($common.product-id, $f.textfield('ProductId'))}
-${h.field($common.materialid, $f.textfield('Material.Id', "%{class='required'}"), true)}
+${h.field($common.materialid, $f.textfield('Product.Id', "%{class='required'}"), true)}
 ${h.field($common.carton-quantity, $f.numberfield('CartonQuantity', "%{class='required', min='0.00000000001'}"), true)}
 ${h.field($common.requireddate, $f.textfield('RequiredDate', "%{class='required'}"), true)}
 ${h.field($common.baseunit, $f.textfield('Unit.Id', "%{class='required'}"), true)}
@@ -189,9 +189,9 @@ ${h.end_with_layout()}
       <td>${entry.Id}</td>
       <td>${entry.OrderNumber}</td>
       <td>$!{entry.ProductId}</td>
-      <td>${entry.Material.Id}</td>
-      <td>$!{entry.Material.Name2}</td>
-      <td>$!{entry.Material.Name}</td>
+      <td>${entry.Product.Id}</td>
+      <td>$!{entry.Product.Name2}</td>
+      <td>$!{entry.Product.Name}</td>
       <td id="carton${entry.Id}">${entry.CartonQuantity}</td>
       <td>${entry.Size}</td>
       <td>${entry.BoxQuantity}</td>

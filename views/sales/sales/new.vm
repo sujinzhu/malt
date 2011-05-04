@@ -76,7 +76,7 @@ ${f.push("instance")}
 
 ${h.field($common.ordernumber, $f.textfield('Id', "%{class='required'}"), true)}
 ${h.field($common.customer, $f.textfield('Customer.Id', "%{class='required'}"), true)}
-${h.field($common.tradetype, $f.select("TradeType", $f.enumtopairs("HJ.Malt.Common.Domain.TradeTypeEnum, HJ.Malt.Common"), "%{value='first', class='required'}"), true)}
+${h.field($common.tradetype, $f.select("TradeType", $f.enumtopairs("HJ.Common.Domain.TradeTypeEnum, HJ.Common"), "%{value='first', class='required'}"), true)}
 ${h.field($common.is-sample, $f.checkboxfield("IsSample"))}
 ${h.field($common.notice, $f.textarea('Notice'))}
 
