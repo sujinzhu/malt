@@ -91,7 +91,7 @@ ${common.bom}: ${owner}
       <li id="m${material.Id}" class="material">
         <span class="material-id">${material.Id}</span>
         <span class="material-name">${material.Name}</span>
-        <span class="material-spec">${material.Specification}</span>
+        <span class="material-spec">$!{material.Specification}</span>
       </li>
     #end
     </ul>
