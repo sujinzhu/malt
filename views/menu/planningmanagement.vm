@@ -11,9 +11,9 @@
     <img src="${siteroot}/content/images/shipment.png"/>
     <span>${common.container}</span></a>
   </li>
-  <li><a href='${url.for("%{area='pmc', controller='mc', action='index'}")}'>
+  <li><a href='${url.for("%{area='inv', controller='formula', action='index'}")}'>
     <img src="${siteroot}/content/images/user.png"/>
-    <span>${common.planningmaterial}</span></a>
+    <span>${common.formula}</span></a>
   </li>
   <li><a href='${url.for("%{area='inv', controller='inventory', action='list'}")}'>
     <img src="${siteroot}/content/images/inventory.png"/>
