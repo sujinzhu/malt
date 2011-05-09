@@ -53,6 +53,7 @@ ${common.inventory}
         {"sClass": "datetime"},
         {"sClass": "datetime"},
         null,
+        null,
         null
         ],
         "fnFooterCallback": function( nRow, aaData, iStart, iEnd, aiDisplay ) {
@@ -126,8 +127,9 @@ ${common.inventory}
       <th>${common.quantity}</th>
       <th>${common.createdate}</th>
       <th>${common.lastupdatedate}</th>
-      <th>${common.allocatee}</th>
-      <th>${common.stub}</th>
+      <th>${common.label}0</th>
+      <th>${common.label}1</th>
+      <th>${common.label}2</th>
     </tr>
   </thead>
   <tbody>
@@ -135,7 +137,7 @@ ${common.inventory}
   <tfoot>
     <tr>
       <th align="right">${common.total}:</th>
-      <th colspan="9"></th>
+      <th colspan="10"></th>
     </tr>
   </tfoot>
 </table>

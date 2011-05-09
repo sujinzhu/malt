@@ -88,24 +88,26 @@
       <th>${common.quantity}</th>
       <th>${common.createdate}</th>
       <th>${common.lastupdatedate}</th>
-      <th>${common.allocatee}</th>
-      <th>${common.stub}</th>
+      <th>${common.label}0</th>
+      <th>${common.label}1</th>
+      <th>${common.label}2</th>
     </tr>
   </thead>
   <tbody>
   #foreach($entry in $rn.Entries)
     #foreach($inventory in $entry.ReceivedInventories)
     <tr>
-      <td>${inventory.Repository}</td>
-      <td>${r.getdescription($inventory.Repository)}</td>
-      <td>${inventory.Material}</td>
-      <td>${m.getname($inventory.Material)}</td>
-      <td>${m.getspecification($inventory.Material)}</td>
+      <td>${inventory.Repository.Id}</td>
+      <td>$!{inventory.Repository.Description}</td>
+      <td>${inventory.Material.Id}</td>
+      <td>$!{inventory.Material.Name}</td>
+      <td>$!{inventory.Material.Sepicifation}</td>
       <td>${inventory.Quantity}</td>
       <td>${inventory.CreateDate.ToString()}</td>
       <td>$!{inventory.LastUpdateDate.ToString()}</td>
-      <td>$!{inventory.Allocatee}</td>
-      <td>$!{inventory.Stub}</td>
+      <td>$!{inventory.Labels.Labels0}</td>
+      <td>$!{inventory.Labels.Labels1}</td>
+      <td>$!{inventory.Labels.Labels2}</td>
     </tr>
     #end
   #end
