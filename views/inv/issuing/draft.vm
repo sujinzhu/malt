@@ -83,7 +83,7 @@ ${common.issuingnote}: ${issuingNote.Id}
 
 <div id="header-container">
 <h3>${common.issuingnote}</h3>
-<a id='btnIssueAccordingToOrder' class="button" href='${url.for("%{action='draftwithorder', querystring='id=$issuingNote.Id'}")}'>${common.issue-according-to-order}</a>
+<a id='btnIssueAccordingToOrder' class="button" href='${url.for("%{action='draftwithreceivable', querystring='id=$issuingNote.Id'}")}'>${common.issue-according-to-order}</a>
 <a id="btnFinish" href='${url.for("%{action='finish', querystring='id=$issuingNote.Id'}")}' class="button">${common.finish}</a>
 <a id="btnCancel" href='${url.for("%{action='cancel', querystring='id=$issuingNote.Id'}")}' class="button">${common.cancel}</a>
 
@@ -101,7 +101,7 @@ ${common.issuingnote}: ${issuingNote.Id}
     <tr class="ui-widget-content">
       <td>${issuingNote.Id}</td>
       <td>
-      #if($h.getenumname($issuingNote.IssueType) == "Inward") ${r.getdescription($issuingNote.IssueTo)}
+      #if($h.getenumname($issuingNote.IssueType) == "Inward") ${issuingNote.IssueTo}
       #else ${v.getname($issuingNote.IssueTo)}
       #end
       </td>

@@ -45,7 +45,7 @@ ${h.end_with_layout()}
     <tr>
       <td>${url.link($issuingNote.Id, "%{action='steering', querystring='id=$issuingNote.Id'}")}</td>
       <td>
-      #if($h.getenumname($issuingNote.IssueType) == "Inward") ${r.getdescription($issuingNote.IssueTo)}
+      #if($h.getenumname($issuingNote.IssueType) == "Inward") ${issuingNote.IssueTo}
       #else ${v.getname($issuingNote.IssueTo)}
       #end
       </td>
