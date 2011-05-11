@@ -32,7 +32,7 @@ ${common.releasematerial}
   #foreach($issuingNote in $finals)
     <tr>
       <td>${url.link($issuingNote.Id, "%{action='steering', querystring='id=$issuingNote.Id'}")}</td>
-      <td> ${r.getdescription($issuingNote.IssueTo)} </td>
+      <td> ${issuingNote.IssueTo.Description} </td>
       <td>${issuingNote.ApplyBy}</td>
       <td>${h.getenumname($issuingNote.Status)}</td>
       <td>${issuingNote.CreateDate.ToShortDateString()}</td>

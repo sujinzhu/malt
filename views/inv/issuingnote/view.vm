@@ -75,7 +75,7 @@ ${common.issuingnote}: ${issuingNote.Id}
   <tbody>
     <tr class="ui-widget-content">
       <td>${issuingNote.Id}</td>
-      <td> ${r.getdescription($issuingNote.IssueTo)} </td>
+      <td> $!{issuingNote.IssueTo.Description} </td>
       <td>${issuingNote.ApplyBy}</td>
       <td>${h.getenumname($issuingNote.Status)}</td>
       <td>${issuingNote.CreateDate.ToShortDateString()}</td>
@@ -108,8 +108,8 @@ ${common.issuingnote}: ${issuingNote.Id}
     <tr>
       <td>${entry.Id}</td>
       <td>$!{entry.JobOrder}</td>
-      <td>$!{entry.IssueFrom}</td>
-      <td>$!{r.getdescription($entry.IssueFrom)}</td>
+      <td>$!{entry.IssueFrom.Id}</td>
+      <td>$!{entry.IssueFrom.Description}</td>
       <td>${entry.Material.Id}</td>
       <td>$!{entry.Material.Name}</td>
       <td>$!{entry.Material.Specification}</td>
@@ -146,11 +146,11 @@ ${common.issuingnote}: ${issuingNote.Id}
   #foreach($entry in $issuingNote.Entries)
     #foreach($inventory in $entry.IssuedInventories)
     <tr>
-      <td>${inventory.Repository}</td>
-      <td>${r.getdescription($inventory.Repository)}</td>
-      <td>${inventory.Material}</td>
-      <td>${m.getname($inventory.Material)}</td>
-      <td>${m.getspecification($inventory.Material)}</td>
+      <td>${inventory.Repository.Id}</td>
+      <td>${inventory.Repository.Description}</td>
+      <td>${inventory.Material.Id}</td>
+      <td>${inventory.Material.Name}</td>
+      <td>$!{inventory.Material.Specification}</td>
       <td>${inventory.Quantity}</td>
       <td>${inventory.CreateDate.ToString()}</td>
       <td>${inventory.LastUpdateDate.ToString()}</td>
