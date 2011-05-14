@@ -37,7 +37,6 @@ ${common.purchaserequisition} ${common.list}: ${common.waitforreviewing}
   <thead>
     <tr>
       <th>${common.id}</th>
-      <th>${common.source}</th>
       <th>${common.applicant}/${common.department}</th>
       <th>${common.status}</th>
     </tr>
@@ -46,9 +45,8 @@ ${common.purchaserequisition} ${common.list}: ${common.waitforreviewing}
   #foreach($pr in $instances)
     <tr>
       <td><a href='${url.for("%{action='steering', querystring='id=$pr.Id}")}'>${pr.Id}</a></td>
-      <td>${pr.Source}</td>
-      <td>$!{pr.Applicant} $!{r.getdescription($pr.Applicant)}</td>
-      <td>${h.getenumname($pr.Status)}</td>
+      <td>$!{pr.Applicant}</td>
+      <td>${pr.Status}</td>
     </tr>
   #end
   </tbody>

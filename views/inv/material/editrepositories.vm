@@ -11,7 +11,7 @@
           </span>
           <span class="ui-widget-header label2">${common.tradetype}:</span>
           <span class="ui-widget-content ui-corner-right value2">
-          ${f.radiolistfield("TradeType", "HJ.Malt.Common.Domain.TradeTypeEnum, HJ.Malt.Common", "%{class='required', defaultValue='0'}")}
+          ${f.radiolistfield("TradeType", "HJ.Common.Domain.TradeTypeEnum, HJ.Common", "%{class='required'}")}
           </span>
           ${f.submit($common.add, "%{style='margin-left: 1em;'}")}
         </li>
