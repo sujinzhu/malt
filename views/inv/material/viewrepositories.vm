@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>${common.repository}</th>
-      <th></th>
+      <th>${common.tradetype}</th>
       <th>${common.capacity}</th>
     </tr>
   </thead>
@@ -12,7 +12,7 @@
   #foreach($mr in $mrs)
     <tr>
       <td>${mr.Repository}</td>
-      <td>$!{r.getdescription($mr.Repository)}</td>
+      <td>$!{h.getenumname($mr.TradeType)}</td>
       <td>$!{mr.Capacity}</td>
     </tr>
   #end
