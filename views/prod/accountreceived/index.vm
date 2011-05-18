@@ -21,31 +21,37 @@ ${j.jquery_autocomplete()}
 // <![CDATA[
   $(function(){
     fnDecorative();
-    $('#id').autocomplete('$url.for("%{area='sales', controller='salesorder', action='autocomplete2'}")', {
+    $('#orderNumber').autocomplete('$url.for("%{area='sales', controller='salesorder', action='autocomplete2'}")', {
       width: 300,
       matchContains: true,
       formatItem: formatSalesOrderItem,
       formatResult: formatResult,
       max: 30
     }).focus();
-    $('#btnEdit').click(function(){location.href='${url.for("%{action='view', querystring='id='}")}' + $('#id').val()});
+
+    $('#btnView').click(function(){location.href='${url.for("%{action='view', querystring='orderNumber='}")}' + $('#orderNumber').val() + "&workShop=" + $('#workShop').val()});
 
     oDataTable = $('#instances').dataTable({
       "bJQueryUI": true,
       "sPaginationType": "full_numbers",
     });
+
+    $('.view').button();
   });
 
+function fnView(orderNumber){
+  location.href='${url.for("%{action='view', querystring='orderNumber='}")}' + orderNumber + "&workShop=" + $('#workShop').val();
+}
 // ]]>
 </script>
 #end
 
 #capturefor(title)
-${common.formula}
+${common.account-received}
 #end
 
 <div id="header-container" class="ui-helper-clearfix">
-<h3>${common.formula}</h3>
+<h3>${common.account-received}</h3>
 </div>
 
 <div id="criteria-container" class="ui-widget-content ui-helper-clearfix">
@@ -53,11 +59,18 @@ ${common.formula}
   <p>
     <span class="label2">*${common.ordernumber}:</span>
     <span class="field2 order-number">
-      <input type="text" name="id" class="required" id="id"/>
+      <input type="text" name="orderNumber" class="required" id="orderNumber"/>
+    </span>
+  </p>
+  
+  <p>
+    <span class="label2">*${common.workshop}:</span>
+    <span class="field2 workshop">
+      ${f.select("workShop", $workShops, "%{value='Id', class='required'}")}
     </span>
   </p>
 
-  <p><button id="btnEdit">${common.view}</button></p>
+  <p><button id="btnView">${common.view}</button></p>
 
 </div>
 
@@ -65,23 +78,21 @@ ${common.formula}
 <table id="instances" class="display">
   <thead>
     <tr>
-      <th>${common.id}</th>
-      <th>${common.customer}</th>
       <th></th>
+      <th>${common.id}</th>
       <th>${common.tradetype}</th>
-      <th>${common.is-sample}</th>
-      <th>${common.notice}</th>
     </tr>
   </thead>
   <tbody>
   #foreach($instance in $instances)
     <tr>
-      <td><a href='${url.for("%{action='view', querystring='id=$instance.Id'}")}'>${instance.Id}</a></td>
-      <td>${instance.Customer.Id}</td>
-      <td>$!{instance.Customer.Name}</td>
+      <td>
+        <a class="view" onclick="fnView('$instance.SheetId');">${common.view}</a>
+      </td>
+      <td>
+        ${instance.SheetId}
+      </td>
       <td>${h.getenumname($instance.TradeType)}</td>
-      <td>${instance.IsSample}</td>
-      <td>$!{instance.Notice}</td>
     </tr>
   #end
   </tbody>

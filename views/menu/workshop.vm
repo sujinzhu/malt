@@ -9,6 +9,10 @@
   </li>
 </ul>
 <ul>
+  <li><a href='${url.for("%{area='prod', controller='accountreceivable', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.account-receivable}</span></a>
+  </li>
   <li><a href='${url.for("%{area='inv', controller='issuing', action='new'}")}'>
     <img src="${siteroot}/content/images/customer.png"/>
     <span>${common.applymaterial}</span></a>
@@ -17,8 +21,16 @@
     <img src="${siteroot}/content/images/docs.png"/>
     <span>${common.issuingnote}</span></a>
   </li>
+  <li><a href='${url.for("%{area='prod', controller='accountreceived', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.account-received}</span></a>
+  </li>
 </ul>
 <ul>
+  <li><a href='${url.for("%{area='prod', controller='accountpayable', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.account-payable}</span></a>
+  </li>
   <li><a href='${url.for("%{area='prod', controller='producing', action='index'}")}'>
     <img src="${siteroot}/content/images/manufacturing.png"/>
     <span>${common.produce}</span></a>
@@ -26,6 +38,10 @@
   <li><a href='${url.for("%{area='prod', controller='producing', action='producewithoutorder'}")}'>
     <img src="${siteroot}/content/images/manufacturing.png"/>
     <span>${common.produce}(${common.without-order})</span></a>
+  </li>
+  <li><a href='${url.for("%{area='prod', controller='accountpaid', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.account-paid}</span></a>
   </li>
 </ul>
 <ul>
