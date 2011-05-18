@@ -75,9 +75,10 @@ ${common.produce} (${common.without-order})
 <div id="new-instance-container" class="ui-helper-clearfix ui-widget-content ui-corner-all">
   <form id="new-instance" action='${url.for("%{action='produce2'}")}' method="POST">
   ${f.push("instance")}
+  ${f.hiddenfield("ForOrder")}
   <p>
     <span class="label2">*${common.workshop}</span>
-    <span class="field2">${f.select("WorkShop", $repositories, "%{value='Id' class='required'}")}</span>
+    <span class="field2">${f.select("Repository.Id", $repositories, "%{value='Id' class='required'}")}</span>
   </p>
   <p>
     <span class="label2">*${common.materialid}:</span>
