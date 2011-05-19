@@ -31,19 +31,6 @@ ${j.jquery_dataTable()}
      $('#issued-inventories').dataTable({
       "bJQueryUI": true,
       "sPaginationType": "full_numbers",
-      "aoColumns": [
-      {"sClass": "repository-id"},
-      {"sClass": "repository-desc"},
-      {"sClass": "material-id"},
-      {"sClass": "material-name"},
-      {"sClass": "material-spec"},
-      {"sClass": "quantity"},
-      {"sClass": "unit-id"},
-      {"sClass": "unit-desc"},
-      {"sClass": "datetime"},
-      {"sClass": "datetime"},
-      null, null
-      ],
     });
   });
 // ]]>
@@ -83,7 +70,7 @@ ${j.jquery_dataTable()}
   <tbody>
     <tr class="ui-widget-content">
       <td>${instance.Id}</td>
-      <td>${r.getdescription($instance.SubmitFrom)}</td>
+      <td>${instance.SubmitFrom}</td>
       <td>${instance.SubmitBy}</td>
       <td>${h.getenumname($instance.Status)}</td>
       <td>${instance.CreateDate.ToShortDateString()}</td>
@@ -130,17 +117,15 @@ ${j.jquery_dataTable()}
   <thead>
     <tr>
       <th>${common.repository}</th>
-      <th></th>
       <th>${common.material}</th>
-      <th></th>
-      <th></th>
       <th>${common.quantity}</th>
       <th>${common.baseunit}</th>
       <th></th>
       <th>${common.createdate}</th>
       <th>${common.lastupdatedate}</th>
-      <th>${common.allocatee}</th>
-      <th>${common.stub}</th>
+      <th>${common.label}0</th>
+      <th>${common.label}1</th>
+      <th>${common.label}2</th>
     </tr>
   </thead>
   <tbody>
@@ -148,17 +133,15 @@ ${j.jquery_dataTable()}
     #foreach($inventory in $entry.SubmittedInventories)
     <tr>
       <td>${inventory.Repository}</td>
-      <td>${r.getdescription($inventory.Repository)}</td>
       <td>${inventory.Material}</td>
-      <td>$!{m.find($inventory.Material).Name}</td>
-      <td>$!{m.find($inventory.Material).Specification}</td>
       <td>${inventory.Quantity}</td>
-      <td>$!{m.trygetprimaryunit($m.find($inventory.Material)).Id}</td>
-      <td>$!{m.trygetprimaryunit($m.find($inventory.Material)).Description}</td>
+      <td>$!{m.trygetprimaryunit($inventory.Material).Id}</td>
+      <td>$!{m.trygetprimaryunit($inventory.Material).Description}</td>
       <td>${inventory.CreateDate.ToString()}</td>
       <td>${inventory.LastUpdateDate.ToString()}</td>
-      <td>$!{inventory.Allocatee}</td>
-      <td>$!{inventory.Stub}</td>
+      <td>$!{inventory.Labels.Label0}</td>
+      <td>$!{inventory.Labels.Label1}</td>
+      <td>$!{inventory.Labels.Label2}</td>
     </tr>
     #end
   #end

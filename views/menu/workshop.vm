@@ -49,6 +49,10 @@
   </li>
 </ul>
 <ul>
+  <li><a href='${url.for("%{area='prod', controller='accountsubmitable', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.account-submitable}</span></a>
+  </li>
   <li><a href='${url.for("%{area='inv', controller='submitting', action='newsemifinishgoodsubmission'}")}'>
     <img src="${siteroot}/content/images/customer2.png"/>
     <span>${common.sfgsubmit}</span></a>
@@ -68,5 +72,13 @@
   <li><a href='${url.for("%{area='prod', controller='returntowarehouse', action='new'}")}'>
     <img src="${siteroot}/content/images/customer3.png"/>
     <span>${common.return-to-warehouse}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='prod', controller='accountsubmitted', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.account-submitted}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='prod', controller='marginofsubmit', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.margin-of-submit}</span></a>
   </li>
 </ul>

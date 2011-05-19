@@ -29,8 +29,8 @@
   #foreach($final in $finals)
     <tr>
       <td>${url.link($final.Id, "%{action='steering', querystring='id=$final.Id'}")}</td>
-      <td>${r.getdescription($final.SubmitFrom)}</td>
-      <td>${r.getdescription($final.SubmitTo)}</td>
+      <td>${final.SubmitFrom}</td>
+      <td>$!{final.SubmitTo}</td>
       <td>${final.SubmitBy}</td>
       <td>${h.getenumname($final.Status)}</td>
       <td>${final.CreateDate.ToShortDateString()}</td>

@@ -108,7 +108,7 @@ ${j.jquery_autocomplete()}
   <tbody>
     <tr class="ui-widget-content">
       <td>${instance.Id}</td>
-      <td>${r.getdescription($instance.SubmitFrom)}</td>
+      <td>${instance.SubmitFrom}</td>
       <td>${instance.SubmitBy}</td>
       <td>${h.getenumname($instance.Status)}</td>
       <td>${instance.CreateDate.ToShortDateString()}</td>

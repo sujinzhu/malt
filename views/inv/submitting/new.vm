@@ -36,7 +36,7 @@ ${f.push("instance")}
 
 ${h.field("${common.id}", $f.textfield("Id"))}
 ${f.hiddenfield("MaterialType")}
-${h.field($common.workshop, $f.select("SubmitFrom", $workshops, "%{value='Id', class='required'}"), true)}
+${h.field($common.workshop, $f.select("SubmitFrom.Id", $workshops, "%{value='Id', text='Name', class='required'}"), true)}
 ${h.field("", $f.submit($common.create))}
 
 ${f.pop()}
@@ -57,7 +57,7 @@ ${h.end_with_layout()}
   #foreach($draft in $drafts)
     <tr>
       <td>${url.link($draft.Id, "%{action='steering', querystring='id=$draft.Id'}")}</td>
-      <td>${r.getdescription($draft.SubmitFrom)}</td>
+      <td>${draft.SubmitFrom}</td>
       <td>${draft.SubmitBy}</td>
       <td>${h.getenumname($draft.Status)}</td>
       <td>${draft.CreateDate.ToShortDateString()}</td>
