@@ -88,7 +88,7 @@ ${common.produce}
   </p>
   <p>
     <span class="label2">*${common.quantity}:</span>
-    <span class="field2">${f.textfield("Yield", "%{min='0.00000001', class='required'}")}&nbsp;</span>
+    <span class="field2">${f.textfield("Yield", "%{min='1E-17', class='required'}")}&nbsp;</span>
   </p>
   ${f.pop()}
   <p>

@@ -55,7 +55,7 @@ ${common.account-paid}
       <td>$!{instance.ProductDelivery.Product.Name}</td>
       <td>$!{instance.ProductDelivery.Product.Specification}</td>
       <td>${instance.ProductDelivery.DeliveredDate}</td>
-      <td>${instance.ProductDelivery.DeliveredQuantity}</td>
+      <td>${instance.ProductDelivery.DeliveredQuantity.ToString('G17')}</td>
     </tr>
     #end
   </tbody>

@@ -43,6 +43,10 @@
     <img src="${siteroot}/content/images/docs.png"/>
     <span>${common.account-paid}</span></a>
   </li>
+  <li><a href='${url.for("%{area='prod', controller='marginofpay', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.margin-of-pay}</span></a>
+  </li>
 </ul>
 <ul>
   <li><a href='${url.for("%{area='inv', controller='submitting', action='newsemifinishgoodsubmission'}")}'>

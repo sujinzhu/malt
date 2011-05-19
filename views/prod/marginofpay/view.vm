@@ -1,5 +1,5 @@
 ﻿#capturefor(title)
-${common.account-payable}
+${common.margin-of-pay}
 #end
 
 #capturefor(head)
@@ -19,12 +19,9 @@ ${common.account-payable}
         "bJQueryUI": true,
         "sPaginationType": "full_numbers",
         "aoColumns": [
-        {"sClass": "ordernumber"},
-        {"sClass": "workshop", "bSortable": false},
         {"sClass": "material-id"},
         {"sClass": "material-name", "bSortable": false},
         {"sClass": "material-spec", "bSortable": false},
-        {"sClass": "datetime"},
         {"sClass": "quantity"},
         ],
       });
@@ -37,25 +34,19 @@ ${common.account-payable}
 <table id="instances" class="display">
   <thead>
     <tr>
-      <th>${common.ordernumber}</th>
-      <th>${common.workshop}</th>
       <th>${common.material}</th>
       <th>${common.name}</th>
       <th>${common.description}</th>
-      <th>${common.date}</th>
       <th>${common.quantity}</th>
     </tr>
   </thead>
   <tbody>
     #foreach($instance in $instances)
     <tr>
-      <td>${instance.Account.OrderNumber}</td>
-      <td>${instance.Account.WorkShop}</td>
-      <td>${instance.ProductRequirement.Product.Id}</td>
-      <td>$!{instance.ProductRequirement.Product.Name}</td>
-      <td>$!{instance.ProductRequirement.Product.Specification}</td>
-      <td>${instance.ProductRequirement.RequiredDate}</td>
-      <td>${instance.ProductRequirement.RequiredQuantity.ToString('G17')}</td>
+      <td>${instance.Item1.Id}</td>
+      <td>$!{instance.Item1.Name}</td>
+      <td>$!{instance.Item1.Specification}</td>
+      <td>${instance.Item2.ToString('G17')}</td>
     </tr>
     #end
   </tbody>
