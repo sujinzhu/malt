@@ -122,7 +122,7 @@ ${j.jquery_dataTable()}
       <td>${entry.Material.Id}</td>
       <td>$!{entry.Material.Name}</td>
       <td>$!{entry.Material.Specification}</td>
-      <td id='${entry.Id}'>${entry.SubmittedQuantity}</td>
+      <td id='${entry.Id}'>${entry.SubmittedQuantity.ToString('G17')}</td>
       <td>${entry.PackageQuantity}</td>
       <td>$!{entry.Notice}</td>
     </tr>

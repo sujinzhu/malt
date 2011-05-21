@@ -8,7 +8,7 @@ ${f.installscripts()}
 </p>
 <p>
   <span class="label2">${common.quantity}:</span>
-  <span class="field2">${entry.SubmittedQuantity} $!{m.TryGetPrimaryUnit($entry.Material).Description}</span>
+  <span class="field2">${entry.SubmittedQuantity.ToString('G17')} $!{m.TryGetPrimaryUnit($entry.Material).Description}</span>
 </p>
 
 #foreach($repository in $repositories)
@@ -16,7 +16,7 @@ ${f.installscripts()}
   <span class="label2 repository-with-desc">[${repository}] ${r.getdescription($repository)}:</span>
   <span class="field2">
   <input type="hidden" name="repository[]" value="${repository}" />
-  <input type="text" name="quantity[]" value="${entry.SubmittedQuantity}" max="${entry.SubmittedQuantity}"/>
+  <input type="text" name="quantity[]" value="${entry.SubmittedQuantity.ToString('G17')}" max="${entry.SubmittedQuantity.ToString('G17')}"/>
   $!{m.TryGetPrimaryUnit($entry.Material).Description}
   </span>
 </p>
