@@ -19,12 +19,13 @@
         "aoColumns": [
           {'bVisible': false},
           {'sClass': 'material-id'},
-          {'sClass': 'material-name'},
           {'sClass': 'material-spec'},
           {'sClass': 'quantity'},
           {'sClass': 'unit-description'},
           {'sClass': 'quantity'},
           {'sClass': 'unit-description'},
+          null,
+          null,
           null,
           null,
           {'sClass': 'short-date'},
@@ -51,8 +52,7 @@ ${common.bom}: ${bill.Compound.Id} [${bill.Id}]
       <th>Id</th>
       <th>${common.name}</th>
       <th>${common.compound}</th>
-      <th></th>
-      <th></th>
+      <th>${common.description}</th>
       <th>${common.status}</th>
       <th>${common.priority}</th>
       <th>${common.effectivedate}</th>
@@ -66,8 +66,7 @@ ${common.bom}: ${bill.Compound.Id} [${bill.Id}]
       <td>${bill.Id}</td>
       <td>$!{bill.Description}</td>
       <td>${bill.Compound.Id}</td>
-      <td>$!{bill.Compound.Name}</td>
-      <td>$!{bill.Compound.Specification}</td>
+      <td>$!{bill.Compound.Description}</td>
       <td>${h.getenumname($bill.Status)}</td>
       <td>${bill.Priority}</td>
       <td>${bill.EffectiveDate.ToShortDateString()}</td>
@@ -85,13 +84,14 @@ ${common.bom}: ${bill.Compound.Id} [${bill.Id}]
     <tr>
       <th>Id</th>
       <th>${common.component}</th>
-      <th></th>
-      <th></th>
+      <th>${common.description}</th>
       <th>${common.rate}(${common.component})</th>
       <th>${common.unit}(${common.component})</th>
       <th>${common.rate}(${common.compound})</th>
       <th>${common.unit}(${common.compound})</th>
       <th>${common.loss}</th>
+      <th>${common.bom-component-position}</th>
+      <th>${common.remark}</th>
       <th>${common.status}</th>
       <th>${common.effectivedate}</th>
       <th>${common.obsoletedate}</th>
@@ -102,13 +102,14 @@ ${common.bom}: ${bill.Compound.Id} [${bill.Id}]
     <tr>
       <td>${component.Id}</td>
       <td>${component.Component.Id}</td>
-      <td>$!{component.Component.Name}</td>
-      <td>$!{component.Component.Specification}</td>
+      <td>$!{component.Component.Description}</td>
       <td>${component.Rate}</td>
       <td>${m.trygetprimaryunit($component.Component).Description}</td>
       <td>${component.Rate2}</td>
       <td>${m.trygetprimaryunit($bill.Compound).Description}</td>
       <td>${component.Loss}%</td>
+      <td>$!{component.Position}</td>
+      <td>$!{component.Comment}</td>
       <td>${h.getenumname($component.Status)}</td>
       <td>${component.EffectiveDate.ToShortDateString()}</td>
       <td>${component.ObsoleteDate.ToShortDateString()}</td>

@@ -21,8 +21,7 @@
         {"fnRender": function(oObj){return fnGetLink(oObj.aData[0]);}, "sClass": "bom-id", "sType": "html"},
         {"sClass": "bom-description"},
         {"sClass": "material-id"},
-        {"sClass": "material-name"},
-        {"sClass": "material-spec"},
+        {"sClass": "material-desc"},
         {"sClass": "status"},
         {"sClass": "priority"},
         {"sClass": "short-date"},
@@ -51,8 +50,7 @@
       <th>Id</th>
       <th>${common.name}</th>
       <th>${common.compound}</th>
-      <th>${common.name}</th>
-      <th>${common.specification}</th>
+      <th>${common.description}</th>
       <th>${common.status}</th>
       <th>${common.priority}</th>
       <th>${common.effectivedate}</th>

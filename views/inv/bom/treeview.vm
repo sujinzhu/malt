@@ -24,7 +24,7 @@
 #end
 
 <div>
-  <h3>${common.bom}: ${bill.Compound.Id} $!{bill.Compound.Name} [$!{bill.Compound.Specification}]</h3>
+  <h3>${common.bom}: ${bill.Compound.Id} $!{bill.Compound.Description}</h3>
   <div>
     ${bill.Compound.Id}
     <ul id="bomtree">

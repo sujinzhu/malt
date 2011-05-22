@@ -92,6 +92,7 @@ h1, h2, h3 {font-weight: bold; font-family: Serif; clear:both;}
 .material-id { width: 95px; } /* for DataTable, you may override this in document. */
 .material-name { width: 200px; }
 .material-spec { width: 200px; }
+.material-desc { width: 300px; }
 .short-date { min-width: 50px; max-width: 80px; }
 .price, .quantity { text-align: right; width: 100px; }
 .unit-id { width: 80px; }
