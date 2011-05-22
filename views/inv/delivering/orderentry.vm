@@ -7,7 +7,7 @@ $f.hiddenfield("SOE.Id")
 
 <p>
   <span class="label2">${common.material}:</span>
-  <span class="field2 material">${entry.SOE.Material.Id} $!{entry.SOE.Material.Name} $!{entry.SOE.Material.Specification}</span>
+  <span class="field2 material">${entry.SOE.Product.Id} $!{entry.SOE.Product.Name} $!{entry.SOE.Product.Specification}</span>
 </p>
 <p>
   <span class="label2">${common.requiredquantity}:</span>

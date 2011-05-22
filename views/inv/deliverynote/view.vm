@@ -96,9 +96,9 @@
     <tr>
       <td>${entry.Id}</td>
       <td><a href='${url.for("%{area='sales', controller='salesorder', action='view', querystring='id=$!{entry.SOE.SO.Id}'}")}' target='_blank'>$!{entry.SOE.SO.Id}</a></td>
-      <td>${entry.SOE.Material.Id}</td>
-      <td>${entry.SOE.Material.Name}</td>
-      <td>${entry.SOE.Material.Specification}</td>
+      <td>${entry.SOE.Product.Id}</td>
+      <td>${entry.SOE.Product.Name}</td>
+      <td>${entry.SOE.Product.Specification}</td>
       <td>${entry.DeliveredQuantity}</td>
       <td>${entry.PackageQuantity}</td>
       <td>${entry.SOE.Unit.Id}</td>

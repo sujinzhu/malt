@@ -1,4 +1,4 @@
-<h4>${common.order}:</h4>
+<h3>${common.order}:</h3>
 <table id="sales-order-entries" class="display">
   <thead>
     <tr>
@@ -9,8 +9,6 @@
       <th></th>
       <th>${common.requireddate}</th>
       <th>${common.requiredquantity}</th>
-      <th>${common.allocatedquantity}</th>
-      <th>${common.plannedmaterialquantity}</th>
       <th>${common.deliveredquantity}</th>
       <th>${common.ordermargin}</th>
       <th>${common.baseunit}</th>
@@ -22,13 +20,11 @@
     <tr>
       <td>${entry.Id}</td>
       <td>${entry.SO.Id}</td>
-      <td>${entry.Material.Id}</td>
-      <td>$!{entry.Material.Name}</td>
-      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.Product.Id}</td>
+      <td>$!{entry.Product.Name}</td>
+      <td>$!{entry.Product.Specification}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>
       <td>${entry.RequiredQuantity}</td>
-      <td>${entry.AllocatedQuantity}</td>
-      <td>${entry.PlannedMaterialQuantity}</td>
       <td>${entry.DeliveredQuantity}</td>
       <td id="${entry.Id}">${entry.RemainRequiredQuantity}</td>
       <td>${entry.Unit.Id}</td>
@@ -49,8 +45,6 @@
     {"sClass": "material-name"},
     {"sClass": "material-spec"},
     {"sClass": "short-date required-date"},
-    {"sClass": "quantity"},
-    {"sClass": "quantity"},
     {"sClass": "quantity"},
     {"sClass": "quantity"},
     {"sClass": "quantity margin ui-state-hover", "fnRender": function(oObj){return fnRenderSelectLink(oObj, "fnSelectOrderEntry");}},

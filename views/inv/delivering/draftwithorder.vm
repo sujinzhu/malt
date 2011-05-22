@@ -67,8 +67,9 @@
 
     function fnShowOrderEntry()
     {
+      //queryString = "customerId=${instance.Customer.Id}&sheetId=${instance.Id};
       $('#new-entry-container').html('').hide("slow");
-      $('#sales-order-entries-container').load('${url.for("%{action='deliverableorderentries', querystring='customerId=$instance.Customer.Id'}")}').show('slow');
+      $('#sales-order-entries-container').load('${url.for("%{action='deliverableorderentries'}")}', {customerId: "${instance.Customer.Id}", sheetId: "${instance.Id}"}).show('slow');
     }
 
     function fnSelectOrderEntry(iId, iRow){
@@ -115,11 +116,11 @@ ${common.issuefinishedgoods}: ${instance.Id} (${instance.Customer.Name})
 <div id="sales-order-entries-container" class="ui-helper-clearfix">
 </div>
 
-<div id="new-entry-container" class="ui-widget-content ui-corner-all ui-helper-hidden">
+<div id="new-entry-container" class="ui-widget-content ui-corner-all ui-helper-hidden ui-helper-clearfix">
 </div>
 
 <div id="entries-container">
-<h4>${common.deliverynote}</h4>
+<h3>${common.deliverynote}:</h3>
 <table id="entries" class="display">
   <thead>
     <tr>
