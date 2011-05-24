@@ -14,6 +14,7 @@ ${j.jquery_dataTable()}
     $('.button').button();
     $('#entries').dataTable({
       "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
       "aoColumns": [
       {"bVisible": false},
       {"sClass": "material-id"},
@@ -65,10 +66,10 @@ ${common.purchaserequisition}: ${instance.Id}
       <td>${entry.Material.Id}</td>
       <td>$!{entry.Material.Name}</td>
       <td>$!{entry.Material.Specification}</td>
-      <td>${entry.RequiredQuantity}</td>
+      <td>${entry.RequiredQuantity.ToString('G17')}</td>
       <td>$!{entry.Unit.Description}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>
-      <td>${entry.OrderedQuantity}</td>
+      <td>${entry.OrderedQuantity.ToString('G17')}</td>
       <td>$!{entry.Responsible}</td>
       <td>$!{entry.Notice}</td>
     </tr>

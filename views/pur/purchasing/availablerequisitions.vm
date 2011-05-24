@@ -1,0 +1,66 @@
+<h3>${common.purchaserequisition}:</h3>
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.material}</th>
+      <th>${common.description}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.unit}</th>
+      <th>${common.unitprice}</th>
+      <th>${common.requireddate}</th>
+      <th>${common.orderedquantity}</th>
+      <th>${common.select}</th>
+      <th>${common.vendor}</th>
+      <th>${common.applicant}</th>
+      <th>${common.responsible}</th>
+      <th>${common.notice}</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($pr in $instances)
+    <tr>
+      <td>${pr.Id}</td>
+      <td>${pr.Material.Id}</td>
+      <td>$!{pr.Material.Description}</td>
+      <td>${pr.RequiredQuantity}</td>
+      <td>$!{pr.Unit.Description}</td>
+      <td>$!{pr.UnitPrice}</td>
+      <td>${pr.RequiredDate.ToShortDateString()}</td>
+      <td>${pr.OrderedQuantity}</td>
+      <td><a>${common.select}</a></td>
+      <td>$!{pr.Vendor.Name}</td>
+      <td>$!{pr.Applicant} $!{r.getdescription($pr.Applicant)}</td>
+      <td>$!{pr.Responsible}</td>
+      <td>$!{pr.Notice}</td>
+    </tr>
+  #end
+  </tbody>
+</table>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+      $('#instances').dataTable({
+        "bJQueryUI": true,
+//        "sPaginationType": "full_numbers",
+        "bPaginate": false,
+        "sScrollY": "220px",
+        "sScrollX": "100%",
+        "aoColumns": [
+        {"bVisible": false},
+        {"sClass": "material-id"},
+        {"sClass": "material-desc"},
+        {"sClass": "quantity"},
+        {"sClass": "unit"},
+        {"sClass": "price"},
+        {"sClass": "short-date"},
+        {"sClass": "quantity"},
+        {"sClass": "operation", "fnRender": function(oObj){return fnRenderSelectLink(oObj, "fnSelect");}, "bSortable": false},
+        {"sClass": "vendor"},
+        {"bVisible": false},
+        {"bVisible": false},
+        {"bVisible": false},
+        ],
+      });
+// ]]>
+</script>

@@ -19,6 +19,7 @@
       $('a').button();
       oInstances = $('#instances').dataTable({
         "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
         "aoColumns": [
         {"bVisible": false},
         {"sClass": "material-id"},
@@ -119,7 +120,7 @@ ${common.review} ${common.purchaserequisition}: ${instance.Id}
       <td>${entry.Material.Id}</td>
       <td>$!{entry.Material.Name}</td>
       <td>$!{entry.Material.Specification}</td>
-      <td>${entry.RequiredQuantity}</td>
+      <td>${entry.RequiredQuantity.ToString('G17')}</td>
       <td>$!{entry.Unit.Description}</td>
       <td id="price${entry.Id}">$!{entry.UnitPrice}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>

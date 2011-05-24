@@ -31,8 +31,8 @@
   <tbody>
   #foreach($mr in $mrs)
     <tr>
-      <td>${mr.Repository}</td>
-      <td>$!{r.getdescription($mr.Repository)}</td>
+      <td>${mr.Repository.Id}</td>
+      <td>$!{mr.Repository.Description}</td>
       <td>$!{h.getenumname($mr.TradeType)}</td>
       <td>${common.remove}</td>
     </tr>

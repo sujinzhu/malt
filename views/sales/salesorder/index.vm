@@ -50,8 +50,6 @@ ${j.jquery_dataTable()}
       {"sClass": "short-date"},
       {"sClass": "quantity"},
       {"sClass": "quantity"},
-      {"sClass": "quantity"},
-      {"sClass": "quantity"},
       {"sClass": "quantity", "bSortable": false},
       {"bVisible": false, "sClass": "unit-id"},
       {"sClass": "unit-desc"},
@@ -67,6 +65,22 @@ ${j.jquery_dataTable()}
       formatItem: formatCustomerItem,
       formatResult: formatResult
     }).focus();
+
+    $('#soId').autocomplete('$url.for("%{area='sales', controller='salesorder', action='autocomplete2'}")', {
+      width: 400,
+      matchContains: true,
+      formatItem: formatSalesOrderItem,
+      formatResult: formatResult,
+      max: 30
+    });
+
+    $('#materialId').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+      width: 550,
+      matchContains: true,
+      formatItem: formatMaterialItem,
+      formatResult: formatResult,
+      max: 30
+    });
 
     $('.date').datepicker();
 
@@ -150,8 +164,6 @@ ${common.salesorder}
       <th>${common.specification}</th>
       <th>${common.requireddate}</th>
       <th>${common.requiredquantity}</th>
-      <th>${common.allocatedquantity}</th>
-      <th>${common.plannedmaterialquantity}</th>
       <th>${common.deliveredquantity}</th>
       <th>${common.ordermargin}</th>
       <th>${common.baseunit}</th>

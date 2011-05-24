@@ -14,10 +14,10 @@ ${j.jquery_dataTable()}
 // <![CDATA[
   $(function(){
     $('#instances').dataTable({
+      "sPaginationType": "full_numbers",
       "bJQueryUI": true,
       "aoColumns": [
       {"sClass": "pr-id"},
-      {"bVisible": false},
       {"sClass": "repository"},
       {"sClass": "status"},
       ]

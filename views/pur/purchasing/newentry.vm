@@ -1,4 +1,4 @@
-<div class="ui-widget-content ui-corner-all ui-helper-clearfix">
+<div class="">
   <form id="new-entry" action='${url.for("%{action='addentry2'}")}' method="POST">
     ${f.push("requisition")}
     ${f.hiddenfield("Id")}
@@ -34,7 +34,7 @@
   ${f.pop()}
   <p>
     ${f.submit($common.submit)}
-    <a id="btnSelectAnother" href="#">${common.selectanother}</a>
+    <!-- <a id="btnSelectAnother" href="#">${common.selectanother}</a> -->
   </p>
   </form>
 </div>

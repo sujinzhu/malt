@@ -26,8 +26,6 @@ ${j.jquery_dataTable()}
       {"sClass": "short-date required-date"},
       {"sClass": "quantity"},
       {"sClass": "quantity"},
-      {"sClass": "quantity"},
-      {"sClass": "quantity"},
       {"sClass": "quantity margin"},
       {"sClass": "unit-id"},
       {"sClass": "unit-desc"},
@@ -53,9 +51,7 @@ ${common.salesorder}: ${instance.Id}
 
 <div id="header-container" class="ui-helper-clearfix">
 <h3>${common.salesorder}: ${instance.Id}</h3>
-<p><a href='${url.for("%{area='inv', controller='formula', action='view', querystring='id=$instance.Id'}")}'>${common.bom}</a></p>
-<p><a href='${url.for("%{area='pmc', controller='mc', action='purchaserequisition', querystring='id=$instance.Id'}")}'>${common.purchaserequisition}</a></p>
-<p><a href='${url.for("%{area='inv', controller='materialcredit', action='list', querystring='creditor=$instance.Id'}")}'>${common.quota}</a></p>
+<p><a href='${url.for("%{area='inv', controller='formula', action='view', querystring='id=$instance.Id'}")}'>${common.formula}</a></p>
 <table class="display">
   <tr class="ui-widget-header">
     <th>${common.customer}</th>
@@ -86,8 +82,6 @@ ${common.salesorder}: ${instance.Id}
       <th></th>
       <th>${common.requireddate}</th>
       <th>${common.requiredquantity}</th>
-      <th>${common.allocatedquantity}</th>
-      <th>${common.plannedmaterialquantity}</th>
       <th>${common.deliveredquantity}</th>
       <th>${common.ordermargin}</th>
       <th>${common.baseunit}</th>
@@ -98,13 +92,11 @@ ${common.salesorder}: ${instance.Id}
   #foreach($entry in $instance.Entries)
     <tr>
       <td>${entry.Id}</td>
-      <td>${entry.Material.Id}</td>
-      <td>$!{entry.Material.Name}</td>
-      <td>$!{entry.Material.Specification}</td>
+      <td>${entry.Product.Id}</td>
+      <td>$!{entry.Product.Name}</td>
+      <td>$!{entry.Product.Specification}</td>
       <td id="date${entry.Id}">${entry.RequiredDate.ToShortDateString()}</td>
       <td>${entry.RequiredQuantity}</td>
-      <td>${entry.AllocatedQuantity}</td>
-      <td>${entry.PlannedMaterialQuantity}</td>
       <td>${entry.DeliveredQuantity}</td>
       <td id="quantity${entry.Id}">${entry.RemainRequiredQuantity}</td>
       <td>${entry.Unit.Id}</td>
