@@ -24,10 +24,11 @@ ${j.jquery_editable()}
       "bJQueryUI": true,
       "sPaginationType": "full_numbers",
       "sScrollX": "100%",
-      "sScrollXInner": "150%",
+      "sScrollXInner": "1800",
       "aoColumns": [
       {'bVisible': false},
       {'sClass': 'material-id'},
+      {'sClass': 'material-name'},
       {'sClass': 'material-spec'},
       {'sClass': 'rate rate1'},
       {'sClass': 'unit-desc'},
@@ -98,7 +99,7 @@ ${j.jquery_editable()}
 
   function fnAddToDT(data){
     if(!fnHasError(data)){
-      oDataTable.fnAddData([data['Id'], data['Component'], data['ComponentDescription'], data['Rate'], data['ComponentUnitDescription'], data['Rate2'], data['CompoundUnitDescription'], data['Loss'], data['Position'], data['Comment'], data['Status'], data['EffectiveDate'], data['ObsoleteDate'], data['CreateDate'], data['ModifyDate'], '${common.remove}']);
+      oDataTable.fnAddData([data['Id'], data['Component'], data['ComponentName'], data['ComponentSpecification'], data['Rate'], data['ComponentUnitDescription'], data['Rate2'], data['CompoundUnitDescription'], data['Loss'], data['Position'], data['Comment'], data['Status'], data['EffectiveDate'], data['ObsoleteDate'], data['CreateDate'], data['ModifyDate'], '${common.remove}']);
       $('#component_Rate').val("");
       $('#component_Loss').val("");
       $('#component_Position').val("");
@@ -191,6 +192,7 @@ ${h.end_with_layout()}
     <tr>
       <th>Id</th>
       <th>${common.component}</th>
+      <th>${common.name}</th>
       <th>${common.description}</th>
       <th>${common.rate}<br/>(${common.component})</th>
       <th>${common.unit}<br/>(${common.component})</th>
@@ -212,7 +214,8 @@ ${h.end_with_layout()}
     <tr>
       <td>${component.Id}</td>
       <td>${component.Component.Id}</td>
-      <td>${component.Component.Description}</td>
+      <td>${component.Component.Name}</td>
+      <td>${component.Component.Specification}</td>
       <td id="rate1${component.Id}">${component.Rate}</td>
       <td>${m.trygetprimaryunit($component.Component).Description}</td>
       <td id="rate2${component.Id}">${component.Rate2}</td>

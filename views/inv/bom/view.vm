@@ -16,10 +16,13 @@
         "sDom": 'T<"clear">lfrtip',
         "bJQueryUI": true,
         "sPaginationType": "full_numbers",
+        "sScrollX": "100%",
+        "sScrollXInner": "1800",
         "aoColumns": [
           {'bVisible': false},
           {'sClass': 'material-id'},
-          {'sClass': 'material-spec'},
+          null,
+          null,
           {'sClass': 'quantity'},
           {'sClass': 'unit-description'},
           {'sClass': 'quantity'},
@@ -84,6 +87,7 @@ ${common.bom}: ${bill.Compound.Id} [${bill.Id}]
     <tr>
       <th>Id</th>
       <th>${common.component}</th>
+      <th>${common.name}</th>
       <th>${common.description}</th>
       <th>${common.rate}(${common.component})</th>
       <th>${common.unit}(${common.component})</th>
@@ -102,7 +106,8 @@ ${common.bom}: ${bill.Compound.Id} [${bill.Id}]
     <tr>
       <td>${component.Id}</td>
       <td>${component.Component.Id}</td>
-      <td>$!{component.Component.Description}</td>
+      <td>$!{component.Component.Name}</td>
+      <td>$!{component.Component.Specification}</td>
       <td>${component.Rate}</td>
       <td>${m.trygetprimaryunit($component.Component).Description}</td>
       <td>${component.Rate2}</td>
