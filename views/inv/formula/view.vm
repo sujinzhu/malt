@@ -33,6 +33,7 @@ ${j.jquery_treeview()}
   $(function(){
     var sUrl = '${url.for("%{action='getleaves', querystring='id=${id}'}")}';
     $('#auto-expandable-container a').button();
+    $('#header-container a').button();
     $('#manually-expandable-container .content li').button().click(function(){
       var url = '${url.for("%{action='listavailableboms', querystring='materialId='}")}' + this.id.substr(1);
       $('#bom-selector-container').empty().load(url).show("slow");
@@ -63,6 +64,7 @@ ${common.bom}: ${owner}
 
 <div id="header-container" class="ui-helper-clearfix">
 <h3>${common.bom}: ${owner}</h3>
+<a href='${url.for("%{action='delete', querystring='id=$id'}")}'>${common.remove}</a>
 </div>
 
 #if($autoExpandable && $autoExpandable.Count > 0)
