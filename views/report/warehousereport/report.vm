@@ -20,11 +20,12 @@
         "sDom": 'T<"clear">lfrtip',
         "bJQueryUI": true,
         "sPaginationType": "full_numbers",
+        "aLengthMenu": [[50, 100, 200, 500, 1000, -1], [50, 100, 200, 500, 1000, "All"]],
+        "iDisplayLength": 50,
         "aoColumns": [
         {"sClass": "repository-id"},
         {"sClass": "repository-desc"},
         {"sClass": "material-id"},
-        {"sClass": "material-name"},
         {"sClass": "material-spec"},
         {"sClass": "quantity"},
         {"sClass": "quantity"},
@@ -61,8 +62,7 @@ ${common.inoutbalance}
       <th>${common.repository}</th>
       <th>${common.repository} ${common.description}</th>
       <th>${common.materialid}</th>
-      <th>${common.material} ${common.name}</th>
-      <th>${common.material} ${common.specification}</th>
+      <th>${common.material} ${common.description}</th>
       <th>${common.beginingbalance}</th>
       <th>${common.currentincome}</th>
       <th>${common.currentoutlay}</th>
@@ -74,27 +74,24 @@ ${common.inoutbalance}
       <th>${common.thirdunit}</th>
     </tr>
   </thead>
-  #foreach($item in $data)
-    #foreach($subItem in $item.Value)
-    <tr>
-      <td>${item.Key}</td>
-      <td>$!{r.getdescription($item.Key)}</td>
-      <td>${subItem.Value.MaterialId}</td>
-      <td>${subItem.Value.MaterialName}</td>
-      <td>${subItem.Value.MaterialSpecification}</td>
-      <td>${subItem.Value.LeftBalance.ToString('N')}</td>
-      <td>${subItem.Value.Income.ToString('N')}</td>
-      <td>${subItem.Value.OutLay.ToString('N')}</td>
-      <td>${subItem.Value.RightBalance.ToString('N')}</td>
-      <td>$!{u.getdescription($subItem.Value.Unit1Id)}</td>
-      <td>${subItem.Value.RightBalance2.ToString('N')}</td>
-      <td>$!{u.getdescription($subItem.Value.Unit2Id)}</td>
-      <td>${subItem.Value.RightBalance3.ToString('N')}</td>
-      <td>$!{u.getdescription($subItem.Value.Unit3Id)}</td>
-    </tr>
-    #end
-  #end
   <tbody>
+  #foreach($item in $report.SummarizeReport())
+    <tr>
+      <td>${item.Key.Item1.Id}</td>
+      <td>$!{item.Key.Item1.Description}</td>
+      <td>${item.Key.Item2.Id}</td>
+      <td>$!{item.Key.Item2.Description}</td>
+      <td>${item.Value.Item1.Item1}</td>
+      <td>${item.Value.Item1.Item2}</td>
+      <td>${item.Value.Item1.Item3}</td>
+      <td>${item.Value.Item1.Item4}</td>
+      <td>$!{item.Value.Item2.Item1.Description}</td>
+      <td>${item.Value.Item2.Item2}</td>
+      <td>$!{item.Value.Item2.Item3.Description}</td>
+      <td>${item.Value.Item2.Item4}</td>
+      <td>$!{item.Value.Item2.Item5.Description}</td>
+    </tr>
+  #end
   </tbody>
 </table>
 </div>
