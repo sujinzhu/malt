@@ -50,7 +50,7 @@ ${common.inoutbalance}
   <div id="date-field">
     <span class="ui-widget-header ui-corner-left">${common.date}:</span>
     <span class="ui-widget-content ui-corner-right">
-    ${common.from} ${fromDate.ToShortDateString()} ${common.to} ${toDate.ToShortDateString()}</span>
+    ${common.from} ${report.FromDate.ToShortDateString()} ${common.to} ${report.ToDate.ToShortDateString()}</span>
   </div>
 </div>
 
