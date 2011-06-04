@@ -166,7 +166,7 @@ ${common.plan-container} ${container}
       <td>${entry.SO.Id}</td>
       <td>${entry.OrderNumber}</td>
       <td>${entry.SO.Customer.Name}</td>
-      <td>${entry.ProductId}</td>
+      <td>$!{entry.ProductId}</td>
       <td>$!{entry.Material.Name2}</td>
       <td>$!{entry.Material.Name}</td>
       <td>$!{entry.Material.Specification}</td>

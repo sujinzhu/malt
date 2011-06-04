@@ -12,7 +12,7 @@ ${j.jquery_dataTable()}
         {"fnRender": function(oObj){return fnRenderAssignLink(oObj);}, "bSortable": false},
         null, null, null, null,
         {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='remove'}")}');}, "bSortable": false},
-        {"fnRender": function(oObj){return fnRenderSelectLink(oObj);}, "bSortable": false}
+        {"fnRender": function(oObj){return fnRenderSelectLink(oObj, 'fnSelect');}, "bSortable": false}
       ]
     });
 
