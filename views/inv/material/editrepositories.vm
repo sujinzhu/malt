@@ -26,6 +26,7 @@
       <th>${common.description}</th>
       <th>${common.tradetype}</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -34,6 +35,7 @@
       <td>${mr.Repository.Id}</td>
       <td>$!{mr.Repository.Description}</td>
       <td>$!{h.getenumname($mr.TradeType)}</td>
+      <td>${mr.TradeType}</td>
       <td>${common.remove}</td>
     </tr>
   #end

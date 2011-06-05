@@ -9,19 +9,20 @@
         "sAjaxSource": '$url.for("%{action='listdetails'}")',
         "bJQueryUI": true,
         "sPaginationType": "full_numbers",
+        "sScrollX": "2000",
         "aoColumns": [
         {"bVisible": false},
         {"fnRender": function(oObj){return fnGetLink(oObj.aData[oObj.iDataColumn]);}, "sType": "html"},
-        {"sClass": ""},
-        {"sClass": "repository-id"},
-        {"sClass": "status"},
-        {"sClass": "jo-id"},
-        {"sClass": "", "bSortable": false},
-        {"sClass": "material-id"},
-        {"sClass": "material-name"},
-        {"sClass": "material-spec"},
-        {"sClass": "quantity"},
-        {"sClass": "quantity"}
+        null,
+        null,
+        null,
+        null,
+        {"bSortable": false},
+        null,
+        null,
+        null,
+        null,
+        null,
         ]
       });
     });

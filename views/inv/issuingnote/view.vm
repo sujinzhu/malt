@@ -21,8 +21,8 @@
         "aoColumns": [
         {"bVisible": false},
         {"sClass": "so-id"},
-        {"sClass": "repository-id"},
-        {"sClass": "repository-desc"},
+        {"sClass": "repository-id", "bVisible": false},
+        {"sClass": "repository-desc", "bVisible": false},
         {"sClass": "material-id"},
         {"sClass": "material-name"},
         {"sClass": "material-spec"},

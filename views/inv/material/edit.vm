@@ -89,15 +89,15 @@
         var aData = oMRs.fnGetData(aPos[0]);
         if(aData[aPos[1]] == '${common.remove}')
         {
-          fnRemoveRepository(aData[0]);
+          fnRemoveRepository(aData[0], aData[3]);
           oMRs.fnDeleteRow(aPos[0]);
         }
       });
     }
-    function fnRemoveRepository(repository)
+    function fnRemoveRepository(repository, tradeType)
     {
       var url = '${url.for("%{action='removerepository'}")}';
-      jQuery.post(url, {material: '${material.Id}', repository: repository}, function(data){fnHasError(data);}, 'json');
+      jQuery.post(url, {material: '${material.Id}', repository: repository, tradeType: tradeType}, function(data){fnHasError(data);}, 'json');
     }
   // ]]>
   </script>
