@@ -32,6 +32,8 @@ ${j.jquery_dataTable()}
       "bServerSide": true,
       "sAjaxSource": '$url.for("%{action='search'}")',
       "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
+      "sScrollX": "1800",
       "aoColumns": [
       {"bVisible": false},
       {"sClass": "transaction-category"},
@@ -45,6 +47,7 @@ ${j.jquery_dataTable()}
       {"sClass": "quantity", "bSortable": false},
       {"sClass": "unit-id", "bSortable": false},
       {"sClass": "unit-desc", "bSortable": false, "bVisible": false},
+      null,
       null,
       null
       ],
@@ -151,8 +154,9 @@ ${common.transaction-detail}
       <th>${common.out-quantity}</th>
       <th>${common.unit}</th>
       <th></th>
-      <th>${common.allocatee}</th>
-      <th>${common.stub}</th>
+      <th>${common.label}0</th>
+      <th>${common.label}1</th>
+      <th>${common.label}2</th>
     </tr>
   </thead>
 </table>
