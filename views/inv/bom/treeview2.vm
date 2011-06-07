@@ -1,0 +1,35 @@
+#capturefor(head)
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+  .bom-rate { color: blue; width: 140px; float: left; }
+  .bom-rate2 { color: orange; }
+  .bom-loss { float: left; width: 120px; font-size: 85%; }
+  .bom-position { float: left; width: 120px;}
+  .bom-comment { float: left; width: 120px;}
+  .material-id { float: left; width: 170px; }
+  .material-name { float: left; }
+  .material-name, .material-spec { width: 310px; }
+  h3 { font-size: 120%; }
+  #bomtree li { float: none; }
+  /* ]]> */
+  </style>
+  
+  ${j.jquery_treeview()}
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+  $(function(){
+    $('#bomtree').treeview({url: '${url.for("%{action='getcomponents2', querystring='bomId=$bill.Id'}")}'});
+  });
+  // ]]>
+  </script>
+#end
+
+<div>
+  <h3>${common.bom}: ${bill.Compound.Id} $!{bill.Compound.Description}</h3>
+  <div>
+    ${bill.Compound.Id}
+    <ul id="bomtree">
+    </ul>
+  </div>
+</div>
