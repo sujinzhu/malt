@@ -7,6 +7,10 @@
     <img src="${siteroot}/content/images/docs.png"/>
     <span>${common.material} ${common.list}</span></a>
   </li>
+  <li><a href='${url.for("%{area='inv', controller='material', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.material} ${common.list} (${common.detail})</span></a>
+  </li>
   <li><a href='${url.for("%{area='inv', controller='bom', action='new'}")}'>
     <img src="${siteroot}/content/images/doc.png"/>
     <span>${common.createnew} ${common.bom}</span></a>
