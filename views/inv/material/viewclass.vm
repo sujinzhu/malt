@@ -1,0 +1,25 @@
+﻿#if($material)
+  <div>
+    <ul>
+      <li>
+        <span class="ui-widget-header ui-corner-left label2">${common.materialclass}:</span>
+        <span class="ui-widget-content value2">
+        <!--TODO: list only workshop repositories -->
+        $!{material.Extension3.MaterialClass.Id}
+        $!{material.Extension3.MaterialClass.Description}
+        </span>
+        <span class="ui-widget-header label2">${common.inventoryclass}:</span>
+        <span class="ui-widget-content ui-corner-right value2">
+        $!{material.Extension3.InventoryClass.Id}
+        $!{material.Extension3.InventoryClass.Description}
+        </span>
+      </li>
+    </form>
+    </ul>
+  </div>
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+// ]]>
+</script>
+#end
+

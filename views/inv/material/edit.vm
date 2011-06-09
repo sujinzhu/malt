@@ -111,6 +111,7 @@
       <li><a href='${url.for("%{action='editunits', querystring='id=$material.Id'}")}'>${common.unit}</a></li>
       <li><a href='${url.for("%{action='editrepositories', querystring='id=$material.Id'}")}'>${common.repository}</a></li>
       <li><a href='${url.for("%{action='editspec', querystring='id=$material.Id'}")}'>${common.specification}</a></li>
+      <li><a href='${url.for("%{action='editclass', querystring='id=$material.Id'}")}'>${common.classification}</a></li>
       <li><a href='${url.for("%{action='editoutsourcing', querystring='id=$material.Id'}")}'>${common.issueoutward}</a></li>
     </ul>
 

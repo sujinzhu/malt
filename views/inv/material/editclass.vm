@@ -1,0 +1,21 @@
+﻿#if($material)
+  <div>
+    <ul>
+    <form action='${url.for("%{action='setclass'}")}' method="POST" id="formAddRepository">
+      ${f.hiddenfield("material", $material.Id)}
+      <li>
+        <span class="ui-widget-header ui-corner-left label2">${common.materialclass}:</span>
+        <span class="ui-widget-content value2">
+        <!--TODO: list only workshop repositories -->
+        ${f.select("materialClass", $!material.Extension3.MaterialClass.Id, $materialClasses, "%{value='id', text='description'}")}
+        </span>
+        <span class="ui-widget-header label2">${common.inventoryclass}:</span>
+        <span class="ui-widget-content ui-corner-right value2">
+        ${f.select("inventoryClass", $!material.Extension3.InventoryClass.Id, $inventoryClasses, "%{value='id', text='description'}")}
+        </span>
+        ${f.submit($common.set, "%{style='margin-left: 1em;'}")}
+      </li>
+    </form>
+    </ul>
+  </div>
+#end

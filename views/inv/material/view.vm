@@ -40,6 +40,7 @@
       <li><a href='${url.for("%{action='viewunits', querystring='id=$material.Id'}")}'>${common.unit}</a></li>
       <li><a href='${url.for("%{action='viewrepositories', querystring='id=$material.Id'}")}'>${common.repository}</a></li>
       <li><a href='${url.for("%{action='viewspec', querystring='id=$material.Id'}")}'>${common.specification}</a></li>
+      <li><a href='${url.for("%{action='viewclass', querystring='id=$material.Id'}")}'>${common.classification}</a></li>
       <li><a href='${url.for("%{action='viewoutsourcing', querystring='id=$material.Id'}")}'>${common.issueoutward}</a></li>
     </ul>
 
