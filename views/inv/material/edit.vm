@@ -79,7 +79,7 @@
     }
     function fnAddToRepositories(data){
       if(!fnHasError(data)){
-        oMRs.fnAddData([data['Repository'], data['RepositoryDescription'], data['TradeType'], '${common.remove}']);
+        oMRs.fnAddData([data['Repository'], data['RepositoryDescription'], data['TradeTypeL'], data['TradeType'], '${common.remove}']);
         fnTrigerRemoveRepository();
       }
     }
