@@ -66,11 +66,11 @@ ${j.jquery_autocomplete()}
   function fnAddToDT(data){
     if(!fnHasError(data)){
       oDataTable.fnAddData([data['Id'], data['JobOrder'], data['MaterialId'], data['MaterialName'], data['MaterialSpec'], data['SubmittedQuantity'], data['PackageQuantity'], data['Notice'], '${common.remove}']);
-      $('#entry_Material_Id').val("");
+      $('#entry_Material_Id').val("").focus();
       $('#entry_SubmittedQuantity').val("");
       $('#entry_PackageQuantity').val("");
       $('#entry_Notice').val("");
-      $('#entry_JobOrder').val("").focus();
+      //$('#entry_JobOrder').val("").focus();
     }
   }
 // ]]>

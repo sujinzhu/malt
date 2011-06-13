@@ -108,7 +108,7 @@ ${j.jquery_autocomplete()}
   <tbody>
     <tr class="ui-widget-content">
       <td>${instance.Id}</td>
-      <td>${r.getdescription($instance.SubmitFrom)}</td>
+      <td>${instance.SubmitFrom}</td>
       <td>${instance.SubmitBy}</td>
       <td>${h.getenumname($instance.Status)}</td>
       <td>${instance.CreateDate.ToShortDateString()}</td>
@@ -124,7 +124,7 @@ ${h.start_with_layout($url.for("%{action='addentry'}"), "formNewInstance")}
 ${f.push("entry")}
 
 $f.hiddenfield("Submission.Id")
-${h.field($common.tradetype, $f.select("TradeType", $f.enumtopairs("HJ.Malt.Common.Domain.TradeTypeEnum, HJ.Malt.Common"), "%{value='first', class='required'}"), true)}
+${h.field($common.tradetype, $f.select("TradeType", $f.enumtopairs("HJ.Common.Domain.TradeTypeEnum, HJ.Common"), "%{value='first', class='required'}"), true)}
 ${h.field($common.material, $f.textfield("Material.Id", "%{class='required'}"), true)}
 ${h.field($common.quantity, $f.textfield("SubmittedQuantity", "%{class='required', min='0.000000001'}"), true)}
 ${h.field($common.packagequantity, $f.textfield("PackageQuantity", "%{min='0'}"))}
