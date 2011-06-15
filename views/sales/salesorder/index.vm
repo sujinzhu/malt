@@ -31,6 +31,7 @@ ${j.jquery_dataTable()}
       "bServerSide": true,
       "sAjaxSource": '$url.for("%{action='search'}")',
       "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
       "fnServerData": function(sSource, aoData, fnCallback){
         var url = sSource + '?customer=' + $('#customer').val() + '&soId=' + $('#soId').val() + '&fromDate=' + $('#fromDate').val() + '&toDate=' + $('#toDate').val() + '&materialId=' + $('#materialId').val() + '&includeFinishedOrder=' + $('#includeFinishedOrder').val();
         jQuery.get(url, aoData, function(json){

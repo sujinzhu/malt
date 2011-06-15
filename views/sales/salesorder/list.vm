@@ -9,6 +9,7 @@ ${j.jquery_datatable()}
     oDataTable = $('#entries').dataTable({
       "sDom": 'T<"clear">lfrtip',
       "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
       "aaSorting": [[1, 'asc']],
       "aoColumns": [
       {"bVisible": false},
