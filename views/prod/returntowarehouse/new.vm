@@ -28,7 +28,7 @@ ${h.start_with_layout($url.for("%{action='create'}"), "new-instance-form")}
 ${f.push("sheet")}
 
 ${h.field("${common.return-to-warehouse} ${common.id}", $f.textfield("Id"))}
-${h.field($common.workshop, $f.select("ReturnFrom", $repositories, "%{value='Id', class='required'}"), true)}
+${h.field($common.workshop, $f.select("ReturnFrom.Id", $repositories, "%{value='Id', class='required'}"), true)}
 ${h.field("", $f.submit($common.create))}
 
 ${f.pop()}
@@ -50,7 +50,7 @@ ${h.end_with_layout()}
   #foreach($draft in $drafts)
     <tr>
       <td>${url.link($draft.Id, "%{action='steering', querystring='id=$draft.Id'}")}</td>
-      <td>$!{r.getdescription($draft.ReturnFrom)}</td>
+      <td>$!{draft.ReturnFrom}</td>
       <td>${draft.ReturnedBy}</td>
       <td>${h.getenumname($draft.Status)}</td>
       <td>${draft.CreateDate.ToShortDateString()}</td>

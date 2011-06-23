@@ -100,7 +100,7 @@ ${common.return-to-warehouse}: ${sheet.Id}
   <tbody>
     <tr class="ui-widget-content">
       <td>${sheet.Id}</td>
-      <td>$!{r.getdescription($sheet.ReturnFrom)}</td>
+      <td>$!{sheet.ReturnFrom}</td>
       <td>${sheet.ReturnedBy}</td>
       <td>${h.getenumname($sheet.Status)}</td>
       <td>${sheet.CreateDate.ToShortDateString()}</td>
