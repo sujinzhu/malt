@@ -107,7 +107,7 @@ ${h.start_with_layout($url.for("%{action='addentry0'}"), "form-new-entry0")}
 ${f.push("entry")}
 
 $f.hiddenfield("Sheet.Id")
-${h.field($common.tradetype, $f.select("TradeType", $f.enumtopairs("HJ.Malt.Common.Domain.TradeTypeEnum, HJ.Malt.Common"), "%{value='first', class='required'}"), true)}
+${h.field($common.tradetype, $f.select("TradeType", $f.enumtopairs("HJ.Common.Domain.TradeTypeEnum, HJ.Common"), "%{value='first', class='required'}"), true)}
 ${h.field($common.material, $f.textfield("Material.Id", "%{class='required'}"), true)}
 ${h.field($common.requiredquantity, $f.textfield("Quantity", "%{class='required', min='0.000000001'}"), true)}
 ${h.field($common.notice, $f.textfield("Notice"))}

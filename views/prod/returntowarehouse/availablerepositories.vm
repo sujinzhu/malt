@@ -13,9 +13,9 @@ ${f.installscripts()}
 
 #foreach($repository in $repositories)
 <p>
-  <span class="label2 repository-with-desc">[${repository.Id}] $!{repository.Description}:</span>
+  <span class="label2 repository-with-desc">[${repository}] ${r.getdescription($repository)}:</span>
   <span class="field2">
-  <input type="hidden" name="repository[]" value="${repository.Id}" />
+  <input type="hidden" name="repository[]" value="${repository}" />
   <input type="text" name="quantity[]" value="${entry.Quantity}" max="${entry.Quantity}"/>
   $!{m.TryGetPrimaryUnit($entry.Material).Description}
   </span>
