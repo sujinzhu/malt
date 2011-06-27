@@ -56,6 +56,11 @@ ${h.start_with_layout($url.for("%{action='increase'}"), "formNewInstance")}
 ${h.field($common.repository, $f.select("repository", $r.findall(), "%{value='id', class='required'}"), true)}
 ${h.field($common.material, $f.textfield("material", "%{class='required'}"), true)}
 ${h.field($common.quantity, $f.textfield("quantity", "%{class='required', min='0.00000000001'}"), true)}
+${h.field("${common.label}0", $f.textfield("label0"))}
+${h.field("${common.label}1", $f.textfield("label1"))}
+${h.field("${common.label}2", $f.textfield("label2"))}
+${h.field("${common.label}3", $f.textfield("label3"))}
+${h.field("${common.label}4", $f.textfield("label4"))}
 ${h.field("", $f.submit($common.increase))}
 
 ${h.end_with_layout()}
