@@ -49,6 +49,16 @@
   </li>
 </ul>
 <ul>
+  <li><a href='${url.for("%{area='prod', controller='decomposing', action='index'}")}'>
+    <img src="${siteroot}/content/images/manufacturing.png"/>
+    <span>${common.decompose}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='prod', controller='decomposing', action='decomposewithoutorder'}")}'>
+    <img src="${siteroot}/content/images/manufacturing.png"/>
+    <span>${common.decompose}(${common.without-order})</span></a>
+  </li>
+</ul>
+<ul>
   <li><a href='${url.for("%{area='prod', controller='accountsubmitable', action='index'}")}'>
     <img src="${siteroot}/content/images/docs.png"/>
     <span>${common.account-submitable}</span></a>

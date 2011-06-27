@@ -1,0 +1,13 @@
+#foreach($bom in $boms)
+  <p>
+    <span class="label2"><input type="radio" name="bom.Id" value='${bom.Id}' /></span>
+    <span class="field2"><a target="_blank" href='${url.for("%{area='inv', controller='bom', action='view', querystring='id=$bom.Id'}")}'>${bom.Name}</a></span>
+  </p>
+#end
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(':radio:first').attr("checked", true);
+  fnDecorative();
+// ]]>
+</script>

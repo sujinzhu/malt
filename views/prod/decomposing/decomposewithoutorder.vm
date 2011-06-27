@@ -1,0 +1,119 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#new-instance-container { width: 800px; padding: 0 1em 1em 1em; }
+h3 { font-size: 123.1%; }
+p { margin-top: 1em; height: 25px; float: left; }
+span { float: left; }
+.label2 { width: 100px; text-align: right; padding-right: .3em; }
+.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; width: 300px; }
+.label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+
+#instances-container { margin-top: 1em; }
+/* ]]> */
+</style>
+
+${j.jquery_autocomplete()}
+${j.jquery_dataTable()}
+${j.jquery_validate()}
+${j.jquery_form()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  $(function(){
+    oDataTable = $('#instances').dataTable({
+      'bJQueryUI': true,
+    });
+
+    $('#instance.WorkShop').focus();
+
+    $('#instance_Product_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+      width: 550,
+      matchContains: true,
+      formatItem: formatMaterialItem,
+      formatResult: formatResult,
+      max: 30
+    }).focusin(function(){fnHideBomList();}).focusout(function(){fnShowBomList();});
+
+    $("#new-instance").validate({
+      submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+    });
+
+    fnDecorative();
+  });
+
+  function fnAddToDT(data){
+    if(!fnHasError(data)){
+      oDataTable.fnAddData([data['Id'], data['WorkShop'], data['WorkShopDesc'], data['FormulaOwner'], data['ProductId'], data['ProductName'], data['ProductSpec'], data['DecomposedQuantity'], data['UnitId'], data['UnitDesc'], data['DecomposedDate']]);
+      $('#instance_Product_Id').val("").focus();
+      $('#instance_DecomposedQuantity').val("");
+    }
+  }
+
+  function fnShowBomList(){
+    if($('#instance_Product_Id').val() > ''){
+      $('#bom-container').show('slow');
+      $('#bom-list').load('${url.for("%{action='listbom'}")}', {materialId: $('#instance_Product_Id').val()});
+    }
+  }
+
+  function fnHideBomList(){
+    $('#bom-container').hide('slow');
+  }
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+${common.decompose} (${common.without-order})
+#end
+
+<div id="header-container" class="ui-helper-clearfix">
+  <h3>${common.decompose}(${common.without-order})</h3>
+</div>
+
+<div id="new-instance-container" class="ui-helper-clearfix ui-widget-content ui-corner-all">
+  <form id="new-instance" action='${url.for("%{action='decompose2'}")}' method="POST">
+  ${f.push("instance")}
+  ${f.hiddenfield("ForOrder")}
+  <p>
+    <span class="label2">*${common.workshop}</span>
+    <span class="field2">${f.select("Repository.Id", $repositories, "%{value='Id' class='required'}")}</span>
+  </p>
+  <p>
+    <span class="label2">*${common.materialid}:</span>
+    <span class="field2">${f.textfield("Product.Id", "%{class='required'}")}&nbsp;</span>
+  </p>
+  <p>
+    <span class="label2">*${common.quantity}:</span>
+    <span class="field2">${f.textfield("DecomposedQuantity", "%{min='0.00000001', class='required'}")}&nbsp;</span>
+  </p>
+  ${f.pop()}
+  <div id="bom-container" class="ui-helper-hidden">
+  <div id="bom-list"></div>
+  <p>
+    ${f.submit($common.submit)}
+  </p>
+  </div>
+  </form>
+</div>
+
+<div id="instances-container" class="ui-helper-clearfix">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.workshop}</th>
+      <th></th>
+      <th>${common.ordernumber}</th>
+      <th>${common.product}</th>
+      <th></th>
+      <th></th>
+      <th>${common.quantity}</th>
+      <th>${common.unit}</th>
+      <th></th>
+      <th>${common.decomposed-date}</th>
+    </tr>
+  </thead>
+</table>
+</div>
