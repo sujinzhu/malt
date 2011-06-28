@@ -62,6 +62,10 @@
           <span class="ui-widget-header ui-corner-left label">${common.specification}:</span>
           <span class="value ui-widget-content ui-corner-right">$!{material.Specification}&nbsp;</span>
         </li>
+        <li id="ma">
+          <span class="ui-widget-header ui-corner-left label">${common.is-active}:</span>
+          <span class="value ui-widget-content ui-corner-right">$!{material.Active}&nbsp;</span>
+        </li>
         <li id="mpu">
           <span class="ui-widget-header ui-corner-left label">${common.primaryunit}:</span>
           <span class="value ui-widget-content ui-corner-right">

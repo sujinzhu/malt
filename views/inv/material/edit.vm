@@ -25,6 +25,7 @@
     $(function(){
       $('#category').tabs({selected: ${tab}}).width('800px');
       fnAdjustHeight('#mn');
+      fnAdjustHeight('#ma');
       fnAdjustHeight('#mn2');
       fnAdjustHeight('#ms');
       fnAdjustHeight('#mpu');
@@ -131,6 +132,10 @@
         <li id="mn2">
           <span class="ui-widget-header ui-corner-left label">${common.name}2:</span>
           <span class="value ui-widget-content ui-corner-right">${f.textfield("Name2")}</span>
+        </li>
+        <li id="ma">
+          <span class="ui-widget-header ui-corner-left label">${common.is-active}:</span>
+          <span class="value ui-widget-content ui-corner-right">${f.checkboxfield("Active")}</span>
         </li>
         <li id="ms">
           <span class="ui-widget-header ui-corner-left label">${common.specification}:</span>
