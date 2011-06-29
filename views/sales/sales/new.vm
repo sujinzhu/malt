@@ -36,6 +36,14 @@ ${j.jquery_validate()}
 
     $('#new-instance-form').validate();
 
+    $('#id').autocomplete('$url.for("%{area='sales', controller='salesorder', action='autocomplete2'}")', {
+      width: 400,
+      matchContains: true,
+      formatItem: formatSalesOrderItem,
+      formatResult: formatResult,
+      max: 30
+    });
+    
     fnDecorative();
     $('.button').button();
 
