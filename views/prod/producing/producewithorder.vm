@@ -23,6 +23,7 @@
     $(function(){
       oDataTable = $('#instances').dataTable({
         'bJQueryUI': true,
+        "sPaginationType": "full_numbers",
       });
       $('#instance.WorkShop').focus();
       $('#instance_FormulaOwner').autocomplete('$url.for("%{area='sales', controller='salesorder', action='autocomplete2'}")', {
