@@ -55,6 +55,12 @@
   </li>
 </ul>
 <ul>
+  <li><a href='${url.for("%{area='inv', controller='repository', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.repository}</span></a>
+  </li>
+</ul>
+<ul>
   <li><a href='${siteroot}/Malt-Manual.PDF'>
     <img src="${siteroot}/content/images/help.png" width="64" height="64"/>
     <span>${common.malt-manual}</span></a>

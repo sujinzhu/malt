@@ -7,7 +7,8 @@
   span { float: left; }
   .label2 { width: 100px; text-align: right; padding-right: .3em; }
   .field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
-  .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+  .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%; }
+  .field2 { width: 200px;}
 
   .description .leven-name { width: 250; }
   /* ]]> */
@@ -19,7 +20,6 @@
   // <![CDATA[
     $(function(){
       fnDecorative();
-      $('#instance_Description').focus();
     });
 
     function fnDecorative(){
@@ -31,47 +31,39 @@
   </script>
 #end
 
-<h3>${common.repository}: ${instance.Id}</h3>
+<h3>${common.repository}: $!{instance.Id}</h3>
 
 <div id="panel" class="ui-helper-clearfix">
-  <form action='${url.for("%{action='update'}")}' method="POST">
-  ${f.push("instance")}
-  ${f.hiddenfield("Id")}
   <p>
     <span class="label2">${common.description}:</span>
-    <span class="field2 description">${f.textfield("Description", "%{size='30'}")}&nbsp;</span>
+    <span class="field2 description">$!{instance.Description}&nbsp;</span>
   </p>
   <p>
     <span class="label2">${common.name}1:</span>
-    <span class="field2 level-name">${f.textfield("LevelName1", "%{size='30'}")}&nbsp;</span>
+    <span class="field2 level-name">$!{instance.LevelName1}&nbsp;</span>
   </p>
   <p>
     <span class="label2">${common.name}2:</span>
-    <span class="field2 level-name">${f.textfield("LevelName2", "%{size='30'}")}&nbsp;</span>
+    <span class="field2 level-name">$!{instance.LevelName2}&nbsp;</span>
   </p>
   <p>
     <span class="label2">${common.name}3:</span>
-    <span class="field2 level-name">${f.textfield("LevelName3", "%{size='30'}")}&nbsp;</span>
+    <span class="field2 level-name">$!{instance.LevelName3}&nbsp;</span>
   </p>
   <p>
     <span class="label2">${common.name}4:</span>
-    <span class="field2 level-name">${f.textfield("LevelName4", "%{size='30'}")}&nbsp;</span>
+    <span class="field2 level-name">$!{instance.LevelName4}&nbsp;</span>
   </p>
   <p>
     <span class="label2">${common.name}5:</span>
-    <span class="field2 level-name">${f.textfield("LevelName5", "%{size='30'}")}&nbsp;</span>
+    <span class="field2 level-name">$!{instance.LevelName5}&nbsp;</span>
   </p>
   <p>
     <span class="label2">${common.name}6:</span>
-    <span class="field2 level-name">${f.textfield("LevelName6", "%{size='30'}")}&nbsp;</span>
+    <span class="field2 level-name">$!{instance.LevelName6}&nbsp;</span>
   </p>
   <p>
     <span class="label2">${common.enabled}?</span>
-    <span class="field2 level-name">${f.checkboxfield("IsActive")}&nbsp;</span>
+    <span class="field2 level-name">$!{instrance.IsActive}&nbsp;</span>
   </p>
-  ${f.pop()}
-  <p>
-    ${f.submit($common.submit)}
-  </p>
-  </form>
 </div>

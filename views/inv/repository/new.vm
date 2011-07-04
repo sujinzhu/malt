@@ -14,12 +14,35 @@
   </style>
 
   ${j.jquery_autocomplete()}
+  ${j.jquery_dataTable()}
+  ${j.jquery_form()}
+  ${j.jquery_validate()}
   
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
     $(function(){
+      $('a').button();
       fnDecorative();
-      $('#instance_Description').focus();
+      $('#instance_Id').focus();
+      oInstances = $('#instances').dataTable({
+        "bServerSide": true,
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [
+        {"fnRender": function(oObj){return fnGetLink(oObj.aData[0]);}, "sType": "html", "sClass": "id"},
+        {"sClass": "description"},
+        {"sClass": "level-name1"},
+        {"sClass": "level-name2"},
+        {"sClass": "level-name3"},
+        {"sClass": "level-name4"},
+        {"sClass": "level-name5"},
+        {"sClass": "level-name6"},
+        null
+        ]
+      });
+      $('#new-instance').validate({
+        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
+      });
     });
 
     function fnDecorative(){
@@ -27,16 +50,35 @@
       $('.field2').addClass('ui-state-hover ui-corner-tr');
       $(':submit').button();
     }
+
+    function fnAddToDT(data){
+      if(!fnHasError(data)){
+        oInstances.fnAddData([data['Id'], data['Description'], data['LevelName1'], data['LevelName2'], data['LevelName3'], data['LevelName4'], data['LevelName5'], data['LevelName6'], data['IsActive']]);
+        $('#instance_Description').val("");
+        $('#instance_Level1').val("");
+        $('#instance_Level2').val("");
+        $('#instance_Level3').val("");
+        $('#instance_Level4').val("");
+        $('#instance_Level5').val("");
+        $('#instance_Level6').val("");
+        $('#instance_IsActive').val("");
+        $('#instance_Id').val("").focus();
+      }
+    }
   // ]]>
   </script>
 #end
 
-<h3>${common.repository}: ${instance.Id}</h3>
+<h3>${common.createnew} ${common.repository}</h3>
+<a href='${url.for("%{action='list'}")}'>${common.returntolist}</a>
 
 <div id="panel" class="ui-helper-clearfix">
-  <form action='${url.for("%{action='update'}")}' method="POST">
+  <form action='${url.for("%{action='create'}")}' method="POST" id="new-instance">
   ${f.push("instance")}
-  ${f.hiddenfield("Id")}
+  <p>
+    <span class="label2">*${common.id}:</span>
+    <span class="field2 description">${f.textfield("Id", "%{size='30', class='required'}")}&nbsp;</span>
+  </p>
   <p>
     <span class="label2">${common.description}:</span>
     <span class="field2 description">${f.textfield("Description", "%{size='30'}")}&nbsp;</span>
@@ -74,4 +116,23 @@
     ${f.submit($common.submit)}
   </p>
   </form>
+</div>
+
+<div id="instances-container">
+
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.description}</th>
+      <th>${common.name}1</th>
+      <th>${common.name}2</th>
+      <th>${common.name}3</th>
+      <th>${common.name}4</th>
+      <th>${common.name}5</th>
+      <th>${common.name}6</th>
+      <th>${common.enabled}</th>
+    </tr>
+  </thead>
+</table>
 </div>
