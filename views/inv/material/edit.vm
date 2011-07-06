@@ -184,7 +184,7 @@
           ${f.hiddenfield("material", $material.Id)}
           <span class="ui-widget-header ui-corner-left label">${common.minimumpackagingquantity}:</span>
           <span class="value ui-widget-content ui-corner-right">
-          ${f.textfieldvalue("mpq", $m.getminimumpackagingquantity($material), "%{class='required', min='1'}")}</span>
+          ${f.textfieldvalue("mpq", $m.getminimumpackagingquantity($material), "%{class='required', min='0'}")}</span>
           ${f.submit($common.set, "%{style='margin-left: 1em;'}")}
         </form>
         </li>
