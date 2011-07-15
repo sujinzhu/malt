@@ -12,6 +12,7 @@ ${j.jquery_dataTable()}
   $(function(){
     $('#entries').dataTable({
       "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
       "aoColumns": [
       {"bVisible": false},
       {"fnRender": function(oObj){return fnGetLink(oObj.aData[1]);}, "sType": "html", "sClass": "pr-id"},
