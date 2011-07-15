@@ -66,10 +66,10 @@ ${common.purchaserequisition}: ${instance.Id}
       <td>${entry.Material.Id}</td>
       <td>$!{entry.Material.Name}</td>
       <td>$!{entry.Material.Specification}</td>
-      <td>${entry.RequiredQuantity.ToString('G17')}</td>
+      <td>${entry.RequiredQuantity.ToString("G")}</td>
       <td>$!{entry.Unit.Description}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>
-      <td>${entry.OrderedQuantity.ToString('G17')}</td>
+      <td>${entry.OrderedQuantity.ToString("G")}</td>
       <td>$!{entry.Responsible}</td>
       <td>$!{entry.Notice}</td>
     </tr>

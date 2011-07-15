@@ -55,7 +55,7 @@ ${common.account-payable}
       <td>$!{instance.ProductRequirement.Product.Name}</td>
       <td>$!{instance.ProductRequirement.Product.Specification}</td>
       <td>${instance.ProductRequirement.RequiredDate}</td>
-      <td>${instance.ProductRequirement.RequiredQuantity.ToString("G$a.FactionalDigit")}</td>
+      <td>${instance.ProductRequirement.RequiredQuantity.ToString("G")}</td>
     </tr>
     #end
   </tbody>

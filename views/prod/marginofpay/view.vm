@@ -52,7 +52,7 @@ ${common.margin-of-pay}
       <td>${instance.Item1.Id}</td>
       <td>$!{instance.Item1.Name}</td>
       <td>$!{instance.Item1.Specification}</td>
-      <td>${instance.Item2.ToString("G$a.FactionalDigit")}</td>
+      <td>${instance.Item2.ToString("G")}</td>
     </tr>
     #end
   </tbody>

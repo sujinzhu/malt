@@ -1,0 +1,8 @@
+.bom-rate { color: blue; width: 230px; float: left; }
+.bom-rate2 { color: orange; }
+.bom-loss { float: left; width: 120px; font-size: 85%; }
+.material-id { float: left; width: 110px; }
+.material-name { float: left; }
+.material-name, .material-spec { width: 310px; }
+h3 { font-size: 120%; }
+#bomtree li { float: none; }

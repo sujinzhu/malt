@@ -55,7 +55,7 @@ ${common.account-submitted}
       <td>$!{instance.ProductSubmission.Product.Name}</td>
       <td>$!{instance.ProductSubmission.Product.Specification}</td>
       <td>${instance.ProductSubmission.SubmittedDate}</td>
-      <td>${instance.ProductSubmission.SubmittedQuantity.ToString("G$a.FactionalDigit")}</td>
+      <td>${instance.ProductSubmission.SubmittedQuantity.ToString("G")}</td>
     </tr>
     #end
   </tbody>
