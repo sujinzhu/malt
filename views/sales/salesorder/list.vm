@@ -80,10 +80,10 @@ ${common.soe-list}(${list-type})
       <td>${pair.Goods.SO.Id}</td>
       <td>${pair.Goods.OrderNumber}</td>
       <td>${pair.Goods.SO.Customer.Name}</td>
-      <td>$!{pair.Goods.ProductId}</td>
-      <td>${pair.Goods.Material.Id}</td>
-      <td>$!{pair.Goods.Material.Name2}</td>
-      <td>$!{pair.Goods.Material.Name}</td>
+      <td>$!{pair.Goods.Product.Id}</td>
+      <td>${pair.Goods.Product.Id}</td>
+      <td>$!{pair.Goods.Product.Name2}</td>
+      <td>$!{pair.Goods.Product.Name}</td>
       <td>${pair.ContainedQuantity.ToString("F0")}</td>
       <td>${pair.Goods.Size.ToString("F3")}</td>
       <td>${pair.Goods.BoxQuantity.ToString("F0")}</td>
