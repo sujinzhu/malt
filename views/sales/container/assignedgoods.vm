@@ -13,6 +13,7 @@ ${j.jquery_editable()}
   $(function(){
     oDataTable = $('#contained-goods').dataTable({
       "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
       "aoColumns": [
       {"bVisible": false},
       {"sClass": "so-id"},
@@ -36,6 +37,7 @@ ${j.jquery_editable()}
 
     oGoods = $('#goods').dataTable({
       "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
       "aoColumns": [
       {"bVisible": false, "sClass": "entry-id"},
       {"sClass": "so-id"},
@@ -120,10 +122,10 @@ ${common.plan-container} ${container}
       <td>${pair.Goods.SO.Id}</td>
       <td>${pair.Goods.OrderNumber}</td>
       <td>${pair.Goods.SO.Customer.Name}</td>
-      <td>${pair.Goods.ProductId}</td>
-      <td>$!{pair.Goods.Material.Name2}</td>
-      <td>$!{pair.Goods.Material.Name}</td>
-      <td>$!{pair.Goods.Material.Specification}</td>
+      <td>${pair.Goods.Product.Id}</td>
+      <td>$!{pair.Goods.Product.Name2}</td>
+      <td>$!{pair.Goods.Product.Name}</td>
+      <td>$!{pair.Goods.Product.Specification}</td>
       <td>${pair.Goods.CartonQuantity.ToString("F0")}</td>
       <td>${pair.Goods.QuantityInContainer.ToString("F0")}</td>
       <td>${pair.ContainedQuantity.ToString("F0")}</td>
@@ -166,10 +168,10 @@ ${common.plan-container} ${container}
       <td>${entry.SO.Id}</td>
       <td>${entry.OrderNumber}</td>
       <td>${entry.SO.Customer.Name}</td>
-      <td>$!{entry.ProductId}</td>
-      <td>$!{entry.Material.Name2}</td>
-      <td>$!{entry.Material.Name}</td>
-      <td>$!{entry.Material.Specification}</td>
+      <td>$!{entry.Product.Id}</td>
+      <td>$!{entry.Product.Name2}</td>
+      <td>$!{entry.Product.Name}</td>
+      <td>$!{entry.Product.Specification}</td>
       <td>${entry.CartonQuantity.ToString("F0")}</td>
       <td>${entry.QuantityInContainer.ToString("F0")}</td>
       <td id="${entry.Id}">0</td>

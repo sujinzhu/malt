@@ -7,6 +7,7 @@ ${j.jquery_dataTable()}
   $(function(){
     oDataTable = $('#instances').dataTable({
       "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
       "aoColumns": [
         {'bVisible': false},
         {"fnRender": function(oObj){return fnRenderAssignLink(oObj);}, "bSortable": false},
