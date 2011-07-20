@@ -106,7 +106,7 @@ ${common.print}</a>
   </thead>
   <tbody>
   #foreach($rne in $rn.Entries)
-    #if(!$rne.Placed)
+    #if($rne.Accepted)
     <tr>
       <td>${rne.Id}</td>
       <td><a href='${url.for("%{area='pur', controller='purchaseorder', action='view', querystring='id=$rne.POE.PO.Id'}")}'>${rne.POE.PO.Id}</a></td>

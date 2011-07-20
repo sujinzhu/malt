@@ -53,7 +53,7 @@
       <th>${common.baseunit}</th>
       <th>${common.packing}</th>
       <th>${common.notice}</th>
-      <th>Accepted?</th>
+      <th>${common.status}</th>
     </tr>
   </thead>
   <tbody>
@@ -70,7 +70,7 @@
       <td>$!{rne.POE.Unit.Description}</td>
       <td>$!{rne.Packing}</td>
       <td>$!{rne.Notice}</td>
-      <td>${rne.Accepted}</td>
+      <td>$!{h.getenumname($rne.Status)}</td>
     </tr>
   #end
   </tbody>

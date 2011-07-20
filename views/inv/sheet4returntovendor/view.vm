@@ -51,6 +51,7 @@ ${common.sheet-for-return-to-vendor}: ${sheet.Id}
     <tr class="ui-widget-header">
       <th>${common.id}</th>
       <th>${common.return-from}</th>
+      <th>${common.vendor}</th>
       <th>${common.returned-by}</th>
       <th>${common.status}</th>
       <th>${common.createdate}</th>
@@ -59,7 +60,8 @@ ${common.sheet-for-return-to-vendor}: ${sheet.Id}
   <tbody>
     <tr class="ui-widget-content">
       <td>${sheet.Id}</td>
-      <td>$!{r.getdescription($sheet.ReturnFrom)}</td>
+      <td>$!{sheet.ReturnFrom}</td>
+      <td>[${sheet.Vendor.Id}] $!{sheet.Vendor.Name} </td>
       <td>${sheet.ReturnedBy}</td>
       <td>${h.getenumname($sheet.Status)}</td>
       <td>${sheet.CreateDate.ToShortDateString()}</td>

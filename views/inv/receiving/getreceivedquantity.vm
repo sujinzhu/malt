@@ -18,9 +18,9 @@
       <td>${rne.POE.PO.Id}</td>
       <td>${rne.POE.Material.Id}</td>
       <td>${rne.POE.RequiredDate.ToShortDateString()}</td>
-      <td>${rne.POE.RequiredQuantity.ToString('G17')}</td>
-      <td>${rne.POE.DeliveredQuantity.ToString('G17')}</td>
-      <td>${rne.POE.RemainRequiredQuantity.ToString('G17')}</td>
+      <td>${rne.POE.RequiredQuantity.ToString('G')}</td>
+      <td>${rne.POE.DeliveredQuantity.ToString('G')}</td>
+      <td>${rne.POE.RemainRequiredQuantity.ToString('G')}</td>
       <td>${rne.POE.Unit.Id}</td>
     </tr>
   </tbody>

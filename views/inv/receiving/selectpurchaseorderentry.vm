@@ -38,7 +38,7 @@
         <span class="material-id">${poe.Material.Id}</span>
         <span class="material-name">$!{poe.Material.Name}</span>
         <span class="material-spec">$!{poe.Material.Specification}</span>
-        <span class="quantity">${poe.RemainRequiredQuantity}</span>
+        <span class="quantity">${poe.RemainRequiredQuantity.ToString('G')}</span>
         <span class="unit-desc">${poe.Unit.Description}</span>
         <span class="short-date">${poe.RequiredDate.ToShortDateString()}</span>
       </li>

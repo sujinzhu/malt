@@ -18,6 +18,7 @@ ${j.jquery_dataTable()}
 
     oDataTable = $('#entries').dataTable({
       "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
       "aoColumns": [
       {"bVisible": false},
       {"sClass": "material-id"},

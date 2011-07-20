@@ -73,9 +73,9 @@ ${common.purchaseorder}: ${instance.Id}
       <td>$!{entry.Material.Name}</td>
       <td>$!{entry.Material.Specification}</td>
       <td>$!{h.getenumname($entry.TradeType)}</td>
-      <td>${entry.RequiredQuantity.ToString("N")}</td>
-      <td>${entry.DeliveredQuantity.ToString("N")}</td>
-      <td>${entry.RemainRequiredQuantity.ToString("N")}</td>
+      <td>${entry.RequiredQuantity.ToString("G")}</td>
+      <td>${entry.DeliveredQuantity.ToString("G")}</td>
+      <td>${entry.RemainRequiredQuantity.ToString("G")}</td>
       <td>${entry.Unit.Id}</td>
       <td>$!{entry.Unit.Description}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>

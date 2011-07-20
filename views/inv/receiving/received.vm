@@ -7,7 +7,7 @@
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
     $(function(){
-      $('#rn-entries').dataTable({
+      oDataTable = $('#rn-entries').dataTable({
         "bJQueryUI": true,
         "sPaginationType": "full_numbers",
         "aoColumns": [
@@ -22,10 +22,9 @@
         {"sClass": "unit-id"},
         {"bVisible": false},
         null,
-        {"bVisible": false}
+        {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='rejectentry'}")}');}}
         ]
       });
-
       $('.button').button();
     });
     function fnAccept(){
@@ -77,11 +76,12 @@
       <th>${common.baseunit}</th>
       <th>${common.packing}</th>
       <th>${common.notice}</th>
-      <th>Accepted?</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
   #foreach($rne in $rn.Entries)
+  #if($rne.Received)
     <tr>
       <td>${rne.Id}</td>
       <td><a href='${url.for("%{area='pur', controller='purchaseorder', action='view', querystring='id=$rne.POE.PO.Id'}")}' target='_blank'>${rne.POE.PO.Id}</a></td>
@@ -94,8 +94,9 @@
       <td>$!{rne.POE.Unit.Description}</td>
       <td>$!{rne.Packing}</td>
       <td>$!{rne.Notice}</td>
-      <td>${rne.Accepted}</td>
+      <td>${common.reject}</td>
     </tr>
+  #end
   #end
   </tbody>
 </table>
