@@ -128,7 +128,7 @@ ${h.start_with_layout($url.for("%{action='addzeropriceentry'}"), "new-entry")}
 ${f.push("entry")}
 
 ${f.hiddenfield("PO.Id")}
-${h.field($common.tradetype, $f.select("TradeType", $f.enumtopairs("HJ.Malt.Common.Domain.TradeTypeEnum, HJ.Malt.Common"), "%{value='first', class='required'}"), true)}
+${h.field($common.tradetype, $f.select("TradeType", $f.enumtopairs("HJ.Common.Domain.TradeTypeEnum, HJ.Common"), "%{value='first', class='required'}"), true)}
 ${h.field($common.material, $f.textfield("Material.Id", "%{class='required'}"), true)}
 ${h.field($common.unit, $f.textfield("Unit.Id", "%{class='required'}"), true)}
 ${h.field($common.requiredquantity, $f.textfield("RequiredQuantity", "%{class='required', min='0.00000000001'}"), true)}
