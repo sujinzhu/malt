@@ -15,6 +15,7 @@
     $(function(){
       oInstances = $('#instances').dataTable({
         "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
         "aoColumns": [
         null,
         null,

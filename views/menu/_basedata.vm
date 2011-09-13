@@ -45,6 +45,10 @@
     <img src="${siteroot}/content/images/docs.png"/>
     <span>${common.currency}</span></a>
   </li>
+  <li><a href='${url.for("%{area='common', controller='taxrate', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.tax-rate}</span></a>
+  </li>
   <li><a href='${url.for("%{area='common', controller='addr', action='index'}")}'>
     <img src="${siteroot}/content/images/docs.png"/>
     <span>${common.address}</span></a>

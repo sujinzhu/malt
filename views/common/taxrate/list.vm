@@ -59,10 +59,10 @@
 
     function fnAddToDT(data){
       if(!fnHasError(data)){
-        oInstances.fnAddData([$('#instance_Id').val(), $('#instance_Description').val(), $('#instance_Symbol').val(), '${common.remove}']);
+        oInstances.fnAddData([$('#instance_Id').val(), $('#instance_Description').val(), $('#instance_Rate').val(), '${common.remove}']);
         fnTrigerRemoveEntry();
         $('#instance_Description').val("");
-        $('#instance_Symbol').val("");
+        $('#instance_Rate').val("");
         $('#instance_Id').val("").focus();
       }
     }
@@ -80,7 +80,7 @@ ${f.push("instance")}
 
 ${h.field($common.id, $f.textfield("Id", "%{class='required'}"), true)}
 ${h.field($common.description, $f.textfield("Description"))}
-${h.field($common.symbol, $f.textfield("Symbol"))}
+${h.field($common.symbol, $f.textfield("Rate"))}
 ${h.field("", $f.submit($common.createnew))}
 
 ${f.pop()}
@@ -95,7 +95,7 @@ ${h.end_with_layout()}
     <tr>
       <th>${common.id}</th>
       <th>${common.description}</th>
-      <th>${common.symbol}</th>
+      <th>${common.tax-rate}</th>
       <th></th>
     </tr>
   </thead>
@@ -104,7 +104,7 @@ ${h.end_with_layout()}
     <tr>
       <td>${instance.id}</td>
       <td>$!{instance.description}</td>
-      <td>$!{instance.symbol}</td>
+      <td>$!{instance.rate}</td>
       <td>${common.remove}</td>
     </tr>
     #end
