@@ -26,13 +26,6 @@
       $('#linkView').button();
       fnDecorative();
     });
-
-    function fnDecorative(){
-      $('.label2').addClass('ui-state-active ui-corner-bl');
-      $('.field2').addClass('ui-state-hover ui-corner-tr');
-      //$('p').addClass('ui-helper-clearfix');
-      $(':submit').button();
-    }
   // ]]>
   </script>
 #end

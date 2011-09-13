@@ -3,10 +3,6 @@
   <span class="field2 currency">[$!{extension.HomeCurrency.Id}]&nbsp;$!{extension.HomeCurrency.Description}</span>
 </p>
 <p>
-  <span class="label2">${common.vendorcategory}:</span>
-  <span class="field2 vendor-category">[$!{extension.Category.Id}]&nbsp;$!{extension.Category.Description}</span>
-</p>
-<p>
   <span class="label2">${common.settlementmode}:</span>
   <span class="field2 settlement">[$!{extension.Settlement.Id}]&nbsp;$!{extension.Settlement.Description}</span>
 </p>

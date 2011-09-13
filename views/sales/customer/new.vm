@@ -10,7 +10,7 @@ span { float: left; }
 .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
 
 .customer-id, .customer-name, .customer-fullname { width: 300px; }
-.address { width: 300px; }
+.notice{ width: 300px; }
 /* ]]> */
 </style>
 
@@ -20,12 +20,6 @@ ${j.jquery_validate()}
 <script type="text/javascript" language="javascript" charset="utf-8">
 // <![CDATA[
   $(function(){
-    $('#instance_Address_Id').autocomplete('$url.for("%{area='common', controller='addr', action='autocomplete2'}")', {
-      width: 400,
-      matchContains: true,
-      formatItem: formatAddressItem,
-      formatResult: formatResult
-    });
     $("#instance_Id").focus();
     $("#new-instance").validate();
     fnDecorative();
@@ -57,8 +51,8 @@ ${common.createnew} ${common.customer}
     <span class="field2 customer-fullname">${f.textfield("Fullname", "%{size='30'}")}&nbsp;</span>
   </p>
   <p>
-    <span class="label2">${common.address}:</span>
-    <span class="field2 address">${f.textfield("Address.Id", "%{size='30'}")}&nbsp;</span>
+    <span class="label2">${common.notice}:</span>
+    <span class="field2 notice">${f.textfield("Notice", "%{size='30'}")}&nbsp;</span>
   </p>
   <p>
     <span class="label2">${common.is-active}:</span>

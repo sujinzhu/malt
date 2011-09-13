@@ -21,10 +21,17 @@
         "sPaginationType": "full_numbers",
         "aoColumns": [
         {"fnRender": function(oObj){return fnGetLink(oObj.aData[0]);}, "sType": "html", "sClass": "id"},
-        {"sClass": "customer-name"},
-        {"sClass": "customer-fullname"},
-        {"sClass": "status"},
-        {"sClass": "address", "bSortable": false},
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
         ]
       });
     });
@@ -50,6 +57,13 @@
       <th>${common.name}</th>
       <th>${common.fullname}</th>
       <th>${common.is-active}</th>
+      <th>${common.remark}</th>
+      <th>${common.currency}</th>
+      <th>${common.settlementmode}</th>
+      <th>${common.paymentterm}</th>
+      <th>${common.transport}</th>
+      <th>${common.contact}</th>
+      <th>${common.main-product}</th>
       <th>${common.address}</th>
     </tr>
   </thead>

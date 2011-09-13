@@ -6,6 +6,14 @@
   <span class="label2">${common.cooperatingdate}[${common.end}]:</span>
   <span class="field2 short-date">$!{extension2.CooperateEndDate.ToShortDateString()}&nbsp;</span>
 </p>
+<p>
+  <span class="label2">${common.contact}:</span>
+  <span class="field2 short-date">$!{extension2.Contact}&nbsp;</span>
+</p>
+<p>
+  <span class="label2">${common.main-product}:</span>
+  <span class="field2 short-date">$!{extension2.MainProduct}&nbsp;</span>
+</p>
 
 <script type="text/javascript" language="javascript" charset="utf-8">
 // <![CDATA[

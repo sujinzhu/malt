@@ -69,6 +69,3 @@
     <li><a target="_self" href='${url.for("%{area='security', controller='authentication', action='logout'}")}'>${common.logout}</a>&nbsp;</li>
   </ul>
 </div>
-
-<!-- Logo -->
-<img id="logo" src="${siteroot}/content/images/bip.png" alt="BIP Logo" height="104" width="148" />

@@ -22,19 +22,20 @@
       $('#vendor-info').tabs({selected: ${tab}}).width("800px");
       $('#linkEdit').button();
       fnDecorative();
-    });
-
-    function fnDecorative(){
-      $('.label2').addClass('ui-state-active ui-corner-bl');
-      $('.field2').addClass('ui-state-hover ui-corner-tr');
       $('p').addClass('ui-helper-clearfix');
-    }
+    });
   // ]]>
   </script>
 #end
 
+#capturefor(title)
+${common.vendor}: ${instance.Id} [$!{instance.Name}]
+#end
+
+<div id="header-container">
 <h3>${common.vendor}: ${instance.Id} [$!{instance.Name}]</h3>
 <a id="linkEdit" href='${url.for("%{action='edit', querystring='id=$instance.Id'}")}'>${common.edit}</a>
+</div>
 
 <div id="vendor-info" class="ui-helper-clearfix">
   <ul>

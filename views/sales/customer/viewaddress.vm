@@ -2,10 +2,6 @@
   <span class="label2">${common.address}:</span>
   <span class="field2 address">[$!{extension3.Address.Id}]&nbsp;$!{extension3.Address.Address1}</span>
 </p>
-<p>
-  <span class="label2">${common.defaulttransportto}:</span>
-  <span class="field2 address">[$!{extension3.DefaultTransportTo.Id}]&nbsp;$!{extension3.DefaultTransportTo.Description}</span>
-</p>
 
 <script type="text/javascript" language="javascript" charset="utf-8">
 // <![CDATA[

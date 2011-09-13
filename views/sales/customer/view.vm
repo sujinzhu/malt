@@ -19,6 +19,7 @@
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
     $(function(){
+      $('#customer-info').tabs({selected: ${tab}}).width("800px");
       $('#linkEdit').button();
       $('p').addClass('ui-helper-clearfix');
       fnDecorative();
@@ -37,7 +38,15 @@
   <a id="linkEdit" href='${url.for("%{action='edit', querystring='id=$instance.Id'}")}'>${common.edit}</a>
 </div>
 
-<div id="instance-container" class="ui-helper-clearfix">
+<div id="customer-info" class="ui-helper-clearfix">
+  <ul>
+    <li><a href='#basedata'>${common.basedata}</a></li>
+    <li><a href='${url.for("%{action='viewfinance', querystring='id=$instance.Id'}")}'>${common.finance}</a></li>
+    <li><a href='${url.for("%{action='viewcooperatingdate', querystring='id=$instance.Id'}")}'>${common.cooperatingdate}</a></li>
+    <li><a href='${url.for("%{action='viewaddress', querystring='id=$instance.Id'}")}'>${common.address}</a></li>
+  </ul>
+
+<div id="basedata" class="ui-helper-clearfix">
   <p>
     <span class="label2">${common.name}:</span>
     <span class="field2 customer-name">$!{instance.Name}&nbsp;</span>
@@ -46,12 +55,13 @@
     <span class="label2">${common.fullname}:</span>
     <span class="field2 customer-fullname">$!{instance.Fullname}&nbsp;</span>
   </p>
-  <p>
-    <span class="label2">${common.address}:</span>
-    <span class="field2 address">$!{instance.Address}&nbsp;</span>
-  </p>
+    <p>
+      <span class="label2">${common.notice}:</span>
+      <span class="field2 notice">$!{instance.Notice}&nbsp;</span>
+    </p>
   <p>
     <span class="label2">${common.is-active}:</span>
     <span class="field2 status">$!{instance.IsActive}&nbsp;</span>
   </p>
+  </div>
 </div>
