@@ -10,7 +10,6 @@
   ${j.jquery_validate()}
   ${j.jquery_dataTable()}
   ${j.jquery_autocomplete()}
-  ${j.jquery_editable()}
 
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
@@ -36,19 +35,6 @@
         null,
         //{"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[12]);}, "bSortable": false}
         ],
-        "fnDrawCallback": function(){
-          $('.unit-price').editable('${url.for("%{action='changeunitprice'}")}');
-          $('.vendor').editable('${url.for("%{action='changevendor'}")}', {
-            loadurl : '${url.for("%{action='changingvendor'}")}',
-          }).click(function(){
-              $('input', this).autocomplete('$url.for("%{area='pur', controller='vendor', action='autocomplete2'}")', {
-                width: 300,
-                matchContains: true,
-                formatItem: formatVendorItem,
-                formatResult: formatResult
-              });
-            });
-        },
       });
       $('#new-entry').validate({
         submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
@@ -95,7 +81,6 @@ ${common.quote} ${common.purchaserequisition}: ${instance.Id}
   <h3>${common.purchaserequisition}: ${instance.Id}</h3>
 #parse("${siteroot}/pur/purchaserequisition/_head.vm")
   <a href='${url.for("%{action='quote', querystring='id=$instance.Id'}")}'>${common.finish}</a>
-  <a href='${url.for("%{action='approved21', querystring='id=$instance.Id'}")}'>New Form</a>
 </div>
 
 <div id="instances-container">
