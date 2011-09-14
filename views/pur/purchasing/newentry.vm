@@ -25,7 +25,7 @@
   </p>
   <p>
     <span class="label2">${common.unitprice}:</span>
-    <span class="field2">${f.textfield("UnitPrice", "%{class='required', min='0'}")}</span>
+    <span class="field2">${f.textfield("Price.UnitPrice", "%{class='required', min='0'}")}</span>
   </p>
   <p>
     <span class="label2">${common.requireddate}:</span>

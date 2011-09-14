@@ -99,7 +99,7 @@
       <td>$!{entry.Material.Name}</td>
       <td>$!{entry.Material.Specification}</td>
       <td>${entry.Unit.Id} $!{entry.Unit.Description}</td>
-      <td id="price${entry.Id}">${entry.UnitPrice}</td>
+      <td id="price${entry.Id}">${entry.Price.UnitPrice}</td>
       <td>${entry.RequiredQuantity}</td>
       <td>${entry.RequiredDate}</td>
     </tr>

@@ -70,7 +70,11 @@
   </script>
 #end
 
-<h3>${common.currency}:</h3>
+#capturefor(title)
+${common.tax-rate}:
+#end
+
+<h3>${common.tax-rate}:</h3>
 
 <div id="new-instance-container">
 
@@ -80,7 +84,7 @@ ${f.push("instance")}
 
 ${h.field($common.id, $f.textfield("Id", "%{class='required'}"), true)}
 ${h.field($common.description, $f.textfield("Description"))}
-${h.field($common.symbol, $f.textfield("Rate"))}
+${h.field($common.tax-rate, $f.textfield("Rate"))}
 ${h.field("", $f.submit($common.createnew))}
 
 ${f.pop()}

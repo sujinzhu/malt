@@ -47,28 +47,6 @@
               });
             });
         },
-        /*"fnFooterCallback": 
-        function (nRow, aaData, iStart, iEnd, aiDisplay ){
-          var iTotalMarket = 0;
-          var iTotalMarket2 = 0;
-          for ( var i=0; i<aaData.length; i++)
-          {
-            iTotalMarket += aaData[i][4]*1;
-            iTotalMarket2 += aaData[i][8]*1;
-          }
-    
-          var iPageMarket = 0;
-          var iPageMarket2 = 0;
-          for ( var i=iStart; i<iEnd; i++)
-          {
-            iPageMarket += aaData[aiDisplay[i]][4]*1;
-            iPageMarket2 += aaData[aiDisplay[i]][8]*1;
-          }
-    
-          var nCells = nRow.getElementsByTagName('th');
-          nCells[1].innerHTML = iPageMarket + ' of ' + iTotalMarket;
-          nCells[3].innerHTML = iPageMarket2 + ' of ' + iTotalMarket2;
-	      }*/
       });
       $('#new-entry').validate({
         submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }

@@ -164,7 +164,7 @@ ${common.purchaseorder}: ${instance.Id}
       <td>${entry.Material.Id}</td>
       <td>$!{entry.Material.Description}</td>
       <td>${entry.Unit.Id} $!{entry.Unit.Description}</td>
-      <td>${entry.UnitPrice}</td>
+      <td>${entry.Price.UnitPrice}</td>
       <td>${entry.RequiredQuantity}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>
       <td>${common.remove}</td>

@@ -41,3 +41,13 @@ function fnDecorative(){
   $('.field2').addClass('ui-state-hover ui-corner-tr');
   $(':submit, :button').button();
 }
+
+$.fn.addItems = function(data) {
+  return this.each(function(){
+    var list = this;
+    $.each(data, function(index, itemData){
+      var option = new Option(itemData.Id, itemData.Description);
+      list.add(option);
+    });
+  });
+};
