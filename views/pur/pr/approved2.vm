@@ -121,7 +121,7 @@ ${common.quote} ${common.purchaserequisition}: ${instance.Id}
       <td>$!{entry.Material.Specification}</td>
       <td>${entry.RequiredQuantity.ToString('G')}</td>
       <td>$!{entry.Unit.Description}</td>
-      <td id="price${entry.Id}">$!{entry.UnitPrice}</td>
+      <td id="price${entry.Id}">$!{entry.Price.UnitPrice}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>
       <td id="vendor${entry.Id}">$!{entry.Vendor.Name}</td>
       <td>$!{entry.Responsible}</td>
