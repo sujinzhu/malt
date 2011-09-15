@@ -19,6 +19,7 @@
       $('a').button();
       oInstances = $('#instances').dataTable({
         "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
         "aoColumns": [
         {"bVisible": false},
         {"sClass": "material-id"},

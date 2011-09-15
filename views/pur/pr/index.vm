@@ -16,6 +16,7 @@ ${j.jquery_dataTable()}
   $(function(){
     $('#instances').dataTable({
       "bJQueryUI": true,
+      "sPaginationType": "full_numbers",
       "aoColumns": [
       {"sClass": "pr-id"},
       {"bVisible": false},
