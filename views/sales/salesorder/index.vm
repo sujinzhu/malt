@@ -109,7 +109,7 @@ ${common.salesorder}
 
 <div id="header-container" class="ui-helper-clearfix">
 <h3>${common.salesorder}</h3>
-<a class="button" href='${url.for("%{action='new'}")}'>${common.createnew}</a>
+<a class="button" href='${url.for("%{controller='sales', action='new'}")}'>${common.createnew}</a>
 </div>
 
 <div id="criteria-container" class="ui-helper-clearfix">

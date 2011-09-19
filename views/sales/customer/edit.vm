@@ -40,6 +40,7 @@
     <li><a href='${url.for("%{action='editfinance', querystring='id=$instance.Id'}")}'>${common.finance}</a></li>
     <li><a href='${url.for("%{action='editcooperatingdate', querystring='id=$instance.Id'}")}'>${common.cooperatingdate}</a></li>
     <li><a href='${url.for("%{action='editaddress', querystring='id=$instance.Id'}")}'>${common.address}</a></li>
+    <li><a href='${url.for("%{action='editcontacts', querystring='id=$instance.Id'}")}'>${common.contact}</a></li>
   </ul>
 
   <div id="basedata" class="ui-helper-clearfix">

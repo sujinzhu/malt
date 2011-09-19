@@ -15,10 +15,6 @@
     <span class="field2 short-date">${f.textfield("CooperateEndDate")}</span>
   </p>
   <p>
-    <span class="label2 cooperating-date">${common.contact}:</span>
-    <span class="field2 short-date">${f.textfield("Contact")}</span>
-  </p>
-  <p>
     <span class="label2 cooperating-date">${common.main-product}:</span>
     <span class="field2 short-date">${f.textfield("MainProduct")}</span>
   </p>

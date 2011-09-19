@@ -8,14 +8,20 @@
   </style>
   
   ${j.jquery_autocomplete()}
-  ${j.jquery_dataTable()}
+  ##${j.jquery_dataTable()}
+  ${dt.DataTable()}
 
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
     $(function(){
       oDataTable = $('#instances').dataTable({
+        "aLengthMenu": [[25, 50, 100, 200, 500, 1000], [25, 50, 100, 200, 500, 1000]],
         "bProcessing": true,
         "bServerSide": true,
+        "sDom": 'T<"clear">lfrtip',
+        "oTableTools": {
+          "sSwfPath": "${dt.SwfPath2()}"
+        },
         "sAjaxSource": '$url.for("%{action='listtabledata'}")',
         "bJQueryUI": true,
         "sPaginationType": "full_numbers",
@@ -23,7 +29,12 @@
         {"fnRender": function(oObj){return fnGetLink(oObj.aData[0]);}, "sType": "html", "sClass": "id"},
         null,
         null,
+        {"bVisible": false},
         null,
+        null,
+        null,
+        null,
+        {"bVisible": false},
         null,
         null,
         null,
@@ -62,9 +73,14 @@
       <th>${common.settlementmode}</th>
       <th>${common.paymentterm}</th>
       <th>${common.transport}</th>
-      <th>${common.contact}</th>
       <th>${common.main-product}</th>
       <th>${common.address}</th>
+      <th>${common.contact}1</th>
+      <th>${common.tel}1</th>
+      <th>${common.contact}2</th>
+      <th>${common.tel}2</th>
+      <th>${common.contact}3</th>
+      <th>${common.tel}3</th>
     </tr>
   </thead>
 </table>
