@@ -7,27 +7,27 @@
   ${f.push("extension4")}
   ${f.hiddenfield("Id")}
   <p>
-    <span class="label2">${common.contact}1:</span>
+    <span class="label2 cooperating-date">${common.contact}1:</span>
     <span class="field2 contact">${f.textfield("Contacts.Contact1")}</span>
   </p>
   <p>
-    <span class="label2">${common.tel}1:</span>
+    <span class="label2 cooperating-date">${common.tel}1:</span>
     <span class="field2 contact">${f.textfield("Contacts.Tel1")}</span>
   </p>
   <p>
-    <span class="label2">${common.contact}2:</span>
+    <span class="label2 cooperating-date">${common.contact}2:</span>
     <span class="field2 contact">${f.textfield("Contacts.Contact2")}</span>
   </p>
   <p>
-    <span class="label2">${common.tel}2:</span>
+    <span class="label2 cooperating-date">${common.tel}2:</span>
     <span class="field2 contact">${f.textfield("Contacts.Tel2")}</span>
   </p>
   <p>
-    <span class="label2">${common.contact}3:</span>
+    <span class="label2 cooperating-date">${common.contact}3:</span>
     <span class="field2 contact">${f.textfield("Contacts.Contact3")}</span>
   </p>
   <p>
-    <span class="label2">${common.tel}3:</span>
+    <span class="label2 cooperating-date">${common.tel}3:</span>
     <span class="field2 contact">${f.textfield("Contacts.Tel3")}</span>
   </p>
   ${f.pop()}

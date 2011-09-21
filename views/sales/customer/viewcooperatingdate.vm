@@ -1,23 +1,21 @@
-<p>
-  <span class="label2">${common.cooperatingdate}[${common.begin}]:</span>
-  <span class="field2 short-date">$!{extension2.CooperateBeginDate.ToShortDateString()}&nbsp;</span>
+<div class="ui-helper-clearfix">
+<p class="ui-helper-clearfix">
+  <span class="label2 label-lang">${common.cooperatingdate}[${common.begin}]:</span>
+  <span class="field2 lang-date">$!{extension2.CooperateBeginDate.ToShortDateString()}&nbsp;</span>
 </p>
-<p>
-  <span class="label2">${common.cooperatingdate}[${common.end}]:</span>
-  <span class="field2 short-date">$!{extension2.CooperateEndDate.ToShortDateString()}&nbsp;</span>
+<p class="ui-helper-clearfix">
+  <span class="label2 label-lang">${common.cooperatingdate}[${common.end}]:</span>
+  <span class="field2 lang-date">$!{extension2.CooperateEndDate.ToShortDateString()}&nbsp;</span>
 </p>
-<p>
-  <span class="label2">${common.contact}:</span>
-  <span class="field2 short-date">$!{extension2.Contact}&nbsp;</span>
-</p>
-<p>
+<p class="ui-helper-clearfix">
   <span class="label2">${common.main-product}:</span>
-  <span class="field2 short-date">$!{extension2.MainProduct}&nbsp;</span>
+  <span class="field2 lang-date">$!{extension2.MainProduct}&nbsp;</span>
 </p>
+</div>
 
 <script type="text/javascript" language="javascript" charset="utf-8">
 // <![CDATA[
   fnDecorative();
-  $('p').addClass('ui-helper-clearfix');
+  //$('p').addClass('ui-helper-clearfix');
 // ]]>
 </script>

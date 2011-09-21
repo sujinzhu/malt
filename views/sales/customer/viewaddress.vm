@@ -1,7 +1,9 @@
+<div class="ui-helper-clearfix">
 <p>
   <span class="label2">${common.address}:</span>
   <span class="field2 address">[$!{extension3.Address.Id}]&nbsp;$!{extension3.Address.Address1}</span>
 </p>
+</div>
 
 <script type="text/javascript" language="javascript" charset="utf-8">
 // <![CDATA[

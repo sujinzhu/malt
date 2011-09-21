@@ -1,0 +1,32 @@
+<div class="ui-helper-clearfix">
+<p>
+  <span class="label2">${common.contact}1:</span>
+  <span class="field2 contact">&nbsp;$!{extension4.Contacts.Contact1}</span>
+</p>
+<p>
+  <span class="label2">${common.tel}1:</span>
+  <span class="field2 contact">&nbsp;$!{extension4.Contacts.Tel1}</span>
+</p>
+<p>
+  <span class="label2">${common.contact}2:</span>
+  <span class="field2 contact">&nbsp;$!{extension4.Contacts.Contact2}</span>
+</p>
+<p>
+  <span class="label2">${common.tel}2:</span>
+  <span class="field2 contact">&nbsp;$!{extension4.Contacts.Tel2}</span>
+</p>
+<p>
+  <span class="label2">${common.contact}3:</span>
+  <span class="field2 contact">&nbsp;$!{extension4.Contacts.Contact3}</span>
+</p>
+<p>
+  <span class="label2">${common.tel}3:</span>
+  <span class="field2 contact">&nbsp;$!{extension4.Contacts.Tel3}</span>
+</p>
+</div>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+  fnDecorative();
+// ]]>
+</script>

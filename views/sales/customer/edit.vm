@@ -5,6 +5,7 @@
   p { margin-top: 1em; height: 25px; float: left; }
   span { float: left; }
   .label2 { width: 100px; text-align: right; padding-right: .3em; }
+  .label-lang { width: 180px; }
   .field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; }
   .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
 
@@ -12,7 +13,9 @@
   .currency, .vendor-category, .settlement, .payment, .transport { width: 150px; }
   .address { width: 500px; }
   .short-date { width: 250px; }
+  .lang-date { width: 300px; }
   .cooperating-date { width: 150px; }
+  .contact { width : 230px; }
 
   #linkView { margin: 0 0 1.5em 1.5em; }
   /* ]]> */

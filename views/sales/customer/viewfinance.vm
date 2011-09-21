@@ -1,3 +1,4 @@
+<div class="ui-helper-clearfix">
 <p>
   <span class="label2">${common.currency}:</span>
   <span class="field2 currency">[$!{extension.HomeCurrency.Id}]&nbsp;$!{extension.HomeCurrency.Description}</span>
@@ -14,10 +15,11 @@
   <span class="label2">${common.transport}:</span>
   <span class="field2 transport">[$!{extension.Transport.Id}]&nbsp;$!{extension.Transport.Description}</span>
 </p>
+</div>
 
 <script type="text/javascript" language="javascript" charset="utf-8">
 // <![CDATA[
   fnDecorative();
-  $('p').addClass('ui-helper-clearfix');
+  //$('p').addClass('ui-helper-clearfix');
 // ]]>
 </script>

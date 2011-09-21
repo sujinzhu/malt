@@ -7,12 +7,12 @@
   ${f.push("extension2")}
   ${f.hiddenfield("Id")}
   <p>
-    <span class="label2">${common.cooperatingdate}[${common.begin}]:</span>
-    <span class="field2 short-date">${f.textfield("CooperateBeginDate")}</span>
+    <span class="label2 label-lang">${common.cooperatingdate}[${common.begin}]:</span>
+    <span class="field2 lang-date">${f.textfield("CooperateBeginDate")}</span>
   </p>
   <p>
-    <span class="label2">${common.cooperatingdate}[${common.end}]:</span>
-    <span class="field2 short-date">${f.textfield("CooperateEndDate")}</span>
+    <span class="label2 label-lang">${common.cooperatingdate}[${common.end}]:</span>
+    <span class="field2 lang-date">${f.textfield("CooperateEndDate")}</span>
   </p>
   ${f.pop()}
   <p>

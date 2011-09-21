@@ -11,7 +11,7 @@
     <span class="field2 address">${f.textfield("Address.Id")}</span>
   </p>
   <p>
-    <span class="label2">${common.defaulttransportto}:</span>
+    <span class="label2 label-lang">${common.defaulttransportto}:</span>
     <span class="field2 address">${f.select("DefaultTransportTo.Id", $selfaddresses, "%{text='description', value='id'}")}</span>
   </p>
   ${f.pop()}
