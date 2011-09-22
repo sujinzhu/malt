@@ -21,6 +21,8 @@
         {"sClass": "material-name"},
         {"sClass": "material-spec"},
         null,
+        null,
+        null,
         {"sClass": "quantity"},
         {"sClass": "quantity"},
         {"sClass": "quantity"},
@@ -54,6 +56,8 @@ ${common.purchaseorder}: ${instance.Id}
       <th></th>
       <th>${common.tradetype}</th>
       <th>${common.unitprice}</th>
+      <th>${common.currency}</th>
+      <th>${common.tax-rate}</th>
       <th>${common.requiredquantity}</th>
       <th>${common.deliveredquantity}</th>
       <th>${common.remainorderquantity}</th>
@@ -70,7 +74,9 @@ ${common.purchaseorder}: ${instance.Id}
       <td>$!{entry.Material.Name}</td>
       <td>$!{entry.Material.Specification}</td>
       <td>$!{h.getenumname($entry.TradeType)}</td>
-      <td>${entry.UnitPrice.ToString("N")}</td>
+      <td>$!{entry.Price.UnitPrice.ToString("N")}</td>
+      <td>$!{entry.Price.Currency.Id}</td>
+      <td>$!{entry.Price.TaxRate.Description}</td>
       <td>${entry.RequiredQuantity.ToString("G")}</td>
       <td>${entry.DeliveredQuantity.ToString("G")}</td>
       <td>${entry.RemainRequiredQuantity.ToString("G")}</td>

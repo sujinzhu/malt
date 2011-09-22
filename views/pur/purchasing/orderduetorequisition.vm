@@ -6,14 +6,14 @@
   #instance { float: left; width: 250px; }
   #doc-header h3, #doc-header p { float: left; }
 /*  #new-entry-container { margin: .5em 1em .5em 1em; } */
-  #new-entry-container div { width: 650px; padding: 0 .5em 1.5em 1.5em; float: right; }
+  #new-entry-container div { width: 680px; padding: 0 .5em 1.5em 1.5em; float: right; }
 
   #new-entry-container p { margin-top: 1em; height: 25px; float: left; }
   #new-entry-container span { float: left; }
   .label2 { width: 100px; text-align: right; padding-right: .3em; }
   .field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; width: 190px; }
   .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
-  .material { width: 500px; }
+  .material { width: 530px; }
   .button { margin-left: 1em; }
   .operation { width: 80px; }
   /* ]]> */

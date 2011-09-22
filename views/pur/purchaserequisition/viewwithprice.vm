@@ -22,6 +22,8 @@ ${j.jquery_dataTable()}
       {"sClass": "quantity"},
       {"sClass": "unit"},
       {"sClass": "price"},
+      null,
+      null,
       {"sClass": "short-date"},
       {"sClass": "quantity"},
       {"sClass": "vendor"},
@@ -50,6 +52,8 @@ ${j.jquery_dataTable()}
       <th>${common.requiredquantity}</th>
       <th>${common.unit}</th>
       <th>${common.unitprice}</th>
+      <th>${common.currency}</th>
+      <th>${common.tax-rate}</th>
       <th>${common.requireddate}</th>
       <th>${common.orderedquantity}</th>
       <th>${common.vendor}</th>
@@ -66,7 +70,9 @@ ${j.jquery_dataTable()}
       <td>$!{entry.Material.Specification}</td>
       <td>${entry.RequiredQuantity.ToString('G17')}</td>
       <td>$!{entry.Unit.Description}</td>
-      <td>$!{entry.UnitPrice}</td>
+      <td>$!{entry.Price.UnitPrice}</td>
+      <td>$!{entry.Price.Currency.Id}</td>
+      <td>$!{entry.Price.TaxRate.Description}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>
       <td>${entry.OrderedQuantity.ToString('G17')}</td>
       <td>$!{entry.Vendor.Name}</td>

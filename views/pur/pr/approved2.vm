@@ -127,8 +127,8 @@ ${common.quote} ${common.purchaserequisition}: ${instance.Id}
       <td>${entry.RequiredQuantity.ToString('G')}</td>
       <td>$!{entry.Unit.Description}</td>
       <td id="price${entry.Id}">$!{entry.Price.UnitPrice}</td>
-      <td id="currency${entry.Id}">$!{entry.Currency.Id}</td>
-      <td id="taxrate${entry.Id}">$!{entry.TaxRate.Description}</td>
+      <td id="currency${entry.Id}">$!{entry.Price.Currency.Id}</td>
+      <td id="taxrate${entry.Id}">$!{entry.Price.TaxRate.Description}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>
       <td id="vendor${entry.Id}">$!{entry.Vendor.Name}</td>
       <td>$!{entry.Responsible}</td>

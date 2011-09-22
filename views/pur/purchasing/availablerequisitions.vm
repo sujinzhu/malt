@@ -8,6 +8,8 @@
       <th>${common.requiredquantity}</th>
       <th>${common.unit}</th>
       <th>${common.unitprice}</th>
+      <th>${common.currency}</th>
+      <th>${common.tax-rate}</th>
       <th>${common.requireddate}</th>
       <th>${common.orderedquantity}</th>
       <th>${common.select}</th>
@@ -25,7 +27,9 @@
       <td>$!{pr.Material.Description}</td>
       <td>${pr.RequiredQuantity}</td>
       <td>$!{pr.Unit.Description}</td>
-      <td>$!{pr.UnitPrice}</td>
+      <td>$!{pr.Price.UnitPrice}</td>
+      <td>$!{pr.Price.Currency.Id}</td>
+      <td>$!{pr.Price.TaxRate.Description}</td>
       <td>${pr.RequiredDate.ToShortDateString()}</td>
       <td>${pr.OrderedQuantity}</td>
       <td><a>${common.select}</a></td>
@@ -53,6 +57,8 @@
         {"sClass": "quantity"},
         {"sClass": "unit"},
         {"sClass": "price"},
+        null,
+        null,
         {"sClass": "short-date"},
         {"sClass": "quantity"},
         {"sClass": "operation", "fnRender": function(oObj){return fnRenderSelectLink(oObj, "fnSelect");}, "bSortable": false},

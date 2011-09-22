@@ -28,6 +28,14 @@
     <span class="field2">${f.textfield("Price.UnitPrice", "%{class='required', min='0'}")}</span>
   </p>
   <p>
+    <span class="label2">${common.currency}:</span>
+    <span class="field2">$!{Price.Currency.Id}</span>
+  </p>
+  <p>
+    <span class="label2">${common.tax-rate}:</span>
+    <span class="field2">$!{Price.TaxRate.Description}</span>
+  </p>
+  <p>
     <span class="label2">${common.requireddate}:</span>
     <span class="field2">${f.textfield('RequiredDate', "%{class='required'}")}</span>
   </p>

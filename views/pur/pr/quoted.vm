@@ -8,9 +8,9 @@
 
   ${j.jquery_form()}
   ${j.jquery_validate()}
-  ${j.jquery_dataTable()}
   ${j.jquery_autocomplete()}
   ${j.jquery_editable()}
+  ${dt.DataTable()}
 
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
@@ -28,6 +28,8 @@
         {"sClass": "quantity required-quantity"},
         {"sClass": "unit"},
         {"sClass": "price unit-price"},
+        null,
+        null,
         {"sClass": "short-date"},
         {"sClass": "vendor"},
         {"sClass": "repository"},
@@ -107,6 +109,8 @@ ${common.review} ${common.purchaserequisition}: ${instance.Id}
       <th>${common.requiredquantity}</th>
       <th>${common.unit}</th>
       <th>${common.unitprice}</th>
+      <th>${common.currency}</th>
+      <th>${common.tax-rate}</th>
       <th>${common.requireddate}</th>
       <th>${common.vendor}</th>
       <th>${common.responsible}</th>
@@ -122,7 +126,9 @@ ${common.review} ${common.purchaserequisition}: ${instance.Id}
       <td>$!{entry.Material.Specification}</td>
       <td>${entry.RequiredQuantity.ToString('G')}</td>
       <td>$!{entry.Unit.Description}</td>
-      <td id="price${entry.Id}">$!{entry.UnitPrice}</td>
+      <td id="price${entry.Id}">$!{entry.Price.UnitPrice}</td>
+      <td id="currency${entry.Id}">$!{entry.Price.Currency.Id}</td>
+      <td id="taxrate${entry.Id}">$!{entry.Price.TaxRate.Description}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>
       <td id="vendor${entry.Id}">$!{entry.Vendor.Name}</td>
       <td>$!{entry.Responsible}</td>

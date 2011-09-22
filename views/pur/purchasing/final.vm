@@ -10,9 +10,9 @@
   
   ${j.jquery_form()}
   ${j.jquery_validate()}
-  ${j.jquery_dataTable()}
   ${j.jquery_autocomplete()}
   ${j.jquery_editable()}
+  ${dt.DataTable()}
  
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
@@ -27,7 +27,8 @@
         {"sClass": "material-spec"},
          null,
         {"sClass": "unit-price"},
-         null, null
+         null, null,
+         null, null,
         ]
       });
 
@@ -88,6 +89,8 @@
       <th></th>
       <th>${common.unit}</th>
       <th>${common.unitprice}</th>
+      <th>${common.currency}</th>
+      <th>${common.tax-rate}</th>
       <th>${common.requiredquantity}</th>
       <th>${common.requireddate}</th>
     </tr>
@@ -100,6 +103,8 @@
       <td>$!{entry.Material.Specification}</td>
       <td>${entry.Unit.Id} $!{entry.Unit.Description}</td>
       <td id="price${entry.Id}">${entry.Price.UnitPrice}</td>
+      <td>$!{entry.Price.Currency.Id}</td>
+      <td>$!{entry.Price.TaxRate.Description}</td>
       <td>${entry.RequiredQuantity}</td>
       <td>${entry.RequiredDate}</td>
     </tr>
