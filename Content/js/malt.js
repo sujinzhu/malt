@@ -46,8 +46,8 @@ $.fn.addItems = function(data) {
   return this.each(function(){
     var list = this;
     $.each(data, function(index, itemData){
-      var option = new Option(itemData.Id, itemData.Description);
-      list.add(option);
+      var option = new Option(itemData.Description, itemData.Id);
+      list.add(option, null);
     });
   });
 };

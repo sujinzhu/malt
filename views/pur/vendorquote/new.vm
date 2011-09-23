@@ -1,0 +1,165 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+  #new-instance-form { padding-bottom: .5em; margin-bottom: .3em; }
+  #new-instance-form span { float: left; }
+  #new-instance-form p { margin-top: 1em; height: 25px; float: left; }
+  .label2 { width: 100px; text-align: right; padding-right: .3em; }
+  .field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; width: 190px; }
+  .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+</style>
+
+${j.jquery_form()}
+${j.jquery_validate()}
+${j.jquery_autocomplete()}
+${dt.DataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+$(function(){
+  jQuery.getJSON('${url.for("%{area='common', controller='currency', action='listjson'}")}', null, function(data){$('#quote_Price_Currency_Id').addItems(data);});
+
+  jQuery.getJSON('${url.for("%{area='common', controller='taxrate', action='listjson'}")}', null, function(data){$('#quote_Price_TaxRate_Id').addItems(data);});
+
+  $('#quote_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+    width: 550,
+    matchContains: true,
+    formatItem: formatItem3,
+    formatResult: formatResult,
+    max: 30
+  });
+
+  $('#quote_Vendor_Id').autocomplete('$url.for("%{area='pur', controller='vendor', action='autocomplete2'}")', {
+    width: 550,
+    matchContains: true,
+    formatItem: formatVendorItem,
+    formatResult: formatResult,
+    max: 30
+  });
+
+  $('#quote_EffectiveDate, #quote_ExpirationDate').datepicker();
+
+  $('#formNewVendorQuote').validate({
+    submitHandler: function(form){$(form).ajaxSubmit({dataType:'json', success: fnAddToDT});}
+  });
+
+  oDataTable = $('#instances').dataTable({
+    "bJQueryUI": true,
+    "sPaginationType": "full_numbers",
+    "aoColumns": [
+      {"bVisible": false},
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+    ],
+  });
+
+  fnDecorative();
+});
+
+function fnAddToDT(data){
+  if(!fnHasError(data)){
+    oDataTable.fnAddData([
+    data['Id'],
+    data['QuotationNo'],
+    data['VendorName'],
+    data['MaterialId'],
+    data['MaterialName'],
+    data['MaterialSpecification'],
+    data['CurrencyDescription'],
+    data['TaxRateDescription'],
+    data['UnitPrice'],
+    data['MinimumOrder'],
+    '${common.remove}'
+    ]);
+  }
+}
+</script>
+#end
+
+#capturefor(title)
+  ${common.createnew} ${common.vendor-quote}
+#end
+
+<header>
+  <h3>${common.createnew} ${common.vendor-quote}</h3>
+</header>
+
+<div id="new-instance-form" class="ui-helper-clearfix">
+  <form action='${url.for("%{action='create'}")}' method="post" id="formNewVendorQuote">
+    ${f.push("quote")}
+    <p>
+      <span class="label2">${common.quotation-no}:</span>
+      <span class="field2">${f.textfield("QuotationNo")}</span>
+    </p>
+
+    <p>
+      <span class="label2">${common.vendor}:</span>
+      <span class="field2">${f.textfield("Vendor.Id", "%{required='required'}")}</span>
+    </p>
+
+    <p>
+      <span class="label2">${common.material}:</span>
+      <span class="field2">${f.textfield("Material.Id", "%{required='required'}")}</span>
+    </p>
+
+    <p>
+      <span class="label2">${common.currency}:</span>
+      <span class="field2">${f.select("Price.Currency.Id", null, "%{required='required'}")}</span>
+    </p>
+
+    <p>
+      <span class="label2">${common.tax-rate}:</span>
+      <span class="field2">${f.select("Price.TaxRate.Id", null, "%{required='required'}")}</span>
+    </p>
+
+    <p>
+      <span class="label2">${common.unitprice}:</span>
+      <span class="field2">${f.textfield("Price.UnitPrice", "%{required='required'}")}</span>
+    </p>
+
+    <p>
+      <span class="label2">${common.effectivedate}:</span>
+      <span class="field2">${f.textfield("EffectiveDate", "%{required='required'}")}</span>
+    </p>
+
+    <p>
+      <span class="label2">${common.expiration-date}:</span>
+      <span class="field2">${f.textfield("ExpirationDate", "%{required='required'}")}</span>
+    </p>
+
+    <p>
+      <span class="label2">${common.minimumorderquantity}:</span>
+      <span class="field2">${f.numberfield("MinimumOrder", "%{required='required'}")}</span>
+    </p>
+
+    <p>
+    <input type="submit" value="Add" />
+    </p>
+    ${f.pop()}
+  </form>
+</div>
+
+<div id="instances-list-container">
+  <table id="instances" class="display">
+    <thead>
+      <tr>
+        <th>${common.id}</th>
+        <th>${common.quotation-no}</th>
+        <th>${common.vendor}</th>
+        <th>${common.material}</th>
+        <th>${common.material-name}</th>
+        <th>${common.material-spec}</th>
+        <th>${common.currency}</th>
+        <th>${common.tax-rate}</th>
+        <th>${common.unitprice}</th>
+        <th>${common.minimumorderquantity}</th>
+        <th></th>
+      </tr>
+    </thead>
+  </table>
+</div>

@@ -11,6 +11,18 @@
     <img src="${siteroot}/content/images/inventory.png"/>
     <span>${common.inventory} ${common.query}</span></a>
   </li>
+  <li><a href='${url.for("%{area='pur', controller='vendorquote', action='new'}")}'>
+    <img src="${siteroot}/content/images/doc.png"/>
+    <span>${common.createnew} ${common.vendor-quote}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='pur', controller='vendorquote', action='index'}")}'>
+    <img src="${siteroot}/content/images/docs.png"/>
+    <span>${common.vendor-quote}</span></a>
+  </li>
+  <li><a href='${url.for("%{area='pur', controller='vendorquote', action='appraise'}")}'>
+    <img src="${siteroot}/content/images/analyse.png"/>
+    <span>${common.appraise-vendor-quote}</span></a>
+  </li>
 </ul>
 <ul>
   <li><a href='${url.for("%{area='pur', controller='pr', action='index'}")}'>
