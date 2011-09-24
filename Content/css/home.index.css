@@ -1,0 +1,10 @@
+/*
+ * mainMenu list
+ */
+#mainMenu { margin-top: .5em; }
+
+.menu-panel { padding-left: .8em; }
+.menu-panel ul { clear: both; }
+.menu-panel li { float: left; width: 96px; font-size: 1em; margin: .8em 1em .8em 0; list-style: none; cursor: pointer;}
+.menu-panel li img { height: auto; display: block; padding-top: 3px; border: 0; position: relative; }
+.menu-panel li span {display: block; margin: .1em 4px; }

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Malt</title>
+  <base href="${siteroot}" target="_blank">
+  <link rel="shortcut icon" href="${siteroot}/Content/favicon.ico" type="image/vnd.microsoft.icon" />
+
+  ${h.stylesheet_link("${siteRoot}/Content/css/yui/reset-fonts-grids.css")}
+  ${h.stylesheet_link("${siteRoot}/Content/css/home.index.css")}
+  ${j.jquery_css('')}
+  ${j.jquery()}
+  ${j.jquery_ui()}
+
+  <script type="text/javascript" charset="utf-8">
+    $(function(){
+      $('#mainMenu').tabs();
+    });
+  </script>
+</head>
+<body>
+<div id="doc3">
+  <div id="mainMenu">
+    <ul>
+      <li><a href="#basedata">${common.basedata}</a></li>
+      <li><a href="#planning">${common.planningmanagement}</a></li>
+      <li><a href="#purchasing">${common.purchasingmanagement}</a></li>
+      <li><a href="#warehouse">${common.warehousemanagement}</a></li>
+      <li><a href="#workshop">${common.workshop}</a></li>
+      <li><a href="#system">${common.systemmanagement}</a></li>
+    </ul>
+
+    <div id="basedata" class="menu-panel ui-helper-clearfix">
+      #parse("${siteroot}/menu/basedata.vm")
+    </div>
+
+    <div id="planning" class="menu-panel ui-helper-clearfix">
+      #parse("${siteroot}/menu/planningmanagement.vm")
+    </div>
+
+    <div id="purchasing" class="menu-panel ui-helper-clearfix">
+      #parse("${siteroot}/menu/purchasingmanagement.vm")
+    </div>
+
+    <div id="warehouse" class="menu-panel ui-helper-clearfix">
+      #parse("${siteroot}/menu/warehousemanagement.vm")
+    </div>
+
+    <div id="workshop" class="menu-panel ui-helper-clearfix">
+      #parse("${siteroot}/menu/workshop.vm")
+    </div>
+
+    <div id="system" class="menu-panel ui-helper-clearfix">
+      #parse("${siteroot}/menu/systemmanagement.vm")
+    </div>
+  </div>
+</div>
+</body>
+</html>
