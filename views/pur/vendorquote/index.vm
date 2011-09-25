@@ -13,11 +13,11 @@ ${dt.DataTable()}
 
 <script type="text/javascript" language="javascript" charset="utf-8">
 $(function(){
-  jQuery.getJSON('${url.for("%{area='common', controller='currency', action='listjson'}")}', null, function(data){$('#quote_Price_Currency_Id').addItems(data);});
+  jQuery.getJSON('${url.for("%{area='common', controller='currency', action='listjson'}")}', null, function(data){$('#currency').addItems(data);});
 
-  jQuery.getJSON('${url.for("%{area='common', controller='taxrate', action='listjson'}")}', null, function(data){$('#quote_Price_TaxRate_Id').addItems(data);});
+  jQuery.getJSON('${url.for("%{area='common', controller='taxrate', action='listjson'}")}', null, function(data){$('#taxRate').addItems(data);});
 
-  $('#quote_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+  $('#material').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
     width: 550,
     matchContains: true,
     formatItem: formatItem3,
@@ -25,7 +25,7 @@ $(function(){
     max: 30
   });
 
-  $('#quote_Vendor_Id').autocomplete('$url.for("%{area='pur', controller='vendor', action='autocomplete2'}")', {
+  $('#vendor').autocomplete('$url.for("%{area='pur', controller='vendor', action='autocomplete2'}")', {
     width: 550,
     matchContains: true,
     formatItem: formatVendorItem,
@@ -33,11 +33,7 @@ $(function(){
     max: 30
   });
 
-  $('#quote_EffectiveDate, #quote_ExpirationDate').datepicker();
-
-  $('#formNewVendorQuote').validate({
-    submitHandler: function(form){$(form).ajaxSubmit({dataType:'json', success: fnAddToDT});}
-  });
+  $('#effectiveDate, #expirationDate').datepicker();
 
   oDataTable = $('#instances').dataTable({
     "bJQueryUI": true,
@@ -46,7 +42,19 @@ $(function(){
       "sSwfPath": "${dt.SwfPath2()}"
     },
     "sPaginationType": "full_numbers",
+    "bProcessing": true,
+    "bServerSide": true,
     "sAjaxSource": '$url.for("%{action='search'}")',
+    "fnServerParams": function(aoData){
+      aoData.push({ "name": "quotationNo", "value": $('#quotationNo').val() });
+      aoData.push({ "name": "vendor", "value": $('#vendor').val() });
+      aoData.push({ "name": "material", "value": $('#material').val() });
+      aoData.push({ "name": "currency", "value": $('#currency').val() });
+      aoData.push({ "name": "taxRate", "value": $('#taxRate').val() });
+      aoData.push({ "name": "effectiveDate", "value": $('#effectiveDate').val() });
+      aoData.push({ "name": "expirationDate", "value": $('#expirationDate').val() });
+      aoData.push({ "name": "minimumOrder", "value": $('#minimumOrder').val() });
+    },
     "aoColumns": [
       {"bVisible": false},
       null,
@@ -61,26 +69,10 @@ $(function(){
     ],
   });
 
+  $('#btnQuery').click(function(){oDataTable.fnDraw();});
+
   fnDecorative();
 });
-
-function fnAddToDT(data){
-  if(!fnHasError(data)){
-    oDataTable.fnAddData([
-    data['Id'],
-    data['QuotationNo'],
-    data['VendorName'],
-    data['MaterialId'],
-    data['MaterialName'],
-    data['MaterialSpecification'],
-    data['CurrencyDescription'],
-    data['TaxRateDescription'],
-    data['UnitPrice'],
-    data['MinimumOrder'],
-    '${common.remove}'
-    ]);
-  }
-}
 </script>
 #end
 
@@ -93,51 +85,56 @@ function fnAddToDT(data){
 </header>
 
 <div id="new-instance-form" class="ui-helper-clearfix">
-  <form action='${url.for("%{action='create'}")}' method="post" id="formNewVendorQuote">
-    <p>
-      <span class="label2">${common.quotation-no}:</span>
-      <span class="field2">${f.textfield("QuotationNo")}</span>
-    </p>
+  <p>
+    <span class="label2">${common.quotation-no}:</span>
+    <span class="field2">${f.textfield("quotationNo")}</span>
+  </p>
 
-    <p>
-      <span class="label2">${common.vendor}:</span>
-      <span class="field2">${f.textfield("Vendor.Id", "%{required='required'}")}</span>
-    </p>
+  <p>
+    <span class="label2">${common.vendor}:</span>
+    <span class="field2">${f.textfield("vendor")}</span>
+  </p>
 
-    <p>
-      <span class="label2">${common.material}:</span>
-      <span class="field2">${f.textfield("Material.Id", "%{required='required'}")}</span>
-    </p>
+  <p>
+    <span class="label2">${common.material}:</span>
+    <span class="field2">${f.textfield("material")}</span>
+  </p>
 
-    <p>
-      <span class="label2">${common.currency}:</span>
-      <span class="field2">${f.select("Price.Currency.Id", null, "%{required='required'}")}</span>
-    </p>
+  <p>
+    <span class="label2">${common.currency}:</span>
+    <span class="field2">${f.select("currency", null)}</span>
+  </p>
 
-    <p>
-      <span class="label2">${common.tax-rate}:</span>
-      <span class="field2">${f.select("Price.TaxRate.Id", null, "%{required='required'}")}</span>
-    </p>
+  <p>
+    <span class="label2">${common.tax-rate}:</span>
+    <span class="field2">${f.select("taxRate", null)}</span>
+  </p>
 
-    <p>
-      <span class="label2">${common.effectivedate}:</span>
-      <span class="field2">${f.textfield("EffectiveDate", "%{required='required'}")}</span>
-    </p>
+  <p>
+    <span class="label2">${common.effectivedate}:</span>
+    <span class="field2">${f.textfield("effectiveDate")}</span>
+  </p>
 
-    <p>
-      <span class="label2">${common.expiration-date}:</span>
-      <span class="field2">${f.textfield("ExpirationDate", "%{required='required'}")}</span>
-    </p>
+  <p>
+    <span class="label2">${common.expiration-date}:</span>
+    <span class="field2">${f.textfield("expirationDate")}</span>
+  </p>
 
-    <p>
-      <span class="label2">${common.minimumorderquantity}:</span>
-      <span class="field2">${f.numberfield("MinimumOrder", "%{required='required'}")}</span>
-    </p>
+  <p>
+    <span class="label2">${common.minimumorderquantity}:</span>
+    <span class="field2">${f.numberfield("minimumOrder")}</span>
+  </p>
 
-    <p>
-    <input type="submit" value="Search" />
-    </p>
-  </form>
+  <p>
+    <span class="label2">${common.status}:</span>
+    <span class="field2">
+    ${f.select("status", $enum.enumtopairs("HJ.Malt.Purchasing.Domain.VendorQuoteStatusEnum, HJ.Malt.Purchasing"), "%{text='second', value='first'}")}
+    </span>
+  </p>
+
+  <p>
+    <button id="btnQuery">${common.query}</button>
+  </p>
 </div>
 
 <div id="instances-list-container">
@@ -154,7 +151,6 @@ function fnAddToDT(data){
         <th>${common.tax-rate}</th>
         <th>${common.unitprice}</th>
         <th>${common.minimumorderquantity}</th>
-        <th></th>
       </tr>
     </thead>
   </table>
