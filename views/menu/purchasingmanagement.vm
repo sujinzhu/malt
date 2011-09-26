@@ -19,7 +19,7 @@
     <img src="${siteroot}/content/images/docs.png"/>
     <span>${common.vendor-quote}</span></a>
   </li>
-  <li><a href='${url.for("%{area='pur', controller='vendorquote', action='appraise'}")}'>
+  <li><a href='${url.for("%{area='pur', controller='vendorquote', action='forappraising'}")}'>
     <img src="${siteroot}/content/images/analyse.png"/>
     <span>${common.appraise-vendor-quote}</span></a>
   </li>

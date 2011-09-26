@@ -1,0 +1,105 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+  #appraise-panel { padding-bottom: .5em; margin-bottom: .3em; }
+  #appraise-panel span { float: left; }
+  #appraise-panel p { margin-top: 1em; height: 25px; float: left; }
+  .label2 { width: 100px; text-align: right; padding-right: .3em; }
+  .field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; width: 190px; }
+  .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+
+  .material-name, .material-spec { width: 350px; }
+</style>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+$(function(){
+  $('#commandList a').button();
+  fnDecorative();
+});
+
+</script>
+#end
+
+#capturefor(title)
+  ${common.appraise} ${common.vendor-quote}
+#end
+
+<header>
+  <h3>${common.appraise} ${common.vendor-quote}</h3>
+</header>
+
+<div id="appraise-panel" class="ui-helper-clearfix">
+  <p>
+    <span class="label2">${common.quotation-no}:</span>
+    <span class="field2">${quote.QuotationNo}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.vendor}:</span>
+    <span class="field2">${quote.Vendor.Name}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.effectivedate}:</span>
+    <span class="field2">${quote.EffectiveDate}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.expiration-date}:</span>
+    <span class="field2">${quote.ExpirationDate}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.material}:</span>
+    <span class="field2">${quote.Material.Id}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.material-name}:</span>
+    <span class="field2 material-name">$!{quote.Material.Name}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.material-spec}:</span>
+    <span class="field2 material-spec">$!{quote.Material.Specification}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.currency}:</span>
+    <span class="field2">[$!{quote.Price.Currency.Id}] $!{quote.Price.Currency.Description}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.tax-rate}:</span>
+    <span class="field2">[$!{quote.Price.TaxRate.Id}] $!{quote.Price.TaxRate.Description}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.unitprice}:</span>
+    <span class="field2">$!{quote.Price.UnitPrice}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.minimumorderquantity}:</span>
+    <span class="field2">${quote.MinimumOrder}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.status}:</span>
+    <span class="field2">${h.GetEnumName(${quote.Status})}</span>
+  </p>
+
+  <p id="commandList">
+    #if(${showAdoptCommand})
+    <a href='${url.for("%{action='adopt', querystring='id=${quote.id}'}")}' target="_self">${common.adopt}</a>
+    #end
+    #if(${showRefuseCommand})
+    <a href='${url.for("%{action='refuse', querystring='id=${quote.id}'}")}' target="_self">${common.refuse}</a>
+    #end
+    #if(${showRepealCommand})
+    <a href='${url.for("%{action='repeal', querystring='id=${quote.id}'}")}' target="_self">${common.repeal}</a>
+    #end
+    #if(${showDeleteCommand})
+    <a href='${url.for("%{action='delete', querystring='id=${quote.id}'}")}' target="_self">${common.delete}</a>
+    #end
+  </p>
+</div>

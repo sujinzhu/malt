@@ -42,6 +42,7 @@ $(function(){
       "sSwfPath": "${dt.SwfPath2()}"
     },
     "sPaginationType": "full_numbers",
+    "aaSorting": [[10, "desc"]],
     "bProcessing": true,
     "bServerSide": true,
     "sAjaxSource": '$url.for("%{action='search'}")',
@@ -54,6 +55,7 @@ $(function(){
       aoData.push({ "name": "effectiveDate", "value": $('#effectiveDate').val() });
       aoData.push({ "name": "expirationDate", "value": $('#expirationDate').val() });
       aoData.push({ "name": "minimumOrder", "value": $('#minimumOrder').val() });
+      aoData.push({ "name": "status", "value": $('#status').val() });
     },
     "aoColumns": [
       {"bVisible": false},
@@ -66,6 +68,10 @@ $(function(){
       null,
       null,
       null,
+      null,
+      null,
+      null,
+      {"bVisible": ${showCommand.ToString().ToLower()}, "fnRender": function(oObj){return fnShowCommand(oObj);}},
     ],
   });
 
@@ -73,15 +79,20 @@ $(function(){
 
   fnDecorative();
 });
+
+function fnShowCommand(oObj){
+  var url = '${url.for("%{action='appraise', querystring='id='}")}' + oObj.aData[0];
+  return '<a href="' + url + '" target="_blank">${common.appraise}</a>'
+}
 </script>
 #end
 
 #capturefor(title)
-  ${common.query} ${common.vendor-quote}
+  ${common.vendor-quote}
 #end
 
 <header>
-  <h3>${common.query} ${common.vendor-quote}</h3>
+  <h3>${common.vendor-quote}</h3>
 </header>
 
 <div id="new-instance-form" class="ui-helper-clearfix">
@@ -151,6 +162,10 @@ $(function(){
         <th>${common.tax-rate}</th>
         <th>${common.unitprice}</th>
         <th>${common.minimumorderquantity}</th>
+        <th>${common.effectivedate}</th>
+        <th>${common.expiration-date}</th>
+        <th>${common.status}</th>
+        <th></th>
       </tr>
     </thead>
   </table>
