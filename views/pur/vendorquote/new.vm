@@ -55,10 +55,11 @@ $(function(){
       null,
       null,
       null,
-      {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='delete'}")}');}}
+      {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='remove'}")}');}}
     ],
   });
 
+  $('#quote_Vendor_Id').focus();
   fnDecorative();
 });
 
@@ -77,6 +78,7 @@ function fnAddToDT(data){
     data['MinimumOrder'],
     '${common.remove}'
     ]);
+    $('#quote_Material_Id').val("").focus();
   }
 }
 </script>
@@ -94,18 +96,8 @@ function fnAddToDT(data){
   <form action='${url.for("%{action='create'}")}' method="post" id="formNewVendorQuote">
     ${f.push("quote")}
     <p>
-      <span class="label2">${common.quotation-no}:</span>
-      <span class="field2">${f.textfield("QuotationNo")}</span>
-    </p>
-
-    <p>
       <span class="label2">${common.vendor}:</span>
       <span class="field2">${f.textfield("Vendor.Id", "%{required='required'}")}</span>
-    </p>
-
-    <p>
-      <span class="label2">${common.material}:</span>
-      <span class="field2">${f.textfield("Material.Id", "%{required='required'}")}</span>
     </p>
 
     <p>
@@ -119,8 +111,8 @@ function fnAddToDT(data){
     </p>
 
     <p>
-      <span class="label2">${common.unitprice}:</span>
-      <span class="field2">${f.textfield("Price.UnitPrice", "%{required='required'}")}</span>
+      <span class="label2">${common.quotation-no}:</span>
+      <span class="field2">${f.textfield("QuotationNo")}</span>
     </p>
 
     <p>
@@ -131,6 +123,16 @@ function fnAddToDT(data){
     <p>
       <span class="label2">${common.expiration-date}:</span>
       <span class="field2">${f.textfield("ExpirationDate", "%{required='required'}")}</span>
+    </p>
+
+    <p>
+      <span class="label2">${common.material}:</span>
+      <span class="field2">${f.textfield("Material.Id", "%{required='required'}")}</span>
+    </p>
+
+    <p>
+      <span class="label2">${common.unitprice}:</span>
+      <span class="field2">${f.textfield("Price.UnitPrice", "%{required='required'}")}</span>
     </p>
 
     <p>
