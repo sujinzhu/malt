@@ -29,11 +29,13 @@
   </p>
   <p>
     <span class="label2">${common.currency}:</span>
-    <span class="field2">$!{Price.Currency.Id}</span>
+    <span class="field2">$!{requisition.Price.Currency.Id}</span>
+    ${f.hiddenfield("entry.Price.Currency.Id", "${requisition.Price.Currency.Id}")}
   </p>
   <p>
     <span class="label2">${common.tax-rate}:</span>
-    <span class="field2">$!{Price.TaxRate.Description}</span>
+    <span class="field2">$!{requisition.Price.TaxRate.Description}</span>
+    ${f.hiddenfield("entry.Price.TaxRate.Id", "${requisition.Price.TaxRate.Id}")}
   </p>
   <p>
     <span class="label2">${common.requireddate}:</span>

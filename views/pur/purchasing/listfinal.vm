@@ -1,4 +1,5 @@
 #capturefor(head)
+  <base target="_blank">
   ${j.jquery_dataTable()}
  
   <script type="text/javascript" language="javascript" charset="utf-8">

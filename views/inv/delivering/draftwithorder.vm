@@ -24,10 +24,11 @@
 /* ]]> */
 </style>
   
-  ${j.jquery_dataTable()}
   ${j.jquery_form()}
   ${j.jquery_validate()}
   ${j.jquery_autocomplete()}
+  ${dt.DataTable()}
+
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
     $(function(){
@@ -142,9 +143,9 @@ ${common.issuefinishedgoods}: ${instance.Id} (${instance.Customer.Name})
     <tr>
       <td>${entry.Id}</td>
       <td>$!{entry.SOE.SO.Id}</td>
-      <td>${entry.SOE.Material.Id}</td>
-      <td>${entry.SOE.Material.Name}</td>
-      <td>${entry.SOE.Material.Specification}</td>
+      <td>${entry.SOE.Product.Id}</td>
+      <td>${entry.SOE.Product.Name}</td>
+      <td>${entry.SOE.Product.Specification}</td>
       <td>${entry.DeliveredQuantity}</td>
       <td>${entry.PackageQuantity}</td>
       <td>${entry.SOE.Unit.Id}</td>

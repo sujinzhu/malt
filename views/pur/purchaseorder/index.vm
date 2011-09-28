@@ -16,21 +16,14 @@
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
     $(function(){
-      $('#materials').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
-        width: 420,
+      $('#materials, .material').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
+        width: 550,
         multiple: true,
         matchContains: true,
         formatItem: formatItem3,
         formatResult: formatResult,
         max: 30
       }).focus();
-      $('.material').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
-        width: 420,
-        matchContains: true,
-        formatItem: formatItem3,
-        formatResult: formatResult,
-        max: 30
-      });
       $('#vendor').autocomplete('$url.for("%{area='pur', controller='vendor', action='autocomplete2'}")', {
         width: 250,
         matchContains: true,

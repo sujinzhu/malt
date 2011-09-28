@@ -21,8 +21,8 @@
   
   ${j.jquery_form()}
   ${j.jquery_validate()}
-  ${j.jquery_dataTable()}
   ${j.jquery_autocomplete()}
+  ${dt.DataTable()}
  
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
@@ -40,7 +40,7 @@
         {"bVisible": false},
         {"sClass": "material-id"},
         {"sClass": "material-desc"},
-         null, null, null, null,
+         null, null, null, null, null, null,
         {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='removeentry2'}")}');}, "bSortable": false}
         ],
       });
@@ -65,7 +65,18 @@
 
     function fnAddToDT(data){
       if(!fnHasError(data)){
-        oDataTable.fnAddData([data['Id'], data['Material'], data['MaterialDescription'], data['BaseUnit'] + " " + data['UnitDescription'], data['UnitPrice'], data['RequiredQuantity'], data['RequiredDate'], '${common.remove}']);
+        oDataTable.fnAddData([
+        data['Id'],
+        data['Material'],
+        data['MaterialDescription'],
+        data['BaseUnit'] + " " + data['UnitDescription'],
+        data['CurrencyDescription'],
+        data['TaxRateDescription'],
+        data['UnitPrice'],
+        data['RequiredQuantity'],
+        data['RequiredDate'],
+        '${common.remove}'
+        ]);
         //$('#new-entry-container').hide("clip");
         //$('#instances-container').show("clip");
         $('#new-entry-container').html('');
@@ -151,6 +162,8 @@ ${common.purchaseorder}: ${instance.Id}
       <th>${common.material}</th>
       <th>${common.description}</th>
       <th>${common.unit}</th>
+      <th>${common.currency}</th>
+      <th>${common.tax-rate}</th>
       <th>${common.unitprice}</th>
       <th>${common.requiredquantity}</th>
       <th>${common.requireddate}</th>
@@ -164,6 +177,8 @@ ${common.purchaseorder}: ${instance.Id}
       <td>${entry.Material.Id}</td>
       <td>$!{entry.Material.Description}</td>
       <td>${entry.Unit.Id} $!{entry.Unit.Description}</td>
+      <td>$!{entry.Price.Currency.Description}</td>
+      <td>$!{entry.Price.TaxRate.Description}</td>
       <td>${entry.Price.UnitPrice}</td>
       <td>${entry.RequiredQuantity}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>

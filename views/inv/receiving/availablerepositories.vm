@@ -8,7 +8,7 @@ ${f.installscripts()}
 </p>
 <p>
   <span class="label2">${common.receivedquantity}:</span>
-  <span class="field2">${entry.ReceivedQuantity.ToString("G17")} ${entry.POE.Unit.Description}</span>
+  <span class="field2">${entry.ReceivedQuantity.ToString("G")} ${entry.POE.Unit.Description}</span>
 </p>
 
 #foreach($repository in $repositories)
@@ -16,7 +16,7 @@ ${f.installscripts()}
   <span class="label2 repository-with-desc">[${repository}] ${r.getdescription($repository)}:</span>
   <span class="field2">
   <input type="hidden" name="repository[]" value="${repository}" />
-  <input type="text" name="quantity[]" value="${entry.ReceivedQuantity.ToString('G17')}" max="${entry.ReceivedQuantity.ToString('G17')}"/>
+  <input type="text" name="quantity[]" value="${entry.ReceivedQuantity.ToString('G')}" max="${entry.ReceivedQuantity.ToString('G')}"/>
   ${entry.POE.Unit.Description}
   </span>
 </p>

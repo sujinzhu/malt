@@ -38,6 +38,7 @@
 // <![CDATA[
   $('#sales-order-entries').dataTable({
     'bJQueryUI': true,
+    "sPaginationType": "full_numbers",
     "aoColumns": [
     {"bVisible": false},
     {"sClass": "so-id"},
