@@ -3,75 +3,147 @@
 /* <![CDATA[ */
 #header-container h3 { float: left; }
 #header-container a { margin-left: 1em; float: left; }
+#instance-head { float: left; }
+
+#operate-panel, #price-list { padding-bottom: .5em; margin-bottom: .3em; }
+#operate-panel span, #price-list span { float: left; }
+#operate-panel p, #price-list li { margin-top: 1em; height: 25px; float: left; }
+.label2 { width: 100px; text-align: right; padding-right: .3em; }
+.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; width: 190px; }
+.label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
+.material-desc, .notice { width: 500px; }
+
+#price-list { float: left; }
+
 /* ]]> */
 </style>
 
-  ${j.jquery_form()}
-  ${j.jquery_validate()}
-  ${j.jquery_dataTable()}
-  ${j.jquery_autocomplete()}
+${j.jquery_form()}
+${j.jquery_validate()}
+${j.jquery_autocomplete()}
+${dt.DataTable()}
 
-  <script type="text/javascript" language="javascript" charset="utf-8">
-  // <![CDATA[
-    var oInstances;
-    $(function(){
-      $('a').button();
-      oInstances = $('#instances').dataTable({
-        "bJQueryUI": true,
-        "sPaginationType": "full_numbers",
-        "aoColumns": [
-        {"bVisible": false},
-        {"sClass": "material-id"},
-        {"sClass": "material-name"},
-        {"sClass": "material-spec"},
-        {"sClass": "quantity required-quantity"},
-        {"sClass": "unit"},
-        {"sClass": "price unit-price"},
-        {"sClass": "currency"},
-        {"sClass": "tax-rate"},
-        {"sClass": "short-date"},
-        {"sClass": "vendor"},
-        {"sClass": "repository"},
-        null,
-        //{"fnRender": function(oObj){return fnGetRemoveLink(oObj.aData[12]);}, "bSortable": false}
-        ],
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+$(function(){
+  $('a').button();
+
+  oDataTable = $('#instances').dataTable({
+    "bJQueryUI": true,
+    "sPaginationType": "full_numbers",
+    "aoColumns": [
+    {"bVisible": false},
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {"fnRender": function(oObj){return fnRenderSelectLink(oObj, "fnSelectEntry");}, "bSortable": false}
+    ],
+  });
+
+  $('#operate-panel').dialog({
+    autoOpen: false,
+    height: 500,
+    width: 700,
+    modal: true,
+    buttons:{
+      "${common.select}": function(){
+        var panel = $(this);
+        jQuery.post(
+          '${url.for("%{action='applyquote'}")}',
+          {id:$('#entry-id').val(), quoteId:$('input:radio[name="quote"]:checked').val()},
+          function(entry){
+            if(!fnHasError(entry)){
+              oDataTable.fnUpdate([
+              entry.Id,
+              entry.Material,
+              entry.MaterialDescription,
+              entry.RequiredQuantity,
+              entry.UnitDescription,
+              entry.UnitPrice,
+              entry.CurrencyDescription,
+              entry.TaxRateDescription,
+              entry.RequiredDate,
+              entry.VendorName,
+              "${common.select}"
+              ], $('#row-id').val(), 0);
+              panel.dialog('close');
+            }
+          }
+        );
+      },
+      Cancel: function(){
+        $(this).dialog('close');
+      }
+    },
+  });
+
+  fnDecorative();
+});
+
+/*
+ * id : obj, id of domain model
+ * iRow: Row index in DataTable
+ */
+function fnSelectEntry(id, iRow){
+  jQuery.getJSON(
+    '${url.for("%{controller='purchaserequisition', action='getentry'}")}',
+    {id: id},
+    function(data){
+      $('#entry-id').val(id);
+      $('#row-id').val(iRow);
+      $('#material-id').text(data.Material);
+      $('#material-desc').text(data.MaterialDescription);
+      $('#required-quantity').text(data.RequiredQuantity);
+      $('#unit').text(data.Unit);
+      $('#vendor').text(data.VendorName);
+      $('#unit-price').text(data.UnitPrice);
+      $('#currency').text(data.CurrencyDescription);
+      $('#tax-rate').text(data.TaxRateDescription);
+      $('#notice').text(data.Notice);
+      //$('#price-list').html("<li class='ui-state-hover ui-corner-all'>${common.no-qualified-quote-found}</li>");
+      jQuery.getJSON(
+        '${url.for("%{action='InquirePrice'}")}',
+        {id: id},
+        function(prices){
+          if(prices.length > 0){
+            $('#price-list').html("");
+            $(prices).each(function(index, price){
+              $('#price-list').append(fnBuildList(price));
+            });
+          }else{
+            fnDialogError("${common.no-qualified-quote-found}");
+          }
       });
-      $('#new-entry').validate({
-        submitHandler: function(form){ $(form).ajaxSubmit({dataType: 'json', success: fnAddToDT}); }
-      });
-      fnTrigerRemoveEntry();
-    });
+      $('#operate-panel').dialog('open');
+  });
+}
 
-    function fnGetRemoveLink(label)
-    {
-      return "<span style='cursor: pointer;'>"+label+"</span>";
-    }
-
-    function fnTrigerRemoveEntry()
-    {
-      $('#instances tbody td').click(function(){
-        var aPos = oInstances.fnGetPosition(this);
-        var aData = oInstances.fnGetData(aPos[0]);
-        if(aData[aPos[2]] == fnGetRemoveLink('${common.remove}'))
-        {
-          fnRemoveEntry(aData[0], aPos[0]);
-        }
-      });
-    }
-
-    function fnRemoveEntry(id, iRow)
-    {
-      var url = '${url.for("%{action='removeentry'}")}';
-      jQuery.post(url, {id: id}, function(data){
-        if(!fnHasError(data)){
-          oInstances.fnDeleteRow(iRow);
-        }
-      }, 'json');
-    }
-
-  // ]]>
-  </script>
+/*
+ * price : JSON object of CSharp model - JSONPurchaseRequisitionEntryData
+ */
+function fnBuildList(price){
+  var li = "<li>";
+  li = li + '<span class="label2 ui-state-active ui-corner-bl">';
+  li = li + '<input type="radio" name="quote" value="' + price.Id + '"/>';
+  li = li + price.Vendor.Name + '</span>';
+  li = li + '<span class="field2 ui-state-hover ui-corner-tr">';
+  li = li + price.Price.Currency.Symbol;
+  li = li + price.Price.UnitPrice;
+  li = li + ' [' + price.Price.TaxRate.Description + '] ';
+  li = li + 'MOQ: ' + price.MinimumOrder + '</span>';
+  li = li + "</li>";
+  return li;
+}
+// ]]>
+</script>
 #end
+
 
 #capturefor(title)
 ${common.quote} ${common.purchaserequisition}: ${instance.Id}
@@ -79,8 +151,64 @@ ${common.quote} ${common.purchaserequisition}: ${instance.Id}
 
 <div id="header-container" class="ui-helper-clearfix">
   <h3>${common.purchaserequisition}: ${instance.Id}</h3>
-#parse("${siteroot}/pur/purchaserequisition/_head.vm")
   <a href='${url.for("%{action='quote', querystring='id=$instance.Id'}")}'>${common.finish}</a>
+  #parse("${siteroot}/pur/purchaserequisition/_head.vm")
+</div>
+
+<div id="operate-panel" class="ui-helper-clearfix">
+  <input type="hidden" id="entry-id" name="entry-id" value=""/>
+  <input type="hidden" id="row-id" name="row-id" value=""/>
+  <p>
+    <span class="label2">${common.purchaserequisition}:</span>
+    <span class="field2">${instance.Id}</span>
+  </p>
+
+  <p>
+    <span class="label2">${common.material}:</span>
+    <span class="field2" id='material-id'></span>
+  </p>
+
+  <p>
+    <span class="label2">${common.description}:</span>
+    <span class="field2 material-desc" id='material-desc'></span>
+  </p>
+
+  <p>
+    <span class="label2">${common.requiredquantity}:</span>
+    <span class="field2" id='required-quantity'></span>
+  </p>
+
+  <p>
+    <span class="label2">${common.unit}:</span>
+    <span class="field2" id="unit"></span>
+  </p>
+
+  <p>
+    <span class="label2">${common.vendor}:</span>
+    <span class="field2" id='vendor'></span>
+  </p>
+
+  <p>
+    <span class="label2">${common.unitprice}:</span>
+    <span class="field2" id="unit-price"></span>
+  </p>
+
+  <p>
+    <span class="label2">${common.currency}:</span>
+    <span class="field2" id="currency"></span>
+  </p>
+
+  <p>
+    <span class="label2">${common.tax-rate}:</span>
+    <span class="field2" id="tax-rate"></span>
+  </p>
+
+  <p>
+    <span class="label2">${common.notice}:</span>
+    <span class="field2 notice" id="notice"></span>
+  </p>
+  
+  <ul id="price-list" class="ui-helper-clearfix"></ul>
 </div>
 
 <div id="instances-container">
@@ -89,8 +217,7 @@ ${common.quote} ${common.purchaserequisition}: ${instance.Id}
     <tr>
       <th>${common.id}</th>
       <th>${common.material}</th>
-      <th></th>
-      <th></th>
+      <th>${common.description}</th>
       <th>${common.requiredquantity}</th>
       <th>${common.unit}</th>
       <th>${common.unitprice}</th>
@@ -98,8 +225,7 @@ ${common.quote} ${common.purchaserequisition}: ${instance.Id}
       <th>${common.tax-rate}</th>
       <th>${common.requireddate}</th>
       <th>${common.vendor}</th>
-      <th>${common.responsible}</th>
-      <th>${common.notice}</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -107,8 +233,7 @@ ${common.quote} ${common.purchaserequisition}: ${instance.Id}
     <tr>
       <td>${entry.Id}</td>
       <td>${entry.Material.Id}</td>
-      <td>$!{entry.Material.Name}</td>
-      <td>$!{entry.Material.Specification}</td>
+      <td>$!{entry.Material.Description}</td>
       <td>${entry.RequiredQuantity.ToString('G')}</td>
       <td>$!{entry.Unit.Description}</td>
       <td id="price${entry.Id}">$!{entry.Price.UnitPrice}</td>
@@ -116,8 +241,7 @@ ${common.quote} ${common.purchaserequisition}: ${instance.Id}
       <td id="taxrate${entry.Id}">$!{entry.TaxRate.Description}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>
       <td id="vendor${entry.Id}">$!{entry.Vendor.Name}</td>
-      <td>$!{entry.Responsible}</td>
-      <td>$!{entry.Notice}</td>
+      <td>${common.select}</td>
     </tr>
   #end
   </tbody>

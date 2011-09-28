@@ -1,19 +1,17 @@
 <style type="text/css" media="screen">
 /* <![CDATA[ */
-#instance-head { width: 600px; float: left; margin-bottom: 1em; }
+#instance-head { width: 400px; float: left; margin-bottom: 1em; }
 #instance-head th { padding: .3em .3em .3em .5em; }
 /* ]]> */
 </style>
 
 <table id="instance-head" class="display">
   <tr class="ui-widget-header">
-    <th>${common.source}</th>
     <th>${common.applicant}</th>
     <th>${common.status}</th>
     <th>${common.createdate}</th>
   </tr>
   <tr class="ui-widget-content">
-    <td>$!{instance.Source}</td>
     <td>$!{instance.Applicant} $!{r.getdescription($instance.Applicant)}</td>
     <td>$!{h.getenumname($instance.Status)}</td>
     <td>$!{instance.CreatedDate.ToShortDateString()}</td>

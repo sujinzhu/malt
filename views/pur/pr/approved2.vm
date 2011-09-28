@@ -6,11 +6,11 @@
 /* ]]> */
 </style>
 
-  ${j.jquery_form()}
-  ${j.jquery_validate()}
-  ${j.jquery_dataTable()}
-  ${j.jquery_autocomplete()}
-  ${j.jquery_editable()}
+${j.jquery_form()}
+${j.jquery_validate()}
+${j.jquery_dataTable()}
+${j.jquery_autocomplete()}
+${dt.DataTable()}
 
   <script type="text/javascript" language="javascript" charset="utf-8">
   // <![CDATA[
