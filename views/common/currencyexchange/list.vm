@@ -1,0 +1,105 @@
+#capturefor(head)
+<style type="text/css" media="screen">
+/* <![CDATA[ */
+#instances-container { width: 750px; }
+
+#new-instance-container span { float: left; padding: .3em .3em .3em .3em; height: 25px; margin-right: .5em; }
+#new-instance-container { margin-bottom: .7em; }
+/* ]]> */
+</style>
+  
+${j.jquery_form()}
+${dt.DataTable()}
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+$(function(){
+  jQuery.getJSON('${url.for("%{area='common', controller='currency', action='listjson'}")}', null, function(data){$('#instance_FromCurrency_Id').addItems(data);});
+  jQuery.getJSON('${url.for("%{area='common', controller='currency', action='listjson'}")}', null, function(data){$('#instance_ToCurrency_Id').addItems(data);});
+
+  oDataTable = $('#instances').dataTable({
+    "bJQueryUI": true,
+    "sPaginationType": "full_numbers",
+    "aoColumns": [
+      {"bVisible": false},
+      null,
+      null,
+      null,
+      null,
+      {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='remove'}")}');}, "bSortable": false}
+    ],
+  });
+
+  $('#instance_FromRate').focus();
+  $('#new-instance').ajaxForm({
+    dataType: 'json',
+    success: fnAddToDT
+  });
+});
+
+function fnAddToDT(data){
+  if(!fnHasError(data)){
+    oDataTable.fnAddData([
+      data.Id,
+      data.FromRate,
+      data.FromCurrencyDescription,
+      data.ToRate,
+      data.ToCurrencyDescription,
+      '${common.remove}'
+    ]);
+
+    $('#instance_Rate').focus();
+  }
+}
+// ]]>
+</script>
+#end
+
+#capturefor(title)
+  ${common.currency-exchange}
+#end
+
+<h3>${common.currency-exchange}:</h3>
+
+<div id="new-instance-container">
+
+<form action='${url.for("%{action='create'}")}' method="post" accept-charset="utf-8" id="new-instance">
+${f.push("instance")}
+<span class="ui-state-hover ui-corner-all">${f.textfield("FromRate", "%{required='required'}")}
+${f.select("FromCurrency.Id", null, "%{required='required'}")}</span>
+<span class="ui-state-active">${common.against}</span>
+<span class="ui-state-hover ui-corner-all">${f.textfield("ToRate", "%{required='required'}")}
+${f.select("ToCurrency.Id", null, "%{required='required'}")}</span>
+${f.submit($common.create)}
+
+${f.pop()}
+</form>
+
+</div>
+
+<div id="instances-container">
+<table id="instances" class="display">
+  <thead>
+    <tr>
+      <th>${common.id}</th>
+      <th>${common.rate}</th>
+      <th>${common.currency}</th>
+      <th>${common.rate}</th>
+      <th>${common.currency}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    #foreach($instance in $instances)
+    <tr>
+      <td>${instance.id}</td>
+      <td>$!{instance.FromRate}</td>
+      <td>$!{instance.FromCurrency.Description}</td>
+      <td>$!{instance.ToRate}</td>
+      <td>$!{instance.ToCurrency.Description}</td>
+      <td>${common.remove}</td>
+    </tr>
+    #end
+  </tbody>
+</table>
+</div>

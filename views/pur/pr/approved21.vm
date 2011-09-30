@@ -9,9 +9,10 @@
 #operate-panel span, #price-list span { float: left; }
 #operate-panel p, #price-list li { margin-top: 1em; height: 25px; float: left; }
 .label2 { width: 100px; text-align: right; padding-right: .3em; }
-.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; width: 190px; }
+.field2 { margin-right: .8em; padding-left: .3em; margin-left: -1px; width: 190px; text-align: left; }
 .label2, .field2 { padding-top: .2em; padding-bottom: .2em; height: 90%}
 .material-desc, .notice { width: 500px; }
+.price { width: 250px; }
 
 #price-list { float: left; }
 
@@ -132,7 +133,7 @@ function fnBuildList(price){
   li = li + '<span class="label2 ui-state-active ui-corner-bl">';
   li = li + '<input type="radio" name="quote" value="' + price.Id + '"/>';
   li = li + price.Vendor.Name + '</span>';
-  li = li + '<span class="field2 ui-state-hover ui-corner-tr">';
+  li = li + '<span class="field2 ui-state-hover ui-corner-tr price">';
   li = li + price.Price.Currency.Symbol;
   li = li + price.Price.UnitPrice;
   li = li + ' [' + price.Price.TaxRate.Description + '] ';
