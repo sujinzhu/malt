@@ -79,6 +79,11 @@ $(function(){
   </p>
 
   <p>
+    <span class="label2">${common.price-unit}:</span>
+    <span class="field2">$!{quote.Price.PriceUnit.Description}</span>
+  </p>
+
+  <p>
     <span class="label2">${common.minimumorderquantity}:</span>
     <span class="field2">${quote.MinimumOrder}</span>
   </p>

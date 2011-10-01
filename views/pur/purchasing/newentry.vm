@@ -16,30 +16,30 @@
     <span class="field2">${requisition.RequiredQuantity} ${requisition.Unit.Description}</span>
   </p>
   <p>
-    <span class="label2">${common.orderedquantity}:</span>
-    <span class="field2">${requisition.OrderedQuantity}  ${requisition.Unit.Description}</span>
-  </p>
-  <p>
-    <span class="label2">${common.unit}:</span>
+    <span class="label2">$!{common.purchasing-unit}:</span>
     <span class="field2">${f.textfield("Unit.Id", "%{class='required'}")}</span>
   </p>
   <p>
     <span class="label2">${common.unitprice}:</span>
-    <span class="field2">${f.textfield("Price.UnitPrice", "%{class='required', min='0'}")}</span>
+    <span class="field2">$!{requisition.Price.UnitPrice}</span>
+  </p>
+  <p>
+    <span class="label2">$!{common.price-unit}</span>
+    <span class="field2">$!{requisition.Price.PriceUnit.Description}</span>
   </p>
   <p>
     <span class="label2">${common.currency}:</span>
     <span class="field2">$!{requisition.Price.Currency.Id}</span>
-    ${f.hiddenfield("entry.Price.Currency.Id", "${requisition.Price.Currency.Id}")}
+    ##${f.hiddenfield("entry.Price.Currency.Id", "${requisition.Price.Currency.Id}")}
   </p>
   <p>
     <span class="label2">${common.tax-rate}:</span>
     <span class="field2">$!{requisition.Price.TaxRate.Description}</span>
-    ${f.hiddenfield("entry.Price.TaxRate.Id", "${requisition.Price.TaxRate.Id}")}
+    ##${f.hiddenfield("entry.Price.TaxRate.Id", "${requisition.Price.TaxRate.Id}")}
   </p>
   <p>
     <span class="label2">${common.requireddate}:</span>
-    <span class="field2">${f.textfield('RequiredDate', "%{class='required'}")}</span>
+    <span class="field2">$!{f.textfield('RequiredDate', "%{class='required'}")}</span>
   </p>
   ${f.pop()}
   <p>

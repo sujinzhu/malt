@@ -17,6 +17,8 @@ $(function(){
 
   jQuery.getJSON('${url.for("%{area='common', controller='taxrate', action='listjson'}")}', null, function(data){$('#taxRate').addItems(data);});
 
+  jQuery.getJSON('${url.for("%{area='common', controller='unit', action='listjson'}")}', null, function(data){$('#priceUnit').addItems(data);});
+
   $('#material').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
     width: 550,
     matchContains: true,
@@ -52,6 +54,7 @@ $(function(){
       aoData.push({ "name": "material", "value": $('#material').val() });
       aoData.push({ "name": "currency", "value": $('#currency').val() });
       aoData.push({ "name": "taxRate", "value": $('#taxRate').val() });
+      aoData.push({ "name": "priceUnit", "value": $('#priceUnit').val() });
       aoData.push({ "name": "effectiveDate", "value": $('#effectiveDate').val() });
       aoData.push({ "name": "expirationDate", "value": $('#expirationDate').val() });
       aoData.push({ "name": "minimumOrder", "value": $('#minimumOrder').val() });
@@ -59,6 +62,7 @@ $(function(){
     },
     "aoColumns": [
       {"bVisible": false},
+      null,
       null,
       null,
       null,
@@ -112,6 +116,11 @@ function fnShowCommand(oObj){
   </p>
 
   <p>
+    <span class="label2">${common.price-unit}:</span>
+    <span class="field2">${f.select("priceUnit", null)}</span>
+  </p>
+
+  <p>
     <span class="label2">${common.currency}:</span>
     <span class="field2">${f.select("currency", null)}</span>
   </p>
@@ -161,6 +170,7 @@ function fnShowCommand(oObj){
         <th>${common.currency}</th>
         <th>${common.tax-rate}</th>
         <th>${common.unitprice}</th>
+        <th>${common.price-unit}</th>
         <th>${common.minimumorderquantity}</th>
         <th>${common.effectivedate}</th>
         <th>${common.expiration-date}</th>

@@ -19,6 +19,8 @@ $(function(){
 
   jQuery.getJSON('${url.for("%{area='common', controller='taxrate', action='listjson'}")}', null, function(data){$('#quote_Price_TaxRate_Id').addItems(data);});
 
+  jQuery.getJSON('${url.for("%{area='common', controller='unit', action='listjson'}")}', null, function(data){$('#quote_Price_PriceUnit_Id').addItems(data);});
+
   $('#quote_Material_Id').autocomplete('$url.for("%{area='inv', controller='material', action='autocomplete3'}")', {
     width: 550,
     matchContains: true,
@@ -55,6 +57,7 @@ $(function(){
       null,
       null,
       null,
+      null,
       {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='remove'}")}');}}
     ],
   });
@@ -75,6 +78,7 @@ function fnAddToDT(data){
     data['CurrencyDescription'],
     data['TaxRateDescription'],
     data['UnitPrice'],
+    data['PriceUnitDescription'],
     data['MinimumOrder'],
     '${common.remove}'
     ]);
@@ -131,6 +135,11 @@ function fnAddToDT(data){
     </p>
 
     <p>
+      <span class="label2">${common.price-unit}:</span>
+      <span class="field2">${f.select("Price.PriceUnit.Id", null, "%{required='required'}")}</span>
+    </p>
+
+    <p>
       <span class="label2">${common.unitprice}:</span>
       <span class="field2">${f.textfield("Price.UnitPrice", "%{required='required'}")}</span>
     </p>
@@ -160,6 +169,7 @@ function fnAddToDT(data){
         <th>${common.currency}</th>
         <th>${common.tax-rate}</th>
         <th>${common.unitprice}</th>
+        <th>${common.price-unit}</th>
         <th>${common.minimumorderquantity}</th>
         <th></th>
       </tr>
