@@ -23,10 +23,8 @@
         "sPaginationType": "full_numbers",
         "aoColumns": [
         {"sClass": "material-id"},
-        {"sClass": "material-name"},
-        {"sClass": "material-spec"},
-         null,
-        {"sClass": "unit-price"},
+         null, null,
+         null, null, null,
          null, null,
          null, null,
         ]
@@ -87,12 +85,13 @@
       <th>${common.material}</th>
       <th></th>
       <th></th>
-      <th>${common.unit}</th>
+      <th>${common.requiredquantity}</th>
+      <th>${common.purchasing-unit}</th>
+      <th>${common.requireddate}</th>
       <th>${common.unitprice}</th>
       <th>${common.currency}</th>
       <th>${common.tax-rate}</th>
-      <th>${common.requiredquantity}</th>
-      <th>${common.requireddate}</th>
+      <th>${common.price-unit}</th>
     </tr>
   </thead>
   <tbody>
@@ -101,12 +100,13 @@
       <td>${entry.Material.Id}</td>
       <td>$!{entry.Material.Name}</td>
       <td>$!{entry.Material.Specification}</td>
-      <td>${entry.Unit.Id} $!{entry.Unit.Description}</td>
+      <td>${entry.RequiredQuantity}</td>
+      <td>$!{entry.Unit.Description}</td>
+      <td>${entry.RequiredDate.ToShortDateString()}</td>
       <td id="price${entry.Id}">${entry.Price.UnitPrice}</td>
       <td>$!{entry.Price.Currency.Id}</td>
       <td>$!{entry.Price.TaxRate.Description}</td>
-      <td>${entry.RequiredQuantity}</td>
-      <td>${entry.RequiredDate}</td>
+      <td>$!{entry.Price.PriceUnit.Description}</td>
     </tr>
   #end
   </tbody>

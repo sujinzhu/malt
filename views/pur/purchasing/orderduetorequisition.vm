@@ -40,7 +40,7 @@
         {"bVisible": false},
         {"sClass": "material-id"},
         {"sClass": "material-desc"},
-         null, null, null, null, null, null,
+         null, null, null, null, null, null, null,
         {"fnRender": function(oObj){return fnRenderRemoveLink(oObj, '${url.for("%{action='removeentry2'}")}');}, "bSortable": false}
         ],
       });
@@ -161,10 +161,11 @@ ${common.purchaseorder}: ${instance.Id}
       <th>${common.id}</th>
       <th>${common.material}</th>
       <th>${common.description}</th>
-      <th>${common.unit}</th>
+      <th>$!{common.purchasing-unit}</th>
       <th>${common.currency}</th>
       <th>${common.tax-rate}</th>
       <th>${common.unitprice}</th>
+      <th>${common.price-unit}</th>
       <th>${common.requiredquantity}</th>
       <th>${common.requireddate}</th>
       <th></th>
@@ -176,10 +177,11 @@ ${common.purchaseorder}: ${instance.Id}
       <td>${entry.Id}</td>
       <td>${entry.Material.Id}</td>
       <td>$!{entry.Material.Description}</td>
-      <td>${entry.Unit.Id} $!{entry.Unit.Description}</td>
+      <td>$!{entry.Unit.Description}</td>
       <td>$!{entry.Price.Currency.Description}</td>
       <td>$!{entry.Price.TaxRate.Description}</td>
-      <td>${entry.Price.UnitPrice}</td>
+      <td>$!{entry.Price.UnitPrice}</td>
+      <td>$!{entry.Price.PriceUnit.Description}</td>
       <td>${entry.RequiredQuantity}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>
       <td>${common.remove}</td>

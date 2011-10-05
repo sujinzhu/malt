@@ -17,18 +17,16 @@ ${j.jquery_dataTable()}
       "aoColumns": [
       {"bVisible": false},
       {"sClass": "material-id"},
-      {"sClass": "material-name"},
-      {"sClass": "material-spec"},
-      {"sClass": "quantity"},
-      {"sClass": "unit"},
-      {"sClass": "price"},
       null,
       null,
-      {"sClass": "short-date"},
-      {"sClass": "quantity"},
-      {"sClass": "vendor"},
       null,
-      null
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
       ],
     });
   });
@@ -54,11 +52,9 @@ ${j.jquery_dataTable()}
       <th>${common.unitprice}</th>
       <th>${common.currency}</th>
       <th>${common.tax-rate}</th>
+      <th>${common.price-unit}</th>
       <th>${common.requireddate}</th>
-      <th>${common.orderedquantity}</th>
       <th>${common.vendor}</th>
-      <th>${common.responsible}</th>
-      <th>${common.notice}</th>
     </tr>
   </thead>
   <tbody>
@@ -73,11 +69,9 @@ ${j.jquery_dataTable()}
       <td>$!{entry.Price.UnitPrice}</td>
       <td>$!{entry.Price.Currency.Id}</td>
       <td>$!{entry.Price.TaxRate.Description}</td>
+      <td>$!{entry.Price.PriceUnit.Description}</td>
       <td>${entry.RequiredDate.ToShortDateString()}</td>
-      <td>${entry.OrderedQuantity.ToString('G17')}</td>
       <td>$!{entry.Vendor.Name}</td>
-      <td>$!{entry.Responsible}</td>
-      <td>$!{entry.Notice}</td>
     </tr>
   #end
   </tbody>
